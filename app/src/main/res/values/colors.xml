@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="color_white">#FFFFFF</color>
+    <color name="color_white_opaque">#F5F5F5</color>
+    <color name="color_black">#000000</color>
+    <color name="color_black_70_transparency">#B3000000</color>
+    <color name="color_transparent">#00000000</color>
+
+    <color name="color_gray_light">#C2C2C2</color>
+    <color name="color_gray">#757575</color>
+    <color name="color_gray_dark">#424242</color>
+
+    <color name="color_primary">#03A9F4</color>
+    <color name="color_primary_dark">#0288D1</color>
+    <color name="color_accent">#FF4081</color>
+
+    <color name="text_primary">#424242</color>
+    <color name="text_secondary">#757575</color>
+
+    <color name="button_primary">#FF4081</color>
+    <color name="button_primary_disable">#B3FF4081</color>
+</resources>

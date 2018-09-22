@@ -1,0 +1,117 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'com.getkeepsafe.dexcount'
+apply from: 'coverage-report.gradle'
+
+android {
+    compileSdkVersion Versions.compileSdkVersion
+    buildToolsVersion Versions.buildToolsVersion
+
+    defaultConfig {
+        applicationId AppInfo.applicationId
+        versionCode AppInfo.versionCode
+        versionName AppInfo.versionName
+        minSdkVersion Versions.minSdkVersion
+        targetSdkVersion Versions.targetSdkVersion
+
+        resConfigs "en", "pt", "es"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file("../keystore/debug.keystore")
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+            storePassword 'android'
+        }
+    }
+
+    buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            resValue "string", "app_name", AppInfo.appName + " Dev"
+
+            testCoverageEnabled = true
+            minifyEnabled false
+        }
+        release {
+            resValue "string", "app_name", AppInfo.appName
+
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+
+        debug.java.srcDirs += 'src/debug/kotlin'
+
+        String sharedTestDir = 'src/sharedTest/kotlin'
+
+        test {
+            java.srcDir sharedTestDir
+            java.srcDirs += 'src/test/kotlin'
+        }
+
+        androidTest {
+            java.srcDir sharedTestDir
+            java.srcDirs += 'src/androidTest/kotlin'
+            java.srcDirs += 'src/test/resources'
+        }
+    }
+
+    testOptions {
+        animationsDisabled true
+
+        unitTests {
+            returnDefaultValues = true
+            includeAndroidResources = true
+        }
+    }
+}
+
+kotlin {
+    experimental {
+        coroutines 'enable'
+    }
+}
+
+preBuild.dependsOn ':ktlint'
+preBuild.dependsOn ':detekt'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    // Kotlin
+    implementation KotlinDependencies.kotlin
+    implementation KotlinDependencies.coroutinesCore
+    implementation KotlinDependencies.coroutinesAndroid
+
+    // Support Library
+    implementation SupportLibraryDependencies.supportLibrary
+    implementation SupportLibraryDependencies.designLibrary
+
+    // Persistence
+    implementation PersistenceDependencies.room
+    kapt PersistenceDependencies.roomCompiler
+
+    // DI
+    implementation DIDependencies.dagger
+    kapt DIDependencies.daggerCompiler
+
+    // Third Party
+    implementation ThirdPartyDependencies.gson
+
+    // Testing
+    testImplementation TestDependencies.junit
+    testImplementation TestDependencies.mockitoCore
+    androidTestImplementation TestDependencies.mockitoAndroid
+    androidTestImplementation TestDependencies.supportAnnotations
+    androidTestImplementation TestDependencies.testRunner
+    androidTestImplementation TestDependencies.kotlinTest
+}

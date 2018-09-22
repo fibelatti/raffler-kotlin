@@ -1,0 +1,29 @@
+buildscript {
+    apply from: 'ktlint.gradle'
+    apply from: 'detekt.gradle'
+
+    repositories {
+        mavenCentral()
+        jcenter()
+        google()
+    }
+
+    dependencies {
+        classpath Classpaths.gradlePlugin
+        classpath Classpaths.kotlinPlugin
+        classpath Classpaths.jacocoPlugin
+        classpath Classpaths.dexCountPlugin
+    }
+}
+
+allprojects {
+    repositories {
+        mavenCentral()
+        jcenter()
+        google()
+    }
+}
+
+clean {
+    delete rootProject.buildDir
+}
