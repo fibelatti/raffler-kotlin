@@ -1,4 +1,4 @@
-package com.fibelatti.raffler.features.database
+package com.fibelatti.raffler.core.persistence.database
 
 import android.arch.persistence.room.TypeConverter
 import com.google.gson.Gson

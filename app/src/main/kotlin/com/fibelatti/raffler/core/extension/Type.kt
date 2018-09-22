@@ -1,4 +1,4 @@
-package com.fibelatti.raffler.core.extensions
+package com.fibelatti.raffler.core.extension
 
 fun Boolean?.orFalse(): Boolean = this ?: false
 

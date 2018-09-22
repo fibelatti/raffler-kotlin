@@ -1,4 +1,4 @@
-package com.fibelatti.raffler.core.providers
+package com.fibelatti.raffler.core.provider
 
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.android.UI

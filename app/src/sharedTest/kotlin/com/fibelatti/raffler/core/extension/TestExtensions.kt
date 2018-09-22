@@ -1,6 +1,6 @@
 @file:Suppress("UNCHECKED_CAST")
 
-package com.fibelatti.raffler.core.extensions
+package com.fibelatti.raffler.core.extension
 
 import org.mockito.Mockito
 import org.mockito.Mockito.mock

@@ -6,6 +6,7 @@ import com.fibelatti.raffler.core.di.DaggerAppComponent
 
 class App : Application() {
     companion object {
+        @JvmStatic
         val appComponent: AppComponent by lazy(mode = LazyThreadSafetyMode.NONE) {
             DaggerAppComponent
                 .builder()
@@ -15,7 +16,8 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        this.injectMembers()
+
+        injectMembers()
     }
 
     private fun injectMembers() = appComponent.inject(this)

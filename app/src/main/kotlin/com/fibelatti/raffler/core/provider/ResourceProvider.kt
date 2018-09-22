@@ -1,4 +1,4 @@
-package com.fibelatti.raffler.core.providers
+package com.fibelatti.raffler.core.provider
 
 import android.support.annotation.StringRes
 import com.google.gson.reflect.TypeToken

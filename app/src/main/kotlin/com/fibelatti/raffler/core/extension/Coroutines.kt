@@ -1,4 +1,4 @@
-package com.fibelatti.raffler.core.extensions
+package com.fibelatti.raffler.core.extension
 
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.CoroutineScope
