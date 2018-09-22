@@ -1,7 +1,6 @@
 package com.fibelatti.raffler.core.platform;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.fibelatti.raffler.core.providers.ResourceProvider;
@@ -22,13 +21,13 @@ import javax.inject.Inject;
 public class AppResourceProvider implements ResourceProvider {
     private static final String TAG = AppResourceProvider.class.getSimpleName();
 
-    @NonNull
+    @NotNull
     private Context context;
-    @NonNull
+    @NotNull
     private Gson gson;
 
     @Inject
-    public AppResourceProvider(@NonNull Context context, @NonNull Gson gson) {
+    public AppResourceProvider(@NotNull Context context, @NotNull Gson gson) {
         this.context = context;
         this.gson = gson;
     }
@@ -47,7 +46,7 @@ public class AppResourceProvider implements ResourceProvider {
 
     @Nullable
     @Override
-    public <T> T getJsonFromAssets(@NonNull String fileName, @NonNull TypeToken<T> type) {
+    public <T> T getJsonFromAssets(@NotNull String fileName, @NotNull TypeToken<T> type) {
         InputStreamReader reader = null;
         try {
             reader = new InputStreamReader(context.getAssets().open(fileName));
