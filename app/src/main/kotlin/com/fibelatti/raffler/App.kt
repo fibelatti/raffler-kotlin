@@ -5,20 +5,15 @@ import com.fibelatti.raffler.core.di.AppComponent
 import com.fibelatti.raffler.core.di.DaggerAppComponent
 
 class App : Application() {
-    companion object {
-        @JvmStatic
-        val appComponent: AppComponent by lazy(mode = LazyThreadSafetyMode.NONE) {
-            DaggerAppComponent
-                .builder()
-                .build()
-        }
+    val appComponent: AppComponent by lazy(mode = LazyThreadSafetyMode.NONE) {
+        DaggerAppComponent
+            .builder()
+            .application(this)
+            .build()
     }
 
     override fun onCreate() {
         super.onCreate()
-
-        injectMembers()
+        appComponent.inject(this)
     }
-
-    private fun injectMembers() = appComponent.inject(this)
 }
