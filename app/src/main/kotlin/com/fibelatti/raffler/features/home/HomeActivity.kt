@@ -13,6 +13,7 @@ import com.fibelatti.raffler.core.extension.exhaustive
 import com.fibelatti.raffler.core.extension.inTransaction
 import com.fibelatti.raffler.core.platform.BaseActivity
 import com.fibelatti.raffler.features.preferences.presentation.PreferencesFragment
+import com.fibelatti.raffler.features.quickdecision.presentation.QuickDecisionFragment
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.layout_toolbar_default.*
 
@@ -27,6 +28,7 @@ class HomeActivity :
     private var selectedItemId: Int = R.id.menuItemQuickDecisions
     private var currentView: CurrentView = CurrentView.QUICK_DECISIONS
 
+    private val quickDecisionFragment: QuickDecisionFragment by lazy { QuickDecisionFragment.newInstance() }
     private val preferencesFragment: PreferencesFragment by lazy { PreferencesFragment.newInstance() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,6 +38,7 @@ class HomeActivity :
         setContentView(R.layout.activity_home)
         setSupportActionBar(toolbar)
         setupLayout()
+        setupInitialState()
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -57,13 +60,23 @@ class HomeActivity :
         layoutBottomNavigation.setOnNavigationItemSelectedListener(this)
     }
 
+    private fun setupInitialState() {
+        supportFragmentManager.run {
+            inTransaction {
+                add(R.id.layoutFragmentContainer, quickDecisionFragment)
+            }
+        }
+    }
+
     private fun updateContent(currentView: CurrentView) {
         currentView.takeIf { it != this.currentView }?.let {
             this.currentView = it
             when (it) {
                 CurrentView.QUICK_DECISIONS -> {
+                    updateLayoutForSelectedItem(R.string.home_menu_item_quick_decisions, R.color.color_accent, quickDecisionFragment)
                 }
                 CurrentView.GROUPS -> {
+                    updateLayoutForSelectedItem(R.string.home_menu_item_my_groups, R.color.color_primary, quickDecisionFragment /* TODO update fragment */)
                 }
                 CurrentView.PREFERENCES -> {
                     updateLayoutForSelectedItem(R.string.home_menu_item_preferences, R.color.color_gray_dark, preferencesFragment)
