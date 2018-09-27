@@ -96,9 +96,11 @@ dependencies {
     implementation SupportLibraryDependencies.supportLibrary
     implementation SupportLibraryDependencies.designLibrary
 
-    // Persistence
-    implementation PersistenceDependencies.room
-    kapt PersistenceDependencies.roomCompiler
+    // Architecture Components
+    implementation ArchitectureComponentDependencies.archComponents
+    kapt ArchitectureComponentDependencies.archComponentsCompiler
+    implementation ArchitectureComponentDependencies.room
+    kapt ArchitectureComponentDependencies.roomCompiler
 
     // DI
     implementation DIDependencies.dagger

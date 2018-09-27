@@ -1,6 +1,6 @@
 object Versions {
     const val gradleVersion = "3.1.4"
-    const val kotlinVersion = "1.2.70"
+    const val kotlinVersion = "1.2.71"
     const val dexCountPlugin = "0.8.2"
     const val jacocoVersion = "0.8.1"
 
@@ -12,9 +12,10 @@ object Versions {
 
     internal const val supportLibraryVersion = "27.1.1"
 
-    internal const val coroutinesCoreVersion = "0.21"
-    internal const val coroutinesAndroidVersion = "0.21"
+    internal const val coroutinesCoreVersion = "0.26.1"
+    internal const val coroutinesAndroidVersion = "0.26.1"
 
+    internal const val archComponentsVersion = "1.1.1"
     internal const val roomVersion = "1.1.1"
 
     internal const val daggerVersion = "2.17"
@@ -44,7 +45,9 @@ object SupportLibraryDependencies {
     val designLibrary = "com.android.support:design:${Versions.supportLibraryVersion}"
 }
 
-object PersistenceDependencies {
+object ArchitectureComponentDependencies {
+    val archComponents = "android.arch.lifecycle:extensions:${Versions.archComponentsVersion}"
+    val archComponentsCompiler = "android.arch.lifecycle:compiler:${Versions.archComponentsVersion}"
     val room = "android.arch.persistence.room:runtime:${Versions.roomVersion}"
     val roomCompiler = "android.arch.persistence.room:compiler:${Versions.roomVersion}"
 }
@@ -65,4 +68,5 @@ object TestDependencies {
     val mockitoCore = "org.mockito:mockito-core:${Versions.mockitoVersion}"
     val mockitoAndroid = "org.mockito:mockito-android:${Versions.mockitoVersion}"
     val supportAnnotations = "com.android.support:support-annotations:${Versions.supportLibraryVersion}"
+    val archComponentsTest = "android.arch.core:core-testing:${Versions.archComponentsVersion}"
 }
