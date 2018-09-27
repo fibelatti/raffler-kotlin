@@ -1,2 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <!-- Common -->
+    <string name="hint_ok">OK</string>
+    <string name="hint_yes">Yes</string>
+    <string name="hint_no">No</string>
+    <string name="hint_done">Done</string>
+    <string name="hint_cancel">Cancel</string>
+    <string name="hint_search">Search</string>
+    <string name="hint_back">Navigate back</string>
+    <string name="hint_try_again">Try again</string>
+    <string name="hint_loading">Loading</string>
+    <string name="hint_dismiss">Dismiss</string>
+    <string name="hint_reset">Reset</string>
+    <string name="hint_did_you_know">Did you know?</string>
+
+    <string name="generic_log_error">Error in %1$s (%2$s)</string>
+
+    <string name="generic_msg_error">Oops! Something went wrong. Please try again.</string>
+</resources>
