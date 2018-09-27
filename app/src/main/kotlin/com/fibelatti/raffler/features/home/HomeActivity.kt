@@ -5,12 +5,14 @@ import android.support.annotation.ColorRes
 import android.support.annotation.StringRes
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
 import android.support.v4.content.ContextCompat
 import android.view.MenuItem
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.exhaustive
 import com.fibelatti.raffler.core.extension.inTransaction
 import com.fibelatti.raffler.core.platform.BaseActivity
+import com.fibelatti.raffler.features.preferences.presentation.PreferencesFragment
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.layout_toolbar_default.*
 
@@ -24,6 +26,8 @@ class HomeActivity :
 
     private var selectedItemId: Int = R.id.menuItemQuickDecisions
     private var currentView: CurrentView = CurrentView.QUICK_DECISIONS
+
+    private val preferencesFragment: PreferencesFragment by lazy { PreferencesFragment.newInstance() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,6 +66,7 @@ class HomeActivity :
                 CurrentView.GROUPS -> {
                 }
                 CurrentView.PREFERENCES -> {
+                    updateLayoutForSelectedItem(R.string.home_menu_item_preferences, R.color.color_gray_dark, preferencesFragment)
                 }
             }.exhaustive
         }
