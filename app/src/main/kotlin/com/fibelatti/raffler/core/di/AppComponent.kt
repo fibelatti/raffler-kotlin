@@ -10,7 +10,7 @@ import javax.inject.Singleton
     CoreModule::class
 ])
 @Singleton
-interface AppComponent {
+interface AppComponent : ActivityInjector {
 
     @Component.Builder
     interface Builder {
