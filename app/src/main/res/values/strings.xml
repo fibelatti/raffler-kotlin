@@ -17,4 +17,9 @@
     <string name="generic_log_error">Error in %1$s (%2$s)</string>
 
     <string name="generic_msg_error">Oops! Something went wrong. Please try again.</string>
+
+    <!-- Home -->
+    <string name="home_menu_item_quick_decisions">Quick Decisions</string>
+    <string name="home_menu_item_my_groups">My Groups</string>
+    <string name="home_menu_item_preferences">Preferences</string>
 </resources>
