@@ -67,6 +67,13 @@
         <item name="android:textColor">@color/color_white_opaque</item>
     </style>
 
+    <style name="AppTheme.TextButton.Hint" parent="AppTheme.TextButton">
+        <item name="android:textSize">@dimen/text_size_regular</item>
+        <item name="android:textColor">@color/color_gray</item>
+        <item name="android:layout_gravity">end</item>
+        <item name="android:minHeight">@dimen/clickable_area</item>
+    </style>
+
     <style name="AppTheme.Text" />
 
     <style name="AppTheme.Text.Title">
