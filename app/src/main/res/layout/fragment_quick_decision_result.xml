@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutQuickDecisionRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="@dimen/margin_regular"
+    android:background="@drawable/background_rounded_rectangle"
+    android:elevation="@dimen/elevation_regular"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="@dimen/padding_small">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/textViewQuickDecisionName"
+        style="@style/AppTheme.Text.Body.White"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Flip a Coin" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/textViewResult"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:padding="@dimen/padding_large"
+        android:textColor="@color/color_white_opaque"
+        android:textSize="@dimen/quick_decision_result_text_size"
+        tools:text="Heads" />
+
+    <View
+        android:id="@+id/textViewPurchaseDetailDivider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_size"
+        android:background="@color/color_white_opaque" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/textViewButtonDismiss"
+        style="@style/AppTheme.TextButton.White"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hint_dismiss" />
+</LinearLayout>

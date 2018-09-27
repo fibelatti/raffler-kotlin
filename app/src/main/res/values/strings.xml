@@ -17,4 +17,33 @@
     <string name="generic_log_error">Error in %1$s (%2$s)</string>
 
     <string name="generic_msg_error">Oops! Something went wrong. Please try again.</string>
+
+    <!-- Home -->
+    <string name="home_menu_item_quick_decisions">Quick Decisions</string>
+    <string name="home_menu_item_my_groups">My Groups</string>
+    <string name="home_menu_item_preferences">Preferences</string>
+
+    <!-- List Item -->
+    <string name="list_item_add_new">Add new</string>
+
+    <!-- Quick Decision -->
+    <string name="quick_decision_dismissible_hint">The answer for your questions is now 1 tap away!&#032;&#032;
+        Here\'s a few shortcuts for simple tasks like flipping a coin or rolling a dice.</string>
+
+    <!-- Preferences -->
+    <string name="preferences_changes_saved">Changes saved</string>
+
+    <string name="preferences_roulette_music_title">Sound Effects</string>
+    <string name="preferences_roulette_music_description">Enable roulette music</string>
+
+    <string name="preferences_reset_hints_title">App Hints</string>
+    <string name="preferences_reset_hints_button">Show again</string>
+    <string name="preferences_reset_hints_description">All the hints that you dismissed will be displayed again</string>
+
+    <string name="preferences_share">Share Raffler</string>
+    <string name="preferences_share_title">Sharing Raffler</string>
+    <string name="preferences_share_text">Check out Raffler! Making decisions never been so easy. Download at %s</string>
+    <string name="preferences_rate">Rate Raffler</string>
+    <string name="preferences_about">Developed with ❤ by Filipe Belatti</string>
+    <string name="preferences_app_version">Version: %s</string>
 </resources>
