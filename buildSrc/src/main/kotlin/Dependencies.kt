@@ -1,5 +1,5 @@
 object Versions {
-    const val gradleVersion = "3.1.4"
+    const val gradleVersion = "3.2.0"
     const val kotlinVersion = "1.2.71"
     const val dexCountPlugin = "0.8.2"
     const val jacocoVersion = "0.8.1"
@@ -8,7 +8,7 @@ object Versions {
     const val targetSdkVersion = 27
     const val compileSdkVersion = 27
 
-    const val buildToolsVersion = "27.0.3"
+    const val buildToolsVersion = "28.0.2"
 
     internal const val supportLibraryVersion = "27.1.1"
 
