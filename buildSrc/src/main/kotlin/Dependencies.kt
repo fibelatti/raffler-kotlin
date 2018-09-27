@@ -11,6 +11,7 @@ object Versions {
     const val buildToolsVersion = "28.0.2"
 
     internal const val supportLibraryVersion = "27.1.1"
+    internal const val constraintLayoutVersion = "1.1.2"
 
     internal const val coroutinesCoreVersion = "0.26.1"
     internal const val coroutinesAndroidVersion = "0.26.1"
@@ -43,6 +44,7 @@ object KotlinDependencies {
 object SupportLibraryDependencies {
     val supportLibrary = "com.android.support:appcompat-v7:${Versions.supportLibraryVersion}"
     val designLibrary = "com.android.support:design:${Versions.supportLibraryVersion}"
+    val constraintLayout = "com.android.support.constraint:constraint-layout:${Versions.constraintLayoutVersion}"
 }
 
 object ArchitectureComponentDependencies {

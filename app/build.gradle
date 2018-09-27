@@ -95,6 +95,7 @@ dependencies {
     // Support Library
     implementation SupportLibraryDependencies.supportLibrary
     implementation SupportLibraryDependencies.designLibrary
+    implementation SupportLibraryDependencies.constraintLayout
 
     // Architecture Components
     implementation ArchitectureComponentDependencies.archComponents
