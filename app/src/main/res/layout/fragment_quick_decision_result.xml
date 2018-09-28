@@ -35,7 +35,7 @@
         android:id="@+id/textViewPurchaseDetailDivider"
         android:layout_width="match_parent"
         android:layout_height="@dimen/divider_size"
-        android:background="@color/color_white_opaque" />
+        android:background="@color/color_background" />
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/textViewButtonDismiss"

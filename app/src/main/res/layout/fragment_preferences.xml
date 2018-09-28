@@ -4,7 +4,7 @@
     android:id="@+id/layoutRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_white_opaque"
+    android:background="@color/color_background"
     android:fillViewport="true">
 
     <android.support.constraint.ConstraintLayout
@@ -16,7 +16,7 @@
 
         <include
             android:id="@+id/dividerRouletteMusic"
-            layout="@layout/layout_divider_gray"
+            layout="@layout/layout_divider"
             android:layout_width="match_parent"
             android:layout_height="@dimen/divider_size"
             android:layout_marginBottom="@dimen/margin_regular"
@@ -51,7 +51,7 @@
 
         <include
             android:id="@+id/dividerHints"
-            layout="@layout/layout_divider_gray"
+            layout="@layout/layout_divider"
             android:layout_width="match_parent"
             android:layout_height="@dimen/divider_size"
             android:layout_marginTop="@dimen/margin_regular"
@@ -98,7 +98,7 @@
 
         <include
             android:id="@+id/layoutDividerFooter"
-            layout="@layout/layout_divider_gray"
+            layout="@layout/layout_divider"
             android:layout_width="match_parent"
             android:layout_height="@dimen/divider_size"
             app:layout_constraintTop_toBottomOf="@+id/spaceFiller" />
