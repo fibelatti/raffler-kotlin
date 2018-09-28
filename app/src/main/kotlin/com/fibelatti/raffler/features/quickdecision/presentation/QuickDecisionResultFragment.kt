@@ -5,6 +5,7 @@ import android.support.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.setShapeBackgroundColor
 import com.fibelatti.raffler.core.platform.BaseFragment
@@ -22,24 +23,21 @@ class QuickDecisionResultFragment
     companion object {
         val TAG: String = QuickDecisionResultFragment::class.java.simpleName
 
-        fun newInstance(
+        fun bundle(
             transitionName: String,
             title: String,
             result: String,
             color: Int
-        ) = QuickDecisionResultFragment().apply {
-            arguments = Bundle().apply {
-                this.transitionName = transitionName
-                this.title = title
-                this.result = result
-                this.color = color
-            }
+        ) = Bundle().apply {
+            this.transitionName = transitionName
+            this.title = title
+            this.result = result
+            this.color = color
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        postponeEnterTransition()
         sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
     }
 
@@ -56,7 +54,7 @@ class QuickDecisionResultFragment
             layoutQuickDecisionRoot.transitionName = transitionName
             layoutQuickDecisionRoot.setShapeBackgroundColor(color)
             textViewQuickDecisionName.text = title
-            textViewButtonDismiss.setOnClickListener { close() }
+            textViewButtonDismiss.setOnClickListener { this@QuickDecisionResultFragment.findNavController().navigateUp() }
             textViewResult.text = result
         }
     }

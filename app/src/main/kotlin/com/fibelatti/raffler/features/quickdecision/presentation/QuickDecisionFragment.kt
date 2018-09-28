@@ -8,11 +8,13 @@ import android.support.v7.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.NavOptions
+import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.navigation.fragment.findNavController
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.di.modules.viewmodel.ViewModelFactory
 import com.fibelatti.raffler.core.extension.error
 import com.fibelatti.raffler.core.extension.exhaustive
-import com.fibelatti.raffler.core.extension.inTransaction
 import com.fibelatti.raffler.core.extension.observe
 import com.fibelatti.raffler.core.platform.BaseFragment
 import com.fibelatti.raffler.core.platform.BaseViewType
@@ -93,18 +95,20 @@ class QuickDecisionFragment : BaseFragment() {
     }
 
     private fun showQuickDecisionResult(state: QuickDecisionViewModel.State.ShowResult) {
-        QuickDecisionResultFragment.newInstance(
-            ViewCompat.getTransitionName(sharedView),
-            state.title,
-            state.result,
-            state.color
-        ).let {
-            this.inTransaction {
-                addSharedElement(sharedView, ViewCompat.getTransitionName(sharedView))
-                    .replace(R.id.layoutFragmentContainer, it)
-                    .addToBackStack(null)
-            }
-        }
+        findNavController().navigate(
+            R.id.action_fragmentQuickDecision_to_fragmentQuickDecisionResult,
+            QuickDecisionResultFragment.bundle(
+                ViewCompat.getTransitionName(sharedView),
+                state.title,
+                state.result,
+                state.color
+            ),
+            NavOptions.Builder()
+                .setExitAnim(R.anim.fade_out)
+                .setPopExitAnim(R.anim.slide_down)
+                .build(),
+            FragmentNavigatorExtras(sharedView to ViewCompat.getTransitionName(sharedView))
+        )
     }
 
     private fun setupRecyclerView() {

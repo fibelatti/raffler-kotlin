@@ -18,6 +18,7 @@ object Versions {
 
     internal const val archComponentsVersion = "1.1.1"
     internal const val roomVersion = "1.1.1"
+    internal const val navigationVersion = "1.0.0-alpha06"
 
     internal const val daggerVersion = "2.17"
 
@@ -52,6 +53,8 @@ object ArchitectureComponentDependencies {
     val archComponentsCompiler = "android.arch.lifecycle:compiler:${Versions.archComponentsVersion}"
     val room = "android.arch.persistence.room:runtime:${Versions.roomVersion}"
     val roomCompiler = "android.arch.persistence.room:compiler:${Versions.roomVersion}"
+    val navigationFragment = "android.arch.navigation:navigation-fragment-ktx:${Versions.navigationVersion}"
+    val navigationUi = "android.arch.navigation:navigation-ui-ktx:${Versions.navigationVersion}"
 }
 
 object DIDependencies {

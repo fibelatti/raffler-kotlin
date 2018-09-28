@@ -10,11 +10,14 @@
 
     <include layout="@layout/layout_toolbar_default" />
 
-    <FrameLayout
-        android:id="@+id/layoutFragmentContainer"
+    <fragment
+        android:id="@+id/fragmentHost"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/nav_graph" />
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/layoutBottomNavigation"

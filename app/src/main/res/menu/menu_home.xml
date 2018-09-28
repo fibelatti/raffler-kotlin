@@ -2,21 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/menuItemQuickDecisions"
+        android:id="@id/fragmentQuickDecision"
         android:enabled="true"
         android:icon="@drawable/ic_check_circle_black"
-        android:title="@string/home_menu_item_quick_decisions"
+        android:title="@string/title_quick_decisions"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/menuItemMyGroups"
+        android:id="@+id/fragmentGroup"
         android:enabled="true"
         android:icon="@drawable/ic_group_black"
-        android:title="@string/home_menu_item_my_groups"
+        android:title="@string/title_groups"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/menuItemPreferences"
+        android:id="@id/fragmentPreferences"
         android:enabled="true"
         android:icon="@drawable/ic_settings_black"
-        android:title="@string/home_menu_item_preferences"
+        android:title="@string/title_preferences"
         app:showAsAction="ifRoom" />
 </menu>

@@ -102,6 +102,8 @@ dependencies {
     kapt ArchitectureComponentDependencies.archComponentsCompiler
     implementation ArchitectureComponentDependencies.room
     kapt ArchitectureComponentDependencies.roomCompiler
+    implementation ArchitectureComponentDependencies.navigationFragment
+    implementation ArchitectureComponentDependencies.navigationUi
 
     // DI
     implementation DIDependencies.dagger
