@@ -1,6 +1,7 @@
 package com.fibelatti.raffler.features.preferences.presentation
 
 import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -12,6 +13,7 @@ import com.fibelatti.raffler.core.di.modules.viewmodel.ViewModelFactory
 import com.fibelatti.raffler.core.extension.gone
 import com.fibelatti.raffler.core.extension.observe
 import com.fibelatti.raffler.core.extension.remove
+import com.fibelatti.raffler.core.extension.setTitle
 import com.fibelatti.raffler.core.platform.AppConfig.MARKET_BASE_URL
 import com.fibelatti.raffler.core.platform.AppConfig.PLAY_STORE_BASE_URL
 import com.fibelatti.raffler.core.platform.BaseFragment
@@ -50,6 +52,11 @@ class PreferencesFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         setupLayout()
         setupListeners()
+    }
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        setTitle(R.string.title_preferences)
     }
 
     private fun setupLayout() {

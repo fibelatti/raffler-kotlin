@@ -3,6 +3,7 @@ package com.fibelatti.raffler.core.extension
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
+import android.support.annotation.StringRes
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
@@ -15,6 +16,14 @@ inline fun <reified T : ViewModel> Fragment.viewModel(
     val vm = ViewModelProviders.of(this, factory)[T::class.java]
     body?.let { vm.it() }
     return vm
+}
+
+fun Fragment.setTitle(@StringRes title: Int) {
+    setTitle(getString(title))
+}
+
+fun Fragment.setTitle(title: String) {
+    activity?.title = title
 }
 
 inline fun Fragment.inTransaction(
