@@ -3,33 +3,16 @@ package com.fibelatti.raffler.features.home
 import android.os.Bundle
 import android.support.annotation.ColorRes
 import android.support.annotation.StringRes
-import android.support.design.widget.BottomNavigationView
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
 import android.support.v4.content.ContextCompat
-import android.view.MenuItem
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.fibelatti.raffler.R
-import com.fibelatti.raffler.core.extension.exhaustive
-import com.fibelatti.raffler.core.extension.inTransaction
 import com.fibelatti.raffler.core.platform.BaseActivity
-import com.fibelatti.raffler.features.preferences.presentation.PreferencesFragment
-import com.fibelatti.raffler.features.quickdecision.presentation.QuickDecisionFragment
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.layout_toolbar_default.*
 
 class HomeActivity :
-    BaseActivity(),
-    BottomNavigationView.OnNavigationItemSelectedListener {
-
-    enum class CurrentView {
-        QUICK_DECISIONS, GROUPS, PREFERENCES
-    }
-
-    private var selectedItemId: Int = R.id.menuItemQuickDecisions
-    private var currentView: CurrentView = CurrentView.QUICK_DECISIONS
-
-    private val quickDecisionFragment: QuickDecisionFragment by lazy { QuickDecisionFragment.newInstance() }
-    private val preferencesFragment: PreferencesFragment by lazy { PreferencesFragment.newInstance() }
+    BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,68 +20,27 @@ class HomeActivity :
 
         setContentView(R.layout.activity_home)
         setSupportActionBar(toolbar)
-        setupLayout()
-        setupInitialState()
+        setupNavigation()
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        item.itemId.takeIf { it != selectedItemId }?.let {
-            selectedItemId = it
-            item.isChecked = true
+    override fun onSupportNavigateUp() = fragmentHost.findNavController().navigateUp()
 
-            when (it) {
-                R.id.menuItemQuickDecisions -> updateContent(CurrentView.QUICK_DECISIONS)
-                R.id.menuItemPreferences -> updateContent(CurrentView.PREFERENCES)
+    private fun setupNavigation() {
+        fragmentHost.findNavController().addOnNavigatedListener { _, destination ->
+            when (destination.id) {
+                R.id.fragmentQuickDecision -> updateLayoutForSelectedItem(R.string.title_quick_decisions, R.color.color_accent)
+                R.id.fragmentPreferences -> updateLayoutForSelectedItem(R.string.title_preferences, R.color.color_gray_dark)
             }
         }
-
-        return true
-    }
-
-    private fun setupLayout() {
-        layoutBottomNavigation.selectedItemId = R.id.menuItemQuickDecisions
-        layoutBottomNavigation.setOnNavigationItemSelectedListener(this)
-    }
-
-    private fun setupInitialState() {
-        supportFragmentManager.run {
-            inTransaction {
-                add(R.id.layoutFragmentContainer, quickDecisionFragment)
-            }
-        }
-    }
-
-    private fun updateContent(currentView: CurrentView) {
-        currentView.takeIf { it != this.currentView }?.let {
-            this.currentView = it
-            when (it) {
-                CurrentView.QUICK_DECISIONS -> {
-                    updateLayoutForSelectedItem(R.string.home_menu_item_quick_decisions, R.color.color_accent, quickDecisionFragment)
-                }
-                CurrentView.GROUPS -> {
-                    updateLayoutForSelectedItem(R.string.home_menu_item_my_groups, R.color.color_primary, quickDecisionFragment /* TODO update fragment */)
-                }
-                CurrentView.PREFERENCES -> {
-                    updateLayoutForSelectedItem(R.string.home_menu_item_preferences, R.color.color_gray_dark, preferencesFragment)
-                }
-            }.exhaustive
-        }
+        layoutBottomNavigation.setupWithNavController(fragmentHost.findNavController())
     }
 
     private fun updateLayoutForSelectedItem(
         @StringRes titleId: Int,
-        @ColorRes colorId: Int,
-        fragment: Fragment
+        @ColorRes colorId: Int
     ) {
         title = getString(titleId)
         toolbar.setTitleTextColor(ContextCompat.getColor(this, colorId))
         layoutBottomNavigation.itemBackgroundResource = colorId
-
-        supportFragmentManager.run {
-            inTransaction {
-                replace(R.id.layoutFragmentContainer, fragment)
-                    .addToBackStack(null)
-            }
-        }
     }
 }

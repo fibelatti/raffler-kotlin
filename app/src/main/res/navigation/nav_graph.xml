@@ -1,0 +1,28 @@
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@+id/fragmentQuickDecision">
+
+    <fragment
+        android:id="@+id/fragmentQuickDecision"
+        android:name="com.fibelatti.raffler.features.quickdecision.presentation.QuickDecisionFragment"
+        android:label="@string/title_quick_decisions"
+        tools:layout="@layout/fragment_recycler_view">
+
+        <action
+            android:id="@+id/action_fragmentQuickDecision_to_fragmentQuickDecisionResult"
+            app:destination="@id/quickDecisionResultFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentPreferences"
+        android:name="com.fibelatti.raffler.features.preferences.presentation.PreferencesFragment"
+        android:label="@string/title_preferences"
+        tools:layout="@layout/fragment_preferences" />
+
+    <fragment
+        android:id="@+id/quickDecisionResultFragment"
+        android:name="com.fibelatti.raffler.features.quickdecision.presentation.QuickDecisionResultFragment"
+        tools:layout="@layout/fragment_quick_decision_result" />
+</navigation>

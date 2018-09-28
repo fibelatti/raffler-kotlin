@@ -4,6 +4,8 @@
     android:id="@+id/layoutQuickDecisionRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginLeft="@dimen/margin_regular"
+    android:layout_marginRight="@dimen/margin_regular"
     android:layout_marginBottom="@dimen/margin_regular"
     android:background="@drawable/background_rounded_rectangle"
     android:elevation="@dimen/elevation_regular"
