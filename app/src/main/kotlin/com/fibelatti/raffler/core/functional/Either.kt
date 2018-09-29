@@ -23,6 +23,18 @@ sealed class Either<out L, out R> {
             is Right -> fnR(b)
         }
 
+    fun leftOrNull(): L? =
+        when (this) {
+            is Left -> a
+            is Right -> null
+        }
+
+    fun rightOrNull(): R? =
+        when (this) {
+            is Left -> null
+            is Right -> b
+        }
+
     companion object {
         @JvmStatic
         fun <L> left(a: L) = Either.Left(a)

@@ -12,9 +12,7 @@ class Randomize @Inject constructor() : UseCase<List<Int>, Randomize.Params>() {
         return runCatching {
             with(params) {
                 val list = ArrayList<Int>().apply {
-                    for (i in 0 until totalQuantity) {
-                        add(i)
-                    }
+                    (0 until totalQuantity).forEach { add(it) }
                     shuffle()
                 }
 
@@ -22,9 +20,7 @@ class Randomize @Inject constructor() : UseCase<List<Int>, Randomize.Params>() {
                     list
                 } else {
                     ArrayList<Int>().apply {
-                        for (i in 0 until raffleQuantity) {
-                            add(list[i])
-                        }
+                        (0 until raffleQuantity).forEach { add(list[it]) }
                     }
                 }
             }
