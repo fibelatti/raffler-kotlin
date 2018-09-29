@@ -23,6 +23,18 @@ sealed class Either<out L, out R> {
             is Right -> fnR(b)
         }
 
+    fun leftOrNull(): L? =
+        when (this) {
+            is Left -> a
+            is Right -> null
+        }
+
+    fun rightOrNull(): R? =
+        when (this) {
+            is Left -> null
+            is Right -> b
+        }
+
     companion object {
         @JvmStatic
         fun <L> left(a: L) = Either.Left(a)
@@ -66,6 +78,12 @@ fun <T, L, R> Either<L, R>.flatMap(fn: (R) -> Either<L, T>): Either<L, T> =
     when (this) {
         is Either.Left -> Either.left(a)
         is Either.Right -> fn(b)
+    }
+
+fun <T, R> Either<Throwable, R>.flatMapCatching(fn: (R) -> T): Either<Throwable, T> =
+    when (this) {
+        is Either.Left -> Either.left(a)
+        is Either.Right -> runCatching { fn(b) }
     }
 
 fun <T, L, R> Either<L, R>.map(fn: (R) -> (T)): Either<L, T> = this.flatMap(fn.c(::right))

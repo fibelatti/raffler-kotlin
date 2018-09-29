@@ -4,13 +4,11 @@ import androidx.lifecycle.MutableLiveData
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.empty
 import com.fibelatti.raffler.core.extension.isInt
-import com.fibelatti.raffler.core.functional.flatMap
-import com.fibelatti.raffler.core.functional.runCatching
+import com.fibelatti.raffler.core.functional.flatMapCatching
 import com.fibelatti.raffler.core.platform.BaseViewModel
 import com.fibelatti.raffler.core.provider.ResourceProvider
 import com.fibelatti.raffler.core.provider.ThreadProvider
 import com.fibelatti.raffler.features.randomize.Randomize
-import kotlinx.coroutines.experimental.launch
 import javax.inject.Inject
 
 class LotteryViewModel @Inject constructor(
@@ -25,7 +23,7 @@ class LotteryViewModel @Inject constructor(
     val raffleQuantityError by lazy { MutableLiveData<String>() }
 
     fun getLotteryNumbers(totalQuantity: String, raffleQuantity: String) {
-        launch {
+        start {
             when {
                 totalQuantity.isBlank() || !totalQuantity.isInt() -> {
                     totalQuantityError.value = resourceProvider.getString(R.string.lottery_quantity_validation_error)
@@ -40,7 +38,7 @@ class LotteryViewModel @Inject constructor(
 
                     inBackground {
                         randomize(Randomize.Params(totalQuantity.toInt(), raffleQuantity.toInt()))
-                            .flatMap { runCatching { lotteryNumberModelMapper.map(it) } }
+                            .flatMapCatching { lotteryNumberModelMapper.map(it) }
                     }.either(
                         { error.value = it },
                         { lotteryNumbers.value = it }

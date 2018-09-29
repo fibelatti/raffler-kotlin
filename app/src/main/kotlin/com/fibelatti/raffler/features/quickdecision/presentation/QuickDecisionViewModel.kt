@@ -2,14 +2,12 @@ package com.fibelatti.raffler.features.quickdecision.presentation
 
 import androidx.lifecycle.MutableLiveData
 import com.fibelatti.raffler.core.extension.random
-import com.fibelatti.raffler.core.functional.Either
-import com.fibelatti.raffler.core.functional.flatMap
+import com.fibelatti.raffler.core.functional.flatMapCatching
 import com.fibelatti.raffler.core.platform.AppConfig
 import com.fibelatti.raffler.core.platform.BaseViewModel
 import com.fibelatti.raffler.core.provider.ThreadProvider
 import com.fibelatti.raffler.features.quickdecision.QuickDecision
 import com.fibelatti.raffler.features.quickdecision.QuickDecisionRepository
-import kotlinx.coroutines.experimental.launch
 import java.util.Locale
 import javax.inject.Inject
 
@@ -23,10 +21,10 @@ class QuickDecisionViewModel @Inject constructor(
     val state by lazy { MutableLiveData<State>() }
 
     fun getAllQuickDecisions() {
-        launch {
+        start {
             inBackground {
                 quickDecisionRepository.getAllQuickDecisions()
-                    .flatMap { Either.right(it.filterByLocale()) }
+                    .flatMapCatching { it.filterByLocale() }
             }.either(::handleError, ::showQuickDecisions)
         }
     }

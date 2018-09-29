@@ -115,7 +115,10 @@ dependencies {
     // Testing
     testImplementation TestDependencies.junit
     testImplementation TestDependencies.mockitoCore
+    testImplementation TestDependencies.archComponentsTest
+    androidTestImplementation TestDependencies.mockitoCore
     androidTestImplementation TestDependencies.mockitoAndroid
+    androidTestImplementation TestDependencies.archComponentsTest
     androidTestImplementation TestDependencies.supportAnnotations
     androidTestImplementation TestDependencies.testRunner
     androidTestImplementation TestDependencies.kotlinTest

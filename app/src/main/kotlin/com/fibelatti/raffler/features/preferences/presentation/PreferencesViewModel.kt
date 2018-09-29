@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import com.fibelatti.raffler.core.platform.BaseViewModel
 import com.fibelatti.raffler.core.provider.ThreadProvider
 import com.fibelatti.raffler.features.preferences.PreferencesRepository
-import kotlinx.coroutines.experimental.launch
 import javax.inject.Inject
 
 class PreferencesViewModel @Inject constructor(
@@ -16,7 +15,7 @@ class PreferencesViewModel @Inject constructor(
     val appTheme by lazy { MutableLiveData<PreferencesRepository.AppTheme>() }
 
     fun getPreferences() {
-        launch {
+        start {
             rouletteMusicEnabled.value = inBackground {
                 preferencesRepository.getRouletteMusicEnabled()
             }
@@ -27,7 +26,7 @@ class PreferencesViewModel @Inject constructor(
     }
 
     fun setRouletteMusicEnabled(value: Boolean) {
-        launch {
+        start {
             inBackground {
                 preferencesRepository.setRouletteMusicEnabled(value)
             }
@@ -35,7 +34,7 @@ class PreferencesViewModel @Inject constructor(
     }
 
     fun setAppTheme(appTheme: PreferencesRepository.AppTheme) {
-        launch {
+        start {
             inBackground {
                 preferencesRepository.setAppTheme(appTheme)
             }
@@ -43,7 +42,7 @@ class PreferencesViewModel @Inject constructor(
     }
 
     fun resetAllHints() {
-        launch {
+        start {
             inBackground {
                 preferencesRepository.resetHints()
             }
