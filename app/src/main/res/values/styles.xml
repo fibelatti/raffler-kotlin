@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AppTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <item name="colorPrimary">@color/color_primary</item>
         <item name="colorPrimaryDark">@color/color_primary_dark</item>
         <item name="colorAccent">@color/color_accent</item>
@@ -17,14 +17,11 @@
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:fitsSystemWindows">true</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" />
 
     <style name="AppTheme.AppActivityAnimation" parent="@android:style/Animation.Activity">
         <item name="android:activityOpenEnterAnimation">@anim/slide_right_in</item>
@@ -32,7 +29,7 @@
         <item name="android:activityCloseExitAnimation">@anim/slide_right_out</item>
     </style>
 
-    <style name="AppTheme.InputLayout" parent="AppTheme">
+    <style name="AppTheme.InputLayout">
         <item name="android:textSize">@dimen/text_size_regular</item>
         <item name="android:textColor">@color/text_secondary</item>
         <item name="android:textColorHint">@color/text_secondary</item>
@@ -62,11 +59,11 @@
         <item name="android:minHeight">@dimen/button_height</item>
     </style>
 
-    <style name="AppTheme.TextButton.White" parent="AppTheme.TextButton">
+    <style name="AppTheme.TextButton.White">
         <item name="android:textColor">@color/color_white_opaque</item>
     </style>
 
-    <style name="AppTheme.TextButton.Hint" parent="AppTheme.TextButton">
+    <style name="AppTheme.TextButton.Hint">
         <item name="android:textSize">@dimen/text_size_regular</item>
         <item name="android:textColor">@color/color_gray</item>
         <item name="android:layout_gravity">end</item>
@@ -86,7 +83,7 @@
         <item name="android:textSize">@dimen/text_size_regular</item>
     </style>
 
-    <style name="AppTheme.Text.Body.White" parent="AppTheme.Text.Body">
+    <style name="AppTheme.Text.Body.White">
         <item name="android:textColor">@color/text_white</item>
     </style>
 </resources>

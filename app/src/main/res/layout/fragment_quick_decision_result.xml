@@ -31,11 +31,7 @@
         android:textSize="@dimen/quick_decision_result_text_size"
         tools:text="Heads" />
 
-    <View
-        android:id="@+id/textViewPurchaseDetailDivider"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/divider_size"
-        android:background="@color/color_background" />
+    <include layout="@layout/layout_divider" />
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/textViewButtonDismiss"

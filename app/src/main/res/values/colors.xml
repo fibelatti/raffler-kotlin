@@ -14,7 +14,7 @@
     <color name="color_primary_dark">#0288D1</color>
     <color name="color_accent">#FF4081</color>
 
-    <color name="color_status_bar">#00000000</color>
+    <color name="color_status_bar">#9E9E9E</color>
     <color name="color_background">#F5F5F5</color>
     <color name="color_background_contrast">#E8E8E8</color>
 
