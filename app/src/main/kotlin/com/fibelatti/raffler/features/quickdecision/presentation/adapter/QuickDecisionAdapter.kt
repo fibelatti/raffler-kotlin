@@ -1,7 +1,7 @@
 package com.fibelatti.raffler.features.quickdecision.presentation.adapter
 
-import android.support.v4.util.SparseArrayCompat
 import android.view.View
+import androidx.collection.SparseArrayCompat
 import com.fibelatti.raffler.core.platform.BaseAdapter
 import com.fibelatti.raffler.core.platform.BaseDelegateAdapter
 import com.fibelatti.raffler.features.quickdecision.presentation.AddNewModel

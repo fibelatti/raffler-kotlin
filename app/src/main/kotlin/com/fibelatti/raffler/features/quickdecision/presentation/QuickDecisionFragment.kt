@@ -2,15 +2,15 @@ package com.fibelatti.raffler.features.quickdecision.presentation
 
 import android.graphics.Color
 import android.os.Bundle
-import android.support.v4.content.ContextCompat.getColor
-import android.support.v4.view.ViewCompat
-import android.support.v7.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.getColor
+import androidx.core.view.ViewCompat
 import androidx.navigation.NavOptions
+import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.FragmentNavigatorExtras
-import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.error
 import com.fibelatti.raffler.core.extension.exhaustive
@@ -86,10 +86,12 @@ class QuickDecisionFragment : BaseFragment() {
     }
 
     private fun showQuickDecisionResult(state: QuickDecisionViewModel.State.ShowResult) {
-        findNavController().navigate(
+        val transitionName = ViewCompat.getTransitionName(sharedView).orEmpty()
+
+        findNavController(layoutRoot).navigate(
             R.id.action_fragmentQuickDecision_to_fragmentQuickDecisionResult,
             QuickDecisionResultFragment.bundle(
-                ViewCompat.getTransitionName(sharedView),
+                transitionName,
                 state.title,
                 state.result,
                 state.color
@@ -98,7 +100,7 @@ class QuickDecisionFragment : BaseFragment() {
                 .setExitAnim(R.anim.fade_out)
                 .setPopExitAnim(R.anim.slide_down)
                 .build(),
-            FragmentNavigatorExtras(sharedView to ViewCompat.getTransitionName(sharedView))
+            FragmentNavigatorExtras(sharedView to transitionName)
         )
     }
 

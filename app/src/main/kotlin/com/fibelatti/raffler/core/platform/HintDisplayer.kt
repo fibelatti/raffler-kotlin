@@ -1,7 +1,7 @@
 package com.fibelatti.raffler.core.platform
 
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.AppCompatTextView
+import androidx.core.content.ContextCompat
+import androidx.appcompat.widget.AppCompatTextView
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import com.fibelatti.raffler.R

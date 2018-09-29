@@ -14,10 +14,10 @@ sealed class BundleDelegate<T>(protected val key: kotlin.String) : ReadWriteProp
         }
     }
 
-    class String(key: kotlin.String) : BundleDelegate<kotlin.String>(key) {
-        override fun getValue(thisRef: Bundle, property: KProperty<*>): kotlin.String = thisRef.getString(key)
+    class String(key: kotlin.String) : BundleDelegate<kotlin.String?>(key) {
+        override fun getValue(thisRef: Bundle, property: KProperty<*>): kotlin.String? = thisRef.getString(key)
 
-        override fun setValue(thisRef: Bundle, property: KProperty<*>, value: kotlin.String) {
+        override fun setValue(thisRef: Bundle, property: KProperty<*>, value: kotlin.String?) {
             thisRef.putString(key, value)
         }
     }
@@ -39,10 +39,10 @@ sealed class BundleDelegate<T>(protected val key: kotlin.String) : ReadWriteProp
         }
     }
 
-    class Parcelable<T : android.os.Parcelable>(key: kotlin.String) : BundleDelegate<T>(key) {
-        override fun getValue(thisRef: Bundle, property: KProperty<*>): T = thisRef.getParcelable(key)
+    class Parcelable<T : android.os.Parcelable>(key: kotlin.String) : BundleDelegate<T?>(key) {
+        override fun getValue(thisRef: Bundle, property: KProperty<*>): T? = thisRef.getParcelable(key)
 
-        override fun setValue(thisRef: Bundle, property: KProperty<*>, value: T) {
+        override fun setValue(thisRef: Bundle, property: KProperty<*>, value: T?) {
             thisRef.putParcelable(key, value)
         }
     }

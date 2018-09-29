@@ -13,14 +13,14 @@
     android:orientation="vertical"
     android:padding="@dimen/padding_small">
 
-    <android.support.v7.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewQuickDecisionName"
         style="@style/AppTheme.Text.Body.White"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="Flip a Coin" />
 
-    <android.support.v7.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewResult"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -33,7 +33,7 @@
 
     <include layout="@layout/layout_divider" />
 
-    <android.support.v7.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewButtonDismiss"
         style="@style/AppTheme.TextButton.White"
         android:layout_width="wrap_content"

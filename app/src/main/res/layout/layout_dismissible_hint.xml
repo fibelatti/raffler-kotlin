@@ -11,14 +11,14 @@
     android:orientation="vertical"
     android:padding="@dimen/padding_regular">
 
-    <android.support.v7.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewHintTitle"
         style="@style/AppTheme.Text.Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="Dismissible hint title" />
 
-    <android.support.v7.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewHintMessage"
         style="@style/AppTheme.Text.Body"
         android:layout_width="match_parent"
@@ -29,7 +29,7 @@
 
     <include layout="@layout/layout_divider" />
 
-    <android.support.v7.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewButtonDismiss"
         style="@style/AppTheme.TextButton.Hint"
         android:layout_width="wrap_content"

@@ -1,6 +1,6 @@
 package com.fibelatti.raffler.core.provider
 
-import android.support.annotation.StringRes
+import androidx.annotation.StringRes
 import com.google.gson.reflect.TypeToken
 
 interface ResourceProvider {

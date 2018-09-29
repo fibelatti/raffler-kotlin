@@ -1,10 +1,10 @@
 package com.fibelatti.raffler.core.platform
 
-import android.support.v4.util.SparseArrayCompat
-import android.support.v7.recyclerview.extensions.ListAdapter
-import android.support.v7.util.DiffUtil
-import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
+import androidx.collection.SparseArrayCompat
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 
 abstract class BaseAdapter : ListAdapter<BaseViewType, RecyclerView.ViewHolder>(
     ListAdapterBaseViewTypeCallback) {
@@ -12,11 +12,13 @@ abstract class BaseAdapter : ListAdapter<BaseViewType, RecyclerView.ViewHolder>(
     abstract val delegateAdapters: SparseArrayCompat<BaseDelegateAdapter>
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        delegateAdapters[getItemViewType(position)].onBindViewHolder(holder, getItem(position))
+        delegateAdapters[getItemViewType(position)]?.onBindViewHolder(holder, getItem(position))
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
-        delegateAdapters[viewType].onCreateViewHolder(parent)
+        delegateAdapters[viewType]?.let {
+            it.onCreateViewHolder(parent)
+        } ?: throw RuntimeException("No adapter mapped to viewType: $viewType")
 
     override fun getItemViewType(position: Int): Int = getItem(position).getViewType()
 }
@@ -32,11 +34,11 @@ interface BaseViewType {
 }
 
 object ListAdapterBaseViewTypeCallback : DiffUtil.ItemCallback<BaseViewType>() {
-    override fun areItemsTheSame(oldItem: BaseViewType?, newItem: BaseViewType?): Boolean {
+    override fun areItemsTheSame(oldItem: BaseViewType, newItem: BaseViewType): Boolean {
         return oldItem == newItem
     }
 
-    override fun areContentsTheSame(oldItem: BaseViewType?, newItem: BaseViewType?): Boolean {
+    override fun areContentsTheSame(oldItem: BaseViewType, newItem: BaseViewType): Boolean {
         return oldItem == newItem
     }
 }

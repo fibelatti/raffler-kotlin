@@ -2,9 +2,9 @@ package com.fibelatti.raffler.core.platform
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.support.annotation.CallSuper
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.app.AppCompatDelegate
+import androidx.annotation.CallSuper
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.fibelatti.raffler.App
 import com.fibelatti.raffler.core.di.modules.viewmodel.ViewModelFactory
 import com.fibelatti.raffler.features.preferences.data.getDarkModeEnabled
