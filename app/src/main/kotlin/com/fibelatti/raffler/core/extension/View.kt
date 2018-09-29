@@ -4,9 +4,6 @@ import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.ShapeDrawable
-import androidx.annotation.LayoutRes
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +14,11 @@ import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
+import androidx.annotation.LayoutRes
+import androidx.recyclerview.widget.RecyclerView
+import com.fibelatti.raffler.R
+import com.fibelatti.raffler.core.platform.ItemOffsetDecoration
+import com.google.android.material.textfield.TextInputLayout
 
 @JvmOverloads
 fun ViewGroup.inflate(@LayoutRes layoutResource: Int, attachToRoot: Boolean = false): View =
@@ -34,9 +36,7 @@ fun ViewGroup.setShapeBackgroundColor(color: Int) {
 // region Components
 fun TextInputLayout.showError(errorMessage: String) {
     error = errorMessage
-    if (childCount == 1 && (getChildAt(0) is TextInputEditText || getChildAt(0) is EditText)) {
-        getChildAt(0).requestFocus()
-    }
+    showKeyboard()
 }
 
 fun TextInputLayout.clearError() {
@@ -81,6 +81,10 @@ fun View.heightWrapContent() {
 
     layoutParams = params
     requestLayout()
+}
+
+fun RecyclerView.withDefaultDecoration() {
+    addItemDecoration(ItemOffsetDecoration(context, R.dimen.margin_xsmall))
 }
 // endregion
 

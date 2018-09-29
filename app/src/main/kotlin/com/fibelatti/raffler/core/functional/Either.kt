@@ -17,7 +17,7 @@ sealed class Either<out L, out R> {
     val isRight get() = this is Right<R>
     val isLeft get() = this is Left<L>
 
-    fun either(fnL: (L) -> Any, fnR: (R) -> Any): Any =
+    fun either(fnL: (L) -> Unit, fnR: (R) -> Unit): Any =
         when (this) {
             is Left -> fnL(a)
             is Right -> fnR(b)
@@ -44,17 +44,17 @@ sealed class Either<out L, out R> {
 
 inline fun <R> runCatching(block: () -> R): Either<Throwable, R> {
     return try {
-        Either.Right(block())
+        Either.right(block())
     } catch (exception: Throwable) {
-        Either.Left(exception)
+        Either.left(exception)
     }
 }
 
 inline fun <T, R> T.runCatching(block: T.() -> R): Either<Throwable, R> {
     return try {
-        Either.Right(block())
+        Either.right(block())
     } catch (exception: Throwable) {
-        Either.Left(exception)
+        Either.left(exception)
     }
 }
 
@@ -64,7 +64,7 @@ fun <A, B, C> ((A) -> B).c(f: (B) -> C): (A) -> C = {
 
 fun <T, L, R> Either<L, R>.flatMap(fn: (R) -> Either<L, T>): Either<L, T> =
     when (this) {
-        is Either.Left -> Either.Left(a)
+        is Either.Left -> Either.left(a)
         is Either.Right -> fn(b)
     }
 

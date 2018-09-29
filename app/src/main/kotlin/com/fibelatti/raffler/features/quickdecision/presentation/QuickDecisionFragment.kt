@@ -15,9 +15,9 @@ import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.error
 import com.fibelatti.raffler.core.extension.exhaustive
 import com.fibelatti.raffler.core.extension.observe
+import com.fibelatti.raffler.core.extension.withDefaultDecoration
 import com.fibelatti.raffler.core.platform.BaseFragment
 import com.fibelatti.raffler.core.platform.BaseViewType
-import com.fibelatti.raffler.core.platform.ItemOffsetDecoration
 import com.fibelatti.raffler.features.quickdecision.presentation.adapter.QuickDecisionAdapter
 import kotlinx.android.synthetic.main.fragment_recycler_view.*
 import kotlinx.android.synthetic.main.layout_hint_container.*
@@ -105,7 +105,7 @@ class QuickDecisionFragment : BaseFragment() {
     }
 
     private fun setupRecyclerView() {
-        recyclerViewItems.addItemDecoration(ItemOffsetDecoration(recyclerViewItems.context, R.dimen.margin_xsmall))
+        recyclerViewItems.withDefaultDecoration()
         recyclerViewItems.adapter = adapter
         recyclerViewItems.layoutManager = GridLayoutManager(context, 2)
     }

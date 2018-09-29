@@ -19,7 +19,8 @@
     <string name="generic_msg_error">Oops! Something went wrong. Please try again.</string>
 
     <!-- Titles -->
-    <string name="title_quick_decisions">Quick Decisions</string>
+    <string name="title_quick_decisions">Decisions</string>
+    <string name="title_lottery">Lottery</string>
     <string name="title_groups">My Groups</string>
     <string name="title_preferences">Preferences</string>
 
@@ -29,6 +30,12 @@
     <!-- Quick Decision -->
     <string name="quick_decision_dismissible_hint">The answer for your questions is now 1 tap away!&#032;&#032;
         Here\'s a few shortcuts for simple tasks like flipping a coin or rolling a dice.</string>
+
+    <!-- Lottery -->
+    <string name="lottery_quantity_available">Quantity available</string>
+    <string name="lottery_quantity_to_raffle">Quantity to raffle</string>
+    <string name="lottery_quantity_validation_error">Please enter a valid quantity</string>
+    <string name="lottery_raffle_button">Raffle numbers</string>
 
     <!-- Preferences -->
     <string name="preferences_changes_saved">Changes saved</string>
