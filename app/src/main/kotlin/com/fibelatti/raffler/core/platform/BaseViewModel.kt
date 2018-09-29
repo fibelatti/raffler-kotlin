@@ -1,12 +1,15 @@
 package com.fibelatti.raffler.core.platform
 
+import androidx.annotation.CallSuper
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.annotation.CallSuper
 import com.fibelatti.raffler.core.provider.ThreadProvider
 import kotlinx.coroutines.experimental.CoroutineScope
+import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.experimental.withContext
 import kotlin.coroutines.experimental.CoroutineContext
 
 abstract class BaseViewModel(
@@ -30,7 +33,15 @@ abstract class BaseViewModel(
         this.error.value = error
     }
 
-    protected suspend fun <T> CoroutineScope.inBackground(
+    protected fun start(
+        block: suspend CoroutineScope.() -> Unit
+    ) = launch(threadProvider.main()) { block() }
+
+    protected suspend fun <T> inBackground(
         block: suspend CoroutineScope.() -> T
-    ): T = async(threadProvider.background()) { block() }.await()
+    ): T = withContext(threadProvider.background()) { block() }
+
+    protected suspend fun <T> CoroutineScope.inBackgroundForParallel(
+        block: suspend CoroutineScope.() -> T
+    ): Deferred<T> = async(threadProvider.background()) { block() }
 }
