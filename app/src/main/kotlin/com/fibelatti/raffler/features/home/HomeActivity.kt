@@ -8,13 +8,10 @@ import com.fibelatti.raffler.core.platform.BaseActivity
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.layout_toolbar_default.*
 
-class HomeActivity :
-    BaseActivity() {
+class HomeActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        injector?.inject(this)
-
         setContentView(R.layout.activity_home)
         setSupportActionBar(toolbar)
         setupNavigation()
