@@ -28,6 +28,7 @@
             style="@style/AppTheme.Text.Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_small"
             android:text="@string/preferences_roulette_music_title"
             app:layout_constraintBottom_toTopOf="@+id/checkBoxRouletteMusic"
             app:layout_constraintTop_toBottomOf="@+id/dividerRouletteMusic" />
@@ -36,7 +37,7 @@
             android:id="@+id/checkBoxRouletteMusic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/dividerHints"
+            app:layout_constraintBottom_toTopOf="@+id/dividerTheme"
             app:layout_constraintTop_toBottomOf="@+id/textViewRouletteMusicTitle" />
 
         <android.support.v7.widget.AppCompatTextView
@@ -50,6 +51,48 @@
             app:layout_constraintRight_toRightOf="parent" />
 
         <include
+            android:id="@+id/dividerTheme"
+            layout="@layout/layout_divider"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_size"
+            android:layout_marginTop="@dimen/margin_regular"
+            android:layout_marginBottom="@dimen/margin_regular"
+            app:layout_constraintBottom_toTopOf="@+id/textViewThemeTitle"
+            app:layout_constraintTop_toBottomOf="@+id/textViewRouletteMusicMessage" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/textViewThemeTitle"
+            style="@style/AppTheme.Text.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_small"
+            android:text="@string/preferences_theme_title"
+            app:layout_constraintBottom_toTopOf="@+id/radioGroupTheme"
+            app:layout_constraintTop_toBottomOf="@+id/dividerTheme" />
+
+        <RadioGroup
+            android:id="@+id/radioGroupTheme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/dividerHints"
+            app:layout_constraintTop_toBottomOf="@+id/textViewThemeTitle">
+
+            <android.support.v7.widget.AppCompatRadioButton
+                android:id="@+id/radioButtonThemeClassic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/preferences_theme_description_classic"
+                android:textColor="@color/text_primary" />
+
+            <android.support.v7.widget.AppCompatRadioButton
+                android:id="@+id/radioButtonThemeDark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/preferences_theme_description_dark"
+                android:textColor="@color/text_primary" />
+        </RadioGroup>
+
+        <include
             android:id="@+id/dividerHints"
             layout="@layout/layout_divider"
             android:layout_width="match_parent"
@@ -57,13 +100,14 @@
             android:layout_marginTop="@dimen/margin_regular"
             android:layout_marginBottom="@dimen/margin_regular"
             app:layout_constraintBottom_toTopOf="@+id/textViewHintsTitle"
-            app:layout_constraintTop_toBottomOf="@+id/checkBoxRouletteMusic" />
+            app:layout_constraintTop_toBottomOf="@+id/radioGroupTheme" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/textViewHintsTitle"
             style="@style/AppTheme.Text.Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_small"
             android:text="@string/preferences_reset_hints_title"
             app:layout_constraintBottom_toTopOf="@+id/buttonResetHints"
             app:layout_constraintTop_toBottomOf="@+id/dividerHints" />
