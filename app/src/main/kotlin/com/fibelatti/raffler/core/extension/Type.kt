@@ -33,6 +33,14 @@ fun String.remove(regex: Regex): String = replace(regex, "")
 fun String.removeFirst(value: String): String = replaceFirst(value, "")
 
 fun String.removeFirst(regex: Regex): String = replaceFirst(regex, "")
+
+fun String.isInt(): Boolean = try {
+    toInt()
+    true
+} catch (e: Exception) {
+    false
+}
+
 // endregion
 // region CharSequence
 fun CharSequence.remove(regex: Regex): String = replace(regex, "")
