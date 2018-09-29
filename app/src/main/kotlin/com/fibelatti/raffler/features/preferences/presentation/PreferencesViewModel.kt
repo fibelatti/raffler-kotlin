@@ -13,11 +13,15 @@ class PreferencesViewModel @Inject constructor(
 ) : BaseViewModel(threadProvider) {
 
     val rouletteMusicEnabled by lazy { MutableLiveData<Boolean>() }
+    val appTheme by lazy { MutableLiveData<PreferencesRepository.AppTheme>() }
 
     fun getPreferences() {
         launch {
             rouletteMusicEnabled.value = inBackground {
                 preferencesRepository.getRouletteMusicEnabled()
+            }
+            appTheme.value = inBackground {
+                preferencesRepository.getTheme()
             }
         }
     }
@@ -26,6 +30,14 @@ class PreferencesViewModel @Inject constructor(
         launch {
             inBackground {
                 preferencesRepository.setRouletteMusicEnabled(value)
+            }
+        }
+    }
+
+    fun setAppTheme(appTheme: PreferencesRepository.AppTheme) {
+        launch {
+            inBackground {
+                preferencesRepository.setAppTheme(appTheme)
             }
         }
     }

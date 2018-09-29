@@ -3,7 +3,7 @@
     android:id="@+id/layoutRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_white_opaque"
+    android:background="@color/color_background"
     android:orientation="vertical">
 
     <include layout="@layout/layout_hint_container" />

@@ -36,6 +36,10 @@
     <string name="preferences_roulette_music_title">Sound Effects</string>
     <string name="preferences_roulette_music_description">Enable roulette music</string>
 
+    <string name="preferences_theme_title">Theme</string>
+    <string name="preferences_theme_description_classic">Classic</string>
+    <string name="preferences_theme_description_dark">Dark</string>
+
     <string name="preferences_reset_hints_title">App Hints</string>
     <string name="preferences_reset_hints_button">Show again</string>
     <string name="preferences_reset_hints_description">All the hints that you dismissed will be displayed again</string>

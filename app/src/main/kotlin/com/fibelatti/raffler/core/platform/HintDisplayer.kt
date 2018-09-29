@@ -21,7 +21,7 @@ class HintDisplayerDelegate : HintDisplayer {
                 val textViewHintMessage = findViewById<AppCompatTextView>(R.id.textViewHintMessage)
                 val buttonHintDismiss = findViewById<AppCompatTextView>(R.id.textViewButtonDismiss)
 
-                rootLayout.setShapeBackgroundColor(ContextCompat.getColor(rootLayout.context, R.color.color_white_opaque))
+                rootLayout.setShapeBackgroundColor(ContextCompat.getColor(rootLayout.context, R.color.color_background_contrast))
 
                 textViewHintTitle.text = hintTitle
                 textViewHintMessage.text = hintMessage
