@@ -7,8 +7,7 @@ import org.junit.Rule
 
 abstract class BaseTest {
     @Suppress("LeakingThis")
-    @Rule
-    @JvmField
+    @get:Rule
     val injectMocks = InjectMocksRule.create(this)
 
     @get:Rule

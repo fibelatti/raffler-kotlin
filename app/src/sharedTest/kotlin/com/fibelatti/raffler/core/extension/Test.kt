@@ -2,6 +2,7 @@
 
 package com.fibelatti.raffler.core.extension
 
+import org.junit.Assert.assertEquals
 import org.mockito.Mockito
 import org.mockito.Mockito.mock
 
@@ -17,3 +18,9 @@ fun <T> any(): T {
 private fun <T> uninitialized(): T = null as T
 
 inline fun <reified T : Any> mock(): T = mock(T::class.java)
+
+// region Assertions
+infix fun Any.shouldBe(otherValue: Any) {
+    assertEquals(otherValue, this)
+}
+// endregion
