@@ -5,19 +5,19 @@ object Versions {
     const val jacocoVersion = "0.8.1"
 
     const val minSdkVersion = 21
-    const val targetSdkVersion = 27
-    const val compileSdkVersion = 27
+    const val targetSdkVersion = 28
+    const val compileSdkVersion = 28
 
     const val buildToolsVersion = "28.0.2"
 
-    internal const val supportLibraryVersion = "27.1.1"
+    internal const val appCompatVersion = "1.0.0"
+    internal const val materialDesignVersion = "1.0.0"
     internal const val constraintLayoutVersion = "1.1.2"
 
     internal const val coroutinesCoreVersion = "0.26.1"
     internal const val coroutinesAndroidVersion = "0.26.1"
 
-    internal const val archComponentsVersion = "1.1.1"
-    internal const val roomVersion = "1.1.1"
+    internal const val archComponentsVersion = "2.0.0-rc01"
     internal const val navigationVersion = "1.0.0-alpha06"
 
     internal const val daggerVersion = "2.17"
@@ -43,16 +43,16 @@ object KotlinDependencies {
 }
 
 object SupportLibraryDependencies {
-    val supportLibrary = "com.android.support:appcompat-v7:${Versions.supportLibraryVersion}"
-    val designLibrary = "com.android.support:design:${Versions.supportLibraryVersion}"
-    val constraintLayout = "com.android.support.constraint:constraint-layout:${Versions.constraintLayoutVersion}"
+    val supportLibrary = "androidx.appcompat:appcompat:${Versions.appCompatVersion}"
+    val materialDesign = "com.google.android.material:material:${Versions.materialDesignVersion}"
+    val constraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.constraintLayoutVersion}"
 }
 
 object ArchitectureComponentDependencies {
-    val archComponents = "android.arch.lifecycle:extensions:${Versions.archComponentsVersion}"
-    val archComponentsCompiler = "android.arch.lifecycle:compiler:${Versions.archComponentsVersion}"
-    val room = "android.arch.persistence.room:runtime:${Versions.roomVersion}"
-    val roomCompiler = "android.arch.persistence.room:compiler:${Versions.roomVersion}"
+    val archComponents = "androidx.lifecycle:lifecycle-extensions:${Versions.archComponentsVersion}"
+    val archComponentsCompiler = "androidx.lifecycle:lifecycle-compiler:${Versions.archComponentsVersion}"
+    val room = "androidx.room:room-runtime:${Versions.archComponentsVersion}"
+    val roomCompiler = "androidx.room:room-compiler:${Versions.archComponentsVersion}"
     val navigationFragment = "android.arch.navigation:navigation-fragment-ktx:${Versions.navigationVersion}"
     val navigationUi = "android.arch.navigation:navigation-ui-ktx:${Versions.navigationVersion}"
 }
@@ -72,6 +72,6 @@ object TestDependencies {
     val kotlinTest = "org.jetbrains.kotlin:kotlin-test-junit:${Versions.kotlinVersion}"
     val mockitoCore = "org.mockito:mockito-core:${Versions.mockitoVersion}"
     val mockitoAndroid = "org.mockito:mockito-android:${Versions.mockitoVersion}"
-    val supportAnnotations = "com.android.support:support-annotations:${Versions.supportLibraryVersion}"
+    val supportAnnotations = "androidx.annotation:annotation:${Versions.appCompatVersion}"
     val archComponentsTest = "android.arch.core:core-testing:${Versions.archComponentsVersion}"
 }

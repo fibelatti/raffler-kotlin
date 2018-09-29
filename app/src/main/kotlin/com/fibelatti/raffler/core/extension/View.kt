@@ -4,9 +4,9 @@ import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.ShapeDrawable
-import android.support.annotation.LayoutRes
-import android.support.design.widget.TextInputEditText
-import android.support.design.widget.TextInputLayout
+import androidx.annotation.LayoutRes
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View

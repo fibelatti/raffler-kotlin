@@ -1,6 +1,6 @@
 package com.fibelatti.raffler.features.preferences.presentation
 
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.MutableLiveData
 import com.fibelatti.raffler.core.platform.BaseViewModel
 import com.fibelatti.raffler.core.provider.ThreadProvider
 import com.fibelatti.raffler.features.preferences.PreferencesRepository

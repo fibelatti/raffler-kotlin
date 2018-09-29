@@ -1,11 +1,11 @@
 package com.fibelatti.raffler.features.quickdecision.presentation
 
 import android.os.Bundle
-import android.support.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.Navigation.findNavController
+import androidx.transition.TransitionInflater
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.setShapeBackgroundColor
 import com.fibelatti.raffler.core.platform.BaseFragment
@@ -54,7 +54,7 @@ class QuickDecisionResultFragment
             layoutQuickDecisionRoot.transitionName = transitionName
             layoutQuickDecisionRoot.setShapeBackgroundColor(color)
             textViewQuickDecisionName.text = title
-            textViewButtonDismiss.setOnClickListener { this@QuickDecisionResultFragment.findNavController().navigateUp() }
+            textViewButtonDismiss.setOnClickListener { findNavController(layoutQuickDecisionRoot).navigateUp() }
             textViewResult.text = result
         }
     }

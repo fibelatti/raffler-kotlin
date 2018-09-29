@@ -1,6 +1,6 @@
 package com.fibelatti.raffler.core.di.modules.viewmodel
 
-import android.arch.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProvider
 import dagger.Binds
 import dagger.Module
 

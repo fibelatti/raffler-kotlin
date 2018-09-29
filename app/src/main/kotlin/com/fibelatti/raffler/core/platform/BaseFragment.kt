@@ -1,8 +1,8 @@
 package com.fibelatti.raffler.core.platform
 
 import android.content.Context
-import android.support.annotation.CallSuper
-import android.support.v4.app.Fragment
+import androidx.annotation.CallSuper
+import androidx.fragment.app.Fragment
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.setTitle
 

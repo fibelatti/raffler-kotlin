@@ -12,7 +12,7 @@
     android:padding="@dimen/padding_small"
     tools:layout_width="200dp">
 
-    <android.support.v7.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewQuickDecisionName"
         style="@style/AppTheme.Text.Body.White"
         android:layout_width="match_parent"
@@ -21,7 +21,7 @@
         android:maxLines="2"
         tools:text="Flip a\nCoin" />
 
-    <android.support.v7.widget.AppCompatImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imageViewGo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

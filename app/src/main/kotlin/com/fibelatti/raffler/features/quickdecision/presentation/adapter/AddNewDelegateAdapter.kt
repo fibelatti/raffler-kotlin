@@ -1,6 +1,6 @@
 package com.fibelatti.raffler.features.quickdecision.presentation.adapter
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.inflate

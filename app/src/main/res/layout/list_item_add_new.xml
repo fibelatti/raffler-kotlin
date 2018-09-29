@@ -12,14 +12,14 @@
     android:padding="@dimen/padding_small"
     tools:layout_width="200dp">
 
-    <android.support.v7.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatTextView
         style="@style/AppTheme.Text.Body.White"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/list_item_add_new" />
 
-    <android.support.v7.widget.AppCompatImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imageViewGo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

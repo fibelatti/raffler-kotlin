@@ -1,8 +1,8 @@
 package com.fibelatti.raffler.core.persistence.database
 
-import android.arch.persistence.room.Database
-import android.arch.persistence.room.RoomDatabase
-import android.arch.persistence.room.TypeConverters
+import androidx.room.Database
+import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.fibelatti.raffler.features.quickdecision.data.QuickDecisionDao
 import com.fibelatti.raffler.features.quickdecision.data.QuickDecisionDto
 

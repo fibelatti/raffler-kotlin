@@ -1,6 +1,6 @@
 package com.fibelatti.raffler.core.di.modules
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 import com.fibelatti.raffler.core.di.modules.viewmodel.ViewModelKey
 import com.fibelatti.raffler.features.quickdecision.QuickDecisionRepository
 import com.fibelatti.raffler.features.quickdecision.data.QuickDecisionDataSource

@@ -1,6 +1,6 @@
 package com.fibelatti.raffler.core.di.modules
 
-import android.arch.persistence.room.Room
+import androidx.room.Room
 import android.content.Context
 import com.fibelatti.raffler.BuildConfig
 import com.fibelatti.raffler.core.persistence.database.AppDatabase

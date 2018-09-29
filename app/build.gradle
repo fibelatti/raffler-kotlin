@@ -18,7 +18,7 @@ android {
 
         resConfigs "en", "pt", "es"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
 
@@ -94,7 +94,7 @@ dependencies {
 
     // Support Library
     implementation SupportLibraryDependencies.supportLibrary
-    implementation SupportLibraryDependencies.designLibrary
+    implementation SupportLibraryDependencies.materialDesign
     implementation SupportLibraryDependencies.constraintLayout
 
     // Architecture Components

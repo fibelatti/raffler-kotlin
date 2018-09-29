@@ -19,12 +19,13 @@
         app:defaultNavHost="true"
         app:navGraph="@navigation/nav_graph" />
 
-    <android.support.design.widget.BottomNavigationView
+    <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/layoutBottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:itemBackground="@color/color_accent"
         app:itemIconTint="@drawable/selector_bottom_bar"
         app:itemTextColor="@drawable/selector_bottom_bar"
+        app:labelVisibilityMode="labeled"
         app:menu="@menu/menu_home" />
 </LinearLayout>

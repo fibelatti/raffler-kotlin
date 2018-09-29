@@ -1,6 +1,6 @@
 package com.fibelatti.raffler.features.quickdecision.presentation
 
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.MutableLiveData
 import com.fibelatti.raffler.core.extension.random
 import com.fibelatti.raffler.core.functional.Either
 import com.fibelatti.raffler.core.functional.flatMap
