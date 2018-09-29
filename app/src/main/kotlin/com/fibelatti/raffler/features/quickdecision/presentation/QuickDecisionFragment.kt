@@ -12,7 +12,6 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.fibelatti.raffler.R
-import com.fibelatti.raffler.core.di.modules.viewmodel.ViewModelFactory
 import com.fibelatti.raffler.core.extension.error
 import com.fibelatti.raffler.core.extension.exhaustive
 import com.fibelatti.raffler.core.extension.observe
@@ -26,16 +25,8 @@ import javax.inject.Inject
 
 class QuickDecisionFragment : BaseFragment() {
 
-    companion object {
-        val TAG: String = QuickDecisionFragment::class.java.simpleName
-
-        fun newInstance() = QuickDecisionFragment()
-    }
-
     @Inject
     lateinit var adapter: QuickDecisionAdapter
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
 
     private lateinit var sharedView: View
 
@@ -45,7 +36,7 @@ class QuickDecisionFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        injector?.inject(this)
+        injector.inject(this)
         quickDecisionViewModel.run {
             error(error) { handleError(it) }
             observe(state) { handleState(it) }

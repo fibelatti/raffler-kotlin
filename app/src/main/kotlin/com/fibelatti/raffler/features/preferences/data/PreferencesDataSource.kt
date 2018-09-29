@@ -8,6 +8,7 @@ import com.fibelatti.raffler.features.preferences.PreferencesRepository
 import javax.inject.Inject
 
 const val KEY_ROULETTE_MUSIC_ENABLED = "ROULETTE_MUSIC_ENABLED"
+const val KEY_APP_THEME = "APP_THEME"
 const val KEY_QUICK_DECISION_HINT_DISPLAYED = "QUICK_DECISION_HINT_DISPLAYED"
 
 class PreferencesDataSource @Inject constructor(
@@ -18,6 +19,18 @@ class PreferencesDataSource @Inject constructor(
 
     override suspend fun setRouletteMusicEnabled(value: Boolean) {
         sharedPreferences.put(KEY_ROULETTE_MUSIC_ENABLED, value)
+    }
+
+    override suspend fun getTheme(): PreferencesRepository.AppTheme {
+        return if (sharedPreferences.get<String>(KEY_APP_THEME) == PreferencesRepository.AppTheme.CLASSIC.value) {
+            PreferencesRepository.AppTheme.CLASSIC
+        } else {
+            PreferencesRepository.AppTheme.DARK
+        }
+    }
+
+    override suspend fun setAppTheme(appTheme: PreferencesRepository.AppTheme) {
+        sharedPreferences.put(KEY_APP_THEME, appTheme.value)
     }
 
     override suspend fun resetHints() {
@@ -31,3 +44,6 @@ class PreferencesDataSource @Inject constructor(
         sharedPreferences.put(KEY_QUICK_DECISION_HINT_DISPLAYED, true)
     }
 }
+
+fun SharedPreferences.getDarkModeEnabled(): Boolean =
+    get<String>(KEY_APP_THEME).equals(PreferencesRepository.AppTheme.DARK.value)

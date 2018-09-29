@@ -10,7 +10,8 @@ abstract class BaseFragment :
     Fragment(),
     HintDisplayer by HintDisplayerDelegate() {
 
-    protected val injector get() = (activity as? BaseActivity)?.injector
+    protected val injector by lazy { (activity as BaseActivity).injector }
+    protected val viewModelFactory by lazy { (activity as BaseActivity).viewModelFactory }
 
     @CallSuper
     override fun onAttach(context: Context?) {
