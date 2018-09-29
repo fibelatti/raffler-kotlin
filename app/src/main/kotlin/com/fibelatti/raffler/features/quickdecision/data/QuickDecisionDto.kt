@@ -6,7 +6,7 @@ import com.fibelatti.raffler.core.functional.Mapper
 import com.fibelatti.raffler.features.quickdecision.QuickDecision
 import javax.inject.Inject
 
-const val QUICK_DECISION_DTO_TABLE_NAME = "QuickDecisionDto"
+const val QUICK_DECISION_DTO_TABLE_NAME = "QuickDecision"
 const val QUICK_DECISION_DTO_COLUMN_ID = "id"
 const val QUICK_DECISION_DTO_COLUMN_LOCALE = "locale"
 
@@ -20,7 +20,8 @@ data class QuickDecisionDto(
     val description: String,
     val values: List<String>
 ) {
-    @Ignore constructor() : this("", "", "", listOf())
+    @Ignore
+    constructor() : this("", "", "", listOf())
 }
 
 class QuickDecisionDtoMapper @Inject constructor() : Mapper<QuickDecisionDto, QuickDecision> {
