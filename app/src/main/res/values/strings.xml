@@ -19,7 +19,8 @@
     <string name="generic_msg_error">Oops! Something went wrong. Please try again.</string>
 
     <!-- Titles -->
-    <string name="title_quick_decisions">Quick Decisions</string>
+    <string name="title_quick_decisions">Decisions</string>
+    <string name="title_lottery">Lottery</string>
     <string name="title_groups">My Groups</string>
     <string name="title_preferences">Preferences</string>
 
