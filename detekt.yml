@@ -69,7 +69,7 @@ potential-bugs:
     UnsafeCallOnNullableType:
         active: true
     UnsafeCast:
-        active: true
+        active: false
 
 style:
     active: true
