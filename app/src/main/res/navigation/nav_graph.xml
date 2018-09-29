@@ -17,19 +17,36 @@
     </fragment>
 
     <fragment
+        android:id="@+id/quickDecisionResultFragment"
+        android:name="com.fibelatti.raffler.features.quickdecision.presentation.QuickDecisionResultFragment"
+        tools:layout="@layout/fragment_quick_decision_result" />
+
+    <fragment
         android:id="@+id/fragmentLottery"
         android:name="com.fibelatti.raffler.features.lottery.presentation.LotteryFragment"
         android:label="@string/title_lottery"
         tools:layout="@layout/fragment_lottery" />
 
     <fragment
+        android:id="@+id/fragmentMyRaffles"
+        android:name="com.fibelatti.raffler.features.myraffles.presentation.MyRafflesFragment"
+        android:label="@string/title_my_raffles"
+        tools:layout="@layout/fragment_my_raffles">
+
+        <action
+            android:id="@+id/action_fragmentMyRaffles_to_activityCreateRaffle"
+            app:destination="@id/activityCreateRaffle" />
+    </fragment>
+
+    <activity
+        android:id="@+id/activityCreateRaffle"
+        android:name="com.fibelatti.raffler.features.myraffles.presentation.CreateRaffleActivity"
+        android:label="@string/title_create_raffle"
+        tools:layout="@layout/activity_create_raffle" />
+
+    <fragment
         android:id="@+id/fragmentPreferences"
         android:name="com.fibelatti.raffler.features.preferences.presentation.PreferencesFragment"
         android:label="@string/title_preferences"
         tools:layout="@layout/fragment_preferences" />
-
-    <fragment
-        android:id="@+id/quickDecisionResultFragment"
-        android:name="com.fibelatti.raffler.features.quickdecision.presentation.QuickDecisionResultFragment"
-        tools:layout="@layout/fragment_quick_decision_result" />
 </navigation>

@@ -14,10 +14,10 @@
         android:title="@string/title_lottery"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/fragmentGroup"
+        android:id="@id/fragmentMyRaffles"
         android:enabled="true"
         android:icon="@drawable/ic_group"
-        android:title="@string/title_groups"
+        android:title="@string/title_my_raffles"
         app:showAsAction="ifRoom" />
     <item
         android:id="@id/fragmentPreferences"
