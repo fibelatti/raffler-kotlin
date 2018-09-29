@@ -68,4 +68,10 @@ fun <T, L, R> Either<L, R>.flatMap(fn: (R) -> Either<L, T>): Either<L, T> =
         is Either.Right -> fn(b)
     }
 
+fun <T, R> Either<Throwable, R>.flatMapCatching(fn: (R) -> T): Either<Throwable, T> =
+    when (this) {
+        is Either.Left -> Either.left(a)
+        is Either.Right -> runCatching { fn(b) }
+    }
+
 fun <T, L, R> Either<L, R>.map(fn: (R) -> (T)): Either<L, T> = this.flatMap(fn.c(::right))
