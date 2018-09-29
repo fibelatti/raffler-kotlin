@@ -36,7 +36,7 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewButtonDismiss"
         style="@style/AppTheme.TextButton.White"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/hint_dismiss" />
 </LinearLayout>
