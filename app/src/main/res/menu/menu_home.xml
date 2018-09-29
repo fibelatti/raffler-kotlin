@@ -8,7 +8,7 @@
         android:title="@string/title_quick_decisions"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/fragmentLottery"
+        android:id="@id/fragmentLottery"
         android:enabled="true"
         android:icon="@drawable/ic_lottery"
         android:title="@string/title_lottery"

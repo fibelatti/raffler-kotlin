@@ -17,6 +17,12 @@
     </fragment>
 
     <fragment
+        android:id="@+id/fragmentLottery"
+        android:name="com.fibelatti.raffler.features.lottery.presentation.LotteryFragment"
+        android:label="@string/title_lottery"
+        tools:layout="@layout/fragment_lottery" />
+
+    <fragment
         android:id="@+id/fragmentPreferences"
         android:name="com.fibelatti.raffler.features.preferences.presentation.PreferencesFragment"
         android:label="@string/title_preferences"
