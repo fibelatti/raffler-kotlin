@@ -43,6 +43,11 @@
     <string name="my_raffles_hint_message">With custom raffles you can:\n\n• Choose someone to win a prize or to do a task\n• Create small groups of people\n\nAnd a lot more! Tap the button below to create your first custom raffle.</string>
     <string name="my_raffles_create_first_button">Create raffle</string>
 
+    <!-- Custom Raffle - New or Edit -->
+    <string name="custom_raffle_description">Description</string>
+    <string name="custom_raffle_add_shortcut">Show as Quick Decision shortcut</string>
+    <string name="custom_raffle_item_description">Item description</string>
+
     <!-- Preferences -->
     <string name="preferences_changes_saved">Changes saved</string>
 
