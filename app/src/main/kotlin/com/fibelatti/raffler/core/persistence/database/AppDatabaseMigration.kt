@@ -40,14 +40,14 @@ object MigrationFrom4To5 : Migration(DATABASE_VERSION_4, DATABASE_VERSION_5) {
         fun migrateGroupsToCustomRaffle() {
             try {
                 // Migrate old data
-                database.execSQL("INSERT INTO `CustomRaffle` (`id`, `description`) " +
-                    "SELECT (`_id`, `group_name`) FROM `groups`")
-                database.execSQL("INSERT INTO `CustomRaffleItem` (`id`, `customRaffleId`, `description`) " +
-                    "SELECT (`_id`, `group_id`, `item_name`) FROM `group_items`")
+                database.execSQL("INSERT INTO `CustomRaffle` " +
+                    "SELECT _id, group_name FROM groups")
+                database.execSQL("INSERT INTO `CustomRaffleItem` " +
+                    "SELECT _id, group_id, item_name FROM group_items")
 
                 // Drop old tables
-                database.execSQL("DROP TABLE IF EXISTS `groups`")
-                database.execSQL("DROP TABLE IF EXISTS `group_items`")
+                database.execSQL("DROP TABLE IF EXISTS groups")
+                database.execSQL("DROP TABLE IF EXISTS group_items")
 
                 logLegacySuccess()
             } catch (e: Exception) {
@@ -58,18 +58,17 @@ object MigrationFrom4To5 : Migration(DATABASE_VERSION_4, DATABASE_VERSION_5) {
         fun migrateSettingsToPreferences() {
             try {
                 // Migrate old data
-                database.execSQL("INSERT INTO `Preferences` (`rouletteMusicEnabled`) " +
-                    "SELECT (`roulette_music_enabled`) FROM `settings`")
+                database.execSQL("INSERT INTO `Preferences`" +
+                    "SELECT 1, roulette_music_enabled, '' FROM settings")
 
                 // Drop old table
-                database.execSQL("DROP TABLE IF EXISTS `settings`")
+                database.execSQL("DROP TABLE IF EXISTS settings")
 
                 logLegacySuccess()
             } catch (e: Exception) {
                 logLegacyError()
 
-                database.execSQL("INSERT INTO `Preferences` (`rouletteMusicEnabled`, `hintsDisplayed`) " +
-                    " VALUES (0, '')")
+                database.execSQL("INSERT INTO `Preferences` VALUES (1, 0, '')")
             }
         }
 
