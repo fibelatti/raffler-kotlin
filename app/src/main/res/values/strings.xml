@@ -40,7 +40,7 @@
 
     <!-- My Raffles -->
     <string name="my_raffles_hint_title">No custom raffles yet</string>
-    <string name="my_raffles_hint_message">With custom raffles you can:\n\n- Choose someone to win a prize or to do a task\n- Create small groups of people\n\nAnd a lot more! Tap the button below to create your first custom raffle.</string>
+    <string name="my_raffles_hint_message">With custom raffles you can:\n\n• Choose someone to win a prize or to do a task\n• Create small groups of people\n\nAnd a lot more! Tap the button below to create your first custom raffle.</string>
     <string name="my_raffles_create_first_button">Create raffle</string>
 
     <!-- Preferences -->

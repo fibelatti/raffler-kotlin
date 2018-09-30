@@ -53,9 +53,9 @@
     <style name="AppTheme.ButtonPrimary.Small">
         <item name="android:layout_height">@dimen/button_height_small</item>
         <item name="android:layout_width">wrap_content</item>
+        <item name="android:minHeight">@dimen/button_width_small</item>
         <item name="android:paddingLeft">0dp</item>
         <item name="android:paddingRight">0dp</item>
-        <item name="android:textSize">@dimen/text_size_small</item>
     </style>
 
     <style name="AppTheme.TextButton">
@@ -73,7 +73,9 @@
     <style name="AppTheme.TextButton.Small">
         <item name="android:layout_height">@dimen/button_height_small</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:minHeight">@dimen/button_width_small</item>
+        <item name="android:paddingLeft">@dimen/padding_regular</item>
+        <item name="android:paddingRight">@dimen/padding_regular</item>
     </style>
 
     <style name="AppTheme.TextButton.White">
