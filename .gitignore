@@ -9,7 +9,6 @@
 /buildSrc/build
 /captures
 .externalNativeBuild
-gradle.properties
 
 
 # IDEA
