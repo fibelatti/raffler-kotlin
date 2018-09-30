@@ -12,6 +12,7 @@
         <item name="android:statusBarColor">@color/color_status_bar</item>
         <item name="android:fitsSystemWindows">true</item>
         <item name="android:windowAnimationStyle">@style/AppTheme.AppActivityAnimation</item>
+        <item name="fontFamily">@font/opensansregular</item>
         <item name="buttonStyle">@style/AppTheme.ButtonPrimary</item>
     </style>
 
