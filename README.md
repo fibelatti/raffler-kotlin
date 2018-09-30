@@ -23,3 +23,9 @@ This project is used to study and demonstrate many topics related to Android dev
 - KtLint
 - Source Control Organisation
 - CI with Travis
+
+### Build Status
+
+Develop branch:
+
+[![Build Status](https://api.travis-ci.org/fibelatti/raffler-kotlin.svg?branch=develop)](https://travis-ci.org/fibelatti/raffler-kotlin)
