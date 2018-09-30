@@ -67,6 +67,9 @@ object MigrationFrom4To5 : Migration(DATABASE_VERSION_4, DATABASE_VERSION_5) {
                 logLegacySuccess()
             } catch (e: Exception) {
                 logLegacyError()
+
+                database.execSQL("INSERT INTO `Preferences` (`rouletteMusicEnabled`, `hintsDisplayed`) " +
+                    " VALUES (0, '')")
             }
         }
 
