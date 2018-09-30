@@ -5,6 +5,7 @@
     <string name="hint_yes">Yes</string>
     <string name="hint_no">No</string>
     <string name="hint_done">Done</string>
+    <string name="hint_save">Save</string>
     <string name="hint_cancel">Cancel</string>
     <string name="hint_search">Search</string>
     <string name="hint_back">Navigate back</string>
