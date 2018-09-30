@@ -102,7 +102,16 @@
         <item name="android:textSize">@dimen/text_size_regular</item>
     </style>
 
+    <style name="AppTheme.Text.Detail">
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+
     <style name="AppTheme.Text.Body.White">
+        <item name="android:textColor">@color/text_white</item>
+    </style>
+
+    <style name="AppTheme.Text.Detail.White">
         <item name="android:textColor">@color/text_white</item>
     </style>
 </resources>
