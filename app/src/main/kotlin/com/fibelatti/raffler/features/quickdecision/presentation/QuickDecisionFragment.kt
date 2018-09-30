@@ -1,11 +1,9 @@
 package com.fibelatti.raffler.features.quickdecision.presentation
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat.getColor
 import androidx.core.view.ViewCompat
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigation.findNavController
@@ -14,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.error
 import com.fibelatti.raffler.core.extension.exhaustive
+import com.fibelatti.raffler.core.extension.getColorGradientForListSize
 import com.fibelatti.raffler.core.extension.observe
 import com.fibelatti.raffler.core.extension.withDefaultDecoration
 import com.fibelatti.raffler.core.platform.BaseFragment
@@ -76,10 +75,11 @@ class QuickDecisionFragment : BaseFragment() {
                 sharedView = view
                 quickDecisionViewModel.getQuickDecisionResult(quickDecisionModel, color)
             }
-            colorList = calculateColorGradient(
-                getColor(requireContext(), R.color.color_accent),
-                getColor(requireContext(), R.color.color_primary),
-                steps = dataSet.size - 1
+            colorList = getColorGradientForListSize(
+                requireContext(),
+                R.color.color_accent,
+                R.color.color_primary,
+                dataSet.size
             )
             submitList(dataSet)
         }
@@ -106,23 +106,7 @@ class QuickDecisionFragment : BaseFragment() {
 
     private fun setupRecyclerView() {
         recyclerViewItems.withDefaultDecoration()
-        recyclerViewItems.adapter = adapter
         recyclerViewItems.layoutManager = GridLayoutManager(context, 2)
-    }
-
-    private fun calculateColorGradient(startColor: Int, endColor: Int, steps: Int): List<Int> {
-        val r1 = Color.red(startColor)
-        val g1 = Color.green(startColor)
-        val b1 = Color.blue(startColor)
-
-        val r2 = Color.red(endColor)
-        val g2 = Color.green(endColor)
-        val b2 = Color.blue(endColor)
-
-        val redStep = (r2 - r1) / steps
-        val greenStep = (g2 - g1) / steps
-        val blueStep = (b2 - b1) / steps
-
-        return (0..steps).map { Color.rgb(r1 + redStep * it, g1 + greenStep * it, b1 + blueStep * it) }
+        recyclerViewItems.adapter = adapter
     }
 }

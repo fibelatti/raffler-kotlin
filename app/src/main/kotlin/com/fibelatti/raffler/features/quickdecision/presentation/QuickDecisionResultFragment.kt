@@ -12,10 +12,10 @@ import com.fibelatti.raffler.core.platform.BaseFragment
 import com.fibelatti.raffler.core.platform.BundleDelegate
 import kotlinx.android.synthetic.main.fragment_quick_decision_result.*
 
-var Bundle.transitionName by BundleDelegate.String("TRANSITION_NAME")
-var Bundle.title by BundleDelegate.String("TITLE")
-var Bundle.result by BundleDelegate.String("RESULT")
-var Bundle.color by BundleDelegate.Int("COLOR")
+private var Bundle.transitionName by BundleDelegate.String("TRANSITION_NAME")
+private var Bundle.title by BundleDelegate.String("TITLE")
+private var Bundle.result by BundleDelegate.String("RESULT")
+private var Bundle.color by BundleDelegate.Int("COLOR")
 
 class QuickDecisionResultFragment
     : BaseFragment() {
