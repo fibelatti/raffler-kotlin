@@ -15,50 +15,13 @@
         android:paddingRight="@dimen/padding_regular">
 
         <include
-            android:id="@+id/dividerRouletteMusic"
-            layout="@layout/layout_divider"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/divider_size"
-            android:layout_marginBottom="@dimen/margin_regular"
-            app:layout_constraintBottom_toTopOf="@+id/textViewRouletteMusicTitle"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textViewRouletteMusicTitle"
-            style="@style/AppTheme.Text.Title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_small"
-            android:text="@string/preferences_roulette_music_title"
-            app:layout_constraintBottom_toTopOf="@+id/checkBoxRouletteMusic"
-            app:layout_constraintTop_toBottomOf="@+id/dividerRouletteMusic" />
-
-        <androidx.appcompat.widget.AppCompatCheckBox
-            android:id="@+id/checkBoxRouletteMusic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/dividerTheme"
-            app:layout_constraintTop_toBottomOf="@+id/textViewRouletteMusicTitle" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textViewRouletteMusicMessage"
-            style="@style/AppTheme.Text.Body"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/preferences_roulette_music_description"
-            app:layout_constraintBaseline_toBaselineOf="@+id/checkBoxRouletteMusic"
-            app:layout_constraintLeft_toRightOf="@+id/checkBoxRouletteMusic"
-            app:layout_constraintRight_toRightOf="parent" />
-
-        <include
             android:id="@+id/dividerTheme"
             layout="@layout/layout_divider"
             android:layout_width="match_parent"
             android:layout_height="@dimen/divider_size"
-            android:layout_marginTop="@dimen/margin_regular"
             android:layout_marginBottom="@dimen/margin_regular"
             app:layout_constraintBottom_toTopOf="@+id/textViewThemeTitle"
-            app:layout_constraintTop_toBottomOf="@+id/textViewRouletteMusicMessage" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewThemeTitle"
@@ -74,7 +37,7 @@
             android:id="@+id/radioGroupTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/dividerHints"
+            app:layout_constraintBottom_toTopOf="@+id/dividerRouletteMusic"
             app:layout_constraintTop_toBottomOf="@+id/textViewThemeTitle">
 
             <androidx.appcompat.widget.AppCompatRadioButton
@@ -93,6 +56,43 @@
         </RadioGroup>
 
         <include
+            android:id="@+id/dividerRouletteMusic"
+            layout="@layout/layout_divider"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_size"
+            android:layout_marginTop="@dimen/margin_regular"
+            android:layout_marginBottom="@dimen/margin_regular"
+            app:layout_constraintBottom_toTopOf="@+id/textViewRouletteMusicTitle"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroupTheme" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewRouletteMusicTitle"
+            style="@style/AppTheme.Text.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_small"
+            android:text="@string/preferences_roulette_music_title"
+            app:layout_constraintBottom_toTopOf="@+id/checkBoxRouletteMusic"
+            app:layout_constraintTop_toBottomOf="@+id/dividerRouletteMusic" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/checkBoxRouletteMusic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/dividerHints"
+            app:layout_constraintTop_toBottomOf="@+id/textViewRouletteMusicTitle" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewRouletteMusicMessage"
+            style="@style/AppTheme.Text.Body"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/preferences_roulette_music_description"
+            app:layout_constraintBaseline_toBaselineOf="@+id/checkBoxRouletteMusic"
+            app:layout_constraintLeft_toRightOf="@+id/checkBoxRouletteMusic"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <include
             android:id="@+id/dividerHints"
             layout="@layout/layout_divider"
             android:layout_width="match_parent"
@@ -100,7 +100,7 @@
             android:layout_marginTop="@dimen/margin_regular"
             android:layout_marginBottom="@dimen/margin_regular"
             app:layout_constraintBottom_toTopOf="@+id/textViewHintsTitle"
-            app:layout_constraintTop_toBottomOf="@+id/radioGroupTheme" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewRouletteMusicMessage" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewHintsTitle"

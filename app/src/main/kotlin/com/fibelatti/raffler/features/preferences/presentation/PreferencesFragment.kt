@@ -30,8 +30,8 @@ class PreferencesFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         injector.inject(this)
         preferencesViewModel.run {
-            observe(rouletteMusicEnabled) { checkBoxRouletteMusic.isChecked = it }
             observe(appTheme, ::setupTheme)
+            observe(rouletteMusicEnabled, ::setupRouletteMusicEnabled)
             observe(updateFeedback) { layoutRoot.snackbar(it) }
 
             getPreferences()
@@ -62,17 +62,12 @@ class PreferencesFragment : BaseFragment() {
     }
 
     private fun setupListeners() {
-        checkBoxRouletteMusic.setOnCheckedChangeListener { _, isChecked ->
-            preferencesViewModel.setRouletteMusicEnabled(isChecked)
-        }
-
         buttonResetHints.setOnClickListener { preferencesViewModel.resetAllHints() }
-
         setupShareAndRate()
     }
 
     private fun setupTheme(appTheme: AppConfig.AppTheme) {
-        removeAllChangeListeners()
+        radioGroupTheme.setOnCheckedChangeListener(null)
 
         if (appTheme == AppConfig.AppTheme.CLASSIC) {
             radioButtonThemeClassic.isChecked = true
@@ -94,9 +89,14 @@ class PreferencesFragment : BaseFragment() {
         }
     }
 
-    private fun removeAllChangeListeners() {
-        checkBoxRouletteMusic.setOnCheckedChangeListener(null)
-        radioGroupTheme.setOnCheckedChangeListener(null)
+    private fun setupRouletteMusicEnabled(value: Boolean) {
+        checkBoxRouletteMusic.apply {
+            setOnCheckedChangeListener(null)
+            isChecked = value
+            setOnCheckedChangeListener { _, isChecked ->
+                preferencesViewModel.setRouletteMusicEnabled(isChecked)
+            }
+        }
     }
 
     private fun setupShareAndRate() {
