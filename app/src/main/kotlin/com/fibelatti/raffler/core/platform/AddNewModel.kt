@@ -1,6 +1,4 @@
-package com.fibelatti.raffler.features.quickdecision.presentation
-
-import com.fibelatti.raffler.core.platform.BaseViewType
+package com.fibelatti.raffler.core.platform
 
 class AddNewModel : BaseViewType {
     companion object {

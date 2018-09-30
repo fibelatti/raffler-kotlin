@@ -15,6 +15,7 @@ import com.fibelatti.raffler.core.extension.exhaustive
 import com.fibelatti.raffler.core.extension.getColorGradientForListSize
 import com.fibelatti.raffler.core.extension.observe
 import com.fibelatti.raffler.core.extension.withDefaultDecoration
+import com.fibelatti.raffler.core.platform.AddNewModel
 import com.fibelatti.raffler.core.platform.BaseFragment
 import com.fibelatti.raffler.core.platform.BaseViewType
 import com.fibelatti.raffler.features.myraffles.presentation.CreateRaffleActivity
