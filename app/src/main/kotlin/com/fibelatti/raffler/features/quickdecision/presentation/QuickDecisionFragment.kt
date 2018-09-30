@@ -17,6 +17,7 @@ import com.fibelatti.raffler.core.extension.observe
 import com.fibelatti.raffler.core.extension.withDefaultDecoration
 import com.fibelatti.raffler.core.platform.BaseFragment
 import com.fibelatti.raffler.core.platform.BaseViewType
+import com.fibelatti.raffler.features.myraffles.presentation.CreateRaffleActivity
 import com.fibelatti.raffler.features.quickdecision.presentation.adapter.QuickDecisionAdapter
 import kotlinx.android.synthetic.main.fragment_recycler_view.*
 import kotlinx.android.synthetic.main.layout_hint_container.*
@@ -71,6 +72,12 @@ class QuickDecisionFragment : BaseFragment() {
             }
 
         adapter.apply {
+            addNewClickListener = {
+                findNavController(layoutRoot).navigate(
+                    R.id.action_fragmentQuickDecision_to_activityCreateRaffle,
+                    CreateRaffleActivity.bundle(addAsShortcut = true)
+                )
+            }
             quickDecisionClickListener = { view, quickDecisionModel, color ->
                 sharedView = view
                 quickDecisionViewModel.getQuickDecisionResult(quickDecisionModel, color)

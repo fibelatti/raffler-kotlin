@@ -14,6 +14,9 @@
         <action
             android:id="@+id/action_fragmentQuickDecision_to_fragmentQuickDecisionResult"
             app:destination="@id/quickDecisionResultFragment" />
+        <action
+            android:id="@+id/action_fragmentQuickDecision_to_activityCreateRaffle"
+            app:destination="@id/activityCreateRaffle" />
     </fragment>
 
     <fragment
