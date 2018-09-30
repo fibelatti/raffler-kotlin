@@ -30,7 +30,7 @@ class RandomizeTest : BaseTest() {
     @Test
     fun `WHEN raffleQuantity is less than totalQuantity THEN all numbers should be less than totalQuantity`() {
         // WHEN
-        val param = ArrayList<Int>().apply { (1 until 10).forEach { add(it) } }
+        val param = ArrayList<Int>().apply { (0 until 10).forEach { add(it) } }
         val result = runBlocking { randomize(Randomize.Params(totalQuantity = 10, raffleQuantity = 5)) }
 
         // THEN
