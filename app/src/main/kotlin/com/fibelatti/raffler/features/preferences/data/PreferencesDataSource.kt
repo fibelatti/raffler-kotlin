@@ -1,49 +1,74 @@
 package com.fibelatti.raffler.features.preferences.data
 
-import android.content.SharedPreferences
-import com.fibelatti.raffler.core.extension.get
+import androidx.room.Dao
+import androidx.room.OnConflictStrategy.REPLACE
+import androidx.room.Query
+import androidx.room.Update
+import com.fibelatti.raffler.core.extension.getOrDefaultValue
 import com.fibelatti.raffler.core.extension.orFalse
-import com.fibelatti.raffler.core.extension.put
+import com.fibelatti.raffler.core.functional.Either
+import com.fibelatti.raffler.core.functional.runCatching
+import com.fibelatti.raffler.core.persistence.CurrentInstallSharedPreferences
+import com.fibelatti.raffler.core.persistence.database.AppDatabase
+import com.fibelatti.raffler.core.platform.AppConfig
 import com.fibelatti.raffler.features.preferences.PreferencesRepository
 import javax.inject.Inject
 
-const val KEY_ROULETTE_MUSIC_ENABLED = "ROULETTE_MUSIC_ENABLED"
-const val KEY_APP_THEME = "APP_THEME"
-const val KEY_QUICK_DECISION_HINT_DISPLAYED = "QUICK_DECISION_HINT_DISPLAYED"
+private const val KEY_QUICK_DECISION_HINT = "QUICK_DECISION_HINT"
 
 class PreferencesDataSource @Inject constructor(
-    private val sharedPreferences: SharedPreferences
+    private val currentInstallSharedPreferences: CurrentInstallSharedPreferences,
+    private val appDatabase: AppDatabase,
+    private val preferencesDao: PreferencesDao
 ) : PreferencesRepository {
-    override suspend fun getRouletteMusicEnabled(): Boolean =
-        sharedPreferences.get(KEY_ROULETTE_MUSIC_ENABLED, false).orFalse()
 
-    override suspend fun setRouletteMusicEnabled(value: Boolean) {
-        sharedPreferences.put(KEY_ROULETTE_MUSIC_ENABLED, value)
+    override suspend fun getTheme(): AppConfig.AppTheme =
+        currentInstallSharedPreferences.getTheme()
+
+    override suspend fun setAppTheme(appTheme: AppConfig.AppTheme) {
+        currentInstallSharedPreferences.setAppTheme(appTheme)
     }
 
-    override suspend fun getTheme(): PreferencesRepository.AppTheme {
-        return if (sharedPreferences.get<String>(KEY_APP_THEME) == PreferencesRepository.AppTheme.CLASSIC.value) {
-            PreferencesRepository.AppTheme.CLASSIC
-        } else {
-            PreferencesRepository.AppTheme.DARK
+    override suspend fun getRouletteMusicEnabled(): Boolean =
+        preferencesDao.getPreferences().firstOrNull()?.rouletteMusicEnabled.orFalse()
+
+    override suspend fun setRouletteMusicEnabled(value: Boolean): Either<Throwable, Unit> {
+        return runCatching { preferencesDao.setRouletteMusicEnabled(value) }
+    }
+
+    override suspend fun resetHints(): Either<Throwable, Unit> {
+        return runCatching {
+            appDatabase.runInTransaction {
+                val updatedPreferences = preferencesDao.getPreferences().first().let {
+                    it.copy(hintsDisplayed = it.hintsDisplayed.mapValues { false }.toMutableMap())
+                }
+
+                preferencesDao.updatePreferences(updatedPreferences)
+            }
         }
     }
 
-    override suspend fun setAppTheme(appTheme: PreferencesRepository.AppTheme) {
-        sharedPreferences.put(KEY_APP_THEME, appTheme.value)
-    }
-
-    override suspend fun resetHints() {
-        sharedPreferences.put(KEY_QUICK_DECISION_HINT_DISPLAYED, false)
-    }
-
     override suspend fun getQuickDecisionHintDisplayed(): Boolean =
-        sharedPreferences.get(KEY_QUICK_DECISION_HINT_DISPLAYED, false).orFalse()
+        preferencesDao.getPreferences().firstOrNull()
+            ?.hintsDisplayed?.getOrDefaultValue(KEY_QUICK_DECISION_HINT, false).orFalse()
 
     override suspend fun setQuickDecisionHintDisplayed() {
-        sharedPreferences.put(KEY_QUICK_DECISION_HINT_DISPLAYED, true)
+        val updatedPreferences = preferencesDao.getPreferences().first().apply {
+            hintsDisplayed[KEY_QUICK_DECISION_HINT] = true
+        }
+
+        preferencesDao.updatePreferences(updatedPreferences)
     }
 }
 
-fun SharedPreferences.getDarkModeEnabled(): Boolean =
-    get<String>(KEY_APP_THEME).equals(PreferencesRepository.AppTheme.DARK.value)
+@Dao
+interface PreferencesDao {
+    @Query("select * from $PREFERENCES_DTO_TABLE_NAME")
+    fun getPreferences(): List<PreferencesDto>
+
+    @Update(onConflict = REPLACE)
+    fun updatePreferences(preferencesDto: PreferencesDto)
+
+    @Query("update $PREFERENCES_DTO_TABLE_NAME set $PREFERENCES_DTO_ROULETTE_MUSIC_ENABLED_COLUMN_NAME = :value")
+    fun setRouletteMusicEnabled(value: Boolean)
+}

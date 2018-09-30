@@ -11,4 +11,8 @@ object AppConfig {
 
     @JvmStatic
     val supportedLocales: List<String> by lazy { listOf(LOCALE_EN, LOCALE_PT, LOCALE_ES) }
+
+    enum class AppTheme(val value: String) {
+        CLASSIC("classic"), DARK("dark")
+    }
 }

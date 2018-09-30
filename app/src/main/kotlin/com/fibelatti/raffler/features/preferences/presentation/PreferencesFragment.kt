@@ -13,13 +13,12 @@ import com.fibelatti.raffler.core.extension.gone
 import com.fibelatti.raffler.core.extension.observe
 import com.fibelatti.raffler.core.extension.remove
 import com.fibelatti.raffler.core.extension.setTitle
+import com.fibelatti.raffler.core.extension.snackbar
+import com.fibelatti.raffler.core.platform.AppConfig
 import com.fibelatti.raffler.core.platform.AppConfig.MARKET_BASE_URL
 import com.fibelatti.raffler.core.platform.AppConfig.PLAY_STORE_BASE_URL
 import com.fibelatti.raffler.core.platform.BaseFragment
-import com.fibelatti.raffler.features.preferences.PreferencesRepository
 import kotlinx.android.synthetic.main.fragment_preferences.*
-
-private const val RESTART_DELAY = 1000L
 
 class PreferencesFragment : BaseFragment() {
 
@@ -33,6 +32,7 @@ class PreferencesFragment : BaseFragment() {
         preferencesViewModel.run {
             observe(rouletteMusicEnabled) { checkBoxRouletteMusic.isChecked = it }
             observe(appTheme, ::setupTheme)
+            observe(updateFeedback) { layoutRoot.snackbar(it) }
 
             getPreferences()
         }
@@ -71,10 +71,10 @@ class PreferencesFragment : BaseFragment() {
         setupShareAndRate()
     }
 
-    private fun setupTheme(appTheme: PreferencesRepository.AppTheme) {
-        radioGroupTheme.setOnCheckedChangeListener(null)
+    private fun setupTheme(appTheme: AppConfig.AppTheme) {
+        removeAllChangeListeners()
 
-        if (appTheme == PreferencesRepository.AppTheme.CLASSIC) {
+        if (appTheme == AppConfig.AppTheme.CLASSIC) {
             radioButtonThemeClassic.isChecked = true
         } else {
             radioButtonThemeDark.isChecked = true
@@ -83,15 +83,20 @@ class PreferencesFragment : BaseFragment() {
         radioGroupTheme.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.radioButtonThemeClassic -> {
-                    preferencesViewModel.setAppTheme(PreferencesRepository.AppTheme.CLASSIC)
+                    preferencesViewModel.setAppTheme(AppConfig.AppTheme.CLASSIC)
                 }
                 R.id.radioButtonThemeDark -> {
-                    preferencesViewModel.setAppTheme(PreferencesRepository.AppTheme.DARK)
+                    preferencesViewModel.setAppTheme(AppConfig.AppTheme.DARK)
                 }
             }
 
             activity?.recreate()
         }
+    }
+
+    private fun removeAllChangeListeners() {
+        checkBoxRouletteMusic.setOnCheckedChangeListener(null)
+        radioGroupTheme.setOnCheckedChangeListener(null)
     }
 
     private fun setupShareAndRate() {

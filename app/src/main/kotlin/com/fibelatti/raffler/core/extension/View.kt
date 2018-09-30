@@ -18,6 +18,7 @@ import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.platform.ItemOffsetDecoration
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 
 @JvmOverloads
@@ -31,6 +32,11 @@ fun ViewGroup.setShapeBackgroundColor(color: Int) {
         is GradientDrawable -> background.setColor(color)
         is ColorDrawable -> background.color = color
     }
+}
+
+@JvmOverloads
+fun View.snackbar(message: String, duration: Int = Snackbar.LENGTH_SHORT) {
+    Snackbar.make(this, message, duration).show()
 }
 
 // region Components

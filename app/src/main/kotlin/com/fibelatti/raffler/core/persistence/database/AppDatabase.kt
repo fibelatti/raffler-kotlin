@@ -7,6 +7,7 @@ import com.fibelatti.raffler.features.myraffles.data.CustomRaffleDao
 import com.fibelatti.raffler.features.myraffles.data.CustomRaffleDto
 import com.fibelatti.raffler.features.myraffles.data.CustomRaffleItemDao
 import com.fibelatti.raffler.features.myraffles.data.CustomRaffleItemDto
+import com.fibelatti.raffler.features.preferences.data.PreferencesDao
 import com.fibelatti.raffler.features.preferences.data.PreferencesDto
 import com.fibelatti.raffler.features.quickdecision.data.QuickDecisionDao
 import com.fibelatti.raffler.features.quickdecision.data.QuickDecisionDto
@@ -38,4 +39,5 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun getQuickDecisionDao(): QuickDecisionDao
     abstract fun getCustomRaffleDao(): CustomRaffleDao
     abstract fun getCustomRaffleItemDao(): CustomRaffleItemDao
+    abstract fun getPreferencesDao(): PreferencesDao
 }
