@@ -6,8 +6,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
-abstract class BaseAdapter : ListAdapter<BaseViewType, RecyclerView.ViewHolder>(
-    ListAdapterBaseViewTypeCallback) {
+abstract class BaseAdapter(
+    diffUtilCallback: DiffUtil.ItemCallback<BaseViewType> = ListAdapterBaseViewTypeCallback
+) : ListAdapter<BaseViewType, RecyclerView.ViewHolder>(diffUtilCallback) {
 
     abstract val delegateAdapters: SparseArrayCompat<BaseDelegateAdapter>
 

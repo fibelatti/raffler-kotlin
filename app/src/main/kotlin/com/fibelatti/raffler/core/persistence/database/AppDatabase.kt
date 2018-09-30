@@ -12,7 +12,7 @@ import com.fibelatti.raffler.features.preferences.data.PreferencesDto
 import com.fibelatti.raffler.features.quickdecision.data.QuickDecisionDao
 import com.fibelatti.raffler.features.quickdecision.data.QuickDecisionDto
 
-const val DATABASE_NAME = "com.fibelatti.raffler.core.persistence.database"
+const val DATABASE_NAME = "com.fibelatti.raffler.db"
 // region Database Versions
 const val DATABASE_VERSION_1 = 1
 const val DATABASE_VERSION_2 = 2

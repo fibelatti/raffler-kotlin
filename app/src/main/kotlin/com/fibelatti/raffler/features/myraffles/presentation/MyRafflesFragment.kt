@@ -4,15 +4,43 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.fibelatti.raffler.R
+import com.fibelatti.raffler.core.extension.error
+import com.fibelatti.raffler.core.extension.getColorGradientForListSize
+import com.fibelatti.raffler.core.extension.gone
+import com.fibelatti.raffler.core.extension.observe
+import com.fibelatti.raffler.core.extension.visible
 import com.fibelatti.raffler.core.extension.withDefaultDecoration
+import com.fibelatti.raffler.core.platform.AddNewModel
 import com.fibelatti.raffler.core.platform.BaseFragment
+import com.fibelatti.raffler.core.platform.BaseViewType
+import com.fibelatti.raffler.features.myraffles.presentation.adapter.CustomRaffleAdapter
 import kotlinx.android.synthetic.main.fragment_my_raffles.*
 import kotlinx.android.synthetic.main.layout_hint_container.*
+import javax.inject.Inject
 
 class MyRafflesFragment : BaseFragment() {
+
+    @Inject
+    lateinit var adapter: CustomRaffleAdapter
+
+    private val myRafflesViewModel by lazy {
+        viewModelFactory.of<MyRafflesViewModel>(this@MyRafflesFragment)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        injector.inject(this)
+        myRafflesViewModel.run {
+            error(error, ::handleError)
+            observe(customRaffles, ::showCustomRaffles)
+            observe(showHintAndCreateNewLayout) { showHintAndCreateNewLayout(it) }
+            getAllCustomRaffles()
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         inflater.inflate(R.layout.fragment_my_raffles, container, false)
@@ -21,21 +49,59 @@ class MyRafflesFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         setupLayout()
         setupRecyclerView()
-        showDismissibleHint(
-            container = layoutHintContainer,
-            hintTitle = getString(R.string.my_raffles_hint_title),
-            hintMessage = getString(R.string.my_raffles_hint_message)
-        )
     }
 
     private fun setupLayout() {
         buttonCreateRaffle.setOnClickListener {
-            findNavController().navigate(R.id.action_fragmentMyRaffles_to_activityCreateRaffle)
+            findNavController().navigate(
+                R.id.action_fragmentMyRaffles_to_activityCreateRaffle,
+                CreateRaffleActivity.bundle()
+            )
         }
     }
 
     private fun setupRecyclerView() {
         recyclerViewItems.withDefaultDecoration()
         recyclerViewItems.layoutManager = GridLayoutManager(context, 2)
+        recyclerViewItems.adapter = adapter
+    }
+
+    private fun showCustomRaffles(list: List<CustomRaffleModel>) {
+        val dataSet = ArrayList<BaseViewType>()
+            .apply {
+                add(AddNewModel())
+                addAll(list)
+            }
+
+        adapter.apply {
+            addNewClickListener = {
+                Navigation.findNavController(layoutRoot).navigate(
+                    R.id.action_fragmentMyRaffles_to_activityCreateRaffle
+                )
+            }
+            colorList = getColorGradientForListSize(
+                requireContext(),
+                R.color.color_accent,
+                R.color.color_primary,
+                dataSet.size
+            )
+            submitList(dataSet)
+        }
+        recyclerViewItems.visible()
+    }
+
+    private fun showHintAndCreateNewLayout(shouldShow: Boolean) {
+        if (shouldShow) {
+            showDismissibleHint(
+                container = layoutHintContainer,
+                hintTitle = getString(R.string.my_raffles_hint_title),
+                hintMessage = getString(R.string.my_raffles_hint_message)
+            )
+            buttonCreateRaffle.visible()
+            recyclerViewItems.gone()
+        } else {
+            layoutHintContainer.removeAllViews()
+            buttonCreateRaffle.gone()
+        }
     }
 }

@@ -10,7 +10,7 @@ class CustomRaffleWithItemsDto {
     @Embedded
     var customRaffleDto: CustomRaffleDto = CustomRaffleDto()
 
-    @Relation(parentColumn = CUSTOM_RAFFLE_ID_COLUMN_NAME, entityColumn = CUSTOM_RAFFLE_ITEM_ID_COLUMN_NAME)
+    @Relation(parentColumn = CUSTOM_RAFFLE_ID_COLUMN_NAME, entityColumn = CUSTOM_RAFFLE_ITEM_CUSTOM_RAFFLE_ID_COLUMN_NAME)
     var items: List<CustomRaffleItemDto> = listOf()
 }
 
