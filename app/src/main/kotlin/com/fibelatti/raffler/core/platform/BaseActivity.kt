@@ -1,13 +1,12 @@
 package com.fibelatti.raffler.core.platform
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.annotation.CallSuper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.fibelatti.raffler.App
 import com.fibelatti.raffler.core.di.modules.viewmodel.ViewModelFactory
-import com.fibelatti.raffler.features.preferences.data.getDarkModeEnabled
+import com.fibelatti.raffler.core.persistence.CurrentInstallSharedPreferences
 import javax.inject.Inject
 
 abstract class BaseActivity : AppCompatActivity() {
@@ -17,7 +16,7 @@ abstract class BaseActivity : AppCompatActivity() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     @Inject
-    lateinit var sharedPreferences: SharedPreferences
+    lateinit var currentInstallSharedPreferences: CurrentInstallSharedPreferences
 
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,10 +30,10 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     private fun setupTheme() {
-        if (sharedPreferences.getDarkModeEnabled()) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        } else {
+        if (currentInstallSharedPreferences.getTheme() == AppConfig.AppTheme.CLASSIC) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         }
     }
 }
