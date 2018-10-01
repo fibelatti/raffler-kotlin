@@ -61,9 +61,9 @@ typealias Success<T> = Either.Right<T>
 
 typealias Failure<T> = Either.Left<T>
 
-fun <R> Result<R>.getOrNull() = leftOrNull()
+fun <R> Result<R>.getOrNull() = rightOrNull()
 
-fun <R> Result<R>.exceptionOrNull() = rightOrNull()
+fun <R> Result<R>.exceptionOrNull() = leftOrNull()
 
 fun <R> Result<R>.throwOnFailure() {
     if (this is Failure) throw a
