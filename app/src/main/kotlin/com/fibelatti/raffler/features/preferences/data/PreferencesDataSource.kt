@@ -6,7 +6,7 @@ import androidx.room.Query
 import androidx.room.Update
 import com.fibelatti.raffler.core.extension.getOrDefaultValue
 import com.fibelatti.raffler.core.extension.orFalse
-import com.fibelatti.raffler.core.functional.Either
+import com.fibelatti.raffler.core.functional.Result
 import com.fibelatti.raffler.core.functional.runCatching
 import com.fibelatti.raffler.core.persistence.CurrentInstallSharedPreferences
 import com.fibelatti.raffler.core.persistence.database.AppDatabase
@@ -32,11 +32,11 @@ class PreferencesDataSource @Inject constructor(
     override suspend fun getRouletteMusicEnabled(): Boolean =
         preferencesDao.getPreferences().firstOrNull()?.rouletteMusicEnabled.orFalse()
 
-    override suspend fun setRouletteMusicEnabled(value: Boolean): Either<Throwable, Unit> {
+    override suspend fun setRouletteMusicEnabled(value: Boolean): Result<Unit> {
         return runCatching { preferencesDao.setRouletteMusicEnabled(value) }
     }
 
-    override suspend fun resetHints(): Either<Throwable, Unit> {
+    override suspend fun resetHints(): Result<Unit> {
         return runCatching {
             appDatabase.runInTransaction {
                 val updatedPreferences = preferencesDao.getPreferences().first().let {
