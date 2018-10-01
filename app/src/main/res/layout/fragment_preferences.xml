@@ -150,20 +150,15 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/buttonShare"
             style="@style/AppTheme.TextButton"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/button_height"
             android:text="@string/preferences_share"
             app:layout_constraintBottom_toTopOf="@+id/textViewAbout"
             app:layout_constraintLeft_toLeftOf="parent"
-
             app:layout_constraintRight_toLeftOf="@+id/buttonRate"
             app:layout_constraintTop_toBottomOf="@+id/layoutDividerFooter" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/buttonRate"
             style="@style/AppTheme.TextButton"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/button_height"
             android:text="@string/preferences_rate"
             app:layout_constraintBaseline_toBaselineOf="@+id/buttonShare"
             app:layout_constraintBottom_toTopOf="@+id/textViewAbout"
