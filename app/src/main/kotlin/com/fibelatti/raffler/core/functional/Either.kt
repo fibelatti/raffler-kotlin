@@ -54,36 +54,83 @@ sealed class Either<out L, out R> {
     data class Right<out R>(val b: R) : Either<Nothing, R>()
 }
 
-inline fun <R> runCatching(block: () -> R): Either<Throwable, R> {
-    return try {
-        Either.right(block())
-    } catch (exception: Throwable) {
-        Either.left(exception)
+// region Result
+typealias Result<T> = Either<Throwable, T>
+
+typealias Success<T> = Either.Right<T>
+
+typealias Failure<T> = Either.Left<T>
+
+fun <R> Result<R>.getOrNull() = leftOrNull()
+
+fun <R> Result<R>.exceptionOrNull() = rightOrNull()
+
+fun <R> Result<R>.throwOnFailure() {
+    if (this is Failure) throw a
+}
+
+fun <R> Result<R>.getOrThrow(): R {
+    return when (this) {
+        is Success -> b
+        is Failure -> throw a
     }
 }
 
-inline fun <T, R> T.runCatching(block: T.() -> R): Either<Throwable, R> {
-    return try {
-        Either.right(block())
-    } catch (exception: Throwable) {
-        Either.left(exception)
+fun <R> Result<R>.getOrElse(onFailure: (exception: Throwable) -> R): R {
+    return when (this) {
+        is Success -> b
+        is Failure -> onFailure(a)
     }
 }
 
+fun <R> Result<R>.getOrDefault(defaultValue: R): R {
+    return when (this) {
+        is Success -> b
+        is Failure -> defaultValue
+    }
+}
+
+fun <R> Result<R>.fold(onSuccess: (R) -> R, onFailure: (Throwable) -> R): R {
+    return when (this) {
+        is Success -> onSuccess(b)
+        is Failure -> onFailure(a)
+    }
+}
+
+fun <T, R> Result<R>.flatMapCatching(fn: (R) -> T): Result<T> {
+    return when (this) {
+        is Success -> runCatching { fn(b) }
+        is Failure -> Failure(a)
+    }
+}
+
+inline fun <R> runCatching(block: () -> R): Result<R> {
+    return try {
+        Success(block())
+    } catch (exception: Throwable) {
+        Failure(exception)
+    }
+}
+
+inline fun <T, R> T.runCatching(block: T.() -> R): Result<R> {
+    return try {
+        Success(block())
+    } catch (exception: Throwable) {
+        Failure(exception)
+    }
+}
+// endregion
+
+// region Transformation
 fun <A, B, C> ((A) -> B).c(f: (B) -> C): (A) -> C = {
     f(this(it))
 }
+
+fun <T, L, R> Either<L, R>.map(fn: (R) -> (T)): Either<L, T> = flatMap(fn.c(::right))
 
 fun <T, L, R> Either<L, R>.flatMap(fn: (R) -> Either<L, T>): Either<L, T> =
     when (this) {
         is Either.Left -> Either.left(a)
         is Either.Right -> fn(b)
     }
-
-fun <T, R> Either<Throwable, R>.flatMapCatching(fn: (R) -> T): Either<Throwable, T> =
-    when (this) {
-        is Either.Left -> Either.left(a)
-        is Either.Right -> runCatching { fn(b) }
-    }
-
-fun <T, L, R> Either<L, R>.map(fn: (R) -> (T)): Either<L, T> = this.flatMap(fn.c(::right))
+// endregion
