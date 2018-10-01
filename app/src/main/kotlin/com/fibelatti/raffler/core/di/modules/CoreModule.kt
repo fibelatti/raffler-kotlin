@@ -1,8 +1,9 @@
 package com.fibelatti.raffler.core.di.modules
 
 import android.content.Context
+import androidx.lifecycle.ViewModelProvider
 import com.fibelatti.raffler.App
-import com.fibelatti.raffler.core.di.modules.viewmodel.ViewModelModule
+import com.fibelatti.raffler.core.di.modules.viewmodel.ViewModelFactory
 import com.fibelatti.raffler.core.platform.AppResourceProvider
 import com.fibelatti.raffler.core.provider.AppThreadProvider
 import com.fibelatti.raffler.core.provider.ResourceProvider
@@ -16,8 +17,7 @@ import java.util.Locale
 
 @Module(includes = [
     CoreModule.Binder::class,
-    PersistenceModule::class,
-    ViewModelModule::class
+    PersistenceModule::class
 ])
 object CoreModule {
     @Module
@@ -30,6 +30,9 @@ object CoreModule {
 
         @Binds
         fun bindResourceProvider(appResourceProvider: AppResourceProvider): ResourceProvider
+
+        @Binds
+        fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
     }
 
     @Provides
