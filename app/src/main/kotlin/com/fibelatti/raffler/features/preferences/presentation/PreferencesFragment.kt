@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.fragment_preferences.*
 class PreferencesFragment : BaseFragment() {
 
     private val preferencesViewModel by lazy {
-        viewModelFactory.of<PreferencesViewModel>(this)
+        viewModelFactory.get<PreferencesViewModel>(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

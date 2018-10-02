@@ -32,7 +32,7 @@ class QuickDecisionFragment : BaseFragment() {
     private lateinit var sharedView: View
 
     private val quickDecisionViewModel by lazy {
-        viewModelFactory.of<QuickDecisionViewModel>(this@QuickDecisionFragment)
+        viewModelFactory.get<QuickDecisionViewModel>(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
