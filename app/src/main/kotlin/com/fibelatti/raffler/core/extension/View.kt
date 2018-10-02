@@ -16,6 +16,7 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.platform.ItemOffsetDecoration
@@ -91,11 +92,15 @@ fun View.heightWrapContent() {
 }
 
 fun RecyclerView.withDefaultDecoration(): RecyclerView = apply {
-    addItemDecoration(ItemOffsetDecoration(context, R.dimen.margin_xsmall))
+    addItemDecoration(ItemOffsetDecoration(context, R.dimen.margin_small))
 }
 
 fun RecyclerView.withGridLayoutManager(spanCount: Int): RecyclerView = apply {
     layoutManager = GridLayoutManager(context, spanCount)
+}
+
+fun RecyclerView.withLinearLayoutManager(): RecyclerView = apply {
+    layoutManager = LinearLayoutManager(context)
 }
 // endregion
 
