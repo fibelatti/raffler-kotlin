@@ -49,6 +49,7 @@
     <string name="custom_raffle_description">Description</string>
     <string name="custom_raffle_add_shortcut">Show as Quick Decision shortcut</string>
     <string name="custom_raffle_item_description">Item description</string>
+    <string name="custom_raffle_edit_title">Editing %s</string>
 
     <!-- Preferences -->
     <string name="preferences_changes_saved">Changes saved</string>
