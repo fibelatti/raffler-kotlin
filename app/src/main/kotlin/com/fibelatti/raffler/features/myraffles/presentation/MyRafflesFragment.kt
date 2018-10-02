@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.navigation.findNavController
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.error
 import com.fibelatti.raffler.core.extension.getColorGradientForListSize
@@ -14,6 +12,7 @@ import com.fibelatti.raffler.core.extension.gone
 import com.fibelatti.raffler.core.extension.observe
 import com.fibelatti.raffler.core.extension.visible
 import com.fibelatti.raffler.core.extension.withDefaultDecoration
+import com.fibelatti.raffler.core.extension.withGridLayoutManager
 import com.fibelatti.raffler.core.platform.AddNewModel
 import com.fibelatti.raffler.core.platform.BaseFragment
 import com.fibelatti.raffler.core.platform.BaseViewType
@@ -38,7 +37,6 @@ class MyRafflesFragment : BaseFragment() {
             error(error, ::handleError)
             observe(customRaffles, ::showCustomRaffles)
             observe(showHintAndCreateNewLayout) { showHintAndCreateNewLayout(it) }
-            getAllCustomRaffles()
         }
     }
 
@@ -51,32 +49,40 @@ class MyRafflesFragment : BaseFragment() {
         setupRecyclerView()
     }
 
+    override fun onResume() {
+        super.onResume()
+        myRafflesViewModel.getAllCustomRaffles()
+    }
+
     private fun setupLayout() {
         buttonCreateRaffle.setOnClickListener {
-            findNavController().navigate(
-                R.id.action_fragmentMyRaffles_to_activityCreateRaffle,
-                CreateRaffleActivity.bundle()
+            layoutRoot.findNavController().navigate(
+                R.id.action_fragmentMyRaffles_to_fragmentCreateCustomRaffle,
+                CreateCustomRaffleFragment.bundle(),
+                CreateCustomRaffleFragment.navOptions()
             )
         }
     }
 
     private fun setupRecyclerView() {
         recyclerViewItems.withDefaultDecoration()
-        recyclerViewItems.layoutManager = GridLayoutManager(context, 2)
-        recyclerViewItems.adapter = adapter
+            .withGridLayoutManager(2)
+            .adapter = adapter
     }
 
     private fun showCustomRaffles(list: List<CustomRaffleModel>) {
         val dataSet = ArrayList<BaseViewType>()
             .apply {
-                add(AddNewModel())
+                add(AddNewModel)
                 addAll(list)
             }
 
         adapter.apply {
             addNewClickListener = {
-                Navigation.findNavController(layoutRoot).navigate(
-                    R.id.action_fragmentMyRaffles_to_activityCreateRaffle
+                layoutRoot.findNavController().navigate(
+                    R.id.action_fragmentMyRaffles_to_fragmentCreateCustomRaffle,
+                    CreateCustomRaffleFragment.bundle(),
+                    CreateCustomRaffleFragment.navOptions()
                 )
             }
             colorList = getColorGradientForListSize(

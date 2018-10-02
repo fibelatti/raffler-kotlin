@@ -8,44 +8,44 @@
     <fragment
         android:id="@+id/fragmentQuickDecision"
         android:name="com.fibelatti.raffler.features.quickdecision.presentation.QuickDecisionFragment"
-        android:label="@string/title_quick_decisions"
+        android:label="@string/app_name"
         tools:layout="@layout/fragment_recycler_view">
 
         <action
             android:id="@+id/action_fragmentQuickDecision_to_fragmentQuickDecisionResult"
-            app:destination="@id/quickDecisionResultFragment" />
+            app:destination="@id/fragmentQuickDecisionResult" />
         <action
-            android:id="@+id/action_fragmentQuickDecision_to_activityCreateRaffle"
-            app:destination="@id/activityCreateRaffle" />
+            android:id="@+id/action_fragmentQuickDecision_to_fragmentCreateCustomRaffle"
+            app:destination="@id/fragmentCreateCustomRaffle" />
     </fragment>
 
     <fragment
-        android:id="@+id/quickDecisionResultFragment"
+        android:id="@+id/fragmentQuickDecisionResult"
         android:name="com.fibelatti.raffler.features.quickdecision.presentation.QuickDecisionResultFragment"
         tools:layout="@layout/fragment_quick_decision_result" />
 
     <fragment
         android:id="@+id/fragmentLottery"
         android:name="com.fibelatti.raffler.features.lottery.presentation.LotteryFragment"
-        android:label="@string/title_lottery"
+        android:label="@string/app_name"
         tools:layout="@layout/fragment_lottery" />
 
     <fragment
         android:id="@+id/fragmentMyRaffles"
         android:name="com.fibelatti.raffler.features.myraffles.presentation.MyRafflesFragment"
-        android:label="@string/title_my_raffles"
+        android:label="@string/app_name"
         tools:layout="@layout/fragment_my_raffles">
 
         <action
-            android:id="@+id/action_fragmentMyRaffles_to_activityCreateRaffle"
-            app:destination="@id/activityCreateRaffle" />
+            android:id="@+id/action_fragmentMyRaffles_to_fragmentCreateCustomRaffle"
+            app:destination="@id/fragmentCreateCustomRaffle" />
     </fragment>
 
-    <activity
-        android:id="@+id/activityCreateRaffle"
-        android:name="com.fibelatti.raffler.features.myraffles.presentation.CreateRaffleActivity"
-        android:label="@string/title_create_raffle"
-        tools:layout="@layout/activity_create_raffle" />
+    <fragment
+        android:id="@+id/fragmentCreateCustomRaffle"
+        android:name="com.fibelatti.raffler.features.myraffles.presentation.CreateCustomRaffleFragment"
+        android:label="@string/title_create_custom_raffle"
+        tools:layout="@layout/fragment_create_custom_raffle" />
 
     <fragment
         android:id="@+id/fragmentPreferences"

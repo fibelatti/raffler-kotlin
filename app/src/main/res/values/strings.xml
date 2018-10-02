@@ -24,7 +24,7 @@
     <string name="title_lottery">Lottery</string>
     <string name="title_my_raffles">My Raffles</string>
     <string name="title_preferences">Preferences</string>
-    <string name="title_create_raffle">Create Raffle</string>
+    <string name="title_create_custom_raffle">Creating raffle</string>
 
     <!-- List Item -->
     <string name="list_item_add_new">Add new</string>

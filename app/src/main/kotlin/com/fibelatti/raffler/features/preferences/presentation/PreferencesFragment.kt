@@ -1,7 +1,6 @@
 package com.fibelatti.raffler.features.preferences.presentation
 
 import android.content.ActivityNotFoundException
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -9,10 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.fibelatti.raffler.R
+import com.fibelatti.raffler.core.extension.error
 import com.fibelatti.raffler.core.extension.gone
 import com.fibelatti.raffler.core.extension.observe
 import com.fibelatti.raffler.core.extension.remove
-import com.fibelatti.raffler.core.extension.setTitle
 import com.fibelatti.raffler.core.extension.snackbar
 import com.fibelatti.raffler.core.platform.AppConfig
 import com.fibelatti.raffler.core.platform.AppConfig.MARKET_BASE_URL
@@ -30,6 +29,7 @@ class PreferencesFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         injector.inject(this)
         preferencesViewModel.run {
+            error(error, ::handleError)
             observe(appTheme, ::setupTheme)
             observe(rouletteMusicEnabled, ::setupRouletteMusicEnabled)
             observe(updateFeedback) { layoutRoot.snackbar(it) }
@@ -45,11 +45,6 @@ class PreferencesFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         setupLayout()
         setupListeners()
-    }
-
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        setTitle(R.string.title_preferences)
     }
 
     private fun setupLayout() {
