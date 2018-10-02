@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation.findNavController
+import androidx.navigation.navOptions
 import androidx.transition.TransitionInflater
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.setShapeBackgroundColor
@@ -33,6 +34,13 @@ class QuickDecisionResultFragment
             this.title = title
             this.result = result
             this.color = color
+        }
+
+        fun navOptions() = navOptions {
+            anim {
+                exit = R.anim.fade_out
+                popExit = R.anim.slide_down
+            }
         }
     }
 

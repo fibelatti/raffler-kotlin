@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
-import androidx.navigation.NavOptions
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import com.fibelatti.raffler.R
@@ -109,10 +108,7 @@ class QuickDecisionFragment : BaseFragment() {
                 state.result,
                 state.color
             ),
-            NavOptions.Builder()
-                .setExitAnim(R.anim.fade_out)
-                .setPopExitAnim(R.anim.slide_down)
-                .build(),
+            QuickDecisionResultFragment.navOptions(),
             FragmentNavigatorExtras(sharedView to transitionName)
         )
     }
