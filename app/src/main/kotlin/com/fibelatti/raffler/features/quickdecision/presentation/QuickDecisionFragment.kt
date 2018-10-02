@@ -81,7 +81,7 @@ class QuickDecisionFragment : BaseFragment() {
                 findNavController(layoutRoot).navigate(
                     R.id.action_fragmentQuickDecision_to_fragmentCreateCustomRaffle,
                     CreateCustomRaffleFragment.bundle(addAsShortcut = true),
-                    CreateCustomRaffleFragment.navOptions()
+                    CreateCustomRaffleFragment.navOptionsNew()
                 )
             }
             quickDecisionClickListener = { view, quickDecisionModel, color ->

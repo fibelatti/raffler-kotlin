@@ -13,7 +13,8 @@ class HomeActivity : BaseActivity() {
 
     private val upNavigationEnabledFragments: List<Int> by lazy {
         listOf(
-            R.id.fragmentCreateCustomRaffle
+            R.id.fragmentCreateCustomRaffle,
+            R.id.fragmentCustomRaffleDetails
         )
     }
     private val bottomBarEnabledFragments: List<Int> by lazy {

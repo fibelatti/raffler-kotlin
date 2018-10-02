@@ -39,6 +39,9 @@
         <action
             android:id="@+id/action_fragmentMyRaffles_to_fragmentCreateCustomRaffle"
             app:destination="@id/fragmentCreateCustomRaffle" />
+        <action
+            android:id="@+id/action_fragmentMyRaffles_to_fragmentCustomRaffleDetails"
+            app:destination="@id/fragmentCustomRaffleDetails" />
     </fragment>
 
     <fragment
@@ -46,6 +49,16 @@
         android:name="com.fibelatti.raffler.features.myraffles.presentation.CreateCustomRaffleFragment"
         android:label="@string/title_create_custom_raffle"
         tools:layout="@layout/fragment_create_custom_raffle" />
+
+    <fragment
+        android:id="@+id/fragmentCustomRaffleDetails"
+        android:name="com.fibelatti.raffler.features.myraffles.presentation.CustomRaffleDetailsFragment"
+        tools:layout="@layout/fragment_custom_raffle_details">
+
+        <action
+            android:id="@+id/action_fragmentCustomRaffleDetails_to_fragmentCreateCustomRaffle"
+            app:destination="@id/fragmentCreateCustomRaffle" />
+    </fragment>
 
     <fragment
         android:id="@+id/fragmentPreferences"

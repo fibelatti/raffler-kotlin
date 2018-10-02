@@ -26,11 +26,20 @@ class CreateCustomRaffleFragment : BaseFragment() {
             this.customRaffleId = customRaffleId
         }
 
-        fun navOptions() = navOptions {
+        fun navOptionsNew() = navOptions {
             anim {
                 enter = R.anim.slide_up
                 popExit = R.anim.slide_down
                 popEnter = R.anim.fade_in
+            }
+        }
+
+        fun navOptionsEdit() = navOptions {
+            anim {
+                enter = R.anim.slide_right_in
+                exit = R.anim.slide_left_out
+                popEnter = R.anim.slide_left_in
+                popExit = R.anim.slide_right_out
             }
         }
     }

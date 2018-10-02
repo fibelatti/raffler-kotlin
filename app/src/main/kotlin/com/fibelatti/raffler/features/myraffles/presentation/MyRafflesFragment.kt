@@ -59,7 +59,7 @@ class MyRafflesFragment : BaseFragment() {
             layoutRoot.findNavController().navigate(
                 R.id.action_fragmentMyRaffles_to_fragmentCreateCustomRaffle,
                 CreateCustomRaffleFragment.bundle(),
-                CreateCustomRaffleFragment.navOptions()
+                CreateCustomRaffleFragment.navOptionsNew()
             )
         }
     }
@@ -82,7 +82,14 @@ class MyRafflesFragment : BaseFragment() {
                 layoutRoot.findNavController().navigate(
                     R.id.action_fragmentMyRaffles_to_fragmentCreateCustomRaffle,
                     CreateCustomRaffleFragment.bundle(),
-                    CreateCustomRaffleFragment.navOptions()
+                    CreateCustomRaffleFragment.navOptionsNew()
+                )
+            }
+            customRaffleClickListener = {
+                layoutRoot.findNavController().navigate(
+                    R.id.action_fragmentMyRaffles_to_fragmentCustomRaffleDetails,
+                    CustomRaffleDetailsFragment.bundle(customRaffleId = it.toInt()),
+                    CustomRaffleDetailsFragment.navOptions()
                 )
             }
             colorList = getColorGradientForListSize(
