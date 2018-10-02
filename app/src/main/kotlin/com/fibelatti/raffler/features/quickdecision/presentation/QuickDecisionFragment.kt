@@ -5,20 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
-import androidx.navigation.NavOptions
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.FragmentNavigatorExtras
-import androidx.recyclerview.widget.GridLayoutManager
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.error
 import com.fibelatti.raffler.core.extension.exhaustive
 import com.fibelatti.raffler.core.extension.getColorGradientForListSize
 import com.fibelatti.raffler.core.extension.observe
 import com.fibelatti.raffler.core.extension.withDefaultDecoration
+import com.fibelatti.raffler.core.extension.withGridLayoutManager
 import com.fibelatti.raffler.core.platform.AddNewModel
 import com.fibelatti.raffler.core.platform.BaseFragment
 import com.fibelatti.raffler.core.platform.BaseViewType
-import com.fibelatti.raffler.features.myraffles.presentation.CreateRaffleActivity
+import com.fibelatti.raffler.features.myraffles.presentation.CreateCustomRaffleFragment
 import com.fibelatti.raffler.features.quickdecision.presentation.adapter.QuickDecisionAdapter
 import kotlinx.android.synthetic.main.fragment_recycler_view.*
 import kotlinx.android.synthetic.main.layout_hint_container.*
@@ -39,9 +38,8 @@ class QuickDecisionFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         injector.inject(this)
         quickDecisionViewModel.run {
-            error(error) { handleError(it) }
-            observe(state) { handleState(it) }
-            getAllQuickDecisions()
+            error(error, ::handleError)
+            observe(state, ::handleState)
         }
     }
 
@@ -58,6 +56,11 @@ class QuickDecisionFragment : BaseFragment() {
         )
     }
 
+    override fun onResume() {
+        super.onResume()
+        quickDecisionViewModel.getAllQuickDecisions()
+    }
+
     private fun handleState(state: QuickDecisionViewModel.State) {
         when (state) {
             is QuickDecisionViewModel.State.ShowList -> showQuickDecisions(state)
@@ -68,15 +71,16 @@ class QuickDecisionFragment : BaseFragment() {
     private fun showQuickDecisions(state: QuickDecisionViewModel.State.ShowList) {
         val dataSet = ArrayList<BaseViewType>()
             .apply {
-                add(AddNewModel())
+                add(AddNewModel)
                 addAll(state.quickDecisions)
             }
 
         adapter.apply {
             addNewClickListener = {
                 findNavController(layoutRoot).navigate(
-                    R.id.action_fragmentQuickDecision_to_activityCreateRaffle,
-                    CreateRaffleActivity.bundle(addAsShortcut = true)
+                    R.id.action_fragmentQuickDecision_to_fragmentCreateCustomRaffle,
+                    CreateCustomRaffleFragment.bundle(addAsShortcut = true),
+                    CreateCustomRaffleFragment.navOptionsNew()
                 )
             }
             quickDecisionClickListener = { view, quickDecisionModel, color ->
@@ -104,17 +108,14 @@ class QuickDecisionFragment : BaseFragment() {
                 state.result,
                 state.color
             ),
-            NavOptions.Builder()
-                .setExitAnim(R.anim.fade_out)
-                .setPopExitAnim(R.anim.slide_down)
-                .build(),
+            QuickDecisionResultFragment.navOptions(),
             FragmentNavigatorExtras(sharedView to transitionName)
         )
     }
 
     private fun setupRecyclerView() {
         recyclerViewItems.withDefaultDecoration()
-        recyclerViewItems.layoutManager = GridLayoutManager(context, 2)
-        recyclerViewItems.adapter = adapter
+            .withGridLayoutManager(2)
+            .adapter = adapter
     }
 }

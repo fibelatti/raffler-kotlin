@@ -17,9 +17,8 @@ abstract class BaseAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
-        delegateAdapters[viewType]?.let {
-            it.onCreateViewHolder(parent)
-        } ?: throw RuntimeException("No adapter mapped to viewType: $viewType")
+        delegateAdapters[viewType]?.onCreateViewHolder(parent)
+            ?: throw RuntimeException("No adapter mapped to viewType: $viewType")
 
     override fun getItemViewType(position: Int): Int = getItem(position).getViewType()
 }

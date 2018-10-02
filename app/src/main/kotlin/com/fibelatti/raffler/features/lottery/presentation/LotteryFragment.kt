@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.clearError
+import com.fibelatti.raffler.core.extension.error
 import com.fibelatti.raffler.core.extension.hideKeyboard
 import com.fibelatti.raffler.core.extension.observe
 import com.fibelatti.raffler.core.extension.showError
@@ -33,6 +34,7 @@ class LotteryFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         injector.inject(this)
         lotteryViewModel.run {
+            error(error, ::handleError)
             observe(lotteryNumbers, ::showResults)
             observe(totalQuantityError, ::handleTotalQuantityError)
             observe(raffleQuantityError, ::handleRaffleQuantityError)

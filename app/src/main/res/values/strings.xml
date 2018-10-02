@@ -6,6 +6,7 @@
     <string name="hint_no">No</string>
     <string name="hint_done">Done</string>
     <string name="hint_save">Save</string>
+    <string name="hint_edit">Edit</string>
     <string name="hint_cancel">Cancel</string>
     <string name="hint_search">Search</string>
     <string name="hint_back">Navigate back</string>
@@ -24,7 +25,7 @@
     <string name="title_lottery">Lottery</string>
     <string name="title_my_raffles">My Raffles</string>
     <string name="title_preferences">Preferences</string>
-    <string name="title_create_raffle">Create Raffle</string>
+    <string name="title_create_custom_raffle">Creating raffle</string>
 
     <!-- List Item -->
     <string name="list_item_add_new">Add new</string>
@@ -48,6 +49,7 @@
     <string name="custom_raffle_description">Description</string>
     <string name="custom_raffle_add_shortcut">Show as Quick Decision shortcut</string>
     <string name="custom_raffle_item_description">Item description</string>
+    <string name="custom_raffle_edit_title">Editing %s</string>
 
     <!-- Preferences -->
     <string name="preferences_changes_saved">Changes saved</string>
