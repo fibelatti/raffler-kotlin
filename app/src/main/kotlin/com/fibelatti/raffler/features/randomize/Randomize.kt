@@ -1,6 +1,6 @@
 package com.fibelatti.raffler.features.randomize
 
-import com.fibelatti.raffler.core.functional.Either
+import com.fibelatti.raffler.core.functional.Result
 import com.fibelatti.raffler.core.functional.UseCase
 import com.fibelatti.raffler.core.functional.runCatching
 import java.util.ArrayList
@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class Randomize @Inject constructor() : UseCase<List<Int>, Randomize.Params>() {
 
-    override suspend fun run(params: Params): Either<Throwable, List<Int>> {
+    override suspend fun run(params: Params): Result<List<Int>> {
         return runCatching {
             with(params) {
                 val list = ArrayList<Int>().apply {

@@ -1,6 +1,6 @@
 package com.fibelatti.raffler.features.preferences
 
-import com.fibelatti.raffler.core.functional.Either
+import com.fibelatti.raffler.core.functional.Result
 import com.fibelatti.raffler.core.platform.AppConfig
 
 interface PreferencesRepository {
@@ -10,9 +10,9 @@ interface PreferencesRepository {
 
     suspend fun getRouletteMusicEnabled(): Boolean
 
-    suspend fun setRouletteMusicEnabled(value: Boolean): Either<Throwable, Unit>
+    suspend fun setRouletteMusicEnabled(value: Boolean): Result<Unit>
 
-    suspend fun resetHints(): Either<Throwable, Unit>
+    suspend fun resetHints(): Result<Unit>
 
     suspend fun getQuickDecisionHintDisplayed(): Boolean
 

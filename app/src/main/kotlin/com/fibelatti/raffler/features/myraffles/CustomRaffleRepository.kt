@@ -1,11 +1,11 @@
 package com.fibelatti.raffler.features.myraffles
 
-import com.fibelatti.raffler.core.functional.Either
+import com.fibelatti.raffler.core.functional.Result
 
 interface CustomRaffleRepository {
-    suspend fun getAllCustomRaffles(): Either<Throwable, List<CustomRaffle>>
+    suspend fun getAllCustomRaffles(): Result<List<CustomRaffle>>
 
-    suspend fun getCustomRaffleById(id: Long): Either<Throwable, CustomRaffle>
+    suspend fun getCustomRaffleById(id: Long): Result<CustomRaffle>
 
-    suspend fun addCustomRaffle(customRaffle: CustomRaffle): Either<Throwable, Unit>
+    suspend fun addCustomRaffle(customRaffle: CustomRaffle): Result<Unit>
 }

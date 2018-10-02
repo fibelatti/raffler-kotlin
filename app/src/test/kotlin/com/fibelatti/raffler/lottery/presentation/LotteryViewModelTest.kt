@@ -6,7 +6,8 @@ import com.fibelatti.raffler.MockDataProvider
 import com.fibelatti.raffler.core.extension.empty
 import com.fibelatti.raffler.core.extension.givenSuspend
 import com.fibelatti.raffler.core.extension.safeAny
-import com.fibelatti.raffler.core.functional.Either
+import com.fibelatti.raffler.core.functional.Failure
+import com.fibelatti.raffler.core.functional.Success
 import com.fibelatti.raffler.core.provider.ResourceProvider
 import com.fibelatti.raffler.features.lottery.presentation.LotteryNumberModel
 import com.fibelatti.raffler.features.lottery.presentation.LotteryNumberModelMapper
@@ -135,7 +136,7 @@ class LotteryViewModelTest : BaseTest() {
     fun `WHEN getLotteryNumbers is called AND randomize throws an error THEN error is changed`() {
         // GIVEN
         givenSuspend { mockRandomize(safeAny()) }
-            .willReturn(Either.left(mockError))
+            .willReturn(Failure(mockError))
 
         // WHEN
         viewModel.getLotteryNumbers(totalQuantity = "10", raffleQuantity = "5")
@@ -153,7 +154,7 @@ class LotteryViewModelTest : BaseTest() {
     fun `WHEN getLotteryNumbers is called AND lotteryNumbers is changed`() {
         // GIVEN
         givenSuspend { mockRandomize(safeAny()) }
-            .willReturn(Either.right(mockRandomList))
+            .willReturn(Success(mockRandomList))
         given(mockLotteryNumberModelMapper.map(mockRandomList))
             .willReturn(mockLotteryNumberList)
 

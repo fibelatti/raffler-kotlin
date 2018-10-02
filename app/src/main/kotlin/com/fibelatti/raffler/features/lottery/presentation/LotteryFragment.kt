@@ -26,7 +26,7 @@ class LotteryFragment : BaseFragment() {
     lateinit var adapter: LotteryAdapter
 
     private val lotteryViewModel by lazy {
-        viewModelFactory.of<LotteryViewModel>(this@LotteryFragment)
+        viewModelFactory.get<LotteryViewModel>(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

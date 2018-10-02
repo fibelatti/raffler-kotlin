@@ -5,7 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
 import androidx.room.Transaction
-import com.fibelatti.raffler.core.functional.Either
+import com.fibelatti.raffler.core.functional.Result
 import com.fibelatti.raffler.core.functional.runCatching
 import com.fibelatti.raffler.core.persistence.database.AppDatabase
 import com.fibelatti.raffler.features.myraffles.CustomRaffle
@@ -18,21 +18,21 @@ class CustomRaffleDataSource @Inject constructor(
     private val customRaffleItemDao: CustomRaffleItemDao,
     private val customRaffleWithItemsDtoMapper: CustomRaffleWithItemsDtoMapper
 ) : CustomRaffleRepository {
-    override suspend fun getAllCustomRaffles(): Either<Throwable, List<CustomRaffle>> {
+    override suspend fun getAllCustomRaffles(): Result<List<CustomRaffle>> {
         return runCatching {
             customRaffleDao.getAllCustomRaffles()
                 .map(customRaffleWithItemsDtoMapper::map)
         }
     }
 
-    override suspend fun getCustomRaffleById(id: Long): Either<Throwable, CustomRaffle> {
+    override suspend fun getCustomRaffleById(id: Long): Result<CustomRaffle> {
         return runCatching {
             customRaffleDao.getCustomRaffleById(id)
                 .let(customRaffleWithItemsDtoMapper::map)
         }
     }
 
-    override suspend fun addCustomRaffle(customRaffle: CustomRaffle): Either<Throwable, Unit> {
+    override suspend fun addCustomRaffle(customRaffle: CustomRaffle): Result<Unit> {
         return runCatching {
             with(customRaffle.let(customRaffleWithItemsDtoMapper::mapReverse)) {
                 appDatabase.runInTransaction {

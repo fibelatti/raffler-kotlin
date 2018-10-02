@@ -1,9 +1,11 @@
 package com.fibelatti.raffler.randomize
 
 import com.fibelatti.raffler.BaseTest
-import com.fibelatti.raffler.core.extension.shouldBeRight
+import com.fibelatti.raffler.core.extension.shouldBeAnInstanceOf
 import com.fibelatti.raffler.core.extension.shouldContain
 import com.fibelatti.raffler.core.extension.sizeShouldBe
+import com.fibelatti.raffler.core.extension.throwAssertionError
+import com.fibelatti.raffler.core.functional.Success
 import com.fibelatti.raffler.features.randomize.Randomize
 import kotlinx.coroutines.experimental.runBlocking
 import org.junit.Test
@@ -18,13 +20,13 @@ class RandomizeTest : BaseTest() {
         val result = runBlocking { randomize(Randomize.Params(totalQuantity = 3, raffleQuantity = 10)) }
 
         // THEN
-        result.shouldBeRight()
+        result shouldBeAnInstanceOf Success::class
         result.rightOrNull()?.let { list ->
             list sizeShouldBe 3
             list shouldContain 0
             list shouldContain 1
             list shouldContain 2
-        }
+        } ?: throwAssertionError()
     }
 
     @Test
@@ -34,10 +36,10 @@ class RandomizeTest : BaseTest() {
         val result = runBlocking { randomize(Randomize.Params(totalQuantity = 10, raffleQuantity = 5)) }
 
         // THEN
-        result.shouldBeRight()
+        result shouldBeAnInstanceOf Success::class
         result.rightOrNull()?.let { list ->
             list sizeShouldBe 5
             param shouldContain list
-        }
+        } ?: throwAssertionError()
     }
 }

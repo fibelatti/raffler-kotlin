@@ -1,10 +1,10 @@
 package com.fibelatti.raffler.core.di.modules.viewmodel
 
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import javax.inject.Inject
 import javax.inject.Provider
 import javax.inject.Singleton
@@ -26,9 +26,9 @@ class ViewModelFactory @Inject constructor(
         }
     }
 
-    inline fun <reified T : ViewModel> of(activity: FragmentActivity): T =
+    inline fun <reified T : ViewModel> get(activity: FragmentActivity): T =
         ViewModelProviders.of(activity, this)[T::class.java]
 
-    inline fun <reified T : ViewModel> of(fragment: Fragment): T =
+    inline fun <reified T : ViewModel> get(fragment: Fragment): T =
         ViewModelProviders.of(fragment, this)[T::class.java]
 }

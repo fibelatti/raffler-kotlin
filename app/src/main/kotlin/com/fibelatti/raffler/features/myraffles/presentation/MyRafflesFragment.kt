@@ -28,7 +28,7 @@ class MyRafflesFragment : BaseFragment() {
     lateinit var adapter: CustomRaffleAdapter
 
     private val myRafflesViewModel by lazy {
-        viewModelFactory.of<MyRafflesViewModel>(this@MyRafflesFragment)
+        viewModelFactory.get<MyRafflesViewModel>(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
