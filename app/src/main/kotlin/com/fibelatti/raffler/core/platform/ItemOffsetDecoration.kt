@@ -43,9 +43,9 @@ class ItemOffsetDecoration(private val itemOffset: Int) : RecyclerView.ItemDecor
                     outRect.apply {
                         left = 0
                         // is top grid edge?
-                        top = if (viewLayoutPosition == 0) 0 else itemOffset
+                        top = 0
                         right = 0
-                        bottom = 0
+                        bottom = if (viewLayoutPosition == parent.adapter?.itemCount) 0 else itemOffset
                     }
                 }
             }
