@@ -18,19 +18,11 @@ class CustomRaffleDataSource @Inject constructor(
     private val customRaffleItemDao: CustomRaffleItemDao,
     private val customRaffleWithItemsDtoMapper: CustomRaffleWithItemsDtoMapper
 ) : CustomRaffleRepository {
-    override suspend fun getAllCustomRaffles(): Result<List<CustomRaffle>> {
-        return runCatching {
-            customRaffleDao.getAllCustomRaffles()
-                .map(customRaffleWithItemsDtoMapper::map)
-        }
-    }
+    override suspend fun getAllCustomRaffles(): Result<List<CustomRaffle>> =
+        customRaffleDao.runCatching { getAllCustomRaffles().map(customRaffleWithItemsDtoMapper::map) }
 
-    override suspend fun getCustomRaffleById(id: Long): Result<CustomRaffle> {
-        return runCatching {
-            customRaffleDao.getCustomRaffleById(id)
-                .let(customRaffleWithItemsDtoMapper::map)
-        }
-    }
+    override suspend fun getCustomRaffleById(id: Long): Result<CustomRaffle> =
+        customRaffleDao.runCatching { getCustomRaffleById(id).let(customRaffleWithItemsDtoMapper::map) }
 
     override suspend fun addCustomRaffle(customRaffle: CustomRaffle): Result<Unit> {
         return runCatching {
@@ -44,6 +36,9 @@ class CustomRaffleDataSource @Inject constructor(
             }
         }
     }
+
+    override suspend fun deleteCustomRaffleById(id: Long): Result<Unit> =
+        customRaffleDao.runCatching { deleteCustomRaffleById(id) }
 }
 
 @Dao
