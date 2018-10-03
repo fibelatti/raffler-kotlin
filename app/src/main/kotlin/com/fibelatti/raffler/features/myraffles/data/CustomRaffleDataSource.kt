@@ -37,7 +37,8 @@ class CustomRaffleDataSource @Inject constructor(
             with(customRaffle.let(customRaffleWithItemsDtoMapper::mapReverse)) {
                 appDatabase.runInTransaction {
                     customRaffleDao.deleteCustomRaffleById(customRaffleDto.id)
-                    customRaffleDao.saveCustomRaffle(customRaffleDto)
+                    val customRaffleId = customRaffleDao.saveCustomRaffle(customRaffleDto)
+                    val items = items.map { it.copy(customRaffleId = customRaffleId) }
                     customRaffleItemDao.saveCustomRaffleItems(*items.toTypedArray())
                 }
             }
@@ -56,7 +57,7 @@ interface CustomRaffleDao {
     fun getAllCustomRaffles(): List<CustomRaffleWithItemsDto>
 
     @Insert(onConflict = REPLACE)
-    fun saveCustomRaffle(customRaffleDto: CustomRaffleDto)
+    fun saveCustomRaffle(customRaffleDto: CustomRaffleDto): Long
 
     @Query("delete from $CUSTOM_RAFFLE_TABLE_NAME where $CUSTOM_RAFFLE_ID_COLUMN_NAME = :id")
     fun deleteCustomRaffleById(id: Long)
