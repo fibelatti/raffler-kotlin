@@ -4,6 +4,8 @@ import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.ShapeDrawable
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -52,6 +54,24 @@ fun TextInputLayout.clearError() {
 }
 
 fun EditText.textAsString(): String = this.text.toString()
+
+fun EditText.clearText() {
+    setText("")
+}
+
+fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
+    addTextChangedListener(object : TextWatcher {
+        override fun beforeTextChanged(charSequence: CharSequence?, p1: Int, p2: Int, p3: Int) {
+        }
+
+        override fun onTextChanged(charSequence: CharSequence?, p1: Int, p2: Int, p3: Int) {
+        }
+
+        override fun afterTextChanged(editable: Editable?) {
+            editable?.let { afterTextChanged(it.toString()) }
+        }
+    })
+}
 
 fun View.gone() {
     visibility = View.GONE
