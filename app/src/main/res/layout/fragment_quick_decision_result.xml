@@ -4,14 +4,12 @@
     android:id="@+id/layoutQuickDecisionRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="@dimen/margin_regular"
-    android:layout_marginRight="@dimen/margin_regular"
-    android:layout_marginBottom="@dimen/margin_regular"
+    android:layout_margin="@dimen/margin_regular"
     android:background="@drawable/background_rounded_rectangle"
     android:elevation="@dimen/elevation_regular"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="@dimen/padding_small">
+    android:padding="@dimen/padding_regular">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewQuickDecisionName"
@@ -35,8 +33,8 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewButtonDismiss"
+        style="@style/AppTheme.TextButton.White"
         android:layout_width="match_parent"
         android:layout_height="@dimen/button_height"
-        style="@style/AppTheme.TextButton.White"
         android:text="@string/hint_dismiss" />
 </LinearLayout>

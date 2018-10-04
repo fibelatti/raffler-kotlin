@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.error
 import com.fibelatti.raffler.core.extension.gone
@@ -33,8 +34,6 @@ class PreferencesFragment : BaseFragment() {
             observe(appTheme, ::setupTheme)
             observe(rouletteMusicEnabled, ::setupRouletteMusicEnabled)
             observe(updateFeedback) { layoutRoot.snackbar(it) }
-
-            getPreferences()
         }
     }
 
@@ -45,9 +44,13 @@ class PreferencesFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         setupLayout()
         setupListeners()
+        preferencesViewModel.getPreferences()
     }
 
     private fun setupLayout() {
+        layoutTitle.setTitle(R.string.title_preferences)
+        layoutTitle.navigateUp { layoutRoot.findNavController().navigateUp() }
+
         try {
             val pInfo = requireContext().packageManager.getPackageInfo(requireContext().packageName, 0)
             textViewAppVersion.text = getString(R.string.preferences_app_version, pInfo.versionName)

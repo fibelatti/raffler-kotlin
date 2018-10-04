@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_background"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:paddingTop="@dimen/padding_regular">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -14,6 +15,13 @@
         android:paddingLeft="@dimen/padding_regular"
         android:paddingRight="@dimen/padding_regular">
 
+        <com.fibelatti.raffler.core.platform.TitleLayout
+            android:id="@+id/layoutTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/dividerTheme"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <include
             android:id="@+id/dividerTheme"
             layout="@layout/layout_divider"
@@ -21,7 +29,7 @@
             android:layout_height="@dimen/divider_size"
             android:layout_marginBottom="@dimen/margin_regular"
             app:layout_constraintBottom_toTopOf="@+id/textViewThemeTitle"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/layoutTitle" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewThemeTitle"

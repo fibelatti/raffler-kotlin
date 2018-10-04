@@ -11,12 +11,6 @@ import kotlinx.android.synthetic.main.layout_toolbar_default.*
 
 class HomeActivity : BaseActivity() {
 
-    private val upNavigationEnabledFragments: List<Int> by lazy {
-        listOf(
-            R.id.fragmentCreateCustomRaffle,
-            R.id.fragmentCustomRaffleDetails
-        )
-    }
     private val bottomBarEnabledFragments: List<Int> by lazy {
         listOf(
             R.id.fragmentQuickDecision,
@@ -40,8 +34,6 @@ class HomeActivity : BaseActivity() {
         fragmentHost.findNavController().apply {
             layoutBottomNavigation.setupWithNavController(this)
             addOnNavigatedListener { _, destination ->
-                setTitle(destination.label)
-                showUpNavigation(destination.id in upNavigationEnabledFragments)
                 layoutBottomNavigation.visibleIf(destination.id in bottomBarEnabledFragments)
             }
         }
