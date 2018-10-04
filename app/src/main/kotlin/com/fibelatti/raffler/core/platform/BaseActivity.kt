@@ -29,10 +29,6 @@ abstract class BaseActivity : AppCompatActivity() {
         error.printStackTrace()
     }
 
-    fun showUpNavigation(predicate: Boolean) {
-        supportActionBar?.setDisplayHomeAsUpEnabled(predicate)
-    }
-
     private fun setupTheme() {
         if (currentInstallSharedPreferences.getTheme() == AppConfig.AppTheme.CLASSIC) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
