@@ -19,7 +19,7 @@ import com.fibelatti.raffler.core.platform.BaseFragment
 import com.fibelatti.raffler.core.platform.BaseViewType
 import com.fibelatti.raffler.features.myraffles.presentation.CreateCustomRaffleFragment
 import com.fibelatti.raffler.features.quickdecision.presentation.adapter.QuickDecisionAdapter
-import kotlinx.android.synthetic.main.fragment_recycler_view.*
+import kotlinx.android.synthetic.main.fragment_quick_decisions.*
 import kotlinx.android.synthetic.main.layout_hint_container.*
 import javax.inject.Inject
 
@@ -44,7 +44,7 @@ class QuickDecisionFragment : BaseFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        inflater.inflate(R.layout.fragment_recycler_view, container, false)
+        inflater.inflate(R.layout.fragment_quick_decisions, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
