@@ -14,6 +14,7 @@
         <item name="android:windowAnimationStyle">@style/AppTheme.AppActivityAnimation</item>
         <item name="fontFamily">@font/opensansregular</item>
         <item name="buttonStyle">@style/AppTheme.ButtonPrimary</item>
+        <item name="checkboxStyle">@style/AppTheme.Checkbox</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -38,6 +39,12 @@
         <item name="colorAccent">@color/color_accent</item>
         <item name="colorControlNormal">@color/text_secondary</item>
         <item name="colorControlActivated">@color/color_accent</item>
+    </style>
+
+    <style name="AppTheme.Checkbox" parent="Base.Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">@dimen/text_size_regular</item>
+        <item name="android:fontFamily">@font/opensansregular</item>
     </style>
 
     <style name="AppTheme.ButtonPrimary" parent="Base.Widget.AppCompat.Button.Borderless.Colored">
