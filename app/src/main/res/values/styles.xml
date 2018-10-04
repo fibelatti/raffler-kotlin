@@ -12,6 +12,7 @@
         <item name="android:statusBarColor">@color/color_status_bar</item>
         <item name="android:fitsSystemWindows">true</item>
         <item name="android:windowAnimationStyle">@style/AppTheme.AppActivityAnimation</item>
+        <item name="android:alertDialogTheme">@style/AppTheme.AlertDialog</item>
         <item name="fontFamily">@font/opensansregular</item>
         <item name="buttonStyle">@style/AppTheme.ButtonPrimary</item>
         <item name="checkboxStyle">@style/AppTheme.Checkbox</item>
@@ -25,6 +26,25 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" />
+
+    <style name="AppTheme.AlertDialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="android:colorPrimary">@color/text_primary</item>
+        <item name="android:colorAccent">@color/color_accent</item>
+    </style>
+
+    <style name="AppTheme.BottomSheetModal" parent="@style/Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/background_bottom_sheet</item>
+    </style>
+
+    <style name="AppTheme.BaseBottomSheetDialog" parent="@style/Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="bottomSheetStyle">@style/AppTheme.BottomSheetModal</item>
+    </style>
+
+    <style name="AppTheme.BaseBottomSheetDialog.BottomSheetDialog">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/color_black</item>
+    </style>
 
     <style name="AppTheme.AppActivityAnimation" parent="@android:style/Animation.Activity">
         <item name="android:activityOpenEnterAnimation">@anim/slide_right_in</item>
