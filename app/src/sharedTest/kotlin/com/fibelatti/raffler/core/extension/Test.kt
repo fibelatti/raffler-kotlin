@@ -3,7 +3,7 @@
 package com.fibelatti.raffler.core.extension
 
 import junit.framework.AssertionFailedError
-import kotlinx.coroutines.experimental.runBlocking
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.mockito.BDDMockito
@@ -25,6 +25,8 @@ inline fun <reified T : Any> mock(): T = mock(T::class.java)
 fun <T> givenSuspend(methodCall: suspend () -> T): BDDMockito.BDDMyOngoingStubbing<T> {
     return given(runBlocking { methodCall() })
 }
+
+fun <T> callSuspend(methodCall: suspend () -> T): T = runBlocking { methodCall() }
 
 // region Assertions
 fun throwAssertionError() {

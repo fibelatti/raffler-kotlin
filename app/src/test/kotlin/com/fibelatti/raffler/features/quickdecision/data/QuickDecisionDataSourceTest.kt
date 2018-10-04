@@ -2,6 +2,7 @@ package com.fibelatti.raffler.features.quickdecision.data
 
 import com.fibelatti.raffler.BaseTest
 import com.fibelatti.raffler.MockDataProvider
+import com.fibelatti.raffler.core.extension.callSuspend
 import com.fibelatti.raffler.core.extension.givenSuspend
 import com.fibelatti.raffler.core.extension.shouldBe
 import com.fibelatti.raffler.core.extension.shouldBeAnInstanceOf
@@ -13,7 +14,6 @@ import com.fibelatti.raffler.core.functional.getOrNull
 import com.fibelatti.raffler.core.provider.ResourceProvider
 import com.fibelatti.raffler.features.quickdecision.QuickDecision
 import com.google.gson.reflect.TypeToken
-import kotlinx.coroutines.experimental.runBlocking
 import org.junit.Before
 import org.junit.Test
 import org.mockito.ArgumentMatchers.anyInt
@@ -61,7 +61,7 @@ class QuickDecisionDataSourceTest : BaseTest() {
             .willReturn(mockQuickDecisionDtoList)
 
         // WHEN
-        val result = runBlocking { quickDecisionDataSource.getAllQuickDecisions() }
+        val result = callSuspend { quickDecisionDataSource.getAllQuickDecisions() }
 
         // THEN
         result shouldBeAnInstanceOf Success::class
@@ -81,7 +81,7 @@ class QuickDecisionDataSourceTest : BaseTest() {
             .willReturn(null)
 
         // WHEN
-        val result = runBlocking { quickDecisionDataSource.getAllQuickDecisions() }
+        val result = callSuspend { quickDecisionDataSource.getAllQuickDecisions() }
 
         // THEN
         result shouldBeAnInstanceOf Failure::class
@@ -103,7 +103,7 @@ class QuickDecisionDataSourceTest : BaseTest() {
             .willAnswer { throw mockError }
 
         // WHEN
-        val result = runBlocking { quickDecisionDataSource.getAllQuickDecisions() }
+        val result = callSuspend { quickDecisionDataSource.getAllQuickDecisions() }
 
         // THEN
         result shouldBeAnInstanceOf Failure::class
@@ -123,7 +123,7 @@ class QuickDecisionDataSourceTest : BaseTest() {
             .willReturn(mockQuickDecisionList)
 
         // WHEN
-        val result = runBlocking { quickDecisionDataSource.getAllQuickDecisions() }
+        val result = callSuspend { quickDecisionDataSource.getAllQuickDecisions() }
 
         // THEN
         result shouldBeAnInstanceOf Success::class
@@ -139,7 +139,7 @@ class QuickDecisionDataSourceTest : BaseTest() {
             .willAnswer { throw mockError }
 
         // WHEN
-        val result = runBlocking { quickDecisionDataSource.addQuickDecisions(mockQuickDecisionList) }
+        val result = callSuspend { quickDecisionDataSource.addQuickDecisions(mockQuickDecisionList) }
 
         // THEN
         result shouldBeAnInstanceOf Failure::class
@@ -151,7 +151,7 @@ class QuickDecisionDataSourceTest : BaseTest() {
     @Test
     fun `WHEN addQuickDecisions is called THEN Success is returned`() {
         // WHEN
-        val result = runBlocking { quickDecisionDataSource.addQuickDecisions(mockQuickDecisionList) }
+        val result = callSuspend { quickDecisionDataSource.addQuickDecisions(mockQuickDecisionList) }
 
         // THEN
         result shouldBeAnInstanceOf Success::class
