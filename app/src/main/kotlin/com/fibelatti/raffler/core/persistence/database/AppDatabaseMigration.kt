@@ -3,6 +3,7 @@ package com.fibelatti.raffler.core.persistence.database
 import android.util.Log
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.fibelatti.raffler.features.preferences.data.PREFERENCES_TABLE_INITIAL_SETUP
 
 fun getDatabaseMigrations(): Array<Migration> =
     arrayOf(
@@ -68,7 +69,7 @@ object MigrationFrom4To5 : Migration(DATABASE_VERSION_4, DATABASE_VERSION_5) {
             } catch (e: Exception) {
                 logLegacyError()
 
-                database.execSQL("INSERT INTO `Preferences` VALUES (1, 0, '')")
+                database.execSQL(PREFERENCES_TABLE_INITIAL_SETUP)
             }
         }
 
