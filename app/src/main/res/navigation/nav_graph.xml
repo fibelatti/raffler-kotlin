@@ -9,7 +9,7 @@
         android:id="@+id/fragmentQuickDecision"
         android:name="com.fibelatti.raffler.features.quickdecision.presentation.QuickDecisionFragment"
         android:label="@string/app_name"
-        tools:layout="@layout/fragment_recycler_view">
+        tools:layout="@layout/fragment_quick_decisions">
 
         <action
             android:id="@+id/action_fragmentQuickDecision_to_fragmentQuickDecisionResult"

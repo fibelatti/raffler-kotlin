@@ -89,6 +89,14 @@
         <item name="android:layout_gravity">end</item>
     </style>
 
+    <style name="AppTheme.ClickableIcon">
+        <item name="android:layout_width">@dimen/clickable_area</item>
+        <item name="android:layout_height">@dimen/clickable_area</item>
+        <item name="android:padding">@dimen/padding_small</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+
     <style name="AppTheme.Text" />
 
     <style name="AppTheme.Text.Title">

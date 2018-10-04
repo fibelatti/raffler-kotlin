@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_background"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingTop="@dimen/padding_regular">
 
     <include layout="@layout/layout_hint_container" />
 
@@ -23,5 +24,6 @@
         android:clipToPadding="false"
         android:paddingLeft="@dimen/padding_regular"
         android:paddingRight="@dimen/padding_regular"
+        android:paddingBottom="@dimen/padding_regular"
         android:visibility="gone" />
 </LinearLayout>
