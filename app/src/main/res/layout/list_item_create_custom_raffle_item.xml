@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/layoutRootCustomRaffleItem"
+    android:id="@+id/layoutRootCreateCustomRaffleItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/selector_custom_raffle_item_background"
@@ -13,18 +12,11 @@
     android:paddingLeft="@dimen/padding_small"
     android:paddingRight="@dimen/padding_small">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imageViewSelected"
-        style="@style/AppTheme.Text.Body"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/margin_small"
-        app:srcCompat="@drawable/ic_check_circle" />
-
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewCustomRaffleItemDescription"
+        android:id="@+id/textViewCreateCustomRaffleItemDescription"
         style="@style/AppTheme.Text.Body"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         tools:text="Some custom raffle item" />
 </LinearLayout>
