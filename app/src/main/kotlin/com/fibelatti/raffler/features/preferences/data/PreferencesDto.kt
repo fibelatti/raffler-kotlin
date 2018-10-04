@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey
 
 const val PREFERENCES_DTO_TABLE_NAME = "Preferences"
 const val PREFERENCES_DTO_ROULETTE_MUSIC_ENABLED_COLUMN_NAME = "rouletteMusicEnabled"
+const val PREFERENCES_TABLE_INITIAL_SETUP = "INSERT INTO `Preferences` VALUES (1, 0, '')"
 
 @Entity(tableName = PREFERENCES_DTO_TABLE_NAME)
 data class PreferencesDto(

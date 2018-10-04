@@ -11,20 +11,43 @@ class ItemOffsetDecoration(private val itemOffset: Int) : RecyclerView.ItemDecor
     constructor(context: Context, @DimenRes itemOffsetId: Int) : this(context.resources.getDimensionPixelSize(itemOffsetId))
 
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
-        (view.layoutParams as? GridLayoutManager.LayoutParams)?.apply {
-            if (viewLayoutPosition == RecyclerView.NO_POSITION) {
-                outRect.set(0, 0, 0, 0)
-                return
-            }
+        val layoutParams = view.layoutParams
 
-            // add edge margin only if item edge is not the grid edge
-            outRect.apply {
-                // is left grid edge?
-                left = if (spanIndex == 0) 0 else itemOffset
-                // is top grid edge?
-                top = if (spanIndex == viewLayoutPosition) 0 else itemOffset
-                right = 0
-                bottom = 0
+        when (layoutParams) {
+            is GridLayoutManager.LayoutParams -> {
+                layoutParams.apply {
+                    if (viewLayoutPosition == RecyclerView.NO_POSITION) {
+                        outRect.set(0, 0, 0, 0)
+                        return
+                    }
+
+                    // add edge margin only if item edge is not the grid edge
+                    outRect.apply {
+                        // is left grid edge?
+                        left = if (spanIndex == 0) 0 else itemOffset
+                        // is top grid edge?
+                        top = if (spanIndex == viewLayoutPosition) 0 else itemOffset
+                        right = 0
+                        bottom = 0
+                    }
+                }
+            }
+            is RecyclerView.LayoutParams -> {
+                layoutParams.apply {
+                    if (viewLayoutPosition == RecyclerView.NO_POSITION) {
+                        outRect.set(0, 0, 0, 0)
+                        return
+                    }
+
+                    // add edge margin only if item edge is not the grid edge
+                    outRect.apply {
+                        left = 0
+                        // is top grid edge?
+                        top = 0
+                        right = 0
+                        bottom = if (viewLayoutPosition == parent.adapter?.itemCount) 0 else itemOffset
+                    }
+                }
             }
         }
     }

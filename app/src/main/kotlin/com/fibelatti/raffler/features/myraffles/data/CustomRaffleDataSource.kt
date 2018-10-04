@@ -18,31 +18,27 @@ class CustomRaffleDataSource @Inject constructor(
     private val customRaffleItemDao: CustomRaffleItemDao,
     private val customRaffleWithItemsDtoMapper: CustomRaffleWithItemsDtoMapper
 ) : CustomRaffleRepository {
-    override suspend fun getAllCustomRaffles(): Result<List<CustomRaffle>> {
-        return runCatching {
-            customRaffleDao.getAllCustomRaffles()
-                .map(customRaffleWithItemsDtoMapper::map)
-        }
-    }
+    override suspend fun getAllCustomRaffles(): Result<List<CustomRaffle>> =
+        customRaffleDao.runCatching { getAllCustomRaffles().map(customRaffleWithItemsDtoMapper::map) }
 
-    override suspend fun getCustomRaffleById(id: Long): Result<CustomRaffle> {
-        return runCatching {
-            customRaffleDao.getCustomRaffleById(id)
-                .let(customRaffleWithItemsDtoMapper::map)
-        }
-    }
+    override suspend fun getCustomRaffleById(id: Long): Result<CustomRaffle> =
+        customRaffleDao.runCatching { getCustomRaffleById(id).let(customRaffleWithItemsDtoMapper::map) }
 
     override suspend fun addCustomRaffle(customRaffle: CustomRaffle): Result<Unit> {
         return runCatching {
             with(customRaffle.let(customRaffleWithItemsDtoMapper::mapReverse)) {
                 appDatabase.runInTransaction {
                     customRaffleDao.deleteCustomRaffleById(customRaffleDto.id)
-                    customRaffleDao.saveCustomRaffle(customRaffleDto)
+                    val customRaffleId = customRaffleDao.saveCustomRaffle(customRaffleDto)
+                    val items = items.map { it.copy(customRaffleId = customRaffleId) }
                     customRaffleItemDao.saveCustomRaffleItems(*items.toTypedArray())
                 }
             }
         }
     }
+
+    override suspend fun deleteCustomRaffleById(id: Long): Result<Unit> =
+        customRaffleDao.runCatching { deleteCustomRaffleById(id) }
 }
 
 @Dao
@@ -56,7 +52,7 @@ interface CustomRaffleDao {
     fun getAllCustomRaffles(): List<CustomRaffleWithItemsDto>
 
     @Insert(onConflict = REPLACE)
-    fun saveCustomRaffle(customRaffleDto: CustomRaffleDto)
+    fun saveCustomRaffle(customRaffleDto: CustomRaffleDto): Long
 
     @Query("delete from $CUSTOM_RAFFLE_TABLE_NAME where $CUSTOM_RAFFLE_ID_COLUMN_NAME = :id")
     fun deleteCustomRaffleById(id: Long)
