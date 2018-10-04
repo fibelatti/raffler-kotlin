@@ -1,6 +1,6 @@
 object Versions {
     const val gradleVersion = "3.2.0"
-    const val kotlinVersion = "1.2.71"
+    const val kotlinVersion = "1.3.0-rc-57"
     const val dexCountPlugin = "0.8.2"
     const val jacocoVersion = "0.8.1"
 
@@ -14,8 +14,8 @@ object Versions {
     internal const val materialDesignVersion = "1.0.0"
     internal const val constraintLayoutVersion = "1.1.2"
 
-    internal const val coroutinesCoreVersion = "0.26.1"
-    internal const val coroutinesAndroidVersion = "0.26.1"
+    internal const val coroutinesCoreVersion = "0.26.1-eap13"
+    internal const val coroutinesAndroidVersion = "0.26.1-eap13"
 
     internal const val archComponentsVersion = "2.0.0-rc01"
     internal const val navigationVersion = "1.0.0-alpha06"
