@@ -9,7 +9,7 @@ abstract class BaseFragment :
     protected val injector by lazy { (activity as BaseActivity).injector }
     protected val viewModelFactory by lazy { (activity as BaseActivity).viewModelFactory }
 
-    fun handleError(error: Throwable) {
+    open fun handleError(error: Throwable) {
         error.printStackTrace()
     }
 }

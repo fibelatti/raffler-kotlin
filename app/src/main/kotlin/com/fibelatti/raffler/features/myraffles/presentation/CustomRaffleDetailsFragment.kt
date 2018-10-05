@@ -10,7 +10,6 @@ import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.error
 import com.fibelatti.raffler.core.extension.observe
 import com.fibelatti.raffler.core.extension.orZero
-import com.fibelatti.raffler.core.extension.setTitle
 import com.fibelatti.raffler.core.extension.withDefaultDecoration
 import com.fibelatti.raffler.core.extension.withLinearLayoutManager
 import com.fibelatti.raffler.core.platform.BaseFragment
@@ -21,7 +20,10 @@ import javax.inject.Inject
 
 private var Bundle.customRaffleId by BundleDelegate.Int("CUSTOM_RAFFLE_ID")
 
-class CustomRaffleDetailsFragment : BaseFragment() {
+class CustomRaffleDetailsFragment :
+    BaseFragment(),
+    CustomRaffleModes by CustomRaffleModesDelegate() {
+
     companion object {
         fun bundle(
             customRaffleId: Int = 0
@@ -59,8 +61,13 @@ class CustomRaffleDetailsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        setupLayout()
         setupRecyclerView()
+        customRaffleDetailsViewModel.getCustomRaffleById(arguments?.customRaffleId.orZero())
+    }
+
+    private fun setupLayout() {
+        layoutTitle.navigateUp { layoutRoot.findNavController().navigateUp() }
 
         buttonEdit.setOnClickListener {
             layoutRoot.findNavController().navigate(
@@ -69,22 +76,32 @@ class CustomRaffleDetailsFragment : BaseFragment() {
                 CreateCustomRaffleFragment.navOptionsEdit()
             )
         }
-    }
 
-    override fun onResume() {
-        super.onResume()
-        customRaffleDetailsViewModel.getCustomRaffleById(arguments?.customRaffleId.orZero())
+        buttonRaffle.setOnClickListener {
+            showRaffleModes(
+                requireContext(),
+                rouletteClickListener = {
+                    layoutRoot.findNavController().navigate(
+                        R.id.action_fragmentCustomRaffleDetails_to_fragmentCustomRaffleRoulette,
+                        null,
+                        CustomRaffleRouletteFragment.navOptions()
+                    )
+                }
+            )
+        }
     }
 
     private fun setupRecyclerView() {
         recyclerViewItems.withDefaultDecoration()
             .withLinearLayoutManager()
             .adapter = adapter
+
+        adapter.clickListener = customRaffleDetailsViewModel::updateItemSelection
     }
 
     private fun showCustomRaffleDetails(customRaffleModel: CustomRaffleModel) {
         with(customRaffleModel) {
-            setTitle(description)
+            layoutTitle.setTitle(description)
             adapter.submitList(items)
         }
     }

@@ -8,7 +8,11 @@ data class CustomRaffleItemModel(
     val id: Long,
     val customRaffleId: Long,
     val description: String
-)
+) {
+    companion object {
+        fun empty() = CustomRaffleItemModel(0, 0, "")
+    }
+}
 
 class CustomRaffleItemModelMapper @Inject constructor() : Mapper<CustomRaffleItem, CustomRaffleItemModel> {
     override fun map(param: CustomRaffleItem): CustomRaffleItemModel {

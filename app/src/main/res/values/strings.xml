@@ -7,14 +7,17 @@
     <string name="hint_done">Done</string>
     <string name="hint_save">Save</string>
     <string name="hint_edit">Edit</string>
+    <string name="hint_delete">Delete</string>
+    <string name="hint_continue">Continue</string>
     <string name="hint_cancel">Cancel</string>
     <string name="hint_search">Search</string>
-    <string name="hint_back">Navigate back</string>
     <string name="hint_try_again">Try again</string>
     <string name="hint_loading">Loading</string>
     <string name="hint_dismiss">Dismiss</string>
     <string name="hint_reset">Reset</string>
     <string name="hint_did_you_know">Did you know?</string>
+
+    <string name="alert_confirm_deletion">Confirm deletion?</string>
 
     <string name="generic_log_error">Error in %1$s (%2$s)</string>
 
@@ -36,7 +39,7 @@
     <!-- Lottery -->
     <string name="lottery_quantity_available">Quantity available</string>
     <string name="lottery_quantity_to_raffle">Quantity to raffle</string>
-    <string name="lottery_quantity_validation_error">Please enter a valid quantity</string>
+    <string name="lottery_quantity_validation_error">Please enter a valid quantity.</string>
     <string name="lottery_raffle_button">Raffle numbers</string>
 
     <!-- My Raffles -->
@@ -45,11 +48,23 @@
     <string name="my_raffles_items_quantity">%d items</string>
     <string name="my_raffles_create_first_button">Create raffle</string>
 
+    <!-- Custom Raffle - Details -->
+    <string name="custom_raffle_details_mode_title">Raffle modes</string>
+    <string name="custom_raffle_details_mode_button">Raffle!</string>
+    <string name="custom_raffle_details_mode_roulette">Roulette</string>
+    <string name="custom_raffle_details_mode_roulette_description">Choose a single winner randomly, with a spinning animation and song</string>
+
     <!-- Custom Raffle - New or Edit -->
     <string name="custom_raffle_description">Description</string>
     <string name="custom_raffle_add_shortcut">Show as Quick Decision shortcut</string>
     <string name="custom_raffle_item_description">Item description</string>
     <string name="custom_raffle_edit_title">Editing %s</string>
+    <string name="custom_raffle_create_remove_all_items">Remove all items</string>
+    <string name="custom_raffle_create_invalid_description">Please enter a valid description.</string>
+    <string name="custom_raffle_create_invalid_items_quantity">A custom raffle should have at least 2 items.</string>
+
+    <!-- Custom Raffle - Roulette -->
+    <string name="custom_raffle_roulette_stop_hint">Stopping…</string>
 
     <!-- Preferences -->
     <string name="preferences_changes_saved">Changes saved</string>

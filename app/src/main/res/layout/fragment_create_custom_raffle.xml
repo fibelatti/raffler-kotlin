@@ -8,24 +8,26 @@
     android:background="@color/color_background"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    android:orientation="vertical"
-    tools:context=".features.home.HomeActivity">
+    android:paddingTop="@dimen/padding_regular"
+    android:paddingBottom="@dimen/padding_regular">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/buttonCancel"
-        style="@style/AppTheme.TextButton.Small"
+    <com.fibelatti.raffler.core.platform.TitleLayout
+        android:id="@+id/layoutTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_regular"
-        android:layout_marginTop="@dimen/margin_regular"
-        android:text="@string/hint_cancel"
+        android:layout_marginRight="@dimen/margin_regular"
+        app:layout_constraintBottom_toTopOf="@+id/inputLayoutCustomRaffleDescription"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/buttonSave"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/buttonSave"
         style="@style/AppTheme.ButtonPrimary.Small"
-        android:layout_marginTop="@dimen/margin_regular"
         android:layout_marginRight="@dimen/margin_regular"
         android:text="@string/hint_save"
+        app:layout_constraintLeft_toRightOf="@+id/layoutTitle"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -37,9 +39,10 @@
         android:layout_marginTop="@dimen/margin_regular"
         android:layout_marginRight="@dimen/margin_regular"
         android:theme="@style/AppTheme.InputLayout"
+        app:layout_constraintBottom_toTopOf="@+id/checkboxAddShortcut"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonCancel">
+        app:layout_constraintTop_toBottomOf="@+id/layoutTitle">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextCustomRaffleDescription"
@@ -52,23 +55,21 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.AppCompatCheckBox
-        android:id="@+id/checkBoxAddShortcut"
+        android:id="@+id/checkboxAddShortcut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_regular"
+        android:layout_marginRight="@dimen/margin_regular"
+        android:text="@string/custom_raffle_add_shortcut"
+        app:layout_constraintBottom_toTopOf="@+id/inputLayoutCustomRaffleItemDescription"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inputLayoutCustomRaffleDescription" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewAddShortcut"
-        style="@style/AppTheme.Text.Body"
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/groupCollapsibleViews"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/margin_regular"
-        android:text="@string/custom_raffle_add_shortcut"
-        app:layout_constraintBaseline_toBaselineOf="@+id/checkBoxAddShortcut"
-        app:layout_constraintLeft_toRightOf="@+id/checkBoxAddShortcut"
-        app:layout_constraintRight_toRightOf="parent" />
+        android:layout_height="0dp"
+        app:constraint_referenced_ids="inputLayoutCustomRaffleDescription,checkboxAddShortcut" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/inputLayoutCustomRaffleItemDescription"
@@ -78,11 +79,12 @@
         android:layout_marginTop="@dimen/margin_regular"
         android:layout_marginRight="@dimen/margin_regular"
         android:theme="@style/AppTheme.InputLayout"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerViewItems"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/imageButtonAddItem"
-        app:layout_constraintTop_toBottomOf="@+id/checkBoxAddShortcut">
+        app:layout_constraintTop_toBottomOf="@+id/checkboxAddShortcut">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.fibelatti.raffler.core.platform.BackPressReactiveTextInputEditText
             android:id="@+id/editTextCustomRaffleItemDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -100,6 +102,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/inputLayoutCustomRaffleItemDescription"
         app:layout_constraintLeft_toRightOf="@+id/inputLayoutCustomRaffleItemDescription"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/inputLayoutCustomRaffleItemDescription"
         app:srcCompat="@drawable/ic_add_item" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -108,6 +111,39 @@
         android:layout_height="0dp"
         android:clipToPadding="false"
         android:padding="@dimen/padding_regular"
+        app:layout_constraintBottom_toTopOf="@+id/dividerDeleteAll"
+        app:layout_constraintTop_toBottomOf="@+id/inputLayoutCustomRaffleItemDescription"
+        tools:listitem="@layout/list_item_create_custom_raffle_item" />
+
+    <include
+        android:id="@+id/dividerDeleteAll"
+        layout="@layout/layout_divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_size"
+        android:layout_marginLeft="@dimen/margin_regular"
+        android:layout_marginRight="@dimen/margin_regular"
+        android:layout_marginBottom="@dimen/margin_regular"
+        app:layout_constraintBottom_toTopOf="@+id/buttonRemoveAll"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerViewItems" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/buttonRemoveAll"
+        style="@style/AppTheme.TextButton.Small"
+        android:layout_marginRight="@dimen/margin_regular"
+        android:text="@string/custom_raffle_create_remove_all_items"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputLayoutCustomRaffleItemDescription" />
+        app:layout_constraintRight_toLeftOf="@+id/buttonDelete"
+        app:layout_constraintTop_toBottomOf="@+id/dividerDeleteAll" />
+
+    <Button
+        android:id="@+id/buttonDelete"
+        style="@style/AppTheme.ButtonPrimary.Small"
+        android:layout_marginRight="@dimen/margin_regular"
+        android:text="@string/hint_delete"
+        android:visibility="gone"
+        app:layout_constraintBaseline_toBaselineOf="@+id/buttonRemoveAll"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dividerDeleteAll"
+        tools:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>
