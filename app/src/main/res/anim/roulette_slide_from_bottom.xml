@@ -2,18 +2,18 @@
 <set xmlns:android="http://schemas.android.com/apk/res/android">
     <translate
         android:duration="350"
-        android:fromXDelta="50%p"
-        android:toXDelta="0" />
+        android:fromYDelta="50%p"
+        android:toYDelta="0" />
     <alpha
         android:duration="350"
         android:fromAlpha="0.0"
         android:toAlpha="1.0" />
     <scale
         android:duration="350"
-        android:fromXScale="0.5"
-        android:fromYScale="1.0"
+        android:fromXScale="1.0"
+        android:fromYScale="0.0"
         android:pivotX="50%"
-        android:pivotY="50%"
+        android:pivotY="100%"
         android:toXScale="1.0"
         android:toYScale="1.0" />
 </set>

@@ -51,6 +51,7 @@
     <!-- Custom Raffle - Details -->
     <string name="custom_raffle_details_mode_title">Raffle modes</string>
     <string name="custom_raffle_details_mode_button">Raffle!</string>
+    <string name="custom_raffle_details_mode_invalid_quantity">Select at least 2 items to raffle.</string>
     <string name="custom_raffle_details_mode_roulette">Roulette</string>
     <string name="custom_raffle_details_mode_roulette_description">Choose a single winner randomly, with a spinning animation and song</string>
 
@@ -64,7 +65,9 @@
     <string name="custom_raffle_create_invalid_items_quantity">A custom raffle should have at least 2 items.</string>
 
     <!-- Custom Raffle - Roulette -->
-    <string name="custom_raffle_roulette_stop_hint">Stopping…</string>
+    <string name="custom_raffle_roulette_hint_play">Play</string>
+    <string name="custom_raffle_roulette_hint_stop">Stop</string>
+    <string name="custom_raffle_roulette_hint_stopping">Stopping…</string>
 
     <!-- Preferences -->
     <string name="preferences_changes_saved">Changes saved</string>
@@ -82,7 +85,7 @@
 
     <string name="preferences_share">Share Raffler</string>
     <string name="preferences_share_title">Sharing Raffler</string>
-    <string name="preferences_share_text">Check out Raffler! Making decisions never been so easy. Download at %s</string>
+    <string name="preferences_share_text">Check out Raffler! Making decisions never been so easy. Download at %s.</string>
     <string name="preferences_rate">Rate Raffler</string>
     <string name="preferences_about">Developed with ❤ by Filipe Belatti</string>
     <string name="preferences_app_version">Version: %s</string>

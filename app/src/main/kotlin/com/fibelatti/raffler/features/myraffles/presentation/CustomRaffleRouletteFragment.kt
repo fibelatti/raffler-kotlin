@@ -1,20 +1,17 @@
 package com.fibelatti.raffler.features.myraffles.presentation
 
 import android.os.Bundle
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.FrameLayout
-import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import com.fibelatti.raffler.R
+import com.fibelatti.raffler.core.extension.animateChangingTransitions
 import com.fibelatti.raffler.core.extension.error
+import com.fibelatti.raffler.core.extension.exhaustive
 import com.fibelatti.raffler.core.extension.observe
 import com.fibelatti.raffler.core.extension.orFalse
-import com.fibelatti.raffler.core.extension.snackbar
 import com.fibelatti.raffler.core.platform.BaseFragment
 import kotlinx.android.synthetic.main.fragment_custom_raffle_roulette.*
 import javax.inject.Inject
@@ -63,6 +60,8 @@ class CustomRaffleRouletteFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        layoutRoot.animateChangingTransitions()
+
         customRaffleDetailsViewModel.preparedRaffle.value?.let { layoutTitle.setTitle(it.description) }
         layoutTitle.navigateUp { layoutRoot.findNavController().navigateUp() }
 
@@ -83,38 +82,41 @@ class CustomRaffleRouletteFragment : BaseFragment() {
 
     private fun setupFab() {
         fab.setOnClickListener {
-            if (rouletteDelegate.isPlaying) {
-                rouletteDelegate.stopRoulette(::onRouletteStopped)
-                layoutRoot.snackbar(getString(R.string.custom_raffle_roulette_stop_hint))
-            } else {
-                rouletteDelegate.startRoulette(
-                    onRouletteStarted = ::onRouletteStarted,
-                    onRouletteIndexUpdated = ::onRouletteIndexUpdated
-                )
-            }
+            when (rouletteDelegate.status) {
+                CustomRaffleRouletteDelegate.RouletteStatus.PLAYING -> {
+                    rouletteDelegate.stopRoulette(::onRouletteStopped)
+                    fab.setText(R.string.custom_raffle_roulette_hint_stopping)
+                }
+                CustomRaffleRouletteDelegate.RouletteStatus.IDLE -> {
+                    rouletteDelegate.startRoulette(
+                        onRouletteStarted = ::onRouletteStarted,
+                        onRouletteIndexUpdated = ::onRouletteIndexUpdated
+                    )
+                }
+                else -> {
+                }
+            }.exhaustive
         }
     }
 
     private fun setupAnimations() {
         textSwitcher.apply {
-            inAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.roulette_slide_from_right)
-            outAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.roulette_slide_to_left)
+            inAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.roulette_slide_from_bottom)
+            outAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.roulette_slide_to_top)
         }
     }
 
     private fun setupFactory() {
         textSwitcher.setFactory {
-            TextView(requireContext()).apply {
-                layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
-                gravity = Gravity.CENTER
-                textSize = context.resources.getDimension(R.dimen.text_size_regular)
-                setTextColor(ContextCompat.getColor(context, R.color.color_accent))
-            }
+            LayoutInflater.from(requireContext()).inflate(R.layout.layout_roulette_text, textSwitcher, false)
         }
     }
 
     private fun onRouletteStarted() {
-        fab?.setImageResource(R.drawable.ic_stop)
+        fab?.apply {
+            setText(R.string.custom_raffle_roulette_hint_stop)
+            setIconResource(R.drawable.ic_stop)
+        }
         activity?.window?.addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     }
 
@@ -125,6 +127,9 @@ class CustomRaffleRouletteFragment : BaseFragment() {
     }
 
     private fun onRouletteStopped() {
-        fab?.setImageResource(R.drawable.ic_play)
+        fab?.apply {
+            setText(R.string.custom_raffle_roulette_hint_play)
+            setIconResource(R.drawable.ic_play)
+        }
     }
 }
