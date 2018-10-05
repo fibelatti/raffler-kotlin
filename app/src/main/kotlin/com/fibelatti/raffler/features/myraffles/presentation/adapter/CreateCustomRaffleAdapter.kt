@@ -1,25 +1,19 @@
 package com.fibelatti.raffler.features.myraffles.presentation.adapter
 
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.inflate
-import com.fibelatti.raffler.core.extension.visibleIf
 import com.fibelatti.raffler.features.myraffles.presentation.CustomRaffleItemModel
-import kotlinx.android.synthetic.main.list_item_custom_raffle_item.view.*
-
+import kotlinx.android.synthetic.main.list_item_create_custom_raffle_item.view.*
 import javax.inject.Inject
 
-class CustomRaffleDetailsAdapter
-@Inject constructor() : ListAdapter<CustomRaffleItemModel, CustomRaffleDetailsAdapter.DataViewHolder>(
-    CustomRaffleItemModelDiffCallback
+class CreateCustomRaffleAdapter
+@Inject constructor() : ListAdapter<CustomRaffleItemModel, CreateCustomRaffleAdapter.DataViewHolder>(
+    CreateCustomRaffleItemModelDiffCallback
 ) {
-
-    var clickListener: (CustomRaffleItemModel, Boolean) -> Unit = { _, _ -> }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder = DataViewHolder(parent)
 
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
@@ -27,26 +21,19 @@ class CustomRaffleDetailsAdapter
     }
 
     inner class DataViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
-        parent.inflate(R.layout.list_item_custom_raffle_item)
+        parent.inflate(R.layout.list_item_create_custom_raffle_item)
     ) {
         fun bind(item: CustomRaffleItemModel) = with(itemView) {
             item.run {
-                layoutRootCustomRaffleItem.isSelected = isSelected
-                textViewCustomRaffleItemDescription.text = description
-
-                setOnClickListener {
-                    layoutRootCustomRaffleItem.isSelected = !layoutRootCustomRaffleItem.isSelected
-                    imageViewSelected.visibleIf(layoutRootCustomRaffleItem.isSelected, otherwiseVisibility = View.INVISIBLE)
-                    clickListener(item, layoutRootCustomRaffleItem.isSelected)
-                }
+                textViewCreateCustomRaffleItemDescription.text = description
             }
         }
     }
 }
 
-object CustomRaffleItemModelDiffCallback : DiffUtil.ItemCallback<CustomRaffleItemModel>() {
+object CreateCustomRaffleItemModelDiffCallback : DiffUtil.ItemCallback<CustomRaffleItemModel>() {
     override fun areItemsTheSame(oldItem: CustomRaffleItemModel, newItem: CustomRaffleItemModel): Boolean {
-        return oldItem.id == newItem.id
+        return oldItem.description == newItem.description
     }
 
     override fun areContentsTheSame(oldItem: CustomRaffleItemModel, newItem: CustomRaffleItemModel): Boolean {

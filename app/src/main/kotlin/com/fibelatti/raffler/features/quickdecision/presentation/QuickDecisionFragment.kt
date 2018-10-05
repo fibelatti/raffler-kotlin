@@ -54,10 +54,6 @@ class QuickDecisionFragment : BaseFragment() {
             hintTitle = getString(R.string.hint_did_you_know),
             hintMessage = getString(R.string.quick_decision_dismissible_hint)
         )
-    }
-
-    override fun onResume() {
-        super.onResume()
         quickDecisionViewModel.getAllQuickDecisions()
     }
 

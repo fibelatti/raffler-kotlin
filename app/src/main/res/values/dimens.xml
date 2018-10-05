@@ -36,6 +36,7 @@
 
     <!-- Contextual dimens -->
     <dimen name="list_item_card_height">100dp</dimen>
+    <dimen name="list_item_row_height">50dp</dimen>
     <dimen name="quick_decision_result_text_size">48sp</dimen>
 
 </resources>

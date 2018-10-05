@@ -57,7 +57,15 @@
         <action
             android:id="@+id/action_fragmentCustomRaffleDetails_to_fragmentCreateCustomRaffle"
             app:destination="@id/fragmentCreateCustomRaffle" />
+        <action
+            android:id="@+id/action_fragmentCustomRaffleDetails_to_fragmentCustomRaffleRoulette"
+            app:destination="@id/fragmentCustomRaffleRoulette" />
     </fragment>
+
+    <fragment
+        android:id="@+id/fragmentCustomRaffleRoulette"
+        android:name="com.fibelatti.raffler.features.myraffles.presentation.CustomRaffleRouletteFragment"
+        tools:layout="@layout/fragment_custom_raffle_details" />
 
     <fragment
         android:id="@+id/fragmentPreferences"

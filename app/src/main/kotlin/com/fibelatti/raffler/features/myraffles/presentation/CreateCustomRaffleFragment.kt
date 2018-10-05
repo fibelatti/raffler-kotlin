@@ -6,15 +6,31 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.navigation.navOptions
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.fibelatti.raffler.R
+import com.fibelatti.raffler.core.extension.afterTextChanged
+import com.fibelatti.raffler.core.extension.alertDialogBuilder
+import com.fibelatti.raffler.core.extension.clearError
+import com.fibelatti.raffler.core.extension.clearText
 import com.fibelatti.raffler.core.extension.error
+import com.fibelatti.raffler.core.extension.gone
+import com.fibelatti.raffler.core.extension.hideKeyboard
+import com.fibelatti.raffler.core.extension.isKeyboardSubmit
 import com.fibelatti.raffler.core.extension.observe
 import com.fibelatti.raffler.core.extension.orFalse
 import com.fibelatti.raffler.core.extension.orZero
-import com.fibelatti.raffler.core.extension.setTitle
+import com.fibelatti.raffler.core.extension.showError
+import com.fibelatti.raffler.core.extension.textAsString
+import com.fibelatti.raffler.core.extension.visible
+import com.fibelatti.raffler.core.extension.withDefaultDecoration
+import com.fibelatti.raffler.core.extension.withLinearLayoutManager
 import com.fibelatti.raffler.core.platform.BaseFragment
 import com.fibelatti.raffler.core.platform.BundleDelegate
+import com.fibelatti.raffler.core.platform.RecyclerViewSwipeToDeleteCallback
+import com.fibelatti.raffler.features.myraffles.presentation.adapter.CreateCustomRaffleAdapter
 import kotlinx.android.synthetic.main.fragment_create_custom_raffle.*
+import javax.inject.Inject
 
 private var Bundle.addAsShortcut by BundleDelegate.Boolean("ADD_AS_SHORTCUT", false)
 private var Bundle.customRaffleId by BundleDelegate.Int("CUSTOM_RAFFLE_ID")
@@ -48,16 +64,33 @@ class CreateCustomRaffleFragment : BaseFragment() {
         }
     }
 
+    @Inject
+    lateinit var adapter: CreateCustomRaffleAdapter
+
     private val createCustomRaffleViewModel by lazy {
         viewModelFactory.get<CreateCustomRaffleViewModel>(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        injector.inject(this)
         createCustomRaffleViewModel.run {
             error(error, ::handleError)
             observe(showCreateCustomRaffleLayout) { showCustomRaffleNewLayout() }
-            observe(customRaffle, ::showCustomRaffleEditLayout)
+            observe(showEditCustomRaffleLayout) { showCustomRaffleEditLayout() }
+            observe(customRaffle, ::showCustomRaffleDetails)
+            observe(addAsQuickDecision) { checkboxAddShortcut.isChecked = it }
+            observe(invalidDescriptionError, ::handleInvalidDescriptionError)
+            observe(invalidItemsQuantityError, ::handleInvalidItemsQuantityError)
+            observe(invalidItemDescriptionError, ::handleInvalidItemDescriptionError)
+            observe(onChangedSaved) { layoutRoot.findNavController().navigateUp() }
+            observe(onDeleted) {
+                layoutRoot.findNavController().navigate(
+                    R.id.fragmentMyRaffles,
+                    null,
+                    navOptions { popUpTo = R.id.fragmentQuickDecision }
+                )
+            }
         }
     }
 
@@ -67,26 +100,113 @@ class CreateCustomRaffleFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupLayout()
-    }
-
-    override fun onResume() {
-        super.onResume()
+        setupRecyclerView()
         createCustomRaffleViewModel.getCustomRaffleById(arguments?.customRaffleId.orZero())
     }
 
+    override fun handleError(error: Throwable) {
+        super.handleError(error)
+        alertDialogBuilder {
+            setMessage(error.message)
+            setPositiveButton(R.string.hint_ok) { dialog, _ -> dialog.dismiss() }
+            show()
+        }
+    }
+
     private fun setupLayout() {
-        buttonCancel.setOnClickListener { layoutRoot.findNavController().navigateUp() }
+        layoutTitle.navigateUp { layoutRoot.findNavController().navigateUp() }
+
+        buttonSave.setOnClickListener { createCustomRaffleViewModel.save(checkboxAddShortcut.isChecked) }
+        editTextCustomRaffleDescription.afterTextChanged { createCustomRaffleViewModel.setDescription(it) }
+
+        editTextCustomRaffleItemDescription.apply {
+            setOnFocusChangeListener { _, hasFocus -> if (hasFocus) groupCollapsibleViews.gone() }
+            onBackPressed = {
+                clearFocus()
+                hideKeyboard()
+                groupCollapsibleViews.visible()
+            }
+            setOnEditorActionListener { _, actionId, event ->
+                return@setOnEditorActionListener if (isKeyboardSubmit(actionId, event)) {
+                    addItem()
+                    true
+                } else {
+                    false
+                }
+            }
+        }
+
+        imageButtonAddItem.setOnClickListener { addItem() }
+        buttonRemoveAll.setOnClickListener { createCustomRaffleViewModel.removeAllItems() }
+        buttonDelete.setOnClickListener {
+            alertDialogBuilder {
+                setMessage(R.string.alert_confirm_deletion)
+                setPositiveButton(R.string.hint_yes) { _, _ -> createCustomRaffleViewModel.delete() }
+                setNegativeButton(R.string.hint_no) { dialog, _ -> dialog.dismiss() }
+                show()
+            }
+        }
+    }
+
+    private fun setupRecyclerView() {
+        recyclerViewItems.withDefaultDecoration()
+            .withLinearLayoutManager()
+            .adapter = adapter
+
+        val swipeHandler = object : RecyclerViewSwipeToDeleteCallback(requireContext()) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                createCustomRaffleViewModel.removeItem(viewHolder.adapterPosition)
+            }
+        }
+
+        ItemTouchHelper(swipeHandler).attachToRecyclerView(recyclerViewItems)
     }
 
     private fun showCustomRaffleNewLayout() {
-        setTitle(R.string.title_create_custom_raffle)
-        checkBoxAddShortcut.isChecked = arguments?.addAsShortcut.orFalse()
+        layoutTitle.setTitle(R.string.title_create_custom_raffle)
+        checkboxAddShortcut.isChecked = arguments?.addAsShortcut.orFalse()
     }
 
-    private fun showCustomRaffleEditLayout(customRaffleModel: CustomRaffleModel) {
-        with(customRaffleModel) {
-            setTitle(getString(R.string.custom_raffle_edit_title, description))
-            editTextCustomRaffleDescription.setText(description)
+    private fun showCustomRaffleEditLayout() {
+        createCustomRaffleViewModel.customRaffle.value?.let {
+            layoutTitle.setTitle(getString(R.string.custom_raffle_edit_title, it.description))
+            editTextCustomRaffleDescription.setText(it.description)
+            buttonDelete.visible()
+        }
+    }
+
+    private fun showCustomRaffleDetails(customRaffleModel: CustomRaffleModel) {
+        adapter.submitList(customRaffleModel.items.toList())
+    }
+
+    private fun addItem() {
+        createCustomRaffleViewModel.addItem(editTextCustomRaffleItemDescription.textAsString())
+        editTextCustomRaffleItemDescription.clearText()
+    }
+
+    private fun handleInvalidDescriptionError(message: String) {
+        if (message.isNotEmpty()) {
+            inputLayoutCustomRaffleDescription.showError(message)
+        } else {
+            inputLayoutCustomRaffleDescription.clearError()
+        }
+    }
+
+    private fun handleInvalidItemsQuantityError(message: String) {
+        if (message.isNotBlank()) {
+            alertDialogBuilder {
+                setMessage(message)
+                setPositiveButton(R.string.hint_ok) { dialog, _ -> dialog.dismiss() }
+                show()
+            }
+        }
+    }
+
+    private fun handleInvalidItemDescriptionError(message: String) {
+        if (message.isNotEmpty()) {
+            inputLayoutCustomRaffleItemDescription.showError(message)
+        } else {
+            inputLayoutCustomRaffleItemDescription.clearError()
         }
     }
 }

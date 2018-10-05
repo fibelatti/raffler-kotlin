@@ -13,6 +13,7 @@ import com.google.gson.GsonBuilder
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
+import java.text.Collator
 import java.util.Locale
 
 @Module(includes = [
@@ -42,4 +43,8 @@ object CoreModule {
     @Provides
     @JvmStatic
     fun provideLocaleDefault(): Locale = Locale.getDefault()
+
+    @Provides
+    @JvmStatic
+    fun provideUSCollator(): Collator = Collator.getInstance(Locale.US)
 }

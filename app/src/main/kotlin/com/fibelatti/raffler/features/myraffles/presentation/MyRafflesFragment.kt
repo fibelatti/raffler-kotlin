@@ -47,10 +47,6 @@ class MyRafflesFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         setupLayout()
         setupRecyclerView()
-    }
-
-    override fun onResume() {
-        super.onResume()
         myRafflesViewModel.getAllCustomRaffles()
     }
 

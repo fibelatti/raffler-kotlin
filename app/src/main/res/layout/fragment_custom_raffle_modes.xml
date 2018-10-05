@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layoutRoot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/padding_regular"
+    android:paddingRight="@dimen/padding_regular"
+    android:paddingBottom="@dimen/padding_xlarge">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewRouletteTitle"
+        style="@style/AppTheme.Text.Title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/custom_raffle_details_mode_roulette"
+        app:layout_constraintBottom_toTopOf="@+id/textViewRouletteDescription"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/buttonRoulette"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewRouletteDescription"
+        style="@style/AppTheme.Text.Body"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/custom_raffle_details_mode_roulette_description"
+        app:layout_constraintBottom_toTopOf="@+id/dividerRoulette"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/buttonRoulette"
+        app:layout_constraintTop_toBottomOf="@+id/textViewRouletteTitle" />
+
+    <Button
+        android:id="@+id/buttonRoulette"
+        style="@style/AppTheme.ButtonPrimary.Small"
+        android:layout_marginLeft="@dimen/margin_regular"
+        android:text="@string/custom_raffle_details_mode_button"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewRouletteDescription"
+        app:layout_constraintLeft_toRightOf="@+id/textViewRouletteDescription"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textViewRouletteTitle" />
+
+    <include
+        android:id="@+id/dividerRoulette"
+        layout="@layout/layout_divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_size"
+        android:layout_marginTop="@dimen/margin_regular"
+        android:layout_marginBottom="@dimen/margin_regular"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewRouletteDescription" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

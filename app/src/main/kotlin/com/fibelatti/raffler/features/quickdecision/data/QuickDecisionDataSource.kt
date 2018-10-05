@@ -39,8 +39,8 @@ class QuickDecisionDataSource @Inject constructor(
         }
     }
 
-    override suspend fun getQuickDecisionById(id: String): Result<QuickDecision> =
-        quickDecisionDao.runCatching { getQuickDecisionById(id).let(quickDecisionDtoMapper::map) }
+    override suspend fun getQuickDecisionById(id: String): Result<QuickDecision?> =
+        quickDecisionDao.runCatching { getQuickDecisionById(id)?.let(quickDecisionDtoMapper::map) }
 
     override suspend fun deleteQuickDecisionById(id: String): Result<Unit> =
         quickDecisionDao.runCatching { deleteQuickDecisionById(id) }
@@ -55,7 +55,7 @@ interface QuickDecisionDao {
     fun getAllQuickDecisions(): List<QuickDecisionDto>
 
     @Query("select * from $QUICK_DECISION_DTO_TABLE_NAME where $QUICK_DECISION_DTO_COLUMN_ID = :id")
-    fun getQuickDecisionById(id: String): QuickDecisionDto
+    fun getQuickDecisionById(id: String): QuickDecisionDto?
 
     @Query("delete from $QUICK_DECISION_DTO_TABLE_NAME where $QUICK_DECISION_DTO_COLUMN_ID = :id")
     fun deleteQuickDecisionById(id: String)
