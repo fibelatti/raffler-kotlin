@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.navigation.navOptions
 import com.fibelatti.raffler.R
+import com.fibelatti.raffler.core.extension.alertDialogBuilder
 import com.fibelatti.raffler.core.extension.error
 import com.fibelatti.raffler.core.extension.observe
 import com.fibelatti.raffler.core.extension.orZero
@@ -78,16 +79,24 @@ class CustomRaffleDetailsFragment :
         }
 
         buttonRaffle.setOnClickListener {
-            showRaffleModes(
-                requireContext(),
-                rouletteClickListener = {
-                    layoutRoot.findNavController().navigate(
-                        R.id.action_fragmentCustomRaffleDetails_to_fragmentCustomRaffleRoulette,
-                        null,
-                        CustomRaffleRouletteFragment.navOptions()
-                    )
+            if (customRaffleDetailsViewModel.preparedRaffle.value?.items?.size.orZero() >= 2) {
+                showRaffleModes(
+                    requireContext(),
+                    rouletteClickListener = {
+                        layoutRoot.findNavController().navigate(
+                            R.id.action_fragmentCustomRaffleDetails_to_fragmentCustomRaffleRoulette,
+                            null,
+                            CustomRaffleRouletteFragment.navOptions()
+                        )
+                    }
+                )
+            } else {
+                alertDialogBuilder {
+                    setMessage(R.string.custom_raffle_details_mode_invalid_quantity)
+                    setPositiveButton(R.string.hint_ok) { dialog, _ -> dialog.dismiss() }
+                    show()
                 }
-            )
+            }
         }
     }
 

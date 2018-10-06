@@ -31,7 +31,7 @@ class CustomRaffleDetailsAdapter
     ) {
         fun bind(item: CustomRaffleItemModel) = with(itemView) {
             item.run {
-                layoutRootCustomRaffleItem.isSelected = isSelected
+                layoutRootCustomRaffleItem.isSelected = true
                 textViewCustomRaffleItemDescription.text = description
 
                 setOnClickListener {

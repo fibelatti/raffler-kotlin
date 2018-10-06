@@ -124,6 +124,23 @@
         <item name="android:focusable">true</item>
     </style>
 
+    <style name="AppTheme.ExtendedFab" parent="Widget.MaterialComponents.Button.TextButton.Icon">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/extended_fab_height</item>
+        <item name="android:paddingLeft">@dimen/padding_regular</item>
+        <item name="android:paddingRight">@dimen/padding_regular</item>
+        <item name="android:elevation">@dimen/elevation_regular</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="enforceTextAppearance">@style/TextAppearance.MaterialComponents.Button</item>
+        <item name="android:textColor">@color/color_white_opaque</item>
+        <item name="android:textSize">@dimen/text_size_regular</item>
+        <item name="backgroundTint">?attr/colorAccent</item>
+        <item name="cornerRadius">@dimen/extended_fab_corner_radius</item>
+        <item name="iconPadding">@dimen/padding_small</item>
+        <item name="iconSize">@dimen/extended_fab_icon_size</item>
+        <item name="iconTint">@color/color_white_opaque</item>
+    </style>
+
     <style name="AppTheme.Text" />
 
     <style name="AppTheme.Text.Title">

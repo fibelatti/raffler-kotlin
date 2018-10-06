@@ -1,5 +1,6 @@
 package com.fibelatti.raffler.core.extension
 
+import android.animation.LayoutTransition
 import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.GradientDrawable
@@ -36,6 +37,10 @@ fun ViewGroup.setShapeBackgroundColor(color: Int) {
         is GradientDrawable -> background.setColor(color)
         is ColorDrawable -> background.color = color
     }
+}
+
+fun ViewGroup.animateChangingTransitions() {
+    layoutTransition = LayoutTransition().apply { enableTransitionType(LayoutTransition.CHANGING) }
 }
 
 @JvmOverloads

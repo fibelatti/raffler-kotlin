@@ -4,7 +4,6 @@ import androidx.lifecycle.Observer
 import com.fibelatti.raffler.BaseTest
 import com.fibelatti.raffler.MockDataProvider
 import com.fibelatti.raffler.core.extension.empty
-import com.fibelatti.raffler.core.extension.givenSuspend
 import com.fibelatti.raffler.core.extension.safeAny
 import com.fibelatti.raffler.core.functional.Failure
 import com.fibelatti.raffler.core.functional.Success
@@ -135,38 +134,41 @@ class LotteryViewModelTest : BaseTest() {
     @Test
     fun `WHEN getLotteryNumbers is called AND randomize throws an error THEN error is changed`() {
         // GIVEN
-        givenSuspend { mockRandomize(safeAny()) }
-            .willReturn(Failure(mockError))
+        start {
+            given(mockRandomize(safeAny()))
+                .willReturn(Failure(mockError))
 
-        // WHEN
-        viewModel.getLotteryNumbers(totalQuantity = "10", raffleQuantity = "5")
+            // WHEN
+            viewModel.getLotteryNumbers(totalQuantity = "10", raffleQuantity = "5")
 
-        // THEN
-        inOrder.run {
-            verify(mockTotalQuantityErrorObserver).onChanged(String.empty())
-            verify(mockRaffleQuantityErrorObserver).onChanged(String.empty())
-            verify(mockErrorObserver).onChanged(mockError)
-            verify(mockLotteryNumbersObserver, never()).onChanged(any())
+            // THEN
+            inOrder.run {
+                verify(mockTotalQuantityErrorObserver).onChanged(String.empty())
+                verify(mockRaffleQuantityErrorObserver).onChanged(String.empty())
+                verify(mockErrorObserver).onChanged(mockError)
+                verify(mockLotteryNumbersObserver, never()).onChanged(any())
+            }
         }
     }
 
     @Test
     fun `WHEN getLotteryNumbers is called AND lotteryNumbers is changed`() {
-        // GIVEN
-        givenSuspend { mockRandomize(safeAny()) }
-            .willReturn(Success(mockRandomList))
-        given(mockLotteryNumberModelMapper.map(mockRandomList))
-            .willReturn(mockLotteryNumberList)
+        start {
+            given(mockRandomize(safeAny()))
+                .willReturn(Success(mockRandomList))
+            given(mockLotteryNumberModelMapper.map(mockRandomList))
+                .willReturn(mockLotteryNumberList)
 
-        // WHEN
-        viewModel.getLotteryNumbers(totalQuantity = "10", raffleQuantity = "5")
+            // WHEN
+            viewModel.getLotteryNumbers(totalQuantity = "10", raffleQuantity = "5")
 
-        // THEN
-        inOrder.run {
-            verify(mockTotalQuantityErrorObserver).onChanged(String.empty())
-            verify(mockRaffleQuantityErrorObserver).onChanged(String.empty())
-            verify(mockErrorObserver, never()).onChanged(any())
-            verify(mockLotteryNumbersObserver).onChanged(mockLotteryNumberList)
+            // THEN
+            inOrder.run {
+                verify(mockTotalQuantityErrorObserver).onChanged(String.empty())
+                verify(mockRaffleQuantityErrorObserver).onChanged(String.empty())
+                verify(mockErrorObserver, never()).onChanged(any())
+                verify(mockLotteryNumbersObserver).onChanged(mockLotteryNumberList)
+            }
         }
     }
 }

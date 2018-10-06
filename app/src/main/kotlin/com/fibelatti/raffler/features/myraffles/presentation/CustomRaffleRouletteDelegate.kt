@@ -29,7 +29,7 @@ class CustomRaffleRouletteDelegate @Inject constructor() : LifecycleObserver {
 
     private val handler by lazy { Handler() }
 
-    var isPlaying = true
+    var status: RouletteStatus = RouletteStatus.PLAYING
         private set
 
     fun setup(
@@ -50,7 +50,7 @@ class CustomRaffleRouletteDelegate @Inject constructor() : LifecycleObserver {
     ) {
         randomIndex = Random().nextInt(optionsCount)
         currentSpeed = ROULETTE_SPEED_MIN
-        isPlaying = true
+        status = RouletteStatus.PLAYING
         mediaVolume = if (rouletteMusicEnabled) 1F else 0F
         mediaPlayer.apply {
             setVolume(mediaVolume, mediaVolume)
@@ -63,7 +63,7 @@ class CustomRaffleRouletteDelegate @Inject constructor() : LifecycleObserver {
     }
 
     fun stopRoulette(onRouletteStopped: () -> Unit) {
-        isPlaying = false
+        status = RouletteStatus.STOPPING
         fadeOutMusic(onRouletteStopped)
     }
 
@@ -88,26 +88,20 @@ class CustomRaffleRouletteDelegate @Inject constructor() : LifecycleObserver {
     }
 
     private fun getCurrentSpeed(): Long {
-        if (!isPlaying) {
-            decreaseSpeed()
-        } else {
-            increaseSpeed()
+        return when (status) {
+            RouletteStatus.IDLE -> currentSpeed
+            RouletteStatus.STOPPING -> decreaseSpeed()
+            RouletteStatus.PLAYING -> increaseSpeed()
         }
-
-        return currentSpeed
     }
 
-    private fun increaseSpeed() {
-        if (currentSpeed > ROULETTE_SPEED_MAX) currentSpeed -= ROULETTE_SPEED_STEPS
-    }
+    private fun increaseSpeed(): Long =
+        currentSpeed.apply { if (currentSpeed > ROULETTE_SPEED_MAX) currentSpeed -= ROULETTE_SPEED_STEPS }
 
-    private fun decreaseSpeed() {
-        if (currentSpeed < ROULETTE_SPEED_MIN) currentSpeed += ROULETTE_SPEED_STEPS
-    }
+    private fun decreaseSpeed(): Long =
+        currentSpeed.apply { if (currentSpeed < ROULETTE_SPEED_MIN) currentSpeed += ROULETTE_SPEED_STEPS }
 
-    private fun shouldStop(): Boolean {
-        return !isPlaying && currentIndex == randomIndex && currentSpeed == ROULETTE_SPEED_MIN
-    }
+    private fun shouldStop(): Boolean = currentIndex == randomIndex && currentSpeed == ROULETTE_SPEED_MIN
 
     private fun fadeOutMusic(onRouletteStopped: () -> Unit) {
         mediaVolume -= MEDIA_VOLUME_STEPS
@@ -120,9 +114,14 @@ class CustomRaffleRouletteDelegate @Inject constructor() : LifecycleObserver {
                     seekTo(0)
                 }
                 onRouletteStopped()
+                status = RouletteStatus.IDLE
             } else {
                 fadeOutMusic(onRouletteStopped)
             }
         }, MEDIA_FADE_DELAY)
+    }
+
+    enum class RouletteStatus {
+        IDLE, PLAYING, STOPPING
     }
 }
