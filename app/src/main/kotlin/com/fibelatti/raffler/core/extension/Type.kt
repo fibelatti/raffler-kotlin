@@ -57,4 +57,18 @@ fun <K, V> Map<K, V>.getOrDefaultValue(key: K, defaultValue: V): V =
 // endregion
 // region List
 fun <T> List<T>.random(): T = get(Random().nextInt(size))
+
+fun <T> List<T>.batchesOf(quantity: Int): List<List<T>> {
+    return when {
+        quantity <= 0 -> throw IllegalArgumentException("Quantity should not be less than zero (quantity = $quantity)")
+        size <= 0 -> listOf()
+        else -> {
+            val chunks = Math.ceil(size.toDouble() / quantity).toInt()
+
+            (0 until chunks).map { n ->
+                subList(n * quantity, ((n + 1) * quantity).takeIf { it <= size } ?: size)
+            }
+        }
+    }
+}
 // endregion

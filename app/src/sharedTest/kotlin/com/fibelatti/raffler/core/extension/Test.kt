@@ -64,7 +64,10 @@ infix fun Any.shouldBe(otherValue: Any) {
 }
 
 infix fun List<Any>.sizeShouldBe(value: Int) {
-    assertTrue(size == value)
+    assertTrue(
+        "Expected: $value - Actual: $size",
+        size == value
+    )
 }
 
 infix fun <T : Any> Any.shouldBeAnInstanceOf(KClass: KClass<T>) {
@@ -79,6 +82,9 @@ infix fun <T> List<T>.shouldContain(value: T) {
 }
 
 infix fun <T> List<T>.shouldContain(subList: List<T>) {
-    assertTrue(containsAll(subList))
+    assertTrue(
+        "Expected: $subList - Actual: $this",
+        containsAll(subList)
+    )
 }
 // endregion
