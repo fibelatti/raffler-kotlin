@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/selector_custom_raffle_item_background"
-    android:elevation="@dimen/elevation_regular"
     android:gravity="center_vertical"
     android:minHeight="@dimen/list_item_row_height"
     android:orientation="horizontal"
