@@ -15,6 +15,7 @@
     <string name="hint_loading">Loading</string>
     <string name="hint_dismiss">Dismiss</string>
     <string name="hint_reset">Reset</string>
+    <string name="hint_raffle">Raffle</string>
     <string name="hint_did_you_know">Did you know?</string>
 
     <string name="alert_confirm_deletion">Confirm deletion?</string>
@@ -60,7 +61,7 @@
     <!-- Custom Raffle - Details -->
     <string name="custom_raffle_details_mode_invalid_quantity">Select at least 2 items to raffle.</string>
     <string name="custom_raffle_details_mode_title">Choose the raffle mode</string>
-    <string name="custom_raffle_details_mode_button">Raffle!</string>
+    <string name="custom_raffle_details_mode_button">Select</string>
 
     <string name="custom_raffle_details_mode_roulette">Roulette</string>
     <string name="custom_raffle_details_mode_roulette_description">Choose a single winner randomly, with a spinning animation and an exciting music</string>
@@ -75,6 +76,18 @@
     <string name="custom_raffle_roulette_hint_play">Play</string>
     <string name="custom_raffle_roulette_hint_stop">Stop</string>
     <string name="custom_raffle_roulette_hint_stopping">Stopping…</string>
+
+    <!-- Custom Raffle - Random Winners -->
+    <string name="custom_raffle_random_winners_hint">Quantity of winners</string>
+    <string name="custom_raffle_random_winners_invalid_quantity_too_few">Should be at least 1</string>
+    <string name="custom_raffle_random_winners_invalid_quantity_too_many">Should be at most %d</string>
+    <string name="custom_raffle_random_winners_item_title">#%d Winner</string>
+
+    <!-- Custom Raffle - Grouping -->
+    <string name="custom_raffle_grouping_quantity_hint">Quantity</string>
+    <string name="custom_raffle_grouping_quantity_of_groups">Groups</string>
+    <string name="custom_raffle_grouping_quantity_of_items_per_group">Items per group</string>
+    <string name="custom_raffle_grouping_item_title">Group #%d</string>
 
     <!-- Preferences -->
     <string name="preferences_changes_saved">Changes saved</string>

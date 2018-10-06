@@ -87,6 +87,10 @@ class CustomRaffleDetailsFragment :
                             R.id.action_fragmentCustomRaffleDetails_to_fragmentCustomRaffleRoulette,
                             null,
                             CustomRaffleRouletteFragment.navOptions()
+                    },
+                    randomWinnersClickListener = {
+                        layoutRoot.findNavController().navigate(
+                            R.id.action_fragmentCustomRaffleDetails_to_fragmentCustomRaffleRandomWinners
                         )
                     }
                 )

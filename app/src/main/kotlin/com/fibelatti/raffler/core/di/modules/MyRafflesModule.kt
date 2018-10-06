@@ -6,6 +6,7 @@ import com.fibelatti.raffler.features.myraffles.CustomRaffleRepository
 import com.fibelatti.raffler.features.myraffles.data.CustomRaffleDataSource
 import com.fibelatti.raffler.features.myraffles.presentation.CreateCustomRaffleViewModel
 import com.fibelatti.raffler.features.myraffles.presentation.CustomRaffleDetailsViewModel
+import com.fibelatti.raffler.features.myraffles.presentation.CustomRaffleRandomWinnersViewModel
 import com.fibelatti.raffler.features.myraffles.presentation.MyRafflesViewModel
 import dagger.Binds
 import dagger.Module
@@ -25,11 +26,16 @@ abstract class MyRafflesModule {
 
     @Binds
     @IntoMap
+    @ViewModelKey(CreateCustomRaffleViewModel::class)
+    abstract fun bindCreateCustomRaffleViewModel(createCustomRaffleViewModel: CreateCustomRaffleViewModel): ViewModel
+
+    @Binds
+    @IntoMap
     @ViewModelKey(CustomRaffleDetailsViewModel::class)
     abstract fun bindCustomRaffleDetailsViewModel(customRaffleDetailsViewModel: CustomRaffleDetailsViewModel): ViewModel
 
     @Binds
     @IntoMap
-    @ViewModelKey(CreateCustomRaffleViewModel::class)
-    abstract fun bindCreateCustomRaffleViewModel(createCustomRaffleViewModel: CreateCustomRaffleViewModel): ViewModel
+    @ViewModelKey(CustomRaffleRandomWinnersViewModel::class)
+    abstract fun bindCustomRaffleRandomWinnersViewModel(customRaffleRandomWinnersViewModel: CustomRaffleRandomWinnersViewModel): ViewModel
 }

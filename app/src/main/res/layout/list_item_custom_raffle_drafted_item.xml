@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutRootModeItem"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_rounded_rectangle"
+    android:elevation="@dimen/elevation_regular"
+    android:gravity="center"
+    android:minHeight="@dimen/list_item_card_height"
+    android:orientation="vertical"
+    android:padding="@dimen/padding_regular">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewTitle"
+        style="@style/AppTheme.Text.Detail.White"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_small"
+        tools:text="My custom raffle" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewItems"
+        style="@style/AppTheme.Text.Body.White"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="3 items" />
+</LinearLayout>
