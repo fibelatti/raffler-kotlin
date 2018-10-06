@@ -68,6 +68,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:clipToPadding="false"
+        android:overScrollMode="never"
         android:paddingLeft="@dimen/padding_regular"
         android:paddingRight="@dimen/padding_regular"
         android:paddingBottom="@dimen/padding_regular"

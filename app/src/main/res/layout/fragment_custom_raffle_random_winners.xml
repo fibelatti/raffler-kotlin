@@ -44,7 +44,6 @@
         style="@style/AppTheme.ButtonPrimary.Small"
         android:layout_marginRight="@dimen/margin_regular"
         android:text="@string/hint_raffle"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerViewItems"
         app:layout_constraintLeft_toRightOf="@+id/inputLayoutWinnersQuantity"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutTitle" />
@@ -53,8 +52,12 @@
         android:id="@+id/recyclerViewItems"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="@dimen/margin_regular"
         android:clipToPadding="false"
-        android:padding="@dimen/padding_regular"
+        android:overScrollMode="never"
+        android:paddingLeft="@dimen/padding_regular"
+        android:paddingRight="@dimen/padding_regular"
+        android:paddingBottom="@dimen/padding_regular"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inputLayoutWinnersQuantity"
         tools:listitem="@layout/list_item_custom_raffle_drafted_item" />

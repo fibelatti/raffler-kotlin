@@ -59,7 +59,7 @@
         app:layout_constraintBottom_toTopOf="@+id/recyclerViewItems"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonRaffle">
+        app:layout_constraintTop_toBottomOf="@+id/inputLayoutQuantity">
 
         <androidx.appcompat.widget.AppCompatRadioButton
             android:id="@+id/radioButtonByGroup"
@@ -84,6 +84,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:clipToPadding="false"
+        android:overScrollMode="never"
         android:padding="@dimen/padding_regular"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radioGroupType"
