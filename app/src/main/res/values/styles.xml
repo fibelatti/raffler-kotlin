@@ -115,7 +115,7 @@
     <style name="AppTheme.TextButton.Hint">
         <item name="android:minHeight">@dimen/clickable_area</item>
         <item name="android:textSize">@dimen/text_size_regular</item>
-        <item name="android:textColor">@color/color_gray</item>
+        <item name="android:textColor">@color/color_grey</item>
         <item name="android:layout_gravity">end</item>
     </style>
 
