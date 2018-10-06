@@ -48,13 +48,6 @@
     <string name="my_raffles_items_quantity">%d items</string>
     <string name="my_raffles_create_first_button">Create raffle</string>
 
-    <!-- Custom Raffle - Details -->
-    <string name="custom_raffle_details_mode_title">Raffle modes</string>
-    <string name="custom_raffle_details_mode_button">Raffle!</string>
-    <string name="custom_raffle_details_mode_invalid_quantity">Select at least 2 items to raffle.</string>
-    <string name="custom_raffle_details_mode_roulette">Roulette</string>
-    <string name="custom_raffle_details_mode_roulette_description">Choose a single winner randomly, with a spinning animation and song</string>
-
     <!-- Custom Raffle - New or Edit -->
     <string name="custom_raffle_description">Description</string>
     <string name="custom_raffle_add_shortcut">Show as Quick Decision shortcut</string>
@@ -63,6 +56,20 @@
     <string name="custom_raffle_create_remove_all_items">Remove all items</string>
     <string name="custom_raffle_create_invalid_description">Please enter a valid description.</string>
     <string name="custom_raffle_create_invalid_items_quantity">A custom raffle should have at least 2 items.</string>
+
+    <!-- Custom Raffle - Details -->
+    <string name="custom_raffle_details_mode_invalid_quantity">Select at least 2 items to raffle.</string>
+    <string name="custom_raffle_details_mode_title">Choose the raffle mode</string>
+    <string name="custom_raffle_details_mode_button">Raffle!</string>
+
+    <string name="custom_raffle_details_mode_roulette">Roulette</string>
+    <string name="custom_raffle_details_mode_roulette_description">Choose a single winner randomly, with a spinning animation and an exciting music</string>
+
+    <string name="custom_raffle_details_mode_random_winners">Random winners</string>
+    <string name="custom_raffle_details_mode_random_winners_description">Choose how many items to raffle and get the winners right away</string>
+
+    <string name="custom_raffle_details_mode_grouping">Grouping</string>
+    <string name="custom_raffle_details_mode_grouping_description">Split the raffle into smaller groups, choosing how many groups or many items per group</string>
 
     <!-- Custom Raffle - Roulette -->
     <string name="custom_raffle_roulette_hint_play">Play</string>

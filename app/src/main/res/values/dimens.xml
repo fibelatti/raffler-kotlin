@@ -36,6 +36,7 @@
 
     <dimen name="extended_fab_height">56dp</dimen>
     <dimen name="extended_fab_corner_radius">32dp</dimen>
+    <dimen name="extended_fab_icon_size_small">16dp</dimen>
     <dimen name="extended_fab_icon_size">24dp</dimen>
 
     <!-- Contextual dimens -->
