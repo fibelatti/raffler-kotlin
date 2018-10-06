@@ -9,7 +9,8 @@ interface CustomRaffleModes {
     fun showRaffleModes(
         context: Context,
         rouletteClickListener: () -> Unit,
-        randomWinnersClickListener: () -> Unit
+        randomWinnersClickListener: () -> Unit,
+        groupingClickListener: () -> Unit
     )
 }
 
@@ -17,7 +18,8 @@ class CustomRaffleModesDelegate : CustomRaffleModes {
     override fun showRaffleModes(
         context: Context,
         rouletteClickListener: () -> Unit,
-        randomWinnersClickListener: () -> Unit
+        randomWinnersClickListener: () -> Unit,
+        groupingClickListener: () -> Unit
     ) {
         BottomSheetDialog(context, R.style.AppTheme_BaseBottomSheetDialog_BottomSheetDialog).apply {
             setContentView(R.layout.fragment_custom_raffle_modes)
@@ -29,6 +31,11 @@ class CustomRaffleModesDelegate : CustomRaffleModes {
 
             buttonRandomWinners?.setOnClickListener {
                 randomWinnersClickListener()
+                dismiss()
+            }
+
+            buttonGrouping?.setOnClickListener {
+                groupingClickListener()
                 dismiss()
             }
 
