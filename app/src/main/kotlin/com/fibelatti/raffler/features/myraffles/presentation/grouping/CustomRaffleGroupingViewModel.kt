@@ -31,7 +31,7 @@ class CustomRaffleGroupingViewModel @Inject constructor(
     fun getGroupsByItemQuantity(options: List<CustomRaffleItemModel>, quantity: String) {
         validateData(options, quantity) {
             start {
-                groups.value = inBackground {createBatches(options, quantity.toInt()) }
+                groups.value = inBackground { createBatches(options, quantity.toInt()) }
             }
         }
     }
