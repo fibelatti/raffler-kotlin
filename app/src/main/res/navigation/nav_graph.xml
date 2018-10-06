@@ -13,7 +13,9 @@
 
         <action
             android:id="@+id/action_fragmentQuickDecision_to_fragmentQuickDecisionResult"
-            app:destination="@id/fragmentQuickDecisionResult" />
+            app:destination="@id/fragmentQuickDecisionResult"
+            app:exitAnim="@anim/fade_out"
+            app:popExitAnim="@anim/slide_down" />
         <action
             android:id="@+id/action_fragmentQuickDecision_to_fragmentCreateCustomRaffle"
             app:destination="@id/fragmentCreateCustomRaffle" />
@@ -41,7 +43,10 @@
             app:destination="@id/fragmentCreateCustomRaffle" />
         <action
             android:id="@+id/action_fragmentMyRaffles_to_fragmentCustomRaffleDetails"
-            app:destination="@id/fragmentCustomRaffleDetails" />
+            app:destination="@id/fragmentCustomRaffleDetails"
+            app:enterAnim="@anim/slide_up"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_down" />
     </fragment>
 
     <fragment

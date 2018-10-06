@@ -104,7 +104,7 @@ class QuickDecisionFragment : BaseFragment() {
                 state.result,
                 state.color
             ),
-            QuickDecisionResultFragment.navOptions(),
+            null,
             FragmentNavigatorExtras(sharedView to transitionName)
         )
     }

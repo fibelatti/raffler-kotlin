@@ -84,8 +84,7 @@ class MyRafflesFragment : BaseFragment() {
             customRaffleClickListener = {
                 layoutRoot.findNavController().navigate(
                     R.id.action_fragmentMyRaffles_to_fragmentCustomRaffleDetails,
-                    CustomRaffleDetailsFragment.bundle(customRaffleId = it.toInt()),
-                    CustomRaffleDetailsFragment.navOptions()
+                    CustomRaffleDetailsFragment.bundle(customRaffleId = it.toInt())
                 )
             }
             colorList = getColorGradientForListSize(

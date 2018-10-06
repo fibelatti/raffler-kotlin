@@ -18,17 +18,6 @@ import javax.inject.Inject
 
 class CustomRaffleRouletteFragment : BaseFragment() {
 
-    companion object {
-        fun navOptions() = androidx.navigation.navOptions {
-            anim {
-                enter = R.anim.slide_right_in
-                exit = R.anim.slide_left_out
-                popEnter = R.anim.slide_left_in
-                popExit = R.anim.slide_right_out
-            }
-        }
-    }
-
     @Inject
     lateinit var rouletteDelegate: CustomRaffleRouletteDelegate
 

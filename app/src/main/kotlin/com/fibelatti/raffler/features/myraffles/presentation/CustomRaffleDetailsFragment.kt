@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
-import androidx.navigation.navOptions
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.alertDialogBuilder
 import com.fibelatti.raffler.core.extension.error
@@ -30,14 +29,6 @@ class CustomRaffleDetailsFragment :
             customRaffleId: Int = 0
         ) = Bundle().apply {
             this.customRaffleId = customRaffleId
-        }
-
-        fun navOptions() = navOptions {
-            anim {
-                enter = R.anim.slide_up
-                popExit = R.anim.slide_down
-                popEnter = R.anim.fade_in
-            }
         }
     }
 
@@ -84,9 +75,8 @@ class CustomRaffleDetailsFragment :
                     requireContext(),
                     rouletteClickListener = {
                         layoutRoot.findNavController().navigate(
-                            R.id.action_fragmentCustomRaffleDetails_to_fragmentCustomRaffleRoulette,
-                            null,
-                            CustomRaffleRouletteFragment.navOptions()
+                            R.id.action_fragmentCustomRaffleDetails_to_fragmentCustomRaffleRoulette
+                        )
                     },
                     randomWinnersClickListener = {
                         layoutRoot.findNavController().navigate(
