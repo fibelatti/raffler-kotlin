@@ -1,11 +1,11 @@
 package com.fibelatti.raffler.core.di
 
 import com.fibelatti.raffler.features.lottery.presentation.LotteryFragment
-import com.fibelatti.raffler.features.myraffles.presentation.CreateCustomRaffleFragment
-import com.fibelatti.raffler.features.myraffles.presentation.CustomRaffleDetailsFragment
-import com.fibelatti.raffler.features.myraffles.presentation.CustomRaffleRandomWinnersFragment
-import com.fibelatti.raffler.features.myraffles.presentation.CustomRaffleRouletteFragment
-import com.fibelatti.raffler.features.myraffles.presentation.MyRafflesFragment
+import com.fibelatti.raffler.features.myraffles.presentation.createcustomraffle.CreateCustomRaffleFragment
+import com.fibelatti.raffler.features.myraffles.presentation.customraffledetails.CustomRaffleDetailsFragment
+import com.fibelatti.raffler.features.myraffles.presentation.randomwinners.CustomRaffleRandomWinnersFragment
+import com.fibelatti.raffler.features.myraffles.presentation.roulette.CustomRaffleRouletteFragment
+import com.fibelatti.raffler.features.myraffles.presentation.list.MyRafflesFragment
 import com.fibelatti.raffler.features.preferences.presentation.PreferencesFragment
 import com.fibelatti.raffler.features.quickdecision.presentation.QuickDecisionFragment
 

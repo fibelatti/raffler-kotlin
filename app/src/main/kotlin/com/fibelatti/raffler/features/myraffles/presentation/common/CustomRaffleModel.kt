@@ -1,4 +1,4 @@
-package com.fibelatti.raffler.features.myraffles.presentation
+package com.fibelatti.raffler.features.myraffles.presentation.common
 
 import com.fibelatti.raffler.core.functional.Mapper
 import com.fibelatti.raffler.core.platform.BaseViewType

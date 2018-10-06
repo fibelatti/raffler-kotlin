@@ -4,10 +4,10 @@ import androidx.lifecycle.ViewModel
 import com.fibelatti.raffler.core.di.modules.viewmodel.ViewModelKey
 import com.fibelatti.raffler.features.myraffles.CustomRaffleRepository
 import com.fibelatti.raffler.features.myraffles.data.CustomRaffleDataSource
-import com.fibelatti.raffler.features.myraffles.presentation.CreateCustomRaffleViewModel
-import com.fibelatti.raffler.features.myraffles.presentation.CustomRaffleDetailsViewModel
-import com.fibelatti.raffler.features.myraffles.presentation.CustomRaffleRandomWinnersViewModel
-import com.fibelatti.raffler.features.myraffles.presentation.MyRafflesViewModel
+import com.fibelatti.raffler.features.myraffles.presentation.createcustomraffle.CreateCustomRaffleViewModel
+import com.fibelatti.raffler.features.myraffles.presentation.customraffledetails.CustomRaffleDetailsViewModel
+import com.fibelatti.raffler.features.myraffles.presentation.randomwinners.CustomRaffleRandomWinnersViewModel
+import com.fibelatti.raffler.features.myraffles.presentation.list.MyRafflesViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap

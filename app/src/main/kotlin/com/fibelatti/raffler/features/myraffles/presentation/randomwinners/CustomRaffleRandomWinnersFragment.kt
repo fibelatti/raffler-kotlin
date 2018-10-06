@@ -1,4 +1,4 @@
-package com.fibelatti.raffler.features.myraffles.presentation
+package com.fibelatti.raffler.features.myraffles.presentation.randomwinners
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,7 +16,9 @@ import com.fibelatti.raffler.core.extension.textAsString
 import com.fibelatti.raffler.core.extension.withDefaultDecoration
 import com.fibelatti.raffler.core.extension.withLinearLayoutManager
 import com.fibelatti.raffler.core.platform.BaseFragment
-import com.fibelatti.raffler.features.myraffles.presentation.adapter.CustomRaffleDraftedAdapter
+import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleDraftedModel
+import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleDraftedAdapter
+import com.fibelatti.raffler.features.myraffles.presentation.customraffledetails.CustomRaffleDetailsViewModel
 import kotlinx.android.synthetic.main.fragment_custom_raffle_random_winners.*
 import javax.inject.Inject
 

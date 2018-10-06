@@ -1,4 +1,4 @@
-package com.fibelatti.raffler.features.myraffles.presentation
+package com.fibelatti.raffler.features.myraffles.presentation.randomwinners
 
 import androidx.lifecycle.MutableLiveData
 import com.fibelatti.raffler.R
@@ -8,6 +8,8 @@ import com.fibelatti.raffler.core.functional.flatMapCatching
 import com.fibelatti.raffler.core.platform.BaseViewModel
 import com.fibelatti.raffler.core.provider.ResourceProvider
 import com.fibelatti.raffler.core.provider.ThreadProvider
+import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleDraftedModel
+import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleItemModel
 import com.fibelatti.raffler.features.randomize.Randomize
 import javax.inject.Inject
 

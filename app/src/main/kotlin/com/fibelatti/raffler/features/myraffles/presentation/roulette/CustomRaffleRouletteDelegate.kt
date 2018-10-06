@@ -1,4 +1,4 @@
-package com.fibelatti.raffler.features.myraffles.presentation
+package com.fibelatti.raffler.features.myraffles.presentation.roulette
 
 import android.content.Context
 import android.media.AudioAttributes
@@ -7,6 +7,7 @@ import android.media.MediaPlayer
 import android.os.Handler
 import androidx.lifecycle.LifecycleObserver
 import com.fibelatti.raffler.R
+import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModel
 import java.util.Random
 import javax.inject.Inject
 

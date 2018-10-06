@@ -1,4 +1,4 @@
-package com.fibelatti.raffler.features.myraffles.presentation
+package com.fibelatti.raffler.features.myraffles.presentation.roulette
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,6 +13,7 @@ import com.fibelatti.raffler.core.extension.exhaustive
 import com.fibelatti.raffler.core.extension.observe
 import com.fibelatti.raffler.core.extension.orFalse
 import com.fibelatti.raffler.core.platform.BaseFragment
+import com.fibelatti.raffler.features.myraffles.presentation.customraffledetails.CustomRaffleDetailsViewModel
 import kotlinx.android.synthetic.main.fragment_custom_raffle_roulette.*
 import javax.inject.Inject
 

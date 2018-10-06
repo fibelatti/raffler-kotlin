@@ -1,4 +1,4 @@
-package com.fibelatti.raffler.features.myraffles.presentation.adapter
+package com.fibelatti.raffler.features.myraffles.presentation.list
 
 import androidx.collection.SparseArrayCompat
 import androidx.recyclerview.widget.DiffUtil
@@ -7,7 +7,7 @@ import com.fibelatti.raffler.core.platform.AddNewModel
 import com.fibelatti.raffler.core.platform.BaseAdapter
 import com.fibelatti.raffler.core.platform.BaseDelegateAdapter
 import com.fibelatti.raffler.core.platform.BaseViewType
-import com.fibelatti.raffler.features.myraffles.presentation.CustomRaffleModel
+import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModel
 import javax.inject.Inject
 
 class CustomRaffleAdapter @Inject constructor(

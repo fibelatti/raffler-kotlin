@@ -1,4 +1,4 @@
-package com.fibelatti.raffler.features.myraffles.presentation
+package com.fibelatti.raffler.features.myraffles.presentation.list
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,7 +16,9 @@ import com.fibelatti.raffler.core.extension.withGridLayoutManager
 import com.fibelatti.raffler.core.platform.AddNewModel
 import com.fibelatti.raffler.core.platform.BaseFragment
 import com.fibelatti.raffler.core.platform.BaseViewType
-import com.fibelatti.raffler.features.myraffles.presentation.adapter.CustomRaffleAdapter
+import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModel
+import com.fibelatti.raffler.features.myraffles.presentation.createcustomraffle.CreateCustomRaffleFragment
+import com.fibelatti.raffler.features.myraffles.presentation.customraffledetails.CustomRaffleDetailsFragment
 import kotlinx.android.synthetic.main.fragment_my_raffles.*
 import kotlinx.android.synthetic.main.layout_hint_container.*
 import javax.inject.Inject

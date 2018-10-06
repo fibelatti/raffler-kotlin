@@ -1,4 +1,4 @@
-package com.fibelatti.raffler.features.myraffles.presentation
+package com.fibelatti.raffler.features.myraffles.presentation.common
 
 import android.content.Context
 import com.fibelatti.raffler.R

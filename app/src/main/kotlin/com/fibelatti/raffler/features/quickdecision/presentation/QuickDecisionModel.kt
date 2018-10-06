@@ -3,7 +3,7 @@ package com.fibelatti.raffler.features.quickdecision.presentation
 import com.fibelatti.raffler.core.functional.Mapper
 import com.fibelatti.raffler.core.platform.AppConfig
 import com.fibelatti.raffler.core.platform.BaseViewType
-import com.fibelatti.raffler.features.myraffles.presentation.CustomRaffleModel
+import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModel
 import com.fibelatti.raffler.features.quickdecision.QuickDecision
 import javax.inject.Inject
 
