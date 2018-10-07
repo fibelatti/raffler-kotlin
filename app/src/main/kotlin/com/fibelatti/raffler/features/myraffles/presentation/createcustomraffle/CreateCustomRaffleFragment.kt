@@ -1,4 +1,4 @@
-package com.fibelatti.raffler.features.myraffles.presentation
+package com.fibelatti.raffler.features.myraffles.presentation.createcustomraffle
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -28,7 +28,7 @@ import com.fibelatti.raffler.core.extension.withLinearLayoutManager
 import com.fibelatti.raffler.core.platform.BaseFragment
 import com.fibelatti.raffler.core.platform.BundleDelegate
 import com.fibelatti.raffler.core.platform.RecyclerViewSwipeToDeleteCallback
-import com.fibelatti.raffler.features.myraffles.presentation.adapter.CreateCustomRaffleAdapter
+import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModel
 import kotlinx.android.synthetic.main.fragment_create_custom_raffle.*
 import javax.inject.Inject
 

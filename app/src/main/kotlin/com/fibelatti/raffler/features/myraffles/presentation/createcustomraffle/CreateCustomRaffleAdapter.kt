@@ -1,4 +1,4 @@
-package com.fibelatti.raffler.features.myraffles.presentation.adapter
+package com.fibelatti.raffler.features.myraffles.presentation.createcustomraffle
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.inflate
-import com.fibelatti.raffler.features.myraffles.presentation.CustomRaffleItemModel
+import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleItemModel
 import kotlinx.android.synthetic.main.list_item_create_custom_raffle_item.view.*
 import javax.inject.Inject
 

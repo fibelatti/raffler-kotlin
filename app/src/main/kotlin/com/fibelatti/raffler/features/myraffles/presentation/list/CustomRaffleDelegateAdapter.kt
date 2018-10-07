@@ -1,4 +1,4 @@
-package com.fibelatti.raffler.features.myraffles.presentation.adapter
+package com.fibelatti.raffler.features.myraffles.presentation.list
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -7,7 +7,7 @@ import com.fibelatti.raffler.core.extension.inflate
 import com.fibelatti.raffler.core.extension.setShapeBackgroundColor
 import com.fibelatti.raffler.core.platform.BaseDelegateAdapter
 import com.fibelatti.raffler.core.platform.BaseViewType
-import com.fibelatti.raffler.features.myraffles.presentation.CustomRaffleModel
+import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModel
 import kotlinx.android.synthetic.main.list_item_custom_raffle.view.*
 import javax.inject.Inject
 

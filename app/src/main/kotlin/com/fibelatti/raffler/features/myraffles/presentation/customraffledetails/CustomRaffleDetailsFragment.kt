@@ -1,11 +1,10 @@
-package com.fibelatti.raffler.features.myraffles.presentation
+package com.fibelatti.raffler.features.myraffles.presentation.customraffledetails
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
-import androidx.navigation.navOptions
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.alertDialogBuilder
 import com.fibelatti.raffler.core.extension.error
@@ -15,7 +14,10 @@ import com.fibelatti.raffler.core.extension.withDefaultDecoration
 import com.fibelatti.raffler.core.extension.withLinearLayoutManager
 import com.fibelatti.raffler.core.platform.BaseFragment
 import com.fibelatti.raffler.core.platform.BundleDelegate
-import com.fibelatti.raffler.features.myraffles.presentation.adapter.CustomRaffleDetailsAdapter
+import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModel
+import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModes
+import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModesDelegate
+import com.fibelatti.raffler.features.myraffles.presentation.createcustomraffle.CreateCustomRaffleFragment
 import kotlinx.android.synthetic.main.fragment_custom_raffle_details.*
 import javax.inject.Inject
 
@@ -30,14 +32,6 @@ class CustomRaffleDetailsFragment :
             customRaffleId: Int = 0
         ) = Bundle().apply {
             this.customRaffleId = customRaffleId
-        }
-
-        fun navOptions() = navOptions {
-            anim {
-                enter = R.anim.slide_up
-                popExit = R.anim.slide_down
-                popEnter = R.anim.fade_in
-            }
         }
     }
 
@@ -84,9 +78,17 @@ class CustomRaffleDetailsFragment :
                     requireContext(),
                     rouletteClickListener = {
                         layoutRoot.findNavController().navigate(
-                            R.id.action_fragmentCustomRaffleDetails_to_fragmentCustomRaffleRoulette,
-                            null,
-                            CustomRaffleRouletteFragment.navOptions()
+                            R.id.action_fragmentCustomRaffleDetails_to_fragmentCustomRaffleRoulette
+                        )
+                    },
+                    randomWinnersClickListener = {
+                        layoutRoot.findNavController().navigate(
+                            R.id.action_fragmentCustomRaffleDetails_to_fragmentCustomRaffleRandomWinners
+                        )
+                    },
+                    groupingClickListener = {
+                        layoutRoot.findNavController().navigate(
+                            R.id.action_fragmentCustomRaffleDetails_to_fragmentCustomRaffleGrouping
                         )
                     }
                 )

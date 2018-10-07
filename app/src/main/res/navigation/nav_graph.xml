@@ -13,7 +13,9 @@
 
         <action
             android:id="@+id/action_fragmentQuickDecision_to_fragmentQuickDecisionResult"
-            app:destination="@id/fragmentQuickDecisionResult" />
+            app:destination="@id/fragmentQuickDecisionResult"
+            app:exitAnim="@anim/fade_out"
+            app:popExitAnim="@anim/slide_down" />
         <action
             android:id="@+id/action_fragmentQuickDecision_to_fragmentCreateCustomRaffle"
             app:destination="@id/fragmentCreateCustomRaffle" />
@@ -32,7 +34,7 @@
 
     <fragment
         android:id="@+id/fragmentMyRaffles"
-        android:name="com.fibelatti.raffler.features.myraffles.presentation.MyRafflesFragment"
+        android:name="com.fibelatti.raffler.features.myraffles.presentation.list.MyRafflesFragment"
         android:label="@string/app_name"
         tools:layout="@layout/fragment_my_raffles">
 
@@ -41,17 +43,20 @@
             app:destination="@id/fragmentCreateCustomRaffle" />
         <action
             android:id="@+id/action_fragmentMyRaffles_to_fragmentCustomRaffleDetails"
-            app:destination="@id/fragmentCustomRaffleDetails" />
+            app:destination="@id/fragmentCustomRaffleDetails"
+            app:enterAnim="@anim/slide_up"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_down" />
     </fragment>
 
     <fragment
         android:id="@+id/fragmentCreateCustomRaffle"
-        android:name="com.fibelatti.raffler.features.myraffles.presentation.CreateCustomRaffleFragment"
+        android:name="com.fibelatti.raffler.features.myraffles.presentation.createcustomraffle.CreateCustomRaffleFragment"
         tools:layout="@layout/fragment_create_custom_raffle" />
 
     <fragment
         android:id="@+id/fragmentCustomRaffleDetails"
-        android:name="com.fibelatti.raffler.features.myraffles.presentation.CustomRaffleDetailsFragment"
+        android:name="com.fibelatti.raffler.features.myraffles.presentation.customraffledetails.CustomRaffleDetailsFragment"
         tools:layout="@layout/fragment_custom_raffle_details">
 
         <action
@@ -59,13 +64,41 @@
             app:destination="@id/fragmentCreateCustomRaffle" />
         <action
             android:id="@+id/action_fragmentCustomRaffleDetails_to_fragmentCustomRaffleRoulette"
-            app:destination="@id/fragmentCustomRaffleRoulette" />
+            app:destination="@id/fragmentCustomRaffleRoulette"
+            app:enterAnim="@anim/slide_right_in"
+            app:exitAnim="@anim/slide_left_out"
+            app:popEnterAnim="@anim/slide_left_in"
+            app:popExitAnim="@anim/slide_right_out" />
+        <action
+            android:id="@+id/action_fragmentCustomRaffleDetails_to_fragmentCustomRaffleRandomWinners"
+            app:destination="@id/fragmentCustomRaffleRandomWinners"
+            app:enterAnim="@anim/slide_right_in"
+            app:exitAnim="@anim/slide_left_out"
+            app:popEnterAnim="@anim/slide_left_in"
+            app:popExitAnim="@anim/slide_right_out" />
+        <action
+            android:id="@+id/action_fragmentCustomRaffleDetails_to_fragmentCustomRaffleGrouping"
+            app:destination="@id/fragmentCustomRaffleGrouping"
+            app:enterAnim="@anim/slide_right_in"
+            app:exitAnim="@anim/slide_left_out"
+            app:popEnterAnim="@anim/slide_left_in"
+            app:popExitAnim="@anim/slide_right_out" />
     </fragment>
 
     <fragment
         android:id="@+id/fragmentCustomRaffleRoulette"
-        android:name="com.fibelatti.raffler.features.myraffles.presentation.CustomRaffleRouletteFragment"
-        tools:layout="@layout/fragment_custom_raffle_details" />
+        android:name="com.fibelatti.raffler.features.myraffles.presentation.roulette.CustomRaffleRouletteFragment"
+        tools:layout="@layout/fragment_custom_raffle_roulette" />
+
+    <fragment
+        android:id="@+id/fragmentCustomRaffleRandomWinners"
+        android:name="com.fibelatti.raffler.features.myraffles.presentation.randomwinners.CustomRaffleRandomWinnersFragment"
+        tools:layout="@layout/fragment_custom_raffle_random_winners" />
+
+    <fragment
+        android:id="@+id/fragmentCustomRaffleGrouping"
+        android:name="com.fibelatti.raffler.features.myraffles.presentation.grouping.CustomRaffleGroupingFragment"
+        tools:layout="@layout/fragment_custom_raffle_grouping" />
 
     <fragment
         android:id="@+id/fragmentPreferences"

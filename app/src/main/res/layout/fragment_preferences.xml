@@ -45,20 +45,23 @@
             android:id="@+id/radioGroupTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toTopOf="@+id/dividerRouletteMusic"
             app:layout_constraintTop_toBottomOf="@+id/textViewThemeTitle">
 
             <androidx.appcompat.widget.AppCompatRadioButton
                 android:id="@+id/radioButtonThemeClassic"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="@string/preferences_theme_description_classic"
                 android:textColor="@color/text_primary" />
 
             <androidx.appcompat.widget.AppCompatRadioButton
                 android:id="@+id/radioButtonThemeDark"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="@string/preferences_theme_description_dark"
                 android:textColor="@color/text_primary" />
         </RadioGroup>

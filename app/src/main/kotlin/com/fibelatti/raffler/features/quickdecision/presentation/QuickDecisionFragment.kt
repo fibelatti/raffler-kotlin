@@ -17,7 +17,7 @@ import com.fibelatti.raffler.core.extension.withGridLayoutManager
 import com.fibelatti.raffler.core.platform.AddNewModel
 import com.fibelatti.raffler.core.platform.BaseFragment
 import com.fibelatti.raffler.core.platform.BaseViewType
-import com.fibelatti.raffler.features.myraffles.presentation.CreateCustomRaffleFragment
+import com.fibelatti.raffler.features.myraffles.presentation.createcustomraffle.CreateCustomRaffleFragment
 import com.fibelatti.raffler.features.quickdecision.presentation.adapter.QuickDecisionAdapter
 import kotlinx.android.synthetic.main.fragment_quick_decisions.*
 import kotlinx.android.synthetic.main.layout_hint_container.*
@@ -104,7 +104,7 @@ class QuickDecisionFragment : BaseFragment() {
                 state.result,
                 state.color
             ),
-            QuickDecisionResultFragment.navOptions(),
+            null,
             FragmentNavigatorExtras(sharedView to transitionName)
         )
     }

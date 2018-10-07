@@ -1,4 +1,4 @@
-package com.fibelatti.raffler.features.myraffles.presentation
+package com.fibelatti.raffler.features.myraffles.presentation.createcustomraffle
 
 import androidx.lifecycle.MutableLiveData
 import com.fibelatti.raffler.R
@@ -8,6 +8,9 @@ import com.fibelatti.raffler.core.platform.BaseViewModel
 import com.fibelatti.raffler.core.provider.ResourceProvider
 import com.fibelatti.raffler.core.provider.ThreadProvider
 import com.fibelatti.raffler.features.myraffles.CustomRaffleRepository
+import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleItemModel
+import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModel
+import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModelMapper
 import com.fibelatti.raffler.features.quickdecision.QuickDecisionRepository
 import com.fibelatti.raffler.features.quickdecision.presentation.CustomRaffleToQuickDecisionMapper
 import javax.inject.Inject

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_background"
+    android:paddingTop="@dimen/padding_regular">
+
+    <com.fibelatti.raffler.core.platform.TitleLayout
+        android:id="@+id/layoutTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_regular"
+        android:layout_marginRight="@dimen/margin_regular"
+        app:layout_constraintBottom_toTopOf="@+id/inputLayoutWinnersQuantity"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputLayoutWinnersQuantity"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_regular"
+        android:layout_marginRight="@dimen/margin_regular"
+        android:theme="@style/AppTheme.InputLayout"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerViewItems"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/buttonRaffle"
+        app:layout_constraintTop_toBottomOf="@+id/layoutTitle">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextTotalQuantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/custom_raffle_random_winners_hint"
+            android:imeOptions="actionGo"
+            android:inputType="number"
+            android:singleLine="true" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/buttonRaffle"
+        style="@style/AppTheme.ButtonPrimary.Small"
+        android:layout_marginRight="@dimen/margin_regular"
+        android:text="@string/hint_raffle"
+        app:layout_constraintLeft_toRightOf="@+id/inputLayoutWinnersQuantity"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutTitle" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewItems"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/margin_regular"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:paddingLeft="@dimen/padding_regular"
+        android:paddingRight="@dimen/padding_regular"
+        android:paddingBottom="@dimen/padding_regular"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputLayoutWinnersQuantity"
+        tools:listitem="@layout/list_item_custom_raffle_drafted_item" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
