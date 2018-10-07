@@ -7,6 +7,7 @@ import com.fibelatti.raffler.core.platform.AppConfig
 import javax.inject.Inject
 
 const val KEY_APP_THEME = "APP_THEME"
+const val KEY_APP_LANGUAGE = "APP_LANGUAGE"
 
 class CurrentInstallSharedPreferences @Inject constructor(
     private val sharedPreferences: SharedPreferences
@@ -21,5 +22,17 @@ class CurrentInstallSharedPreferences @Inject constructor(
 
     fun setAppTheme(appTheme: AppConfig.AppTheme) {
         sharedPreferences.put(KEY_APP_THEME, appTheme.value)
+    }
+
+    fun getAppLanguage(): AppConfig.AppLanguage {
+        return when (sharedPreferences.get<String>(KEY_APP_LANGUAGE)) {
+            AppConfig.AppLanguage.PORTUGUESE.value -> AppConfig.AppLanguage.PORTUGUESE
+            AppConfig.AppLanguage.SPANISH.value -> AppConfig.AppLanguage.SPANISH
+            else -> AppConfig.AppLanguage.ENGLISH
+        }
+    }
+
+    fun setAppLanguage(appLanguage: AppConfig.AppLanguage) {
+        sharedPreferences.put(KEY_APP_LANGUAGE, appLanguage.value)
     }
 }

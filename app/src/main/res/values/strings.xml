@@ -99,6 +99,11 @@
     <string name="preferences_theme_description_classic">Classic</string>
     <string name="preferences_theme_description_dark">Dark</string>
 
+    <string name="preferences_language_title">App language</string>
+    <string name="preferences_language_english">English</string>
+    <string name="preferences_language_portuguese">Portuguese</string>
+    <string name="preferences_language_spanish">Spanish</string>
+
     <string name="preferences_reset_hints_title">App Hints</string>
     <string name="preferences_reset_hints_button">Show again</string>
     <string name="preferences_reset_hints_description">All the hints that you dismissed will be displayed again</string>

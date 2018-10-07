@@ -46,7 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/dividerRouletteMusic"
+            app:layout_constraintBottom_toTopOf="@+id/dividerLanguage"
             app:layout_constraintTop_toBottomOf="@+id/textViewThemeTitle">
 
             <androidx.appcompat.widget.AppCompatRadioButton
@@ -67,6 +67,59 @@
         </RadioGroup>
 
         <include
+            android:id="@+id/dividerLanguage"
+            layout="@layout/layout_divider"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_size"
+            android:layout_marginTop="@dimen/margin_regular"
+            android:layout_marginBottom="@dimen/margin_regular"
+            app:layout_constraintBottom_toTopOf="@+id/textViewLanguageTitle"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroupTheme" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewLanguageTitle"
+            style="@style/AppTheme.Text.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_small"
+            android:text="@string/preferences_language_title"
+            app:layout_constraintBottom_toTopOf="@+id/radioGroupLanguage"
+            app:layout_constraintTop_toBottomOf="@+id/dividerTheme" />
+
+        <RadioGroup
+            android:id="@+id/radioGroupLanguage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/dividerRouletteMusic"
+            app:layout_constraintTop_toBottomOf="@+id/textViewLanguageTitle">
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/radioButtonLanguageEnglish"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/preferences_language_english"
+                android:textColor="@color/text_primary" />
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/radioButtonLanguagePortuguese"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/preferences_language_portuguese"
+                android:textColor="@color/text_primary" />
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/radioButtonLanguageSpanish"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/preferences_language_spanish"
+                android:textColor="@color/text_primary" />
+        </RadioGroup>
+
+        <include
             android:id="@+id/dividerRouletteMusic"
             layout="@layout/layout_divider"
             android:layout_width="match_parent"
@@ -74,7 +127,7 @@
             android:layout_marginTop="@dimen/margin_regular"
             android:layout_marginBottom="@dimen/margin_regular"
             app:layout_constraintBottom_toTopOf="@+id/textViewRouletteMusicTitle"
-            app:layout_constraintTop_toBottomOf="@+id/radioGroupTheme" />
+            app:layout_constraintTop_toBottomOf="@+id/radioGroupLanguage" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewRouletteMusicTitle"

@@ -42,7 +42,7 @@
         style="@style/AppTheme.ButtonPrimary"
         android:layout_width="match_parent"
         android:layout_margin="@dimen/margin_regular"
-        android:text="Raffle!"
+        android:text="@string/hint_raffle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

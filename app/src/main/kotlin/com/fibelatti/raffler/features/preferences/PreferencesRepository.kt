@@ -8,6 +8,10 @@ interface PreferencesRepository {
 
     suspend fun setAppTheme(appTheme: AppConfig.AppTheme)
 
+    suspend fun getLanguage(): AppConfig.AppLanguage
+
+    suspend fun setLanguage(appLanguage: AppConfig.AppLanguage)
+
     suspend fun getRouletteMusicEnabled(): Boolean
 
     suspend fun setRouletteMusicEnabled(value: Boolean): Result<Unit>

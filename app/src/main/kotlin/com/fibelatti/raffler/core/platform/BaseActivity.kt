@@ -1,11 +1,13 @@
 package com.fibelatti.raffler.core.platform
 
+import android.content.Context
 import android.os.Bundle
 import androidx.annotation.CallSuper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.fibelatti.raffler.App
 import com.fibelatti.raffler.core.di.modules.viewmodel.ViewModelFactory
+import com.fibelatti.raffler.core.extension.getUpdateContextForLocale
 import com.fibelatti.raffler.core.persistence.CurrentInstallSharedPreferences
 import javax.inject.Inject
 
@@ -17,6 +19,10 @@ abstract class BaseActivity : AppCompatActivity() {
     lateinit var viewModelFactory: ViewModelFactory
     @Inject
     lateinit var currentInstallSharedPreferences: CurrentInstallSharedPreferences
+
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(newBase?.getUpdateContextForLocale())
+    }
 
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
