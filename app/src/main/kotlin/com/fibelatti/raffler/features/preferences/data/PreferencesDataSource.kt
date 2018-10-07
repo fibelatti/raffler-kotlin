@@ -29,6 +29,13 @@ class PreferencesDataSource @Inject constructor(
         currentInstallSharedPreferences.setAppTheme(appTheme)
     }
 
+    override suspend fun getLanguage(): AppConfig.AppLanguage =
+        currentInstallSharedPreferences.getAppLanguage()
+
+    override suspend fun setLanguage(appLanguage: AppConfig.AppLanguage) {
+        currentInstallSharedPreferences.setAppLanguage(appLanguage)
+    }
+
     override suspend fun getRouletteMusicEnabled(): Boolean =
         preferencesDao.getPreferences().firstOrNull()?.rouletteMusicEnabled.orFalse()
 

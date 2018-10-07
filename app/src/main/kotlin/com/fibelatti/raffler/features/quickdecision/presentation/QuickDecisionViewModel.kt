@@ -3,7 +3,7 @@ package com.fibelatti.raffler.features.quickdecision.presentation
 import androidx.lifecycle.MutableLiveData
 import com.fibelatti.raffler.core.extension.random
 import com.fibelatti.raffler.core.functional.flatMapCatching
-import com.fibelatti.raffler.core.platform.AppConfig
+import com.fibelatti.raffler.core.platform.AppConfig.LOCALE_NONE
 import com.fibelatti.raffler.core.platform.BaseViewModel
 import com.fibelatti.raffler.core.provider.ThreadProvider
 import com.fibelatti.raffler.features.quickdecision.QuickDecision
@@ -33,16 +33,8 @@ class QuickDecisionViewModel @Inject constructor(
         state.value = State.ShowResult(quickDecision.description, quickDecision.values.random(), color)
     }
 
-    private fun List<QuickDecision>.filterByLocale(): List<QuickDecisionModel> {
-        val currentLocale = if (AppConfig.supportedLocales.contains(locale.language.toLowerCase())) {
-            locale.language
-        } else {
-            AppConfig.LOCALE_EN
-        }
-
-        return filter { it.locale == currentLocale || it.locale == AppConfig.LOCALE_NONE }
-            .map(quickDecisionModelMapper::map)
-    }
+    private fun List<QuickDecision>.filterByLocale(): List<QuickDecisionModel> =
+        filter { it.locale == locale.language || it.locale == LOCALE_NONE }.map(quickDecisionModelMapper::map)
 
     private fun showQuickDecisions(list: List<QuickDecisionModel>) {
         state.value = State.ShowList(list)

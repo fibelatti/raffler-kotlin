@@ -4,6 +4,7 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +21,8 @@ import com.fibelatti.raffler.core.platform.AppConfig.PLAY_STORE_BASE_URL
 import com.fibelatti.raffler.core.platform.BaseFragment
 import kotlinx.android.synthetic.main.fragment_preferences.*
 
+private const val RESTART_DELAY = 1000L
+
 class PreferencesFragment : BaseFragment() {
 
     private val preferencesViewModel by lazy {
@@ -32,6 +35,7 @@ class PreferencesFragment : BaseFragment() {
         preferencesViewModel.run {
             error(error, ::handleError)
             observe(appTheme, ::setupTheme)
+            observe(appLanguage, ::setupLanguage)
             observe(rouletteMusicEnabled, ::setupRouletteMusicEnabled)
             observe(updateFeedback) { layoutRoot.snackbar(it) }
         }
@@ -84,6 +88,32 @@ class PreferencesFragment : BaseFragment() {
             }
 
             activity?.recreate()
+        }
+    }
+
+    private fun setupLanguage(appLanguage: AppConfig.AppLanguage) {
+        radioGroupLanguage.setOnCheckedChangeListener(null)
+
+        when (appLanguage) {
+            AppConfig.AppLanguage.PORTUGUESE -> radioButtonLanguagePortuguese.isChecked = true
+            AppConfig.AppLanguage.SPANISH -> radioButtonLanguageSpanish.isChecked = true
+            else -> radioButtonLanguageEnglish.isChecked = true
+        }
+
+        radioGroupLanguage.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                R.id.radioButtonLanguageEnglish -> {
+                    preferencesViewModel.setAppLanguage(AppConfig.AppLanguage.ENGLISH)
+                }
+                R.id.radioButtonLanguagePortuguese -> {
+                    preferencesViewModel.setAppLanguage(AppConfig.AppLanguage.PORTUGUESE)
+                }
+                R.id.radioButtonLanguageSpanish -> {
+                    preferencesViewModel.setAppLanguage(AppConfig.AppLanguage.SPANISH)
+                }
+            }
+
+            Handler().postDelayed({ activity?.recreate() }, RESTART_DELAY)
         }
     }
 

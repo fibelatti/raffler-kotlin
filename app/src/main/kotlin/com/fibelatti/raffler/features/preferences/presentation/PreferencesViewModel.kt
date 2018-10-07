@@ -16,16 +16,30 @@ class PreferencesViewModel @Inject constructor(
 ) : BaseViewModel(threadProvider) {
 
     val appTheme by lazy { MutableLiveData<AppConfig.AppTheme>() }
+    val appLanguage by lazy { MutableLiveData<AppConfig.AppLanguage>() }
     val rouletteMusicEnabled by lazy { MutableLiveData<Boolean>() }
     val updateFeedback by lazy { MutableLiveData<String>() }
 
     fun getPreferences() {
         start {
-            rouletteMusicEnabled.value = inBackground {
-                preferencesRepository.getRouletteMusicEnabled()
+            appTheme.value = inBackground { preferencesRepository.getTheme() }
+            appLanguage.value = inBackground { preferencesRepository.getLanguage() }
+            rouletteMusicEnabled.value = inBackground { preferencesRepository.getRouletteMusicEnabled() }
+        }
+    }
+
+    fun setAppTheme(appTheme: AppConfig.AppTheme) {
+        start {
+            inBackground {
+                preferencesRepository.setAppTheme(appTheme)
             }
-            appTheme.value = inBackground {
-                preferencesRepository.getTheme()
+        }
+    }
+
+    fun setAppLanguage(appLanguage: AppConfig.AppLanguage) {
+        start {
+            inBackground {
+                preferencesRepository.setLanguage(appLanguage)
             }
         }
     }
@@ -38,14 +52,6 @@ class PreferencesViewModel @Inject constructor(
                 { error.value = it },
                 { updateFeedback.value = resourceProvider.getString(R.string.preferences_changes_saved) }
             )
-        }
-    }
-
-    fun setAppTheme(appTheme: AppConfig.AppTheme) {
-        start {
-            inBackground {
-                preferencesRepository.setAppTheme(appTheme)
-            }
         }
     }
 
