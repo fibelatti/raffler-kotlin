@@ -4,15 +4,12 @@ import androidx.lifecycle.MutableLiveData
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.empty
 import com.fibelatti.raffler.core.extension.isInt
-import com.fibelatti.raffler.core.functional.flatMapCatching
 import com.fibelatti.raffler.core.platform.BaseViewModel
 import com.fibelatti.raffler.core.provider.ResourceProvider
 import com.fibelatti.raffler.core.provider.ThreadProvider
-import com.fibelatti.raffler.features.randomize.Randomize
 import javax.inject.Inject
 
 class LotteryViewModel @Inject constructor(
-    private val randomize: Randomize,
     private val lotteryNumberModelMapper: LotteryNumberModelMapper,
     private val resourceProvider: ResourceProvider,
     threadProvider: ThreadProvider
@@ -24,26 +21,35 @@ class LotteryViewModel @Inject constructor(
 
     fun getLotteryNumbers(totalQuantity: String, raffleQuantity: String) {
         start {
-            when {
-                totalQuantity.isBlank() || !totalQuantity.isInt() -> {
-                    totalQuantityError.value = resourceProvider.getString(R.string.lottery_quantity_validation_error)
+            inBackground {
+                validateData(totalQuantity, raffleQuantity) { totalQty, raffleQty ->
+                    (1..totalQty).shuffled()
+                        .take(raffleQty)
+                        .map(lotteryNumberModelMapper::map)
+                        .let(lotteryNumbers::postValue)
                 }
-                raffleQuantity.isBlank() || !raffleQuantity.isInt() -> {
-                    totalQuantityError.value = String.empty()
-                    raffleQuantityError.value = resourceProvider.getString(R.string.lottery_quantity_validation_error)
-                }
-                else -> {
-                    totalQuantityError.value = String.empty()
-                    raffleQuantityError.value = String.empty()
+            }
+        }
+    }
 
-                    inBackground {
-                        randomize(Randomize.Params(totalQuantity.toInt(), raffleQuantity.toInt()))
-                            .flatMapCatching { lotteryNumberModelMapper.map(it) }
-                    }.either(
-                        { error.value = it },
-                        { lotteryNumbers.value = it }
-                    )
-                }
+    private fun validateData(
+        totalQuantity: String,
+        raffleQuantity: String,
+        ifValid: (totalQuantity: Int, raffleQuantity: Int) -> Unit
+    ) {
+        when {
+            totalQuantity.isBlank() || !totalQuantity.isInt() -> {
+                totalQuantityError.postValue(resourceProvider.getString(R.string.lottery_quantity_validation_error))
+            }
+            raffleQuantity.isBlank() || !raffleQuantity.isInt() -> {
+                totalQuantityError.postValue(String.empty())
+                raffleQuantityError.postValue(resourceProvider.getString(R.string.lottery_quantity_validation_error))
+            }
+            else -> {
+                totalQuantityError.postValue(String.empty())
+                raffleQuantityError.postValue(String.empty())
+
+                ifValid(totalQuantity.toInt(), raffleQuantity.toInt())
             }
         }
     }

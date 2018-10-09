@@ -2,9 +2,13 @@ package com.fibelatti.raffler.core.extension
 
 import android.content.Context
 import android.content.res.Configuration
+import androidx.core.content.ContextCompat
 import com.fibelatti.raffler.core.persistence.KEY_APP_LANGUAGE
 import com.fibelatti.raffler.core.platform.AppConfig
 import java.util.Locale
+
+inline fun <reified T> Context.getSystemService(): T? =
+    ContextCompat.getSystemService(this, T::class.java)
 
 fun Context.getUpdateContextForLocale(): Context {
     val locale = when (getUserPreferences().get<String>(KEY_APP_LANGUAGE)) {
