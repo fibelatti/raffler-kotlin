@@ -9,7 +9,7 @@ import androidx.navigation.navOptions
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.fibelatti.raffler.R
-import com.fibelatti.raffler.core.extension.afterTextChanged
+import com.fibelatti.raffler.core.extension.addTextChangedListener
 import com.fibelatti.raffler.core.extension.alertDialogBuilder
 import com.fibelatti.raffler.core.extension.clearError
 import com.fibelatti.raffler.core.extension.clearText
@@ -117,7 +117,8 @@ class CreateCustomRaffleFragment : BaseFragment() {
         layoutTitle.navigateUp { layoutRoot.findNavController().navigateUp() }
 
         buttonSave.setOnClickListener { createCustomRaffleViewModel.save(checkboxAddShortcut.isChecked) }
-        editTextCustomRaffleDescription.afterTextChanged { createCustomRaffleViewModel.setDescription(it) }
+
+        editTextCustomRaffleDescription.addTextChangedListener(afterTextChanged = createCustomRaffleViewModel::setDescription)
 
         editTextCustomRaffleItemDescription.apply {
             setOnFocusChangeListener { _, hasFocus -> if (hasFocus) groupCollapsibleViews.gone() }

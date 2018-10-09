@@ -57,22 +57,28 @@ fun TextInputLayout.clearError() {
     error = null
 }
 
-fun EditText.textAsString(): String = this.text.toString()
+fun EditText.textAsString(): String = text.toString()
 
 fun EditText.clearText() {
     setText("")
 }
 
-fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
+inline fun EditText.addTextChangedListener(
+    crossinline beforeTextChanged: (charSequence: CharSequence, start: Int, count: Int, after: Int) -> Unit = { _, _, _, _ -> },
+    crossinline onTextChanged: (charSequence: CharSequence, start: Int, before: Int, count: Int) -> Unit = { _, _, _, _ -> },
+    crossinline afterTextChanged: (text: String) -> Unit = { _ -> }
+) {
     addTextChangedListener(object : TextWatcher {
-        override fun beforeTextChanged(charSequence: CharSequence?, p1: Int, p2: Int, p3: Int) {
+        override fun beforeTextChanged(charSequence: CharSequence, start: Int, count: Int, after: Int) {
+            beforeTextChanged(charSequence, start, count, after)
         }
 
-        override fun onTextChanged(charSequence: CharSequence?, p1: Int, p2: Int, p3: Int) {
+        override fun onTextChanged(charSequence: CharSequence, start: Int, before: Int, count: Int) {
+            onTextChanged(charSequence, start, before, count)
         }
 
-        override fun afterTextChanged(editable: Editable?) {
-            editable?.let { afterTextChanged(it.toString()) }
+        override fun afterTextChanged(editable: Editable) {
+            afterTextChanged(editable.toString())
         }
     })
 }
