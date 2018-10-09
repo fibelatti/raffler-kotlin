@@ -5,13 +5,10 @@ import com.fibelatti.raffler.BaseTest
 import com.fibelatti.raffler.MockDataProvider
 import com.fibelatti.raffler.core.extension.empty
 import com.fibelatti.raffler.core.extension.safeAny
-import com.fibelatti.raffler.core.functional.Failure
-import com.fibelatti.raffler.core.functional.Success
 import com.fibelatti.raffler.core.provider.ResourceProvider
 import com.fibelatti.raffler.features.lottery.presentation.LotteryNumberModel
 import com.fibelatti.raffler.features.lottery.presentation.LotteryNumberModelMapper
 import com.fibelatti.raffler.features.lottery.presentation.LotteryViewModel
-import com.fibelatti.raffler.features.randomize.Randomize
 import org.junit.Before
 import org.junit.Test
 import org.mockito.ArgumentMatchers.any
@@ -24,8 +21,6 @@ import org.mockito.Mockito.never
 
 class LotteryViewModelTest : BaseTest() {
 
-    @Mock
-    lateinit var mockRandomize: Randomize
     @Mock
     lateinit var mockLotteryNumberModelMapper: LotteryNumberModelMapper
     @Mock
@@ -49,7 +44,6 @@ class LotteryViewModelTest : BaseTest() {
 
     private val viewModel by lazy {
         LotteryViewModel(
-            mockRandomize,
             mockLotteryNumberModelMapper,
             mockResourceProvider,
             testThreadProvider
@@ -132,31 +126,10 @@ class LotteryViewModelTest : BaseTest() {
     }
 
     @Test
-    fun `WHEN getLotteryNumbers is called AND randomize throws an error THEN error is changed`() {
-        // GIVEN
-        start {
-            given(mockRandomize(safeAny()))
-                .willReturn(Failure(mockError))
-
-            // WHEN
-            viewModel.getLotteryNumbers(totalQuantity = "10", raffleQuantity = "5")
-
-            // THEN
-            inOrder.run {
-                verify(mockTotalQuantityErrorObserver).onChanged(String.empty())
-                verify(mockRaffleQuantityErrorObserver).onChanged(String.empty())
-                verify(mockErrorObserver).onChanged(mockError)
-                verify(mockLotteryNumbersObserver, never()).onChanged(any())
-            }
-        }
-    }
-
-    @Test
     fun `WHEN getLotteryNumbers is called AND lotteryNumbers is changed`() {
         start {
-            given(mockRandomize(safeAny()))
-                .willReturn(Success(mockRandomList))
-            given(mockLotteryNumberModelMapper.map(mockRandomList))
+            // GIVEN
+            given(mockLotteryNumberModelMapper.map(safeAny<List<Int>>()))
                 .willReturn(mockLotteryNumberList)
 
             // WHEN

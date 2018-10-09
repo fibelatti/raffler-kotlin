@@ -1,7 +1,5 @@
 package com.fibelatti.raffler.core.extension
 
-import java.util.Random
-
 // region Any
 val Unit.exhaustive get() = this
 
@@ -56,7 +54,7 @@ fun <K, V> Map<K, V>.getOrDefaultValue(key: K, defaultValue: V): V =
 
 // endregion
 // region List
-fun <T> List<T>.random(): T = get(Random().nextInt(size))
+fun <T> List<T>.random(): T = shuffled().first()
 
 fun <T> List<T>.batchesOf(quantity: Int): List<List<T>> {
     return when {
