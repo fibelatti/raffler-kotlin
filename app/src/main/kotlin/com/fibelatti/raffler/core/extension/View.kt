@@ -1,7 +1,6 @@
 package com.fibelatti.raffler.core.extension
 
 import android.animation.LayoutTransition
-import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.ShapeDrawable
@@ -137,10 +136,10 @@ fun isKeyboardSubmit(actionId: Int, event: KeyEvent?): Boolean =
 
 fun View.showKeyboard() {
     requestFocus()
-    (context.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)?.showSoftInput(this, 0)
+    context.getSystemService<InputMethodManager>()?.showSoftInput(this, 0)
 }
 
 fun View.hideKeyboard() {
-    (context.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)?.hideSoftInputFromWindow(windowToken, 0)
+    context.getSystemService<InputMethodManager>()?.hideSoftInputFromWindow(windowToken, 0)
 }
 // endregion
