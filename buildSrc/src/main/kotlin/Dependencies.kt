@@ -17,7 +17,7 @@ object Versions {
     internal const val coroutinesCoreVersion = "0.26.1-eap13"
     internal const val coroutinesAndroidVersion = "0.26.1-eap13"
 
-    internal const val archComponentsVersion = "2.0.0-rc01"
+    internal const val archComponentsVersion = "2.0.0"
     internal const val navigationVersion = "1.0.0-alpha06"
 
     internal const val daggerVersion = "2.17"
