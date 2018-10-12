@@ -30,7 +30,7 @@ abstract class BaseViewModel(
     }
 
     protected fun handleError(error: Throwable) {
-        this.error.value = error
+        this.error.postValue(error)
     }
 
     protected fun start(
