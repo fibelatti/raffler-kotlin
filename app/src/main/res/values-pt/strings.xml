@@ -104,7 +104,7 @@
     <string name="preferences_section_lottery">Preferências - Loteria</string>
     <string name="preferences_section_my_raffles">Preferências - Sorteios</string>
 
-    <string name="preferences_theme_title">Tema</string>
+    <string name="preferences_theme_title">Aparência</string>
     <string name="preferences_theme_description_classic">Clássico</string>
     <string name="preferences_theme_description_dark">Noturno</string>
 
@@ -125,7 +125,7 @@
     <string name="preferences_default_lottery_button">Salvar</string>
 
     <string name="preferences_remember_raffled_title">Lembrar itens sorteados</string>
-    <string name="preferences_remember_raffled_description">Se ativo, itens já sorteados não serão incluídos nos próximos sorteios (usando Roleta ou Sorteados Aleatórios). Selecionar um item redefine seu status.</string>
+    <string name="preferences_remember_raffled_description">Se ativo, itens sorteados usando Roleta ou Sorteados aleatórios não serão incluídos automaticamente nos sorteios subsequentes. Incluir ou excluir itens manualmente também é lembrado.</string>
 
     <string name="preferences_reset_hints_title">Dicas</string>
     <string name="preferences_reset_hints_button">Mostrar novamente</string>

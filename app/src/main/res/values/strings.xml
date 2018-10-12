@@ -125,7 +125,7 @@
     <string name="preferences_default_lottery_button">Save</string>
 
     <string name="preferences_remember_raffled_title">Remember raffled items</string>
-    <string name="preferences_remember_raffled_description">If active, items won\'t be selected to enter a raffle once they\'ve been raffled (using Roulette or Random Winners). Selecting the item resets its raffled status.</string>
+    <string name="preferences_remember_raffled_description">If active, items raffled with Roulette or Random winners won\'t be automatically included in subsequent raffles. Including or excluding items manually is also persisted.</string>
 
     <string name="preferences_reset_hints_title">App Hints</string>
     <string name="preferences_reset_hints_description">All the hints that you dismissed will be displayed again</string>
