@@ -23,24 +23,23 @@ class QuickDecisionViewModel @Inject constructor(
     val state by lazy { MutableLiveData<State>() }
 
     fun getAllQuickDecisions() {
-        start {
-            inBackground {
-                quickDecisionRepository.getAllQuickDecisions()
-                    .flatMapCatching { it.filterByLocale() }
-            }.onSuccess(::showQuickDecisions)
+        startInBackground {
+            quickDecisionRepository.getAllQuickDecisions()
+                .flatMapCatching { it.filterByLocale() }
+                .onSuccess(::showQuickDecisions)
                 .onFailure(::handleError)
         }
     }
 
     fun getQuickDecisionResult(quickDecision: QuickDecisionModel, color: Int) {
-        state.value = State.ShowResult(quickDecision.description, quickDecision.values.random(), color)
+        state.postValue(State.ShowResult(quickDecision.description, quickDecision.values.random(), color))
     }
 
     private fun List<QuickDecision>.filterByLocale(): List<QuickDecisionModel> =
         filter { it.locale == locale.language || it.locale == LOCALE_NONE }.map(quickDecisionModelMapper::map)
 
     private fun showQuickDecisions(list: List<QuickDecisionModel>) {
-        state.value = State.ShowList(list)
+        state.postValue(State.ShowList(list))
     }
 
     sealed class State {

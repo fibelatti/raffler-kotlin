@@ -54,9 +54,7 @@ class CustomRaffleDetailsViewModel @Inject constructor(
         customRaffle.value?.run {
             customRaffle.value = apply { items[index].included = isSelected }
 
-            start {
-                inBackground { rememberRaffled(RememberRaffled.Params(items[index], isSelected)) }
-            }
+            startInBackground { rememberRaffled(RememberRaffled.Params(items[index], isSelected)) }
         }
     }
 

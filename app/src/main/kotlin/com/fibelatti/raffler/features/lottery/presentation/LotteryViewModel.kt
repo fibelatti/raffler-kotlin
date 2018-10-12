@@ -29,24 +29,22 @@ class LotteryViewModel @Inject constructor(
     }
 
     fun getLotteryNumbers(quantityAvailable: String, quantityToRaffle: String) {
-        start {
-            inBackground {
-                validateData(quantityAvailable, quantityToRaffle) { totalQty, raffleQty ->
-                    (1..totalQty).shuffled()
-                        .take(raffleQty)
-                        .map(lotteryNumberModelMapper::map)
-                        .let(lotteryNumbers::postValue)
-                }
+        startInBackground {
+            validateData(quantityAvailable, quantityToRaffle) { totalQty, raffleQty ->
+                (1..totalQty).shuffled()
+                    .take(raffleQty)
+                    .map(lotteryNumberModelMapper::map)
+                    .let(lotteryNumbers::postValue)
             }
         }
     }
 
     private fun getDefaults() {
-        start {
-            inBackground { preferencesRepository.getPreferences() }
+        startInBackground {
+            preferencesRepository.getPreferences()
                 .onSuccess {
-                    defaultQuantityAvailable.value = it.lotteryDefaultQuantityAvailable
-                    defaultQuantityToRaffle.value = it.lotteryDefaultQuantityToRaffle
+                    defaultQuantityAvailable.postValue(it.lotteryDefaultQuantityAvailable)
+                    defaultQuantityToRaffle.postValue(it.lotteryDefaultQuantityToRaffle)
                 }
         }
     }

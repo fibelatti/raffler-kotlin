@@ -21,14 +21,13 @@ class MyRafflesViewModel @Inject constructor(
     val showHintAndCreateNewLayout by lazy { MutableLiveData<Boolean>() }
 
     fun getAllCustomRaffles() {
-        start {
-            inBackground {
-                customRaffleRepository.getAllCustomRaffles()
-                    .flatMapCatching { it.map(customRaffleModelMapper::map) }
-            }.onSuccess { list ->
-                showHintAndCreateNewLayout.value = list.isEmpty()
-                customRaffles.value = list
-            }.onFailure(::handleError)
+        startInBackground {
+            customRaffleRepository.getAllCustomRaffles()
+                .flatMapCatching { it.map(customRaffleModelMapper::map) }
+                .onSuccess { list ->
+                    showHintAndCreateNewLayout.postValue(list.isEmpty())
+                    customRaffles.postValue(list)
+                }.onFailure(::handleError)
         }
     }
 }

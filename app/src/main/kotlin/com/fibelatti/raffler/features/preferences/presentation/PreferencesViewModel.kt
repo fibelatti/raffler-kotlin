@@ -29,58 +29,54 @@ class PreferencesViewModel @Inject constructor(
     val raffleQuantityError by lazy { MutableLiveEvent<String>() }
 
     fun getPreferences() {
-        start {
-            inBackground { preferencesRepository.getPreferences() }
-                .onSuccess(preferences::setValue)
+        startInBackground {
+            preferencesRepository.getPreferences()
+                .onSuccess(preferences::postValue)
                 .onFailure(::handleError)
         }
     }
 
     fun setAppTheme(appTheme: AppConfig.AppTheme) {
-        start {
-            inBackground { preferencesRepository.setAppTheme(appTheme) }
-        }
+        startInBackground { preferencesRepository.setAppTheme(appTheme) }
     }
 
     fun setAppLanguage(appLanguage: AppConfig.AppLanguage) {
-        start {
-            inBackground { preferencesRepository.setLanguage(appLanguage) }
-        }
+        startInBackground { preferencesRepository.setLanguage(appLanguage) }
     }
 
     fun setLotteryDefaultValues(quantityAvailable: String, quantityToRaffle: String) {
         validateData(quantityAvailable, quantityToRaffle) { qtyTotal, qtyRaffle ->
-            start {
-                inBackground { preferencesRepository.setLotteryDefault(qtyTotal, qtyRaffle) }
+            startInBackground {
+                preferencesRepository.setLotteryDefault(qtyTotal, qtyRaffle)
                     .handleResult()
             }
         }
     }
 
     fun setPreferredRaffleMode(raffleMode: AppConfig.RaffleMode) {
-        start {
-            inBackground { preferencesRepository.setPreferredRaffleMode(raffleMode) }
+        startInBackground {
+            preferencesRepository.setPreferredRaffleMode(raffleMode)
                 .handleResult()
         }
     }
 
     fun setRouletteMusicEnabled(value: Boolean) {
-        start {
-            inBackground { preferencesRepository.setRouletteMusicEnabled(value) }
+        startInBackground {
+            preferencesRepository.setRouletteMusicEnabled(value)
                 .handleResult()
         }
     }
 
     fun setRememberRaffledItems(value: Boolean) {
-        start {
-            inBackground { preferencesRepository.rememberRaffledItems(value) }
+        startInBackground {
+            preferencesRepository.rememberRaffledItems(value)
                 .handleResult()
         }
     }
 
     fun resetAllHints() {
-        start {
-            inBackground { preferencesRepository.resetHints() }
+        startInBackground {
+            preferencesRepository.resetHints()
                 .handleResult()
         }
     }

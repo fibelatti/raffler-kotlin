@@ -23,21 +23,19 @@ class CustomRaffleRandomWinnersViewModel @Inject constructor(
 
     fun getRandomWinners(options: List<CustomRaffleItemModel>, quantity: String) {
         validateData(options, quantity) { qty ->
-            start {
-                inBackground {
-                    options.shuffled()
-                        .take(qty)
-                        .also { raffledItems ->
-                            raffledItems.forEach { rememberRaffled(RememberRaffled.Params(it, included = false)) }
-                        }
-                        .mapIndexed { index, item ->
-                            CustomRaffleDraftedModel(
-                                title = resourceProvider.getString(R.string.custom_raffle_random_winners_item_title, index + 1),
-                                description = item.description
-                            )
-                        }
-                        .let(randomWinners::postValue)
-                }
+            startInBackground {
+                options.shuffled()
+                    .take(qty)
+                    .also { raffledItems ->
+                        raffledItems.forEach { rememberRaffled(RememberRaffled.Params(it, included = false)) }
+                    }
+                    .mapIndexed { index, item ->
+                        CustomRaffleDraftedModel(
+                            title = resourceProvider.getString(R.string.custom_raffle_random_winners_item_title, index + 1),
+                            description = item.description
+                        )
+                    }
+                    .let(randomWinners::postValue)
             }
         }
     }
