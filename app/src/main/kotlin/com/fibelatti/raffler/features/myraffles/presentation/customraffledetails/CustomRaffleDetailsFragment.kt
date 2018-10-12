@@ -8,10 +8,14 @@ import androidx.navigation.findNavController
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.alertDialogBuilder
 import com.fibelatti.raffler.core.extension.error
+import com.fibelatti.raffler.core.extension.exhaustive
+import com.fibelatti.raffler.core.extension.gone
 import com.fibelatti.raffler.core.extension.observe
-import com.fibelatti.raffler.core.extension.orZero
+import com.fibelatti.raffler.core.extension.observeEvent
+import com.fibelatti.raffler.core.extension.visible
 import com.fibelatti.raffler.core.extension.withDefaultDecoration
 import com.fibelatti.raffler.core.extension.withLinearLayoutManager
+import com.fibelatti.raffler.core.platform.AppConfig
 import com.fibelatti.raffler.core.platform.BaseFragment
 import com.fibelatti.raffler.core.platform.BundleDelegate
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModel
@@ -21,7 +25,7 @@ import com.fibelatti.raffler.features.myraffles.presentation.createcustomraffle.
 import kotlinx.android.synthetic.main.fragment_custom_raffle_details.*
 import javax.inject.Inject
 
-private var Bundle.customRaffleId by BundleDelegate.Int("CUSTOM_RAFFLE_ID")
+private var Bundle.customRaffleId by BundleDelegate.Long("CUSTOM_RAFFLE_ID")
 
 class CustomRaffleDetailsFragment :
     BaseFragment(),
@@ -29,7 +33,7 @@ class CustomRaffleDetailsFragment :
 
     companion object {
         fun bundle(
-            customRaffleId: Int = 0
+            customRaffleId: Long
         ) = Bundle().apply {
             this.customRaffleId = customRaffleId
         }
@@ -47,7 +51,11 @@ class CustomRaffleDetailsFragment :
         injector.inject(this)
         customRaffleDetailsViewModel.run {
             error(error, ::handleError)
+            observe(preferredRaffleMode, ::setupRaffleButtons)
             observe(customRaffle, ::showCustomRaffleDetails)
+            observeEvent(invalidSelectionError, ::handleInvalidSelectionError)
+            observeEvent(showModeSelector) { showRaffleModeSelector() }
+            observeEvent(showPreferredRaffleMode) { showPreferredRaffleMode(it) }
         }
     }
 
@@ -58,7 +66,7 @@ class CustomRaffleDetailsFragment :
         super.onViewCreated(view, savedInstanceState)
         setupLayout()
         setupRecyclerView()
-        customRaffleDetailsViewModel.getCustomRaffleById(arguments?.customRaffleId.orZero())
+        customRaffleDetailsViewModel.getCustomRaffleById(arguments?.customRaffleId)
     }
 
     private fun setupLayout() {
@@ -67,39 +75,26 @@ class CustomRaffleDetailsFragment :
         buttonEdit.setOnClickListener {
             layoutRoot.findNavController().navigate(
                 R.id.action_fragmentCustomRaffleDetails_to_fragmentCreateCustomRaffle,
-                CreateCustomRaffleFragment.bundle(customRaffleId = arguments?.customRaffleId.orZero()),
+                CreateCustomRaffleFragment.bundle(customRaffleId = arguments?.customRaffleId),
                 CreateCustomRaffleFragment.navOptionsEdit()
             )
         }
+    }
 
-        buttonRaffle.setOnClickListener {
-            if (customRaffleDetailsViewModel.preparedRaffle.value?.items?.size.orZero() >= 2) {
-                showRaffleModes(
-                    requireContext(),
-                    rouletteClickListener = {
-                        layoutRoot.findNavController().navigate(
-                            R.id.action_fragmentCustomRaffleDetails_to_fragmentCustomRaffleRoulette
-                        )
-                    },
-                    randomWinnersClickListener = {
-                        layoutRoot.findNavController().navigate(
-                            R.id.action_fragmentCustomRaffleDetails_to_fragmentCustomRaffleRandomWinners
-                        )
-                    },
-                    groupingClickListener = {
-                        layoutRoot.findNavController().navigate(
-                            R.id.action_fragmentCustomRaffleDetails_to_fragmentCustomRaffleGrouping
-                        )
-                    }
-                )
-            } else {
-                alertDialogBuilder {
-                    setMessage(R.string.custom_raffle_details_mode_invalid_quantity)
-                    setPositiveButton(R.string.hint_ok) { dialog, _ -> dialog.dismiss() }
-                    show()
-                }
+    private fun setupRaffleButtons(raffleMode: AppConfig.RaffleMode) {
+        when (raffleMode) {
+            AppConfig.RaffleMode.NONE -> {
+                buttonSelectMode.gone()
+                buttonRaffle.setOnClickListener { customRaffleDetailsViewModel.selectMode() }
             }
-        }
+            else -> {
+                buttonSelectMode.apply {
+                    visible()
+                    setOnClickListener { customRaffleDetailsViewModel.selectMode() }
+                }
+                buttonRaffle.setOnClickListener { customRaffleDetailsViewModel.raffle() }
+            }
+        }.exhaustive
     }
 
     private fun setupRecyclerView() {
@@ -111,9 +106,55 @@ class CustomRaffleDetailsFragment :
     }
 
     private fun showCustomRaffleDetails(customRaffleModel: CustomRaffleModel) {
-        with(customRaffleModel) {
-            layoutTitle.setTitle(description)
-            adapter.submitList(items)
+        layoutTitle.setTitle(customRaffleModel.description)
+        adapter.setItems(customRaffleModel.items)
+    }
+
+    private fun handleInvalidSelectionError(message: String) {
+        alertDialogBuilder {
+            setMessage(message)
+            setPositiveButton(R.string.hint_ok) { dialog, _ -> dialog.dismiss() }
+            show()
         }
+    }
+
+    private fun showRaffleModeSelector() {
+        showRaffleModes(
+            requireContext(),
+            rouletteClickListener = { goToRoulette() },
+            randomWinnersClickListener = { goToRandomWinners() },
+            groupingClickListener = { goToGrouping() }
+        )
+    }
+
+    private fun showPreferredRaffleMode(raffleMode: AppConfig.RaffleMode) {
+        when (raffleMode) {
+            AppConfig.RaffleMode.ROULETTE -> goToRoulette()
+            AppConfig.RaffleMode.RANDOM_WINNERS -> goToRandomWinners()
+            AppConfig.RaffleMode.GROUPING -> goToGrouping()
+            AppConfig.RaffleMode.COMBINATION -> { // TODO
+            }
+            AppConfig.RaffleMode.SECRET_VOTING -> { // TODO
+            }
+            AppConfig.RaffleMode.NONE -> showRaffleModeSelector()
+        }.exhaustive
+    }
+
+    private fun goToRoulette() {
+        layoutRoot.findNavController().navigate(
+            R.id.action_fragmentCustomRaffleDetails_to_fragmentCustomRaffleRoulette
+        )
+    }
+
+    private fun goToRandomWinners() {
+        layoutRoot.findNavController().navigate(
+            R.id.action_fragmentCustomRaffleDetails_to_fragmentCustomRaffleRandomWinners
+        )
+    }
+
+    private fun goToGrouping() {
+        layoutRoot.findNavController().navigate(
+            R.id.action_fragmentCustomRaffleDetails_to_fragmentCustomRaffleGrouping
+        )
     }
 }

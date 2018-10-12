@@ -38,8 +38,8 @@
     <string name="quick_decision_dismissible_hint">A resposta para suas perguntas na ponta dos seus dedos. Estes atalhos podem te ajudar em decisões simples como jogar uma moeda ou rolar um dado.</string>
 
     <!-- Lottery -->
-    <string name="lottery_quantity_available">Quantidade disponível</string>
-    <string name="lottery_quantity_to_raffle">Quantidade para sortear</string>
+    <string name="lottery_quantity_available">Qtde. de números disponíveis</string>
+    <string name="lottery_quantity_to_raffle">Qtde. de números sorteados</string>
     <string name="lottery_quantity_validation_error">Por favor entre uma quantidade válida.</string>
     <string name="lottery_raffle_button">Sortear números</string>
 
@@ -48,6 +48,7 @@
     <string name="my_raffles_hint_message">Com sorteios personalizados você pode:\n\n• Escolher alguém para ganhar um prêmio ou fazer uma tarefa\n• Criar grupos de pessoas\n\nE muito mais! Pressione o botão abaixo para criar seu primeiro sorteio.</string>
     <string name="my_raffles_items_quantity">%d itens</string>
     <string name="my_raffles_create_first_button">Criar sorteio</string>
+    <string name="my_raffles_select_mode_button">Escolher modo</string>
 
     <!-- Custom Raffle - New or Edit -->
     <string name="custom_raffle_description">Descrição</string>
@@ -63,6 +64,8 @@
     <string name="custom_raffle_details_mode_title">Escolha o modo de sorteio</string>
     <string name="custom_raffle_details_mode_button">Escolher</string>
 
+    <string name="custom_raffle_details_mode_none">Nenhum</string>
+
     <string name="custom_raffle_details_mode_roulette">Roleta</string>
     <string name="custom_raffle_details_mode_roulette_description">Escolha o vencedor de forma aleatória, com a clássica música do peão</string>
 
@@ -72,10 +75,15 @@
     <string name="custom_raffle_details_mode_grouping">Agrupamento</string>
     <string name="custom_raffle_details_mode_grouping_description">Crie grupos a partir dos itens do sorteio, escolhendo quantos grupos criar ou quantos itens por grupo</string>
 
+    <string name="custom_raffle_details_mode_combination">Combinação</string>
+
+    <string name="custom_raffle_details_mode_secret_voting">Votação secreta</string>
+
     <!-- Custom Raffle - Roulette -->
     <string name="custom_raffle_roulette_hint_play">Rodar</string>
     <string name="custom_raffle_roulette_hint_stop">Parar</string>
     <string name="custom_raffle_roulette_hint_stopping">Parando…</string>
+    <string name="custom_raffle_roulette_hint_all_raffled">Todos sorteados</string>
 
     <!-- Custom Raffle - Random Winners -->
     <string name="custom_raffle_random_winners_hint">Quantidade de sorteados</string>
@@ -92,8 +100,9 @@
     <!-- Preferences -->
     <string name="preferences_changes_saved">Alterações salvas</string>
 
-    <string name="preferences_roulette_music_title">Efeitos sonoros</string>
-    <string name="preferences_roulette_music_description">Habilitar música do peão</string>
+    <string name="preferences_section_general">Preferências gerais</string>
+    <string name="preferences_section_lottery">Preferências - Loteria</string>
+    <string name="preferences_section_my_raffles">Preferências - Sorteios</string>
 
     <string name="preferences_theme_title">Tema</string>
     <string name="preferences_theme_description_classic">Clássico</string>
@@ -103,6 +112,20 @@
     <string name="preferences_language_english">Inglês</string>
     <string name="preferences_language_portuguese">Português</string>
     <string name="preferences_language_spanish">Espanhol</string>
+
+    <string name="preferences_preferred_raffle_mode_title">Modo de sorteio preferido</string>
+    <string name="preferences_preferred_raffle_mode_button">Alterar</string>
+
+    <string name="preferences_roulette_music_title">Efeitos sonoros</string>
+    <string name="preferences_roulette_music_description">Habilitar música do peão</string>
+
+    <string name="preferences_default_lottery_title">Valores padrão</string>
+    <string name="preferences_default_lottery_max_quantity">Qtde. de números disponíveis</string>
+    <string name="preferences_default_lottery_raffle_quantity">Qtde. de números sorteados</string>
+    <string name="preferences_default_lottery_button">Salvar</string>
+
+    <string name="preferences_remember_raffled_title">Lembrar itens sorteados</string>
+    <string name="preferences_remember_raffled_description">Se ativo, itens já sorteados não serão incluídos nos próximos sorteios (usando Roleta ou Sorteados Aleatórios). Selecionar um item redefine seu status.</string>
 
     <string name="preferences_reset_hints_title">Dicas</string>
     <string name="preferences_reset_hints_button">Mostrar novamente</string>

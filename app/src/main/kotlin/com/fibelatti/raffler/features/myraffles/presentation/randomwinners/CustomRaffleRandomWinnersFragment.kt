@@ -11,13 +11,15 @@ import com.fibelatti.raffler.core.extension.error
 import com.fibelatti.raffler.core.extension.getColorGradientForListSize
 import com.fibelatti.raffler.core.extension.hideKeyboard
 import com.fibelatti.raffler.core.extension.observe
+import com.fibelatti.raffler.core.extension.observeEvent
 import com.fibelatti.raffler.core.extension.showError
+import com.fibelatti.raffler.core.extension.snackbar
 import com.fibelatti.raffler.core.extension.textAsString
 import com.fibelatti.raffler.core.extension.withDefaultDecoration
 import com.fibelatti.raffler.core.extension.withLinearLayoutManager
 import com.fibelatti.raffler.core.platform.BaseFragment
-import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleDraftedModel
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleDraftedAdapter
+import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleDraftedModel
 import com.fibelatti.raffler.features.myraffles.presentation.customraffledetails.CustomRaffleDetailsViewModel
 import kotlinx.android.synthetic.main.fragment_custom_raffle_random_winners.*
 import javax.inject.Inject
@@ -37,6 +39,12 @@ class CustomRaffleRandomWinnersFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         injector.inject(this)
+        customRaffleDetailsViewModel.run {
+            observeEvent(allOptionsRaffled) {
+                layoutRoot.snackbar(getString(R.string.custom_raffle_roulette_hint_all_raffled))
+            }
+        }
+
         randomWinnersViewModel.run {
             error(error, ::handleError)
             observe(quantityError, ::handleQuantityError)
@@ -53,14 +61,19 @@ class CustomRaffleRandomWinnersFragment : BaseFragment() {
         setupRecyclerView()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        layoutRoot.hideKeyboard()
+    }
+
     private fun setupLayout() {
         layoutTitle.setTitle(R.string.custom_raffle_details_mode_random_winners)
         layoutTitle.navigateUp { layoutRoot.findNavController().navigateUp() }
 
         buttonRaffle.setOnClickListener {
-            customRaffleDetailsViewModel.preparedRaffle.value?.let { preparedRaffle ->
+            customRaffleDetailsViewModel.customRaffle.value?.let { raffle ->
                 randomWinnersViewModel.getRandomWinners(
-                    preparedRaffle.items,
+                    raffle.includedItems,
                     editTextTotalQuantity.textAsString()
                 )
             }
@@ -82,6 +95,7 @@ class CustomRaffleRandomWinnersFragment : BaseFragment() {
     }
 
     private fun handleWinners(winners: List<CustomRaffleDraftedModel>) {
+        customRaffleDetailsViewModel.itemRaffled()
         layoutRoot.hideKeyboard()
         adapter.run {
             colorList = getColorGradientForListSize(

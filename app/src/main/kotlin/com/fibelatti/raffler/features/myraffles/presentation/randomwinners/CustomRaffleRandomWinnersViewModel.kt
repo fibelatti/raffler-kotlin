@@ -7,11 +7,13 @@ import com.fibelatti.raffler.core.extension.isInt
 import com.fibelatti.raffler.core.platform.BaseViewModel
 import com.fibelatti.raffler.core.provider.ResourceProvider
 import com.fibelatti.raffler.core.provider.ThreadProvider
+import com.fibelatti.raffler.features.myraffles.RememberRaffled
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleDraftedModel
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleItemModel
 import javax.inject.Inject
 
 class CustomRaffleRandomWinnersViewModel @Inject constructor(
+    private val rememberRaffled: RememberRaffled,
     private val resourceProvider: ResourceProvider,
     threadProvider: ThreadProvider
 ) : BaseViewModel(threadProvider) {
@@ -20,19 +22,20 @@ class CustomRaffleRandomWinnersViewModel @Inject constructor(
     val quantityError by lazy { MutableLiveData<String>() }
 
     fun getRandomWinners(options: List<CustomRaffleItemModel>, quantity: String) {
-        start {
-            inBackground {
-                validateData(options, quantity) { qty ->
-                    options.shuffled()
-                        .take(qty)
-                        .mapIndexed { index, item ->
-                            CustomRaffleDraftedModel(
-                                title = resourceProvider.getString(R.string.custom_raffle_random_winners_item_title, index + 1),
-                                description = item.description
-                            )
-                        }
-                        .let(randomWinners::postValue)
-                }
+        validateData(options, quantity) { qty ->
+            startInBackground {
+                options.shuffled()
+                    .take(qty)
+                    .also { raffledItems ->
+                        raffledItems.forEach { rememberRaffled(RememberRaffled.Params(it, included = false)) }
+                    }
+                    .mapIndexed { index, item ->
+                        CustomRaffleDraftedModel(
+                            title = resourceProvider.getString(R.string.custom_raffle_random_winners_item_title, index + 1),
+                            description = item.description
+                        )
+                    }
+                    .let(randomWinners::postValue)
             }
         }
     }

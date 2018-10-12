@@ -10,7 +10,6 @@ import com.fibelatti.raffler.features.myraffles.CustomRaffleItem
 import javax.inject.Inject
 
 const val CUSTOM_RAFFLE_ITEM_TABLE_NAME = "CustomRaffleItem"
-const val CUSTOM_RAFFLE_ITEM_ID_COLUMN_NAME = "id"
 const val CUSTOM_RAFFLE_ITEM_CUSTOM_RAFFLE_ID_COLUMN_NAME = "customRaffleId"
 
 @Entity(
@@ -26,18 +25,19 @@ data class CustomRaffleItemDto(
     @PrimaryKey(autoGenerate = true)
     val id: Long,
     val customRaffleId: Long,
-    val description: String
+    val description: String,
+    val included: Boolean
 ) {
     @Ignore
-    constructor() : this(0, 0, "")
+    constructor() : this(0, 0, "", true)
 }
 
 class CustomRaffleItemDtoMapper @Inject constructor() : Mapper<CustomRaffleItemDto, CustomRaffleItem> {
     override fun map(param: CustomRaffleItemDto): CustomRaffleItem {
-        return with(param) { CustomRaffleItem(id, customRaffleId, description) }
+        return with(param) { CustomRaffleItem(id, customRaffleId, description, included) }
     }
 
     override fun mapReverse(param: CustomRaffleItem): CustomRaffleItemDto {
-        return with(param) { CustomRaffleItemDto(id, customRaffleId, description) }
+        return with(param) { CustomRaffleItemDto(id, customRaffleId, description, included) }
     }
 }

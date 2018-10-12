@@ -30,12 +30,16 @@ abstract class BaseViewModel(
     }
 
     protected fun handleError(error: Throwable) {
-        this.error.value = error
+        this.error.postValue(error)
     }
 
     protected fun start(
         block: suspend CoroutineScope.() -> Unit
     ) = launch(threadProvider.main()) { block() }
+
+    protected fun startInBackground(
+        block: suspend CoroutineScope.() -> Unit
+    ) = launch(threadProvider.background()) { block() }
 
     protected suspend fun <T> inBackground(
         block: suspend CoroutineScope.() -> T

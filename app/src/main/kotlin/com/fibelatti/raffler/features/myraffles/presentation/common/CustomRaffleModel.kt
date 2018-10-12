@@ -19,6 +19,15 @@ data class CustomRaffleModel(
     }
 
     override fun getViewType(): Int = VIEW_TYPE
+
+    val includedItems
+        get() = items.filter { it.included }
+    val includedItemsIndex
+        get() = items.mapIndexed { index, customRaffleItemModel ->
+            if (customRaffleItemModel.included) index else null
+        }.filterNotNull()
+    val itemSelectionIsValid
+        get() = includedItems.size > 1
 }
 
 class CustomRaffleModelMapper @Inject constructor(

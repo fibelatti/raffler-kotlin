@@ -22,16 +22,18 @@ class CustomRaffleGroupingViewModel @Inject constructor(
 
     fun getGroupsByQuantity(options: List<CustomRaffleItemModel>, quantity: String) {
         validateData(options, quantity) {
-            start {
-                groups.value = inBackground { createBatches(options, Math.ceil(options.size.toDouble() / quantity.toInt()).toInt()) }
+            startInBackground {
+                createBatches(options, Math.ceil(options.size.toDouble() / quantity.toInt()).toInt())
+                    .let(groups::postValue)
             }
         }
     }
 
     fun getGroupsByItemQuantity(options: List<CustomRaffleItemModel>, quantity: String) {
         validateData(options, quantity) {
-            start {
-                groups.value = inBackground { createBatches(options, quantity.toInt()) }
+            startInBackground {
+                createBatches(options, quantity.toInt())
+                    .let(groups::postValue)
             }
         }
     }

@@ -3,6 +3,8 @@ package com.fibelatti.raffler.features.quickdecision.presentation
 import androidx.lifecycle.MutableLiveData
 import com.fibelatti.raffler.core.extension.random
 import com.fibelatti.raffler.core.functional.flatMapCatching
+import com.fibelatti.raffler.core.functional.onFailure
+import com.fibelatti.raffler.core.functional.onSuccess
 import com.fibelatti.raffler.core.platform.AppConfig.LOCALE_NONE
 import com.fibelatti.raffler.core.platform.BaseViewModel
 import com.fibelatti.raffler.core.provider.ThreadProvider
@@ -21,23 +23,23 @@ class QuickDecisionViewModel @Inject constructor(
     val state by lazy { MutableLiveData<State>() }
 
     fun getAllQuickDecisions() {
-        start {
-            inBackground {
-                quickDecisionRepository.getAllQuickDecisions()
-                    .flatMapCatching { it.filterByLocale() }
-            }.either(::handleError, ::showQuickDecisions)
+        startInBackground {
+            quickDecisionRepository.getAllQuickDecisions()
+                .flatMapCatching { it.filterByLocale() }
+                .onSuccess(::showQuickDecisions)
+                .onFailure(::handleError)
         }
     }
 
     fun getQuickDecisionResult(quickDecision: QuickDecisionModel, color: Int) {
-        state.value = State.ShowResult(quickDecision.description, quickDecision.values.random(), color)
+        state.postValue(State.ShowResult(quickDecision.description, quickDecision.values.random(), color))
     }
 
     private fun List<QuickDecision>.filterByLocale(): List<QuickDecisionModel> =
         filter { it.locale == locale.language || it.locale == LOCALE_NONE }.map(quickDecisionModelMapper::map)
 
     private fun showQuickDecisions(list: List<QuickDecisionModel>) {
-        state.value = State.ShowList(list)
+        state.postValue(State.ShowList(list))
     }
 
     sealed class State {

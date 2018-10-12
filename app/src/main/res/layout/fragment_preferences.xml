@@ -1,247 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layoutRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_background"
-    android:fillViewport="true"
-    android:paddingTop="@dimen/padding_regular">
+    android:clipToPadding="false"
+    android:paddingLeft="@dimen/padding_regular"
+    android:paddingTop="@dimen/padding_regular"
+    android:paddingRight="@dimen/padding_regular">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
+        android:id="@+id/layoutSectionGeneral"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/list_item_row_height"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/layoutSectionLottery"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/margin_regular"
+            app:srcCompat="@drawable/ic_preferences"
+            app:tint="@color/color_icon" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/AppTheme.Text.SectionTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/preferences_section_general" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutSectionLottery"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/list_item_row_height"
+        android:layout_marginTop="@dimen/margin_regular"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/layoutSectionMyRaffles"
+        app:layout_constraintTop_toBottomOf="@+id/layoutSectionGeneral">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/margin_regular"
+            app:srcCompat="@drawable/ic_lottery"
+            app:tint="@color/color_icon" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/AppTheme.Text.SectionTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/preferences_section_lottery" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutSectionMyRaffles"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/list_item_row_height"
+        android:layout_marginTop="@dimen/margin_regular"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/spaceFiller"
+        app:layout_constraintTop_toBottomOf="@+id/layoutSectionLottery">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/margin_regular"
+            app:srcCompat="@drawable/ic_group"
+            app:tint="@color/color_icon" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/AppTheme.Text.SectionTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/preferences_section_my_raffles" />
+    </LinearLayout>
+
+    <Space
+        android:id="@+id/spaceFiller"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/margin_regular"
+        app:layout_constraintBottom_toTopOf="@+id/layoutDividerFooter"
+        app:layout_constraintTop_toBottomOf="@+id/layoutSectionMyRaffles" />
+
+    <include
+        android:id="@+id/layoutDividerFooter"
+        layout="@layout/layout_divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_size"
+        app:layout_constraintBottom_toTopOf="@+id/buttonShare"
+        app:layout_constraintTop_toBottomOf="@+id/spaceFiller" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/buttonShare"
+        style="@style/AppTheme.TextButton"
+        android:text="@string/preferences_share"
+        app:layout_constraintBottom_toTopOf="@+id/textViewAbout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/buttonRate"
+        app:layout_constraintTop_toBottomOf="@+id/layoutDividerFooter" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/buttonRate"
+        style="@style/AppTheme.TextButton"
+        android:text="@string/preferences_rate"
+        app:layout_constraintBaseline_toBaselineOf="@+id/buttonShare"
+        app:layout_constraintBottom_toTopOf="@+id/textViewAbout"
+        app:layout_constraintLeft_toRightOf="@+id/buttonShare"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutDividerFooter" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewAbout"
+        style="@style/AppTheme.Text.Body"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clipToPadding="false"
-        android:paddingLeft="@dimen/padding_regular"
-        android:paddingRight="@dimen/padding_regular">
+        android:layout_marginTop="@dimen/margin_small"
+        android:gravity="center_horizontal"
+        android:text="@string/preferences_about"
+        app:layout_constraintBottom_toTopOf="@+id/textViewAppVersion"
+        app:layout_constraintTop_toBottomOf="@+id/buttonRate" />
 
-        <com.fibelatti.raffler.core.platform.TitleLayout
-            android:id="@+id/layoutTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/dividerTheme"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <include
-            android:id="@+id/dividerTheme"
-            layout="@layout/layout_divider"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/divider_size"
-            android:layout_marginBottom="@dimen/margin_regular"
-            app:layout_constraintBottom_toTopOf="@+id/textViewThemeTitle"
-            app:layout_constraintTop_toBottomOf="@+id/layoutTitle" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textViewThemeTitle"
-            style="@style/AppTheme.Text.Title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_small"
-            android:text="@string/preferences_theme_title"
-            app:layout_constraintBottom_toTopOf="@+id/radioGroupTheme"
-            app:layout_constraintTop_toBottomOf="@+id/dividerTheme" />
-
-        <RadioGroup
-            android:id="@+id/radioGroupTheme"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/dividerLanguage"
-            app:layout_constraintTop_toBottomOf="@+id/textViewThemeTitle">
-
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/radioButtonThemeClassic"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/preferences_theme_description_classic"
-                android:textColor="@color/text_primary" />
-
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/radioButtonThemeDark"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/preferences_theme_description_dark"
-                android:textColor="@color/text_primary" />
-        </RadioGroup>
-
-        <include
-            android:id="@+id/dividerLanguage"
-            layout="@layout/layout_divider"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/divider_size"
-            android:layout_marginTop="@dimen/margin_regular"
-            android:layout_marginBottom="@dimen/margin_regular"
-            app:layout_constraintBottom_toTopOf="@+id/textViewLanguageTitle"
-            app:layout_constraintTop_toBottomOf="@+id/radioGroupTheme" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textViewLanguageTitle"
-            style="@style/AppTheme.Text.Title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_small"
-            android:text="@string/preferences_language_title"
-            app:layout_constraintBottom_toTopOf="@+id/radioGroupLanguage"
-            app:layout_constraintTop_toBottomOf="@+id/dividerTheme" />
-
-        <RadioGroup
-            android:id="@+id/radioGroupLanguage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/dividerRouletteMusic"
-            app:layout_constraintTop_toBottomOf="@+id/textViewLanguageTitle">
-
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/radioButtonLanguageEnglish"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/preferences_language_english"
-                android:textColor="@color/text_primary" />
-
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/radioButtonLanguagePortuguese"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/preferences_language_portuguese"
-                android:textColor="@color/text_primary" />
-
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/radioButtonLanguageSpanish"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/preferences_language_spanish"
-                android:textColor="@color/text_primary" />
-        </RadioGroup>
-
-        <include
-            android:id="@+id/dividerRouletteMusic"
-            layout="@layout/layout_divider"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/divider_size"
-            android:layout_marginTop="@dimen/margin_regular"
-            android:layout_marginBottom="@dimen/margin_regular"
-            app:layout_constraintBottom_toTopOf="@+id/textViewRouletteMusicTitle"
-            app:layout_constraintTop_toBottomOf="@+id/radioGroupLanguage" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textViewRouletteMusicTitle"
-            style="@style/AppTheme.Text.Title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_small"
-            android:text="@string/preferences_roulette_music_title"
-            app:layout_constraintBottom_toTopOf="@+id/checkBoxRouletteMusic"
-            app:layout_constraintTop_toBottomOf="@+id/dividerRouletteMusic" />
-
-        <androidx.appcompat.widget.AppCompatCheckBox
-            android:id="@+id/checkBoxRouletteMusic"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/preferences_roulette_music_description"
-            app:layout_constraintBottom_toTopOf="@+id/dividerHints"
-            app:layout_constraintTop_toBottomOf="@+id/textViewRouletteMusicTitle" />
-
-        <include
-            android:id="@+id/dividerHints"
-            layout="@layout/layout_divider"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/divider_size"
-            android:layout_marginTop="@dimen/margin_regular"
-            android:layout_marginBottom="@dimen/margin_regular"
-            app:layout_constraintBottom_toTopOf="@+id/textViewHintsTitle"
-            app:layout_constraintTop_toBottomOf="@+id/checkBoxRouletteMusic" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textViewHintsTitle"
-            style="@style/AppTheme.Text.Title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_small"
-            android:text="@string/preferences_reset_hints_title"
-            app:layout_constraintBottom_toTopOf="@+id/buttonResetHints"
-            app:layout_constraintTop_toBottomOf="@+id/dividerHints" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/buttonResetHints"
-            style="@style/AppTheme.TextButton"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/button_height"
-            android:text="@string/preferences_reset_hints_button"
-            app:layout_constraintBottom_toTopOf="@+id/spaceFiller"
-            app:layout_constraintTop_toBottomOf="@+id/textViewHintsTitle" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textViewHintsMessage"
-            style="@style/AppTheme.Text.Body"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginLeft="@dimen/margin_regular"
-            android:text="@string/preferences_reset_hints_description"
-            app:layout_constraintBottom_toBottomOf="@+id/buttonResetHints"
-            app:layout_constraintLeft_toRightOf="@+id/buttonResetHints"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/buttonResetHints" />
-
-        <Space
-            android:id="@+id/spaceFiller"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/layoutDividerFooter"
-            app:layout_constraintTop_toBottomOf="@+id/buttonResetHints" />
-
-        <include
-            android:id="@+id/layoutDividerFooter"
-            layout="@layout/layout_divider"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/divider_size"
-            app:layout_constraintTop_toBottomOf="@+id/spaceFiller" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/buttonShare"
-            style="@style/AppTheme.TextButton"
-            android:text="@string/preferences_share"
-            app:layout_constraintBottom_toTopOf="@+id/textViewAbout"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/buttonRate"
-            app:layout_constraintTop_toBottomOf="@+id/layoutDividerFooter" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/buttonRate"
-            style="@style/AppTheme.TextButton"
-            android:text="@string/preferences_rate"
-            app:layout_constraintBaseline_toBaselineOf="@+id/buttonShare"
-            app:layout_constraintBottom_toTopOf="@+id/textViewAbout"
-            app:layout_constraintLeft_toRightOf="@+id/buttonShare"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layoutDividerFooter" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textViewAbout"
-            style="@style/AppTheme.Text.Body"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_xsmall"
-            android:gravity="center_horizontal"
-            android:text="@string/preferences_about"
-            app:layout_constraintBottom_toTopOf="@+id/textViewAppVersion"
-            app:layout_constraintTop_toBottomOf="@+id/buttonRate" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textViewAppVersion"
-            style="@style/AppTheme.Text.Body"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_small"
-            android:gravity="center_horizontal"
-            android:text="@string/preferences_app_version"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewAbout" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</ScrollView>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewAppVersion"
+        style="@style/AppTheme.Text.Body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_regular"
+        android:gravity="center_horizontal"
+        android:text="@string/preferences_app_version"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAbout" />
+</androidx.constraintlayout.widget.ConstraintLayout>

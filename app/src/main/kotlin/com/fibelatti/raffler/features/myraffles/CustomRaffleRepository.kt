@@ -7,7 +7,9 @@ interface CustomRaffleRepository {
 
     suspend fun getCustomRaffleById(id: Long): Result<CustomRaffle>
 
-    suspend fun addCustomRaffle(customRaffle: CustomRaffle): Result<Unit>
+    suspend fun saveCustomRaffle(customRaffle: CustomRaffle): Result<Unit>
+
+    suspend fun updateCustomRaffleItem(customRaffleItem: CustomRaffleItem): Result<Unit>
 
     suspend fun deleteCustomRaffleById(id: Long): Result<Unit>
 }

@@ -7,23 +7,24 @@ import javax.inject.Inject
 data class CustomRaffleItemModel(
     val id: Long,
     val customRaffleId: Long,
-    val description: String
+    val description: String,
+    var included: Boolean
 ) {
     companion object {
-        fun empty() = CustomRaffleItemModel(0, 0, "")
+        fun empty() = CustomRaffleItemModel(0, 0, "", true)
     }
 }
 
 class CustomRaffleItemModelMapper @Inject constructor() : Mapper<CustomRaffleItem, CustomRaffleItemModel> {
     override fun map(param: CustomRaffleItem): CustomRaffleItemModel {
         return with(param) {
-            CustomRaffleItemModel(id, customRaffleId, description)
+            CustomRaffleItemModel(id, customRaffleId, description, included)
         }
     }
 
     override fun mapReverse(param: CustomRaffleItemModel): CustomRaffleItem {
         return with(param) {
-            CustomRaffleItem(id, customRaffleId, description)
+            CustomRaffleItem(id, customRaffleId, description, included)
         }
     }
 }

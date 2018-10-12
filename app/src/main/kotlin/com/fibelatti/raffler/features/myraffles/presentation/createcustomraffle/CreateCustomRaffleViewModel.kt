@@ -4,6 +4,9 @@ import androidx.lifecycle.MutableLiveData
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.empty
 import com.fibelatti.raffler.core.functional.flatMapCatching
+import com.fibelatti.raffler.core.functional.isSuccess
+import com.fibelatti.raffler.core.functional.onFailure
+import com.fibelatti.raffler.core.functional.onSuccess
 import com.fibelatti.raffler.core.platform.BaseViewModel
 import com.fibelatti.raffler.core.provider.ResourceProvider
 import com.fibelatti.raffler.core.provider.ThreadProvider
@@ -34,21 +37,22 @@ class CreateCustomRaffleViewModel @Inject constructor(
     val onChangedSaved by lazy { MutableLiveData<Boolean>() }
     val onDeleted by lazy { MutableLiveData<Boolean>() }
 
-    fun getCustomRaffleById(id: Int) {
-        if (id != 0) {
+    fun getCustomRaffleById(id: Long?) {
+        if (id != null && id != 0L) {
             start {
                 inBackground {
-                    customRaffleRepository.getCustomRaffleById(id.toLong())
+                    customRaffleRepository.getCustomRaffleById(id)
                         .flatMapCatching { customRaffle -> customRaffleModelMapper.map(customRaffle) }
-                }.either(::handleError) {
+                }.onSuccess {
                     customRaffle.value = it
                     showEditCustomRaffleLayout.value = Unit
-                }
+                }.onFailure(::handleError)
 
                 customRaffle.value?.let { customRaffle ->
                     inBackground {
                         quickDecisionRepository.getQuickDecisionById(customRaffle.description)
-                    }.either(::handleError) { addAsQuickDecision.value = it != null }
+                    }.onSuccess { addAsQuickDecision.value = it != null }
+                        .onFailure(::handleError)
                 }
             }
         } else {
@@ -90,17 +94,17 @@ class CreateCustomRaffleViewModel @Inject constructor(
         validateData {
             start {
                 val resultCustomRaffle = inBackgroundForParallel {
-                    customRaffleRepository.addCustomRaffle(customRaffleModelMapper.mapReverse(it))
+                    customRaffleRepository.saveCustomRaffle(customRaffleModelMapper.mapReverse(it))
                 }
                 val resultQuickDecision = inBackgroundForParallel {
-                    return@inBackgroundForParallel if (saveAsQuickDecision) {
+                    if (saveAsQuickDecision) {
                         quickDecisionRepository.addQuickDecisions(listOf(customRaffleToQuickDecisionMapper.map(it)))
                     } else {
                         quickDecisionRepository.deleteQuickDecisionById(it.description)
                     }
                 }
 
-                if (resultCustomRaffle.await().isRight && resultQuickDecision.await().isRight) {
+                if (resultCustomRaffle.await().isSuccess && resultQuickDecision.await().isSuccess) {
                     onChangedSaved.value = true
                 } else {
                     error.value = Throwable(resourceProvider.getString(R.string.generic_msg_error))
@@ -120,7 +124,7 @@ class CreateCustomRaffleViewModel @Inject constructor(
                     quickDecisionRepository.deleteQuickDecisionById(customRaffle.description)
                 }
 
-                if (resultCustomRaffle.await().isRight && resultQuickDecision.await().isRight) {
+                if (resultCustomRaffle.await().isSuccess && resultQuickDecision.await().isSuccess) {
                     onDeleted.value = true
                 } else {
                     error.value = Throwable(resourceProvider.getString(R.string.generic_msg_error))

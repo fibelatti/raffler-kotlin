@@ -5,34 +5,56 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_background"
-    android:paddingTop="@dimen/padding_regular">
+    android:clipToPadding="false"
+    android:paddingLeft="@dimen/padding_regular"
+    android:paddingTop="@dimen/padding_regular"
+    android:paddingRight="@dimen/padding_regular">
 
-    <include
-        android:id="@+id/layoutHintContainer"
-        layout="@layout/layout_hint_container"
+    <com.fibelatti.raffler.core.platform.TitleLayout
+        android:id="@+id/layoutTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_regular"
+        app:layout_constraintBottom_toTopOf="@+id/dividerLotteryDefaults"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <include
+        android:id="@+id/dividerLotteryDefaults"
+        layout="@layout/layout_divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_size"
+        android:layout_marginBottom="@dimen/margin_regular"
+        app:layout_constraintBottom_toTopOf="@+id/textViewLotteryDefaultsTitle"
+        app:layout_constraintTop_toBottomOf="@+id/layoutTitle" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewLotteryDefaultsTitle"
+        style="@style/AppTheme.Text.SectionTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_small"
+        android:text="@string/preferences_default_lottery_title"
         app:layout_constraintBottom_toTopOf="@+id/inputLayoutTotalQuantity"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/dividerLotteryDefaults" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/inputLayoutTotalQuantity"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_regular"
-        android:layout_marginRight="@dimen/margin_regular"
         android:layout_marginBottom="@dimen/margin_small"
         android:theme="@style/AppTheme.InputLayout"
         app:layout_constraintBottom_toTopOf="@+id/inputLayoutRaffleQuantity"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layoutHintContainer">
+        app:layout_constraintTop_toBottomOf="@+id/textViewLotteryDefaultsTitle">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextTotalQuantity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/lottery_quantity_available"
+            android:hint="@string/preferences_default_lottery_max_quantity"
             android:imeOptions="actionNext"
             android:inputType="number"
             android:singleLine="true" />
@@ -42,10 +64,9 @@
         android:id="@+id/inputLayoutRaffleQuantity"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_regular"
-        android:layout_marginRight="@dimen/margin_regular"
+        android:layout_marginBottom="@dimen/margin_small"
         android:theme="@style/AppTheme.InputLayout"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonRaffle"
+        app:layout_constraintBottom_toTopOf="@+id/buttonLotteryDefaults"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inputLayoutTotalQuantity">
@@ -54,32 +75,16 @@
             android:id="@+id/editTextRaffleQuantity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/lottery_quantity_to_raffle"
+            android:hint="@string/preferences_default_lottery_raffle_quantity"
             android:imeOptions="actionDone"
             android:inputType="number"
             android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/buttonRaffle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_regular"
-        android:text="@string/lottery_raffle_button"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerViewItems"
-        app:layout_constraintTop_toBottomOf="@+id/inputLayoutRaffleQuantity" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewItems"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:clipToPadding="false"
-        android:overScrollMode="never"
-        android:paddingLeft="@dimen/padding_regular"
-        android:paddingRight="@dimen/padding_regular"
-        android:paddingBottom="@dimen/padding_regular"
-        android:visibility="invisible"
+        android:id="@+id/buttonLotteryDefaults"
+        style="@style/AppTheme.ButtonPrimary.Small"
+        android:text="@string/preferences_default_lottery_button"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonRaffle" />
-
+        app:layout_constraintTop_toBottomOf="@+id/inputLayoutRaffleQuantity" />
 </androidx.constraintlayout.widget.ConstraintLayout>
