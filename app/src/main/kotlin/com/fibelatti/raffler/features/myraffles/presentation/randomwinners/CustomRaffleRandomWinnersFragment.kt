@@ -53,6 +53,11 @@ class CustomRaffleRandomWinnersFragment : BaseFragment() {
         setupRecyclerView()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        layoutRoot.hideKeyboard()
+    }
+
     private fun setupLayout() {
         layoutTitle.setTitle(R.string.custom_raffle_details_mode_random_winners)
         layoutTitle.navigateUp { layoutRoot.findNavController().navigateUp() }

@@ -104,6 +104,11 @@ class CreateCustomRaffleFragment : BaseFragment() {
         createCustomRaffleViewModel.getCustomRaffleById(arguments?.customRaffleId.orZero())
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        layoutRoot.hideKeyboard()
+    }
+
     override fun handleError(error: Throwable) {
         super.handleError(error)
         alertDialogBuilder {
