@@ -38,8 +38,8 @@
     <string name="quick_decision_dismissible_hint">The answer for your questions is now 1 tap away! Here\'s a few shortcuts for simple tasks like flipping a coin or rolling a dice.</string>
 
     <!-- Lottery -->
-    <string name="lottery_quantity_available">Quantity available</string>
-    <string name="lottery_quantity_to_raffle">Quantity to raffle</string>
+    <string name="lottery_quantity_available">Qty. of numbers available</string>
+    <string name="lottery_quantity_to_raffle">Qty. of numbers to raffle</string>
     <string name="lottery_quantity_validation_error">Please enter a valid quantity.</string>
     <string name="lottery_raffle_button">Raffle numbers</string>
 
@@ -48,6 +48,7 @@
     <string name="my_raffles_hint_message">With custom raffles you can:\n\n• Choose someone to win a prize or to do a task\n• Create small groups of people\n\nAnd a lot more! Tap the button below to create your first custom raffle.</string>
     <string name="my_raffles_items_quantity">%d items</string>
     <string name="my_raffles_create_first_button">Create raffle</string>
+    <string name="my_raffles_select_mode_button">Select mode</string>
 
     <!-- Custom Raffle - New or Edit -->
     <string name="custom_raffle_description">Description</string>
@@ -82,6 +83,7 @@
     <string name="custom_raffle_roulette_hint_play">Play</string>
     <string name="custom_raffle_roulette_hint_stop">Stop</string>
     <string name="custom_raffle_roulette_hint_stopping">Stopping…</string>
+    <string name="custom_raffle_roulette_hint_all_raffled">All raffled</string>
 
     <!-- Custom Raffle - Random Winners -->
     <string name="custom_raffle_random_winners_hint">Quantity of winners</string>

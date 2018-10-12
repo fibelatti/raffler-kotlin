@@ -38,8 +38,8 @@
     <string name="quick_decision_dismissible_hint">A resposta para suas perguntas na ponta dos seus dedos. Estes atalhos podem te ajudar em decisões simples como jogar uma moeda ou rolar um dado.</string>
 
     <!-- Lottery -->
-    <string name="lottery_quantity_available">Quantidade disponível</string>
-    <string name="lottery_quantity_to_raffle">Quantidade para sortear</string>
+    <string name="lottery_quantity_available">Qtde. de números disponíveis</string>
+    <string name="lottery_quantity_to_raffle">Qtde. de números sorteados</string>
     <string name="lottery_quantity_validation_error">Por favor entre uma quantidade válida.</string>
     <string name="lottery_raffle_button">Sortear números</string>
 
@@ -48,6 +48,7 @@
     <string name="my_raffles_hint_message">Com sorteios personalizados você pode:\n\n• Escolher alguém para ganhar um prêmio ou fazer uma tarefa\n• Criar grupos de pessoas\n\nE muito mais! Pressione o botão abaixo para criar seu primeiro sorteio.</string>
     <string name="my_raffles_items_quantity">%d itens</string>
     <string name="my_raffles_create_first_button">Criar sorteio</string>
+    <string name="my_raffles_select_mode_button">Escolher modo</string>
 
     <!-- Custom Raffle - New or Edit -->
     <string name="custom_raffle_description">Descrição</string>
@@ -82,6 +83,7 @@
     <string name="custom_raffle_roulette_hint_play">Rodar</string>
     <string name="custom_raffle_roulette_hint_stop">Parar</string>
     <string name="custom_raffle_roulette_hint_stopping">Parando…</string>
+    <string name="custom_raffle_roulette_hint_all_raffled">Todos sorteados</string>
 
     <!-- Custom Raffle - Random Winners -->
     <string name="custom_raffle_random_winners_hint">Quantidade de sorteados</string>

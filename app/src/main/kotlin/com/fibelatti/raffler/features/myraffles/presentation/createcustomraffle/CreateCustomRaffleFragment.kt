@@ -19,7 +19,6 @@ import com.fibelatti.raffler.core.extension.hideKeyboard
 import com.fibelatti.raffler.core.extension.isKeyboardSubmit
 import com.fibelatti.raffler.core.extension.observe
 import com.fibelatti.raffler.core.extension.orFalse
-import com.fibelatti.raffler.core.extension.orZero
 import com.fibelatti.raffler.core.extension.showError
 import com.fibelatti.raffler.core.extension.textAsString
 import com.fibelatti.raffler.core.extension.visible
@@ -33,17 +32,17 @@ import kotlinx.android.synthetic.main.fragment_create_custom_raffle.*
 import javax.inject.Inject
 
 private var Bundle.addAsShortcut by BundleDelegate.Boolean("ADD_AS_SHORTCUT", false)
-private var Bundle.customRaffleId by BundleDelegate.Int("CUSTOM_RAFFLE_ID")
+private var Bundle.customRaffleId by BundleDelegate.Long("CUSTOM_RAFFLE_ID")
 
 class CreateCustomRaffleFragment : BaseFragment() {
 
     companion object {
         fun bundle(
             addAsShortcut: Boolean = false,
-            customRaffleId: Int = 0
+            customRaffleId: Long? = null
         ) = Bundle().apply {
             this.addAsShortcut = addAsShortcut
-            this.customRaffleId = customRaffleId
+            customRaffleId?.let { this.customRaffleId = it }
         }
 
         fun navOptionsNew() = navOptions {
@@ -101,7 +100,7 @@ class CreateCustomRaffleFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         setupLayout()
         setupRecyclerView()
-        createCustomRaffleViewModel.getCustomRaffleById(arguments?.customRaffleId.orZero())
+        createCustomRaffleViewModel.getCustomRaffleById(arguments?.customRaffleId)
     }
 
     override fun onDestroyView() {

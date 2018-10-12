@@ -5,24 +5,21 @@ import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Handler
-import androidx.lifecycle.LifecycleObserver
 import com.fibelatti.raffler.R
+import com.fibelatti.raffler.core.extension.random
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModel
-import java.util.Random
 import javax.inject.Inject
 
 private const val ROULETTE_SPEED_MAX = 350L
 private const val ROULETTE_SPEED_MIN = 1000L
 private const val ROULETTE_SPEED_STEPS = 50L
 private const val MEDIA_VOLUME_STEPS = 0.05F
-private const val MEDIA_FADE_DELAY = 600L
 
-class CustomRaffleRouletteDelegate @Inject constructor() : LifecycleObserver {
-    private lateinit var mediaPlayer: MediaPlayer
+class CustomRaffleRouletteDelegate @Inject constructor() {
+    private var mediaPlayer: MediaPlayer? = null
     private var mediaVolume = 1F
-    private var rouletteMusicEnabled: Boolean = false
 
-    private var optionsCount = 0
+    private var optionsIndex: List<Int> = listOf()
     private var currentIndex = -1
     private var randomIndex = 0
 
@@ -30,62 +27,82 @@ class CustomRaffleRouletteDelegate @Inject constructor() : LifecycleObserver {
 
     private val handler by lazy { Handler() }
 
-    var status: RouletteStatus = RouletteStatus.PLAYING
+    var status: RouletteStatus = RouletteStatus.IDLE
         private set
 
     fun setup(
         context: Context,
-        customRaffleModel: CustomRaffleModel,
         rouletteMusicEnabled: Boolean
     ): CustomRaffleRouletteDelegate = apply {
-        this.optionsCount = customRaffleModel.items.size
-        this.rouletteMusicEnabled = rouletteMusicEnabled
-        this.mediaPlayer = MediaPlayer.create(context, R.raw.easter_egg_soundtrack).apply {
-            setAudioAttributes(AudioAttributes.Builder().setLegacyStreamType(AudioManager.STREAM_MUSIC).build())
+        if (rouletteMusicEnabled) {
+            this.mediaPlayer = MediaPlayer.create(context, R.raw.easter_egg_soundtrack).apply {
+                setAudioAttributes(AudioAttributes.Builder().setLegacyStreamType(AudioManager.STREAM_MUSIC).build())
+            }
         }
     }
 
+    fun tearDown() {
+        handler.removeCallbacksAndMessages(null)
+        mediaPlayer?.release()
+    }
+
     fun startRoulette(
+        customRaffleModel: CustomRaffleModel,
         onRouletteStarted: () -> Unit,
-        onRouletteIndexUpdated: (newIndex: Int) -> Unit
+        onRouletteIndexUpdated: (newIndex: Int) -> Unit,
+        onRouletteStopped: (winningIndex: Int) -> Unit
     ) {
-        randomIndex = Random().nextInt(optionsCount)
+        optionsIndex = customRaffleModel.includedItemsIndex
+        randomIndex = optionsIndex.random()
         currentSpeed = ROULETTE_SPEED_MIN
         status = RouletteStatus.PLAYING
-        mediaVolume = if (rouletteMusicEnabled) 1F else 0F
-        mediaPlayer.apply {
+        mediaVolume = 1F
+        mediaPlayer?.apply {
             setVolume(mediaVolume, mediaVolume)
             start()
         }
 
         onRouletteStarted()
 
-        animate(onRouletteIndexUpdated)
+        animate(onRouletteIndexUpdated, onRouletteStopped)
     }
 
-    fun stopRoulette(onRouletteStopped: () -> Unit) {
+    fun stopRoulette() {
         status = RouletteStatus.STOPPING
-        fadeOutMusic(onRouletteStopped)
     }
 
-    fun tearDown() {
-        handler.removeCallbacksAndMessages(null)
-        mediaPlayer.release()
+    private fun animate(
+        onRouletteIndexUpdated: (newIndex: Int) -> Unit,
+        onRouletteStopped: (winningIndex: Int) -> Unit
+    ) {
+        updateIndex()
+        onRouletteIndexUpdated(optionsIndex[currentIndex])
+
+        handler.postDelayed({
+            when {
+                shouldStop() -> {
+                    handler.removeCallbacksAndMessages(null)
+                    status = RouletteStatus.IDLE
+                    mediaPlayer?.run {
+                        pause()
+                        seekTo(0)
+                    }
+                    onRouletteStopped(randomIndex)
+                }
+                status == RouletteStatus.STOPPING -> {
+                    mediaVolume -= MEDIA_VOLUME_STEPS
+                    mediaPlayer?.setVolume(mediaVolume, mediaVolume)
+                    animate(onRouletteIndexUpdated, onRouletteStopped)
+                }
+                else -> animate(onRouletteIndexUpdated, onRouletteStopped)
+            }
+        }, getCurrentSpeed())
     }
 
-    private fun animate(onRouletteIndexUpdated: (newIndex: Int) -> Unit) {
-        increaseIndex()
-
-        onRouletteIndexUpdated(currentIndex)
-
-        handler.postDelayed({ if (!shouldStop()) animate(onRouletteIndexUpdated) }, getCurrentSpeed())
-    }
-
-    private fun increaseIndex() {
+    private fun updateIndex() {
         currentIndex++
 
-        if (currentIndex == optionsCount) currentIndex = 0
-        if (currentSpeed == ROULETTE_SPEED_MIN) currentIndex = randomIndex
+        if (currentIndex >= optionsIndex.size) currentIndex = 0
     }
 
     private fun getCurrentSpeed(): Long {
@@ -102,25 +119,7 @@ class CustomRaffleRouletteDelegate @Inject constructor() : LifecycleObserver {
     private fun decreaseSpeed(): Long =
         currentSpeed.apply { if (currentSpeed < ROULETTE_SPEED_MIN) currentSpeed += ROULETTE_SPEED_STEPS }
 
-    private fun shouldStop(): Boolean = currentIndex == randomIndex && currentSpeed == ROULETTE_SPEED_MIN
-
-    private fun fadeOutMusic(onRouletteStopped: () -> Unit) {
-        mediaVolume -= MEDIA_VOLUME_STEPS
-        mediaPlayer.setVolume(mediaVolume, mediaVolume)
-
-        handler.postDelayed({
-            if (shouldStop()) {
-                mediaPlayer.run {
-                    pause()
-                    seekTo(0)
-                }
-                onRouletteStopped()
-                status = RouletteStatus.IDLE
-            } else {
-                fadeOutMusic(onRouletteStopped)
-            }
-        }, MEDIA_FADE_DELAY)
-    }
+    private fun shouldStop(): Boolean = optionsIndex[currentIndex] == randomIndex && currentSpeed == ROULETTE_SPEED_MIN
 
     enum class RouletteStatus {
         IDLE, PLAYING, STOPPING

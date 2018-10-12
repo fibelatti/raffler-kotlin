@@ -2,6 +2,8 @@ package com.fibelatti.raffler.features.myraffles.presentation.list
 
 import androidx.lifecycle.MutableLiveData
 import com.fibelatti.raffler.core.functional.flatMapCatching
+import com.fibelatti.raffler.core.functional.onFailure
+import com.fibelatti.raffler.core.functional.onSuccess
 import com.fibelatti.raffler.core.platform.BaseViewModel
 import com.fibelatti.raffler.core.provider.ThreadProvider
 import com.fibelatti.raffler.features.myraffles.CustomRaffleRepository
@@ -23,14 +25,10 @@ class MyRafflesViewModel @Inject constructor(
             inBackground {
                 customRaffleRepository.getAllCustomRaffles()
                     .flatMapCatching { it.map(customRaffleModelMapper::map) }
-            }.either(::handleError) { list ->
-                if (list.isEmpty()) {
-                    showHintAndCreateNewLayout.value = true
-                } else {
-                    showHintAndCreateNewLayout.value = false
-                    customRaffles.value = list
-                }
-            }
+            }.onSuccess { list ->
+                showHintAndCreateNewLayout.value = list.isEmpty()
+                customRaffles.value = list
+            }.onFailure(::handleError)
         }
     }
 }

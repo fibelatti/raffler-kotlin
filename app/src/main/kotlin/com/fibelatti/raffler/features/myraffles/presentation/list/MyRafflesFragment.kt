@@ -64,7 +64,7 @@ class MyRafflesFragment : BaseFragment() {
 
     private fun setupRecyclerView() {
         recyclerViewItems.withDefaultDecoration()
-            .withGridLayoutManager(2)
+            .withGridLayoutManager(spanCount = 2)
             .adapter = adapter
     }
 
@@ -86,7 +86,7 @@ class MyRafflesFragment : BaseFragment() {
             customRaffleClickListener = {
                 layoutRoot.findNavController().navigate(
                     R.id.action_fragmentMyRaffles_to_fragmentCustomRaffleDetails,
-                    CustomRaffleDetailsFragment.bundle(customRaffleId = it.toInt())
+                    CustomRaffleDetailsFragment.bundle(customRaffleId = it)
                 )
             }
             colorList = getColorGradientForListSize(

@@ -35,6 +35,8 @@ class LotteryFragment : BaseFragment() {
         injector.inject(this)
         lotteryViewModel.run {
             error(error, ::handleError)
+            observe(defaultQuantityAvailable) { editTextTotalQuantity.setText(it) }
+            observe(defaultQuantityToRaffle) { editTextRaffleQuantity.setText(it) }
             observe(lotteryNumbers, ::showResults)
             observe(totalQuantityError, ::handleTotalQuantityError)
             observe(raffleQuantityError, ::handleRaffleQuantityError)

@@ -10,7 +10,7 @@ import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.animateChangingTransitions
 import com.fibelatti.raffler.core.extension.error
 import com.fibelatti.raffler.core.extension.exhaustive
-import com.fibelatti.raffler.core.extension.observe
+import com.fibelatti.raffler.core.extension.observeEvent
 import com.fibelatti.raffler.core.extension.orFalse
 import com.fibelatti.raffler.core.platform.BaseFragment
 import com.fibelatti.raffler.features.myraffles.presentation.customraffledetails.CustomRaffleDetailsViewModel
@@ -31,15 +31,12 @@ class CustomRaffleRouletteFragment : BaseFragment() {
         injector.inject(this)
         customRaffleDetailsViewModel.run {
             error(error, ::handleError)
-            observe(preparedRaffle) {
-                rouletteDelegate.setup(
-                    context = requireContext(),
-                    customRaffleModel = it,
-                    rouletteMusicEnabled = rouletteMusicEnabled.value.orFalse()
-                ).startRoulette(
-                    onRouletteStarted = ::onRouletteStarted,
-                    onRouletteIndexUpdated = ::onRouletteIndexUpdated
-                )
+            observeEvent(allOptionsRaffled) {
+                fab?.apply {
+                    setText(R.string.custom_raffle_roulette_hint_all_raffled)
+                    setIconResource(R.drawable.ic_stop)
+                    setOnClickListener(null)
+                }
             }
         }
     }
@@ -51,13 +48,25 @@ class CustomRaffleRouletteFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         layoutRoot.animateChangingTransitions()
-
-        customRaffleDetailsViewModel.preparedRaffle.value?.let { layoutTitle.setTitle(it.description) }
         layoutTitle.navigateUp { layoutRoot.findNavController().navigateUp() }
 
         setupFab()
         setupAnimations()
         setupFactory()
+
+        customRaffleDetailsViewModel.customRaffle.value?.let {
+            layoutTitle.setTitle(it.description)
+
+            rouletteDelegate.setup(
+                context = requireContext(),
+                rouletteMusicEnabled = customRaffleDetailsViewModel.rouletteMusicEnabled.value.orFalse()
+            ).startRoulette(
+                customRaffleModel = it,
+                onRouletteStarted = ::onRouletteStarted,
+                onRouletteIndexUpdated = ::onRouletteIndexUpdated,
+                onRouletteStopped = ::onRouletteStopped
+            )
+        }
     }
 
     override fun onDetach() {
@@ -74,16 +83,20 @@ class CustomRaffleRouletteFragment : BaseFragment() {
         fab.setOnClickListener {
             when (rouletteDelegate.status) {
                 CustomRaffleRouletteDelegate.RouletteStatus.PLAYING -> {
-                    rouletteDelegate.stopRoulette(::onRouletteStopped)
+                    rouletteDelegate.stopRoulette()
                     fab.setText(R.string.custom_raffle_roulette_hint_stopping)
                 }
                 CustomRaffleRouletteDelegate.RouletteStatus.IDLE -> {
-                    rouletteDelegate.startRoulette(
-                        onRouletteStarted = ::onRouletteStarted,
-                        onRouletteIndexUpdated = ::onRouletteIndexUpdated
-                    )
+                    customRaffleDetailsViewModel.customRaffle.value?.let { customRaffleModel ->
+                        rouletteDelegate.startRoulette(
+                            customRaffleModel = customRaffleModel,
+                            onRouletteStarted = ::onRouletteStarted,
+                            onRouletteIndexUpdated = ::onRouletteIndexUpdated,
+                            onRouletteStopped = ::onRouletteStopped
+                        )
+                    }
                 }
-                else -> {
+                CustomRaffleRouletteDelegate.RouletteStatus.STOPPING -> {
                 }
             }.exhaustive
         }
@@ -111,12 +124,14 @@ class CustomRaffleRouletteFragment : BaseFragment() {
     }
 
     private fun onRouletteIndexUpdated(newIndex: Int) {
-        customRaffleDetailsViewModel.preparedRaffle.value?.let {
+        customRaffleDetailsViewModel.customRaffle.value?.let {
             textSwitcher?.setText(it.items[newIndex].description)
         }
     }
 
-    private fun onRouletteStopped() {
+    private fun onRouletteStopped(winningIndex: Int) {
+        customRaffleDetailsViewModel.itemRaffled(winningIndex)
+
         fab?.apply {
             setText(R.string.custom_raffle_roulette_hint_play)
             setIconResource(R.drawable.ic_play)

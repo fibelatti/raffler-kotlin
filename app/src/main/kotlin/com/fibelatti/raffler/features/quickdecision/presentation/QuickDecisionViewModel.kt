@@ -3,6 +3,8 @@ package com.fibelatti.raffler.features.quickdecision.presentation
 import androidx.lifecycle.MutableLiveData
 import com.fibelatti.raffler.core.extension.random
 import com.fibelatti.raffler.core.functional.flatMapCatching
+import com.fibelatti.raffler.core.functional.onFailure
+import com.fibelatti.raffler.core.functional.onSuccess
 import com.fibelatti.raffler.core.platform.AppConfig.LOCALE_NONE
 import com.fibelatti.raffler.core.platform.BaseViewModel
 import com.fibelatti.raffler.core.provider.ThreadProvider
@@ -25,7 +27,8 @@ class QuickDecisionViewModel @Inject constructor(
             inBackground {
                 quickDecisionRepository.getAllQuickDecisions()
                     .flatMapCatching { it.filterByLocale() }
-            }.either(::handleError, ::showQuickDecisions)
+            }.onSuccess(::showQuickDecisions)
+                .onFailure(::handleError)
         }
     }
 

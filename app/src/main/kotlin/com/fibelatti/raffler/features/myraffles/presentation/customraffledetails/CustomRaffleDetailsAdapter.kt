@@ -2,28 +2,32 @@ package com.fibelatti.raffler.features.myraffles.presentation.customraffledetail
 
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.inflate
 import com.fibelatti.raffler.core.extension.visibleIf
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleItemModel
 import kotlinx.android.synthetic.main.list_item_custom_raffle_item.view.*
-
 import javax.inject.Inject
 
-class CustomRaffleDetailsAdapter
-@Inject constructor() : ListAdapter<CustomRaffleItemModel, CustomRaffleDetailsAdapter.DataViewHolder>(
-    CustomRaffleItemModelDiffCallback
-) {
+class CustomRaffleDetailsAdapter @Inject constructor() : RecyclerView.Adapter<CustomRaffleDetailsAdapter.DataViewHolder>() {
 
-    var clickListener: (CustomRaffleItemModel, Boolean) -> Unit = { _, _ -> }
+    var clickListener: (index: Int, isSelected: Boolean) -> Unit = { _, _ -> }
+
+    private val items: MutableList<CustomRaffleItemModel> = mutableListOf()
+
+    override fun getItemCount(): Int = items.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder = DataViewHolder(parent)
 
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(items[position])
+    }
+
+    fun setItems(items: List<CustomRaffleItemModel>) {
+        this.items.clear()
+        this.items.addAll(items)
+        notifyDataSetChanged()
     }
 
     inner class DataViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
@@ -31,25 +35,16 @@ class CustomRaffleDetailsAdapter
     ) {
         fun bind(item: CustomRaffleItemModel) = with(itemView) {
             item.run {
-                layoutRootCustomRaffleItem.isSelected = true
+                layoutRootCustomRaffleItem.isSelected = included
+                imageViewSelected.visibleIf(included, otherwiseVisibility = View.INVISIBLE)
                 textViewCustomRaffleItemDescription.text = description
 
                 setOnClickListener {
                     layoutRootCustomRaffleItem.isSelected = !layoutRootCustomRaffleItem.isSelected
                     imageViewSelected.visibleIf(layoutRootCustomRaffleItem.isSelected, otherwiseVisibility = View.INVISIBLE)
-                    clickListener(item, layoutRootCustomRaffleItem.isSelected)
+                    clickListener(adapterPosition, layoutRootCustomRaffleItem.isSelected)
                 }
             }
         }
-    }
-}
-
-object CustomRaffleItemModelDiffCallback : DiffUtil.ItemCallback<CustomRaffleItemModel>() {
-    override fun areItemsTheSame(oldItem: CustomRaffleItemModel, newItem: CustomRaffleItemModel): Boolean {
-        return oldItem.id == newItem.id
-    }
-
-    override fun areContentsTheSame(oldItem: CustomRaffleItemModel, newItem: CustomRaffleItemModel): Boolean {
-        return oldItem == newItem
     }
 }

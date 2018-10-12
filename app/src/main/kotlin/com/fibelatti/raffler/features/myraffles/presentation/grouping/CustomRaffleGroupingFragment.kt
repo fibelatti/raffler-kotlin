@@ -59,19 +59,19 @@ class CustomRaffleGroupingFragment : BaseFragment() {
     }
 
     private fun setupLayout() {
-        layoutTitle.setTitle(R.string.custom_raffle_details_mode_random_winners)
+        layoutTitle.setTitle(R.string.custom_raffle_details_mode_grouping)
         layoutTitle.navigateUp { layoutRoot.findNavController().navigateUp() }
 
         buttonRaffle.setOnClickListener {
-            customRaffleDetailsViewModel.preparedRaffle.value?.let { preparedRaffle ->
+            customRaffleDetailsViewModel.customRaffle.value?.let { raffle ->
                 if (radioButtonByGroup.isChecked) {
                     customRaffleGroupingViewModel.getGroupsByQuantity(
-                        preparedRaffle.items,
+                        raffle.includedItems,
                         editTextTotalQuantity.textAsString()
                     )
                 } else {
                     customRaffleGroupingViewModel.getGroupsByItemQuantity(
-                        preparedRaffle.items,
+                        raffle.includedItems,
                         editTextTotalQuantity.textAsString()
                     )
                 }
