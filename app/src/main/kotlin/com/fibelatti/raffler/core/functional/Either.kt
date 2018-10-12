@@ -61,6 +61,10 @@ typealias Success<T> = Either.Right<T>
 
 typealias Failure<T> = Either.Left<T>
 
+val <R> Result<R>.isSuccess get() = isRight
+
+val <R> Result<R>.isFailure get() = isLeft
+
 fun <R> Result<R>.getOrNull() = rightOrNull()
 
 fun <R> Result<R>.exceptionOrNull() = leftOrNull()
@@ -118,6 +122,16 @@ inline fun <T, R> T.runCatching(block: T.() -> R): Result<R> {
     } catch (exception: Throwable) {
         Failure(exception)
     }
+}
+
+inline fun <T> Result<T>.onFailure(action: (exception: Throwable) -> Unit): Result<T> {
+    exceptionOrNull()?.let { action(it) }
+    return this
+}
+
+inline fun <T> Result<T>.onSuccess(action: (value: T) -> Unit): Result<T> {
+    getOrNull()?.let { action(it) }
+    return this
 }
 // endregion
 
