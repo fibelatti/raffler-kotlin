@@ -31,11 +31,13 @@ class CustomRaffleRouletteFragment : BaseFragment() {
         injector.inject(this)
         customRaffleDetailsViewModel.run {
             error(error, ::handleError)
-            observeEvent(allOptionsRaffled) {
-                fab?.apply {
-                    setText(R.string.custom_raffle_roulette_hint_all_raffled)
-                    setIconResource(R.drawable.ic_stop)
-                    setOnClickListener(null)
+            observeEvent(itensRemaining) {
+                if (it == 1) {
+                    fab?.apply {
+                        isEnabled = false
+                        text = resources.getQuantityString(R.plurals.custom_raffle_roulette_hint_items_remaining, it, it)
+                        setIconResource(0)
+                    }
                 }
             }
         }

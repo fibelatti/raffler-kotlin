@@ -83,7 +83,10 @@
     <string name="custom_raffle_roulette_hint_play">Play</string>
     <string name="custom_raffle_roulette_hint_stop">Stop</string>
     <string name="custom_raffle_roulette_hint_stopping">Stopping…</string>
-    <string name="custom_raffle_roulette_hint_all_raffled">All raffled</string>
+    <plurals name="custom_raffle_roulette_hint_items_remaining">
+        <item quantity="one">Only 1 item left</item>
+        <item quantity="other">%d items left to raffle</item>
+    </plurals>
 
     <!-- Custom Raffle - Random Winners -->
     <string name="custom_raffle_random_winners_hint">Quantity of winners</string>

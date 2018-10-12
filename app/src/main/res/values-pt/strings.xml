@@ -83,7 +83,10 @@
     <string name="custom_raffle_roulette_hint_play">Rodar</string>
     <string name="custom_raffle_roulette_hint_stop">Parar</string>
     <string name="custom_raffle_roulette_hint_stopping">Parando…</string>
-    <string name="custom_raffle_roulette_hint_all_raffled">Todos sorteados</string>
+    <plurals name="custom_raffle_roulette_hint_items_remaining">
+        <item quantity="one">Apenas 1 item restante</item>
+        <item quantity="other">%d itens restantes no sorteio</item>
+    </plurals>
 
     <!-- Custom Raffle - Random Winners -->
     <string name="custom_raffle_random_winners_hint">Quantidade de sorteados</string>
