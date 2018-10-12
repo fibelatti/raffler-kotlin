@@ -134,10 +134,10 @@
         <item name="android:paddingRight">@dimen/padding_regular</item>
         <item name="android:elevation">@dimen/elevation_regular</item>
         <item name="android:textAllCaps">true</item>
-        <item name="enforceTextAppearance">@style/TextAppearance.MaterialComponents.Button</item>
         <item name="android:textColor">@color/color_white_opaque</item>
         <item name="android:textSize">@dimen/text_size_regular</item>
-        <item name="backgroundTint">?attr/colorAccent</item>
+        <item name="enforceTextAppearance">@style/TextAppearance.MaterialComponents.Button</item>
+        <item name="backgroundTint">@drawable/selector_extended_fab</item>
         <item name="cornerRadius">@dimen/extended_fab_corner_radius</item>
         <item name="iconPadding">@dimen/padding_small</item>
         <item name="iconSize">@dimen/extended_fab_icon_size</item>

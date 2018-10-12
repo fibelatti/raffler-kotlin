@@ -21,6 +21,7 @@ import com.fibelatti.raffler.core.platform.BaseFragment
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleDraftedAdapter
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleDraftedModel
 import com.fibelatti.raffler.features.myraffles.presentation.customraffledetails.CustomRaffleDetailsViewModel
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_custom_raffle_random_winners.*
 import javax.inject.Inject
 
@@ -40,8 +41,13 @@ class CustomRaffleRandomWinnersFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         injector.inject(this)
         customRaffleDetailsViewModel.run {
-            observeEvent(allOptionsRaffled) {
-                layoutRoot.snackbar(getString(R.string.custom_raffle_roulette_hint_all_raffled))
+            observeEvent(itensRemaining) {
+                layoutRoot.snackbar(
+                    resources.getQuantityString(R.plurals.custom_raffle_roulette_hint_items_remaining, it, it),
+                    duration = Snackbar.LENGTH_LONG
+                )
+
+                if (it == 1) buttonRaffle.isEnabled = false
             }
         }
 

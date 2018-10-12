@@ -44,7 +44,15 @@ fun ViewGroup.animateChangingTransitions() {
 
 @JvmOverloads
 fun View.snackbar(message: String, duration: Int = Snackbar.LENGTH_SHORT) {
-    Snackbar.make(this, message, duration).show()
+    Snackbar.make(this, message, duration)
+        .apply {
+            val margin = context.resources.getDimensionPixelSize(R.dimen.margin_regular)
+            view.layoutParams = (view.layoutParams as ViewGroup.MarginLayoutParams).apply {
+                setMargins(margin, margin, margin, margin)
+            }
+            view.background = context.getDrawable(R.drawable.background_snackbar)
+        }
+        .show()
 }
 
 // region Components
