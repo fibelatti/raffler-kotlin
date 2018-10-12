@@ -1,7 +1,7 @@
 package com.fibelatti.raffler.core.extension
 
 // region Any
-val Unit.exhaustive get() = this
+val Unit?.exhaustive get() = this
 
 // endregion
 // region Boolean
