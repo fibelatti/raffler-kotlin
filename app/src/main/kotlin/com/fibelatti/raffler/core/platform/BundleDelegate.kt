@@ -14,6 +14,14 @@ sealed class BundleDelegate<T>(protected val key: kotlin.String) : ReadWriteProp
         }
     }
 
+    class Long(key: kotlin.String) : BundleDelegate<kotlin.Long>(key) {
+        override fun getValue(thisRef: Bundle, property: KProperty<*>): kotlin.Long = thisRef.getLong(key)
+
+        override fun setValue(thisRef: Bundle, property: KProperty<*>, value: kotlin.Long) {
+            thisRef.putLong(key, value)
+        }
+    }
+
     class String(key: kotlin.String) : BundleDelegate<kotlin.String?>(key) {
         override fun getValue(thisRef: Bundle, property: KProperty<*>): kotlin.String? = thisRef.getString(key)
 
