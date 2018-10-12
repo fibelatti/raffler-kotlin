@@ -4,21 +4,23 @@ import com.fibelatti.raffler.core.functional.Result
 import com.fibelatti.raffler.core.platform.AppConfig
 
 interface PreferencesRepository {
-    suspend fun getTheme(): AppConfig.AppTheme
+    suspend fun getPreferences(): Result<Preferences>
 
     suspend fun setAppTheme(appTheme: AppConfig.AppTheme)
 
-    suspend fun getLanguage(): AppConfig.AppLanguage
-
     suspend fun setLanguage(appLanguage: AppConfig.AppLanguage)
 
-    suspend fun getRouletteMusicEnabled(): Boolean
-
     suspend fun setRouletteMusicEnabled(value: Boolean): Result<Unit>
+
+    suspend fun setPreferredRaffleMode(raffleMode: AppConfig.RaffleMode): Result<Unit>
+
+    suspend fun setLotteryDefault(quantityAvailable: Int, quantityToRaffle: Int): Result<Unit>
+
+    suspend fun rememberRaffledItems(value: Boolean): Result<Unit>
 
     suspend fun resetHints(): Result<Unit>
 
     suspend fun getQuickDecisionHintDisplayed(): Boolean
 
-    suspend fun setQuickDecisionHintDisplayed()
+    suspend fun setQuickDecisionHintDisplayed(): Result<Unit>
 }

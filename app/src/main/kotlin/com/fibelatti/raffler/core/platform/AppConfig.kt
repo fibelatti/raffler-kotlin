@@ -13,4 +13,13 @@ object AppConfig {
     enum class AppLanguage(val value: String) {
         ENGLISH("en"), PORTUGUESE("pt"), SPANISH("es")
     }
+
+    enum class RaffleMode(val value: String) {
+        NONE("None"),
+        ROULETTE("Roulette"),
+        RANDOM_WINNERS("Random Winners"),
+        GROUPING("Grouping"),
+        COMBINATION("Combination"),
+        SECRET_VOTING("Secret Voting")
+    }
 }

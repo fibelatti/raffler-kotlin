@@ -7,7 +7,6 @@ import com.fibelatti.raffler.features.myraffles.presentation.grouping.CustomRaff
 import com.fibelatti.raffler.features.myraffles.presentation.list.MyRafflesFragment
 import com.fibelatti.raffler.features.myraffles.presentation.randomwinners.CustomRaffleRandomWinnersFragment
 import com.fibelatti.raffler.features.myraffles.presentation.roulette.CustomRaffleRouletteFragment
-import com.fibelatti.raffler.features.preferences.presentation.PreferencesFragment
 import com.fibelatti.raffler.features.quickdecision.presentation.QuickDecisionFragment
 
 interface FragmentInjector {
@@ -26,6 +25,4 @@ interface FragmentInjector {
     fun inject(customRaffleRandomWinnersFragment: CustomRaffleRandomWinnersFragment)
 
     fun inject(customRaffleGroupingFragment: CustomRaffleGroupingFragment)
-
-    fun inject(preferencesFragment: PreferencesFragment)
 }

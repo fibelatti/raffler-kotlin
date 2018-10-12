@@ -160,6 +160,12 @@
         <item name="android:textSize">@dimen/text_size_large</item>
     </style>
 
+    <style name="AppTheme.Text.SectionTitle">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">@dimen/text_size_regular</item>
+    </style>
+
     <style name="AppTheme.Text.Body">
         <item name="android:textColor">@color/text_primary</item>
         <item name="android:textSize">@dimen/text_size_regular</item>

@@ -14,10 +14,13 @@ class HomeActivity : BaseActivity() {
     private val bottomBarEnabledFragments: List<Int> by lazy {
         listOf(
             R.id.fragmentQuickDecision,
+            R.id.fragmentQuickDecisionResult,
             R.id.fragmentLottery,
             R.id.fragmentMyRaffles,
             R.id.fragmentPreferences,
-            R.id.fragmentQuickDecisionResult
+            R.id.fragmentPreferencesGeneral,
+            R.id.fragmentPreferencesLottery,
+            R.id.fragmentPreferencesCustomRaffle
         )
     }
 
