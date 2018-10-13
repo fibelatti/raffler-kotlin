@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutRootAddNewQuickDecisionItem"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/selector_custom_raffle_item_background"
+    android:gravity="center_vertical"
+    android:minHeight="@dimen/list_item_row_height"
+    android:orientation="horizontal"
+    android:paddingLeft="@dimen/padding_small"
+    android:paddingRight="@dimen/padding_small">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewCustomRaffleDescription"
+        style="@style/AppTheme.Text.Body"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        tools:text="Some custom raffle" />
+</LinearLayout>

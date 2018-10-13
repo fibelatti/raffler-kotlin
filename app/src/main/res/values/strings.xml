@@ -37,6 +37,9 @@
     <!-- Quick Decision -->
     <string name="quick_decision_dismissible_hint">The answer for your questions is now 1 tap away! Here\'s a few shortcuts for simple tasks like flipping a coin or rolling a dice.</string>
 
+    <!-- Quick Decision - Add new -->
+    <string name="quick_decision_add_new_title">Select raffle to add as shortcut</string>
+
     <!-- Lottery -->
     <string name="lottery_quantity_available">Qty. of numbers available</string>
     <string name="lottery_quantity_to_raffle">Qty. of numbers to raffle</string>
