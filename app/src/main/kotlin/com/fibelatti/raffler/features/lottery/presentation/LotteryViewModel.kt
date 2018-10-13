@@ -33,8 +33,8 @@ class LotteryViewModel @Inject constructor(
             validateData(quantityAvailable, quantityToRaffle) { totalQty, raffleQty ->
                 (1..totalQty).shuffled()
                     .take(raffleQty)
-                    .map(lotteryNumberModelMapper::map)
-                    .let(lotteryNumbers::postValue)
+                    .let(lotteryNumberModelMapper::mapList)
+                    .also(lotteryNumbers::postValue)
             }
         }
     }

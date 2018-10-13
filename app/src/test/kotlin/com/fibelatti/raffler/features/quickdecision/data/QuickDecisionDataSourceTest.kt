@@ -48,9 +48,9 @@ class QuickDecisionDataSourceTest : BaseTest() {
     fun setup() {
         given(mockResourceProvider.getString(anyInt()))
             .willReturn(MockDataProvider.genericString)
-        given(mockQuickDecisionDtoMapper.map(mockQuickDecisionDtoList))
+        given(mockQuickDecisionDtoMapper.mapList(mockQuickDecisionDtoList))
             .willReturn(mockQuickDecisionList)
-        given(mockQuickDecisionDtoMapper.mapReverse(mockQuickDecisionList))
+        given(mockQuickDecisionDtoMapper.mapListReverse(mockQuickDecisionList))
             .willReturn(mockQuickDecisionDtoList)
     }
 

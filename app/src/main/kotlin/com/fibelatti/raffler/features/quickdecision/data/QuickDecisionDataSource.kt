@@ -20,7 +20,7 @@ class QuickDecisionDataSource @Inject constructor(
 ) : QuickDecisionRepository {
     override suspend fun getAllQuickDecisions(): Result<List<QuickDecision>> {
         return runCatching {
-            val dbList = quickDecisionDtoMapper.map(quickDecisionDao.getAllQuickDecisions())
+            val dbList = quickDecisionDtoMapper.mapList(quickDecisionDao.getAllQuickDecisions())
 
             if (dbList.isNotEmpty()) {
                 dbList
@@ -46,7 +46,7 @@ class QuickDecisionDataSource @Inject constructor(
         quickDecisionDao.runCatching { deleteQuickDecisionById(id) }
 
     override suspend fun addQuickDecisions(list: List<QuickDecision>): Result<Unit> =
-        quickDecisionDao.runCatching { addQuickDecisions(quickDecisionDtoMapper.mapReverse(list)) }
+        quickDecisionDao.runCatching { addQuickDecisions(quickDecisionDtoMapper.mapListReverse(list)) }
 }
 
 @Dao

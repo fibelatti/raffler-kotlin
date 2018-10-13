@@ -22,7 +22,7 @@ class CustomRaffleWithItemsDtoMapper @Inject constructor(
             CustomRaffle(
                 id = customRaffleDto.id,
                 description = customRaffleDto.description,
-                items = customRaffleItemDtoMapper.map(items)
+                items = customRaffleItemDtoMapper.mapList(items)
             )
         }
     }
@@ -31,7 +31,7 @@ class CustomRaffleWithItemsDtoMapper @Inject constructor(
         return with(param) {
             CustomRaffleWithItemsDto().apply {
                 customRaffleDto = CustomRaffleDto(id, description)
-                items = customRaffleItemDtoMapper.mapReverse(param.items)
+                items = customRaffleItemDtoMapper.mapListReverse(param.items)
             }
         }
     }
