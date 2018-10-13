@@ -25,8 +25,9 @@ class MyRafflesViewModel @Inject constructor(
             customRaffleRepository.getAllCustomRaffles()
                 .flatMapCatching { it.map(customRaffleModelMapper::map) }
                 .onSuccess { list ->
-                    showHintAndCreateNewLayout.postValue(list.isEmpty())
-                    customRaffles.postValue(list)
+                    list.takeIf { it.isNotEmpty() }
+                        ?.let(customRaffles::postValue)
+                        ?: showHintAndCreateNewLayout.postValue(true)
                 }.onFailure(::handleError)
         }
     }
