@@ -38,8 +38,8 @@ class LotteryFragment : BaseFragment() {
             observe(defaultQuantityAvailable) { editTextTotalQuantity.setText(it) }
             observe(defaultQuantityToRaffle) { editTextRaffleQuantity.setText(it) }
             observe(lotteryNumbers, ::showResults)
-            observe(totalQuantityError, ::handleTotalQuantityError)
-            observe(raffleQuantityError, ::handleRaffleQuantityError)
+            observe(quantityAvailableError, ::handleTotalQuantityError)
+            observe(quantityToRaffleError, ::handleRaffleQuantityError)
         }
     }
 
