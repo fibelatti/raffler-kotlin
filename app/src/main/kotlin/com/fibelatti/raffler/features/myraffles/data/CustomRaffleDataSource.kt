@@ -21,7 +21,7 @@ class CustomRaffleDataSource @Inject constructor(
     private val customRaffleItemDtoMapper: CustomRaffleItemDtoMapper
 ) : CustomRaffleRepository {
     override suspend fun getAllCustomRaffles(): Result<List<CustomRaffle>> =
-        customRaffleDao.runCatching { getAllCustomRaffles().let(customRaffleWithItemsDtoMapper::map) }
+        customRaffleDao.runCatching { getAllCustomRaffles().let(customRaffleWithItemsDtoMapper::mapList) }
 
     override suspend fun getCustomRaffleById(id: Long): Result<CustomRaffle> =
         customRaffleDao.runCatching { getCustomRaffleById(id).let(customRaffleWithItemsDtoMapper::map) }

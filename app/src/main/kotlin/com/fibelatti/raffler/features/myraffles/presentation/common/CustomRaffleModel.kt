@@ -49,7 +49,7 @@ class CustomRaffleModelMapper @Inject constructor(
 
     override fun mapReverse(param: CustomRaffleModel): CustomRaffle {
         return with(param) {
-            CustomRaffle(id, description, items = customRaffleItemModelMapper.mapReverse(items))
+            CustomRaffle(id, description, items = customRaffleItemModelMapper.mapListReverse(items))
         }
     }
 }
