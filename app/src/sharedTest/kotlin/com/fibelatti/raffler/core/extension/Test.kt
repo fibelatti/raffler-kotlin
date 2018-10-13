@@ -2,13 +2,19 @@
 
 package com.fibelatti.raffler.core.extension
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import junit.framework.AssertionFailedError
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
+import org.mockito.ArgumentMatchers.any
 import org.mockito.BDDMockito
 import org.mockito.BDDMockito.given
+import org.mockito.BDDMockito.verify
 import org.mockito.Mockito
+import org.mockito.Mockito.never
+import org.mockito.Mockito.spy
 import kotlin.reflect.KClass
 
 /***
@@ -86,5 +92,20 @@ infix fun <T> List<T>.shouldContain(subList: List<T>) {
         "Expected: $subList - Actual: $this",
         containsAll(subList)
     )
+}
+
+infix fun <T> LiveData<T>.shouldReceive(expectedValue: T) {
+    var value: T? = null
+    val observer = Observer<T> { value = it }
+    observeForever(observer)
+    assertEquals(expectedValue, value)
+    removeObserver(observer)
+}
+
+fun <T> LiveData<T>.shouldNeverReceiveValues() {
+    val observer = spy(Observer<T> { })
+    observeForever(observer)
+    verify(observer, never()).onChanged(any())
+    removeObserver(observer)
 }
 // endregion

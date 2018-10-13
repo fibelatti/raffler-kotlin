@@ -40,7 +40,7 @@ class TypeTest : BaseTest() {
     @Test
     fun `WHEN batches is called THEN subLists are returned`() {
         // GIVEN
-        val originalList = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+        val originalList = List(10) { it }
 
         // WHEN
         val batchesOfFive = originalList.batchesOf(5)

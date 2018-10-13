@@ -35,7 +35,7 @@ abstract class BaseViewModel(
 
     protected fun start(
         block: suspend CoroutineScope.() -> Unit
-    ) = launch(threadProvider.main()) { block() }
+    ) = launch { block() }
 
     protected fun startInBackground(
         block: suspend CoroutineScope.() -> Unit
