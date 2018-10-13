@@ -61,6 +61,10 @@ typealias Success<T> = Either.Right<T>
 
 typealias Failure<T> = Either.Left<T>
 
+val <T> Success<T>.value get() = b
+
+val <T> Failure<T>.error get() = a
+
 val <R> Result<R>.isSuccess get() = isRight
 
 val <R> Result<R>.isFailure get() = isLeft
