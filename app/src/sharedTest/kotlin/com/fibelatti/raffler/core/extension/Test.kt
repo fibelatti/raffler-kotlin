@@ -17,6 +17,8 @@ import org.mockito.Mockito.never
 import org.mockito.Mockito.spy
 import kotlin.reflect.KClass
 
+inline fun <reified T> mock(): T = Mockito.mock(T::class.java)
+
 /***
  * Mockito.any() returns null and that can be an issue when testing Kotlin code.
  * This function addresses that issue and enables the usage of this matcher.

@@ -4,6 +4,7 @@ import com.fibelatti.raffler.BaseTest
 import com.fibelatti.raffler.MockDataProvider
 import com.fibelatti.raffler.core.extension.callSuspend
 import com.fibelatti.raffler.core.extension.givenSuspend
+import com.fibelatti.raffler.core.extension.mock
 import com.fibelatti.raffler.core.extension.shouldBe
 import com.fibelatti.raffler.core.extension.shouldBeAnInstanceOf
 import com.fibelatti.raffler.core.extension.throwAssertionError
@@ -18,23 +19,16 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.BDDMockito.given
-import org.mockito.Mock
 
 class QuickDecisionDataSourceTest : BaseTest() {
 
-    @Mock
-    lateinit var mockQuickDecisionDao: QuickDecisionDao
-    @Mock
-    lateinit var mockResourceProvider: ResourceProvider
-    @Mock
-    lateinit var mockQuickDecisionDtoMapper: QuickDecisionDtoMapper
+    private val mockQuickDecisionDao = mock<QuickDecisionDao>()
+    private val mockResourceProvider = mock<ResourceProvider>()
+    private val mockQuickDecisionDtoMapper = mock<QuickDecisionDtoMapper>()
 
-    @Mock
-    lateinit var mockQuickDecisionDtoList: List<QuickDecisionDto>
-    @Mock
-    lateinit var mockQuickDecisionList: List<QuickDecision>
-    @Mock
-    lateinit var mockError: Throwable
+    private val mockQuickDecisionDtoList = mock<List<QuickDecisionDto>>()
+    private val mockQuickDecisionList = mock<List<QuickDecision>>()
+    private val mockError = mock<Throwable>()
 
     private val quickDecisionDataSource by lazy {
         QuickDecisionDataSource(

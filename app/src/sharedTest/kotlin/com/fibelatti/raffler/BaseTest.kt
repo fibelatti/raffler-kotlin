@@ -9,10 +9,6 @@ import org.junit.Rule
 import kotlin.coroutines.CoroutineContext
 
 abstract class BaseTest : CoroutineScope {
-    @Suppress("LeakingThis")
-    @get:Rule
-    val injectMocks = InjectMocksRule.create(this)
-
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 

@@ -4,6 +4,7 @@ import com.fibelatti.raffler.BaseTest
 import com.fibelatti.raffler.MockDataProvider
 import com.fibelatti.raffler.core.extension.empty
 import com.fibelatti.raffler.core.extension.givenSuspend
+import com.fibelatti.raffler.core.extension.mock
 import com.fibelatti.raffler.core.extension.safeAny
 import com.fibelatti.raffler.core.extension.shouldNeverReceiveValues
 import com.fibelatti.raffler.core.extension.shouldReceive
@@ -16,21 +17,15 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.BDDMockito.given
-import org.mockito.Mock
 
 class LotteryViewModelTest : BaseTest() {
 
-    @Mock
-    lateinit var mockPreferencesRepository: PreferencesRepository
-    @Mock
-    lateinit var mockLotteryNumberModelMapper: LotteryNumberModelMapper
-    @Mock
-    lateinit var mockResourceProvider: ResourceProvider
+    private val mockPreferencesRepository = mock<PreferencesRepository>()
+    private val mockLotteryNumberModelMapper = mock<LotteryNumberModelMapper>()
+    private val mockResourceProvider = mock<ResourceProvider>()
 
-    @Mock
-    lateinit var mockPreferences: Preferences
-    @Mock
-    lateinit var mockLotteryNumberList: List<LotteryNumberModel>
+    private val mockPreferences = mock<Preferences>()
+    private val mockLotteryNumberList = mock<List<LotteryNumberModel>>()
 
     private lateinit var viewModel: LotteryViewModel
 
