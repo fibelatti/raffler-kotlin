@@ -37,6 +37,9 @@
     <!-- Quick Decision -->
     <string name="quick_decision_dismissible_hint">A resposta para suas perguntas na ponta dos seus dedos. Estes atalhos podem te ajudar em decisões simples como jogar uma moeda ou rolar um dado.</string>
 
+    <!-- Quick Decision - Add new -->
+    <string name="quick_decision_add_new_title">Escolha o sorteio para adicionar como atalho</string>
+
     <!-- Lottery -->
     <string name="lottery_quantity_available">Qtde. de números disponíveis</string>
     <string name="lottery_quantity_to_raffle">Qtde. de números sorteados</string>

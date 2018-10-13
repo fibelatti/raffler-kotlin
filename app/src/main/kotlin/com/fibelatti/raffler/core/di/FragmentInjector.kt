@@ -8,9 +8,12 @@ import com.fibelatti.raffler.features.myraffles.presentation.list.MyRafflesFragm
 import com.fibelatti.raffler.features.myraffles.presentation.randomwinners.CustomRaffleRandomWinnersFragment
 import com.fibelatti.raffler.features.myraffles.presentation.roulette.CustomRaffleRouletteFragment
 import com.fibelatti.raffler.features.quickdecision.presentation.QuickDecisionFragment
+import com.fibelatti.raffler.features.quickdecision.presentation.addnew.AddNewQuickDecisionFragment
 
 interface FragmentInjector {
     fun inject(quickDecisionFragment: QuickDecisionFragment)
+
+    fun inject(addNewQuickDecisionFragment: AddNewQuickDecisionFragment)
 
     fun inject(lotteryFragment: LotteryFragment)
 

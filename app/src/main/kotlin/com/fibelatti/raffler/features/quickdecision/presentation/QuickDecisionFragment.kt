@@ -1,5 +1,6 @@
 package com.fibelatti.raffler.features.quickdecision.presentation
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +20,9 @@ import com.fibelatti.raffler.core.platform.BaseFragment
 import com.fibelatti.raffler.core.platform.BaseViewType
 import com.fibelatti.raffler.features.myraffles.presentation.createcustomraffle.CreateCustomRaffleFragment
 import com.fibelatti.raffler.features.quickdecision.presentation.adapter.QuickDecisionAdapter
+import com.fibelatti.raffler.features.quickdecision.presentation.addnew.ADD_NEW_QUICK_DECISION_REQUEST_CODE
+import com.fibelatti.raffler.features.quickdecision.presentation.addnew.ADD_NEW_QUICK_DECISION_SUCCESS
+import com.fibelatti.raffler.features.quickdecision.presentation.addnew.AddNewQuickDecisionFragment
 import kotlinx.android.synthetic.main.fragment_quick_decisions.*
 import kotlinx.android.synthetic.main.layout_hint_container.*
 import javax.inject.Inject
@@ -57,6 +61,12 @@ class QuickDecisionFragment : BaseFragment() {
         quickDecisionViewModel.getAllQuickDecisions()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (ADD_NEW_QUICK_DECISION_REQUEST_CODE == requestCode && ADD_NEW_QUICK_DECISION_SUCCESS == resultCode) {
+            quickDecisionViewModel.getAllQuickDecisions()
+        }
+    }
+
     private fun handleState(state: QuickDecisionViewModel.State) {
         when (state) {
             is QuickDecisionViewModel.State.ShowList -> showQuickDecisions(state)
@@ -73,11 +83,18 @@ class QuickDecisionFragment : BaseFragment() {
 
         adapter.apply {
             addNewClickListener = {
-                findNavController(layoutRoot).navigate(
-                    R.id.action_fragmentQuickDecision_to_fragmentCreateCustomRaffle,
-                    CreateCustomRaffleFragment.bundle(addAsShortcut = true),
-                    CreateCustomRaffleFragment.navOptionsNew()
-                )
+                if (state.hasCustomRaffles) {
+                    findNavController(layoutRoot).navigate(
+                        R.id.action_fragmentQuickDecision_to_dialogFragmentAddNewQuickDecision,
+                        AddNewQuickDecisionFragment.bundle()
+                    )
+                } else {
+                    findNavController(layoutRoot).navigate(
+                        R.id.action_fragmentQuickDecision_to_fragmentCreateCustomRaffle,
+                        CreateCustomRaffleFragment.bundle(addAsShortcut = true),
+                        CreateCustomRaffleFragment.navOptionsNew()
+                    )
+                }
             }
             quickDecisionClickListener = { view, quickDecisionModel, color ->
                 sharedView = view
