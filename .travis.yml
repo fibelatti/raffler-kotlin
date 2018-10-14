@@ -26,7 +26,7 @@ licenses:
     - 'android-sdk-preview-license-.+'
 
 script:
-  - ./gradlew clean test assemble
+  - ./gradlew clean assemble test -a
 
 notifications:
   email: false

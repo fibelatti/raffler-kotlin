@@ -67,14 +67,21 @@ fun throwAssertionError() {
     throw AssertionFailedError("Object should not be null")
 }
 
-infix fun Any.shouldBe(otherValue: Any) {
+infix fun Any?.shouldBe(otherValue: Any) {
     assertEquals(otherValue, this)
 }
 
 infix fun List<Any>.sizeShouldBe(value: Int) {
     assertTrue(
-        "Expected: $value - Actual: $size",
+        "Expected size: $value - Actual size: $size",
         size == value
+    )
+}
+
+fun List<Any>.shouldBeEmpty() {
+    assertTrue(
+        "Expected size: 0 - Actual size: $size",
+        this.isEmpty()
     )
 }
 

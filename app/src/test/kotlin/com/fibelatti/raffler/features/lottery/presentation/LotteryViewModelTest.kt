@@ -39,6 +39,8 @@ class LotteryViewModelTest : BaseTest() {
             .willReturn(MockDataProvider.genericString)
         given(mockPreferences.lotteryDefaultQuantityToRaffle)
             .willReturn(MockDataProvider.genericString)
+        givenSuspend { mockPreferencesRepository.getLotteryHintDisplayed() }
+            .willReturn(true)
 
         viewModel = LotteryViewModel(
             mockPreferencesRepository,
@@ -49,6 +51,7 @@ class LotteryViewModelTest : BaseTest() {
 
         viewModel.defaultQuantityAvailable shouldReceive MockDataProvider.genericString
         viewModel.defaultQuantityToRaffle shouldReceive MockDataProvider.genericString
+        viewModel.showHint.shouldNeverReceiveValues()
     }
 
     @Test
