@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: "de.mannodermaus.android-junit5"
 apply plugin: 'com.getkeepsafe.dexcount'
 apply from: 'coverage-report.gradle'
 
@@ -107,8 +108,14 @@ dependencies {
 
     // Testing
     testImplementation TestDependencies.junit
+    testImplementation TestDependencies.junit5
+    testImplementation TestDependencies.junit5Params
     testImplementation TestDependencies.mockitoCore
     testImplementation TestDependencies.archComponentsTest
+
+    testRuntimeOnly TestDependencies.junit5Engine
+    testRuntimeOnly TestDependencies.junitVintage
+
     androidTestImplementation TestDependencies.mockitoAndroid
     androidTestImplementation TestDependencies.archComponentsTest
     androidTestImplementation TestDependencies.supportAnnotations

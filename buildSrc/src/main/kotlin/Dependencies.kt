@@ -27,11 +27,14 @@ object Versions {
     internal const val jUnitVersion = "4.12"
     internal const val testRunnerVersion = "1.0.1"
     internal const val mockitoVersion = "2.23.0"
+    internal const val junit5pluginVersion = "1.2.0.0"
+    internal const val junit5Version = "5.2.0"
 }
 
 object Classpaths {
     val gradlePlugin = "com.android.tools.build:gradle:${Versions.gradleVersion}"
     val kotlinPlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlinVersion}"
+    val junit5Plugin = "de.mannodermaus.gradle.plugins:android-junit5:${Versions.junit5pluginVersion}"
     val jacocoPlugin = "org.jacoco:org.jacoco.core:${Versions.jacocoVersion}"
     val dexCountPlugin = "com.getkeepsafe.dexcount:dexcount-gradle-plugin:${Versions.dexCountPlugin}"
 }
@@ -68,6 +71,10 @@ object ThirdPartyDependencies {
 
 object TestDependencies {
     val junit = "junit:junit:${Versions.jUnitVersion}"
+    val junit5 = "org.junit.jupiter:junit-jupiter-api:${Versions.junit5Version}"
+    val junit5Engine = "org.junit.jupiter:junit-jupiter-engine:${Versions.junit5Version}"
+    val junit5Params = "org.junit.jupiter:junit-jupiter-params:${Versions.junit5Version}"
+    val junitVintage = "org.junit.vintage:junit-vintage-engine:${Versions.junit5Version}"
     val testRunner = "com.android.support.test:runner:${Versions.testRunnerVersion}"
     val kotlinTest = "org.jetbrains.kotlin:kotlin-test-junit:${Versions.kotlinVersion}"
     val mockitoCore = "org.mockito:mockito-core:${Versions.mockitoVersion}"

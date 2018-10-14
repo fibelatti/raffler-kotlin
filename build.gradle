@@ -12,6 +12,7 @@ buildscript {
     dependencies {
         classpath Classpaths.gradlePlugin
         classpath Classpaths.kotlinPlugin
+        classpath Classpaths.junit5Plugin
         classpath Classpaths.jacocoPlugin
         classpath Classpaths.dexCountPlugin
     }
