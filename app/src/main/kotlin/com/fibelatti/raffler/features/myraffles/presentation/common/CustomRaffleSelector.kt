@@ -4,7 +4,6 @@ import android.content.Context
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.withDefaultDecoration
 import com.fibelatti.raffler.core.extension.withLinearLayoutManager
-import com.fibelatti.raffler.features.quickdecision.presentation.addnew.AddNewQuickDecisionAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.fragment_add_custom_raffle_as_quick_decision.*
 
@@ -29,7 +28,7 @@ class CustomRaffleSelectorDelegate : CustomRaffleSelector {
 
             textViewSelectCustomRaffleTitle?.text = title
 
-            val adapter = AddNewQuickDecisionAdapter().apply {
+            val adapter = CustomRaffleSelectorAdapter().apply {
                 clickListener = {
                     customRaffleClickListener(it)
                     dismiss()
