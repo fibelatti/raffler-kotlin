@@ -15,7 +15,7 @@ import com.fibelatti.raffler.core.extension.showError
 import com.fibelatti.raffler.core.extension.textAsString
 import com.fibelatti.raffler.core.extension.withDefaultDecoration
 import com.fibelatti.raffler.core.extension.withLinearLayoutManager
-import com.fibelatti.raffler.core.platform.BaseFragment
+import com.fibelatti.raffler.core.platform.base.BaseFragment
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleDraftedAdapter
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleDraftedModel
 import com.fibelatti.raffler.features.myraffles.presentation.customraffledetails.CustomRaffleDetailsViewModel

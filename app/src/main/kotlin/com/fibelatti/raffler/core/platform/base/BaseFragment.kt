@@ -1,6 +1,8 @@
-package com.fibelatti.raffler.core.platform
+package com.fibelatti.raffler.core.platform.base
 
 import androidx.fragment.app.Fragment
+import com.fibelatti.raffler.core.platform.DismissibleHint
+import com.fibelatti.raffler.core.platform.DismissibleHintDelegate
 
 abstract class BaseFragment :
     Fragment(),

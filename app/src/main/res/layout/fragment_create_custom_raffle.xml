@@ -11,7 +11,7 @@
     android:paddingTop="@dimen/padding_regular"
     android:paddingBottom="@dimen/padding_regular">
 
-    <com.fibelatti.raffler.core.platform.TitleLayout
+    <com.fibelatti.raffler.core.platform.customview.TitleLayout
         android:id="@+id/layoutTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -84,7 +84,7 @@
         app:layout_constraintRight_toLeftOf="@+id/imageButtonAddItem"
         app:layout_constraintTop_toBottomOf="@+id/checkboxAddShortcut">
 
-        <com.fibelatti.raffler.core.platform.BackPressReactiveTextInputEditText
+        <com.fibelatti.raffler.core.platform.customview.BackPressReactiveTextInputEditText
             android:id="@+id/editTextCustomRaffleItemDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -1,8 +1,8 @@
 package com.fibelatti.raffler.core.di.modules
 
-import androidx.lifecycle.ViewModel
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.lifecycle.ViewModel
 import com.fibelatti.raffler.core.di.modules.viewmodel.ViewModelKey
 import com.fibelatti.raffler.core.extension.getUserPreferences
 import com.fibelatti.raffler.features.preferences.PreferencesRepository

@@ -14,7 +14,7 @@ import com.fibelatti.raffler.core.extension.observeEvent
 import com.fibelatti.raffler.core.extension.showError
 import com.fibelatti.raffler.core.extension.snackbar
 import com.fibelatti.raffler.core.extension.textAsString
-import com.fibelatti.raffler.core.platform.BaseFragment
+import com.fibelatti.raffler.core.platform.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_preferences_lottery.*
 
 class PreferencesLotteryFragment : BaseFragment() {

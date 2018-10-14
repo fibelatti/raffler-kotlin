@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.empty
 import com.fibelatti.raffler.core.extension.isInt
-import com.fibelatti.raffler.core.platform.BaseViewModel
+import com.fibelatti.raffler.core.platform.base.BaseViewModel
 import com.fibelatti.raffler.core.provider.ResourceProvider
 import com.fibelatti.raffler.core.provider.ThreadProvider
 import com.fibelatti.raffler.features.myraffles.RememberRaffled

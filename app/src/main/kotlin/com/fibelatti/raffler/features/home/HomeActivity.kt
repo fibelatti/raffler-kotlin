@@ -6,8 +6,8 @@ import androidx.navigation.plusAssign
 import androidx.navigation.ui.setupWithNavController
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.visibleIf
-import com.fibelatti.raffler.core.platform.BaseActivity
 import com.fibelatti.raffler.core.platform.DialogNavigator
+import com.fibelatti.raffler.core.platform.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.layout_toolbar_default.*
 

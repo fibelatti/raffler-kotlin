@@ -13,9 +13,9 @@ import com.fibelatti.raffler.core.extension.observe
 import com.fibelatti.raffler.core.extension.visible
 import com.fibelatti.raffler.core.extension.withDefaultDecoration
 import com.fibelatti.raffler.core.extension.withGridLayoutManager
-import com.fibelatti.raffler.core.platform.AddNewModel
-import com.fibelatti.raffler.core.platform.BaseFragment
-import com.fibelatti.raffler.core.platform.BaseViewType
+import com.fibelatti.raffler.core.platform.base.BaseFragment
+import com.fibelatti.raffler.core.platform.base.BaseViewType
+import com.fibelatti.raffler.core.platform.recyclerview.AddNewModel
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModel
 import com.fibelatti.raffler.features.myraffles.presentation.createcustomraffle.CreateCustomRaffleFragment
 import com.fibelatti.raffler.features.myraffles.presentation.customraffledetails.CustomRaffleDetailsFragment

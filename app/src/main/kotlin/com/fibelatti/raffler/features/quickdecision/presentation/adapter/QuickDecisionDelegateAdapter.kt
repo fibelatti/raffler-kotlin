@@ -1,14 +1,14 @@
 package com.fibelatti.raffler.features.quickdecision.presentation.adapter
 
-import androidx.core.view.ViewCompat
-import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
+import androidx.recyclerview.widget.RecyclerView
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.inflate
 import com.fibelatti.raffler.core.extension.setShapeBackgroundColor
-import com.fibelatti.raffler.core.platform.BaseDelegateAdapter
-import com.fibelatti.raffler.core.platform.BaseViewType
+import com.fibelatti.raffler.core.platform.base.BaseDelegateAdapter
+import com.fibelatti.raffler.core.platform.base.BaseViewType
 import com.fibelatti.raffler.features.quickdecision.presentation.QuickDecisionModel
 import kotlinx.android.synthetic.main.list_item_quick_decision.view.*
 import javax.inject.Inject

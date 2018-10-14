@@ -1,4 +1,4 @@
-package com.fibelatti.raffler.core.platform
+package com.fibelatti.raffler.core.platform.base
 
 import android.view.ViewGroup
 import androidx.collection.SparseArrayCompat

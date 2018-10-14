@@ -1,4 +1,4 @@
-package com.fibelatti.raffler.core.platform
+package com.fibelatti.raffler.core.platform.base
 
 import android.content.Context
 import android.os.Bundle
@@ -9,6 +9,7 @@ import com.fibelatti.raffler.App
 import com.fibelatti.raffler.core.di.modules.viewmodel.ViewModelFactory
 import com.fibelatti.raffler.core.extension.getUpdateContextForLocale
 import com.fibelatti.raffler.core.persistence.CurrentInstallSharedPreferences
+import com.fibelatti.raffler.core.platform.AppConfig
 import javax.inject.Inject
 
 abstract class BaseActivity : AppCompatActivity() {

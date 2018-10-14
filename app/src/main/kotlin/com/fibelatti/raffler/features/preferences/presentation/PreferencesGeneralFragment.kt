@@ -12,7 +12,7 @@ import com.fibelatti.raffler.core.extension.observe
 import com.fibelatti.raffler.core.extension.observeEvent
 import com.fibelatti.raffler.core.extension.snackbar
 import com.fibelatti.raffler.core.platform.AppConfig
-import com.fibelatti.raffler.core.platform.BaseFragment
+import com.fibelatti.raffler.core.platform.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_preferences_general.*
 
 private const val RESTART_DELAY = 1000L

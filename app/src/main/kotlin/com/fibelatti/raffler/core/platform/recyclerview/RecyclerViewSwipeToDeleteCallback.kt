@@ -1,4 +1,4 @@
-package com.fibelatti.raffler.core.platform
+package com.fibelatti.raffler.core.platform.recyclerview
 
 import android.content.Context
 import android.graphics.Canvas

@@ -8,8 +8,8 @@ import androidx.navigation.Navigation.findNavController
 import androidx.transition.TransitionInflater
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.setShapeBackgroundColor
-import com.fibelatti.raffler.core.platform.BaseFragment
 import com.fibelatti.raffler.core.platform.BundleDelegate
+import com.fibelatti.raffler.core.platform.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_quick_decision_result.*
 
 private var Bundle.transitionName by BundleDelegate.String("TRANSITION_NAME")

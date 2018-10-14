@@ -1,6 +1,6 @@
 package com.fibelatti.raffler.features.myraffles.presentation.common
 
-import com.fibelatti.raffler.core.platform.BaseViewType
+import com.fibelatti.raffler.core.platform.base.BaseViewType
 
 data class CustomRaffleDraftedModel(
     val title: String,

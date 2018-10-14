@@ -1,4 +1,4 @@
-package com.fibelatti.raffler.core.platform
+package com.fibelatti.raffler.core.platform.customview
 
 import android.content.Context
 import android.util.AttributeSet

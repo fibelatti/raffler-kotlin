@@ -11,7 +11,7 @@ import com.fibelatti.raffler.core.extension.observe
 import com.fibelatti.raffler.core.extension.observeEvent
 import com.fibelatti.raffler.core.extension.snackbar
 import com.fibelatti.raffler.core.platform.AppConfig
-import com.fibelatti.raffler.core.platform.BaseFragment
+import com.fibelatti.raffler.core.platform.base.BaseFragment
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModes
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModesDelegate
 import kotlinx.android.synthetic.main.fragment_preferences_custom_raffle.*

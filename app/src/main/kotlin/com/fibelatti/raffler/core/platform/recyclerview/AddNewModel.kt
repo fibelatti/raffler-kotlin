@@ -1,4 +1,6 @@
-package com.fibelatti.raffler.core.platform
+package com.fibelatti.raffler.core.platform.recyclerview
+
+import com.fibelatti.raffler.core.platform.base.BaseViewType
 
 object AddNewModel : BaseViewType {
     @JvmStatic

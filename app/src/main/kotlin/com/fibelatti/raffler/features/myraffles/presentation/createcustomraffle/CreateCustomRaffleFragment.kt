@@ -25,9 +25,9 @@ import com.fibelatti.raffler.core.extension.textAsString
 import com.fibelatti.raffler.core.extension.visible
 import com.fibelatti.raffler.core.extension.withDefaultDecoration
 import com.fibelatti.raffler.core.extension.withLinearLayoutManager
-import com.fibelatti.raffler.core.platform.BaseFragment
 import com.fibelatti.raffler.core.platform.BundleDelegate
-import com.fibelatti.raffler.core.platform.RecyclerViewSwipeToDeleteCallback
+import com.fibelatti.raffler.core.platform.base.BaseFragment
+import com.fibelatti.raffler.core.platform.recyclerview.RecyclerViewSwipeToDeleteCallback
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModel
 import kotlinx.android.synthetic.main.fragment_create_custom_raffle.*
 import javax.inject.Inject

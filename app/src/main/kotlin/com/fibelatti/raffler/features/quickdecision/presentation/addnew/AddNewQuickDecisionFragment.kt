@@ -9,7 +9,7 @@ import com.fibelatti.raffler.core.extension.observe
 import com.fibelatti.raffler.core.extension.observeEvent
 import com.fibelatti.raffler.core.extension.withDefaultDecoration
 import com.fibelatti.raffler.core.extension.withLinearLayoutManager
-import com.fibelatti.raffler.core.platform.BaseBottomSheetDialogFragment
+import com.fibelatti.raffler.core.platform.base.BaseBottomSheetDialogFragment
 import com.fibelatti.raffler.core.platform.requestCode
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModel
 import kotlinx.android.synthetic.main.fragment_add_custom_raffle_as_quick_decision.*

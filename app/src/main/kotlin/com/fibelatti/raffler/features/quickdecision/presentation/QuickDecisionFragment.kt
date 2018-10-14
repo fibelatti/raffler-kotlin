@@ -16,9 +16,9 @@ import com.fibelatti.raffler.core.extension.observe
 import com.fibelatti.raffler.core.extension.observeEvent
 import com.fibelatti.raffler.core.extension.withDefaultDecoration
 import com.fibelatti.raffler.core.extension.withGridLayoutManager
-import com.fibelatti.raffler.core.platform.AddNewModel
-import com.fibelatti.raffler.core.platform.BaseFragment
-import com.fibelatti.raffler.core.platform.BaseViewType
+import com.fibelatti.raffler.core.platform.base.BaseFragment
+import com.fibelatti.raffler.core.platform.base.BaseViewType
+import com.fibelatti.raffler.core.platform.recyclerview.AddNewModel
 import com.fibelatti.raffler.features.myraffles.presentation.createcustomraffle.CreateCustomRaffleFragment
 import com.fibelatti.raffler.features.quickdecision.presentation.adapter.QuickDecisionAdapter
 import com.fibelatti.raffler.features.quickdecision.presentation.addnew.ADD_NEW_QUICK_DECISION_REQUEST_CODE

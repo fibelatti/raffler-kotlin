@@ -21,7 +21,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fibelatti.raffler.R
-import com.fibelatti.raffler.core.platform.ItemOffsetDecoration
+import com.fibelatti.raffler.core.platform.recyclerview.ItemOffsetDecoration
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 

@@ -1,7 +1,7 @@
 package com.fibelatti.raffler.features.myraffles.presentation.common
 
 import com.fibelatti.raffler.core.functional.Mapper
-import com.fibelatti.raffler.core.platform.BaseViewType
+import com.fibelatti.raffler.core.platform.base.BaseViewType
 import com.fibelatti.raffler.features.myraffles.CustomRaffle
 import java.text.Collator
 import javax.inject.Inject

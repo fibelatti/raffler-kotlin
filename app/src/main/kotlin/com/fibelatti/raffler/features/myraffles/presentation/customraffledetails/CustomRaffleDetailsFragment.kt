@@ -16,8 +16,8 @@ import com.fibelatti.raffler.core.extension.visible
 import com.fibelatti.raffler.core.extension.withDefaultDecoration
 import com.fibelatti.raffler.core.extension.withLinearLayoutManager
 import com.fibelatti.raffler.core.platform.AppConfig
-import com.fibelatti.raffler.core.platform.BaseFragment
 import com.fibelatti.raffler.core.platform.BundleDelegate
+import com.fibelatti.raffler.core.platform.base.BaseFragment
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModel
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModes
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModesDelegate
