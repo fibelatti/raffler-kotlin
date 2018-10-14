@@ -53,6 +53,14 @@ class CustomRaffleDetailsFragment :
             error(error, ::handleError)
             observe(preferredRaffleMode, ::setupRaffleButtons)
             observe(customRaffle, ::showCustomRaffleDetails)
+            observeEvent(showHint) {
+                showDismissibleHint(
+                    container = layoutHintContainer,
+                    hintTitle = getString(R.string.hint_quick_tip),
+                    hintMessage = getString(R.string.custom_raffle_details_dismissible_hint),
+                    onHintDismissed = { customRaffleDetailsViewModel.hintDismissed() }
+                )
+            }
             observeEvent(invalidSelectionError, ::handleInvalidSelectionError)
             observeEvent(showModeSelector) { showRaffleModeSelector() }
             observeEvent(showPreferredRaffleMode) { showPreferredRaffleMode(it) }

@@ -17,6 +17,7 @@
     <string name="hint_reset">Reset</string>
     <string name="hint_raffle">Raffle</string>
     <string name="hint_did_you_know">Did you know?</string>
+    <string name="hint_quick_tip">A quick tip</string>
 
     <string name="alert_confirm_deletion">Confirm deletion?</string>
 
@@ -41,6 +42,7 @@
     <string name="quick_decision_add_new_title">Select raffle to add as shortcut</string>
 
     <!-- Lottery -->
+    <string name="lottery_dismissible_hint">If you don\'t like thinking of lottery numbers than Raffler can help you out. If you always need the same set-up you can set the default values in preferences.</string>
     <string name="lottery_quantity_available">Qty. of numbers available</string>
     <string name="lottery_quantity_to_raffle">Qty. of numbers to raffle</string>
     <string name="lottery_quantity_validation_error">Please enter a valid quantity.</string>
@@ -54,6 +56,7 @@
     <string name="my_raffles_select_mode_button">Select mode</string>
 
     <!-- Custom Raffle - New or Edit -->
+    <string name="custom_raffle_add_as_quick_decision_dismissible_hint">Having a raffle added as a shortcut can be handy. Since you don\'t have any yet let\'s create your first one and it will be added as a shortcut.</string>
     <string name="custom_raffle_description">Description</string>
     <string name="custom_raffle_add_shortcut">Show as Quick Decision shortcut</string>
     <string name="custom_raffle_item_description">Item description</string>
@@ -63,6 +66,7 @@
     <string name="custom_raffle_create_invalid_items_quantity">A custom raffle should have at least 2 items.</string>
 
     <!-- Custom Raffle - Details -->
+    <string name="custom_raffle_details_dismissible_hint">Customize raffles with ease. Tapping items will either include or exclude them from the next raffle.</string>
     <string name="custom_raffle_details_mode_invalid_quantity">Select at least 2 items to raffle.</string>
     <string name="custom_raffle_details_mode_title">Choose the raffle mode</string>
     <string name="custom_raffle_details_mode_button">Select</string>

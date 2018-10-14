@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
 import androidx.room.Update
-import com.fibelatti.raffler.core.extension.getOrDefaultValue
+import com.fibelatti.raffler.core.extension.orFalse
 import com.fibelatti.raffler.core.functional.Result
 import com.fibelatti.raffler.core.functional.getOrDefault
 import com.fibelatti.raffler.core.functional.runCatching
@@ -16,7 +16,10 @@ import com.fibelatti.raffler.features.preferences.PreferencesRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 
-private const val KEY_QUICK_DECISION_HINT = "QUICK_DECISION_HINT"
+private const val HINT_KEY_QUICK_DECISION = "HINT_KEY_QUICK_DECISION"
+private const val HINT_KEY_ADD_NEW_QUICK_DECISION = "HINT_KEY_ADD_NEW_QUICK_DECISION"
+private const val HINT_KEY_LOTTERY = "HINT_KEY_LOTTERY"
+private const val HINT_KEY_RAFFLE_DETAILS = "HINT_KEY_RAFFLE_DETAILS"
 
 @Singleton
 class PreferencesDataSource @Inject constructor(
@@ -62,20 +65,42 @@ class PreferencesDataSource @Inject constructor(
     override suspend fun rememberRaffledItems(value: Boolean): Result<Unit> =
         updateCurrentPreferences { it.copy(rememberRaffledItems = value) }
 
-    override suspend fun resetHints(): Result<Unit> = updateCurrentPreferences { it.apply { hintsDisplayed.clear() } }
+    override suspend fun resetHints(): Result<Unit> = updateCurrentPreferences {
+        it.copy(hintsDisplayed = mutableMapOf())
+    }
 
-    override suspend fun getQuickDecisionHintDisplayed(): Boolean =
-        runCatching {
-            preferencesDao.getPreferences().first()
-                .hintsDisplayed.getOrDefaultValue(KEY_QUICK_DECISION_HINT, false)
-        }.getOrDefault(false)
+    override suspend fun getQuickDecisionHintDisplayed(): Boolean = getHintDisplayed(HINT_KEY_QUICK_DECISION)
 
-    override suspend fun setQuickDecisionHintDisplayed(): Result<Unit> =
-        updateCurrentPreferences { it.apply { hintsDisplayed[KEY_QUICK_DECISION_HINT] = true } }
+    override suspend fun setQuickDecisionHintDismissed(): Result<Unit> = setHintDisplayed(HINT_KEY_QUICK_DECISION)
+
+    override suspend fun getAddNewQuickDecisionDisplayed(): Boolean = getHintDisplayed(HINT_KEY_ADD_NEW_QUICK_DECISION)
+
+    override suspend fun setAddNewQuickDecisionDismissed(): Result<Unit> = setHintDisplayed(HINT_KEY_ADD_NEW_QUICK_DECISION)
+
+    override suspend fun getLotteryHintDisplayed(): Boolean = getHintDisplayed(HINT_KEY_LOTTERY)
+
+    override suspend fun setLotteryHintDismissed(): Result<Unit> = setHintDisplayed(HINT_KEY_LOTTERY)
+
+    override suspend fun getRaffleDetailsHintDisplayed(): Boolean = getHintDisplayed(HINT_KEY_RAFFLE_DETAILS)
+
+    override suspend fun setRaffleDetailsHintDismissed(): Result<Unit> = setHintDisplayed(HINT_KEY_RAFFLE_DETAILS)
+
+    private fun getHintDisplayed(key: String): Boolean =
+        runCatching { preferencesDao.getPreferences().first().hintsDisplayed[key].orFalse() }
+            .getOrDefault(false)
+
+    private fun setHintDisplayed(key: String): Result<Unit> =
+        updateCurrentPreferences {
+            it.copy(hintsDisplayed = it.hintsDisplayed.toMutableMap().apply { set(key, true) })
+        }
 
     private fun updateCurrentPreferences(block: (PreferencesDto) -> PreferencesDto): Result<Unit> {
         return preferencesDao.runCatching {
-            appDatabase.runInTransaction { updatePreferences(block(getPreferences().first())) }
+            appDatabase.runInTransaction {
+                val currentPreferences = getPreferences().first()
+                val updatedPreferences = block(currentPreferences)
+                updatePreferences(updatedPreferences)
+            }
         }
     }
 }

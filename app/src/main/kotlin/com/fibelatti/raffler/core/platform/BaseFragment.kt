@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 
 abstract class BaseFragment :
     Fragment(),
-    HintDisplayer by HintDisplayerDelegate() {
+    DismissibleHint by DismissibleHintDelegate() {
 
     protected val injector by lazy { (activity as BaseActivity).injector }
     protected val viewModelFactory by lazy { (activity as BaseActivity).viewModelFactory }

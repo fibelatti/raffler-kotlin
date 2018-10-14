@@ -17,6 +17,7 @@
     <string name="hint_reset">Resetar</string>
     <string name="hint_raffle">Sortear</string>
     <string name="hint_did_you_know">Você sabia?</string>
+    <string name="hint_quick_tip">Uma dica</string>
 
     <string name="alert_confirm_deletion">Confirma a exclusão?</string>
 
@@ -41,6 +42,7 @@
     <string name="quick_decision_add_new_title">Escolha o sorteio para adicionar como atalho</string>
 
     <!-- Lottery -->
+    <string name="lottery_dismissible_hint">Se você não gosta de ficar pensando em quais números jogar na loteria o Raffler pode te ajudar. Você pode definir quantidades padrão nas preferências.</string>
     <string name="lottery_quantity_available">Qtde. de números disponíveis</string>
     <string name="lottery_quantity_to_raffle">Qtde. de números sorteados</string>
     <string name="lottery_quantity_validation_error">Por favor entre uma quantidade válida.</string>
@@ -54,6 +56,7 @@
     <string name="my_raffles_select_mode_button">Escolher modo</string>
 
     <!-- Custom Raffle - New or Edit -->
+    <string name="custom_raffle_add_as_quick_decision_dismissible_hint">Criar um atalho para sortear algo rapidamente pode vir bem a calhar. Como você não possui nenhum sorteio ainda vamos criar o primeiro.</string>
     <string name="custom_raffle_description">Descrição</string>
     <string name="custom_raffle_add_shortcut">Adicionar atalho</string>
     <string name="custom_raffle_item_description">Descrição do item</string>
@@ -63,6 +66,7 @@
     <string name="custom_raffle_create_invalid_items_quantity">O sorteio deve ter pelo menos 2 itens.</string>
 
     <!-- Custom Raffle - Details -->
+    <string name="custom_raffle_details_dismissible_hint">Personalize cada sorteio facilmente. Clicar nos itens irá incluí-los ou excluí-los do próximo sorteio.</string>
     <string name="custom_raffle_details_mode_invalid_quantity">Escolha pelo menos 2 itens para sortear.</string>
     <string name="custom_raffle_details_mode_title">Escolha o modo de sorteio</string>
     <string name="custom_raffle_details_mode_button">Escolher</string>
