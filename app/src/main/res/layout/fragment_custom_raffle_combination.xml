@@ -36,7 +36,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewFirstCustomRaffleDescription"
-            style="@style/AppTheme.Text.Body.White"
+            style="@style/AppTheme.Text.Body"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -45,7 +45,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewFirstCustomRaffleItems"
-            style="@style/AppTheme.Text.Detail.White"
+            style="@style/AppTheme.Text.Detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -72,7 +72,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewSecondCustomRaffleDescription"
-            style="@style/AppTheme.Text.Body.White"
+            style="@style/AppTheme.Text.Body"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -81,7 +81,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewSecondCustomRaffleItems"
-            style="@style/AppTheme.Text.Detail.White"
+            style="@style/AppTheme.Text.Detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
