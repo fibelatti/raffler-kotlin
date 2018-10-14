@@ -5,8 +5,8 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.fibelatti.raffler.core.functional.Result
+import com.fibelatti.raffler.core.functional.catching
 import com.fibelatti.raffler.core.functional.getOrThrow
-import com.fibelatti.raffler.core.functional.runCatching
 import com.fibelatti.raffler.core.provider.ResourceProvider
 import com.fibelatti.raffler.features.quickdecision.QuickDecision
 import com.fibelatti.raffler.features.quickdecision.QuickDecisionRepository
@@ -19,7 +19,7 @@ class QuickDecisionDataSource @Inject constructor(
     private val quickDecisionDtoMapper: QuickDecisionDtoMapper
 ) : QuickDecisionRepository {
     override suspend fun getAllQuickDecisions(): Result<List<QuickDecision>> {
-        return runCatching {
+        return catching {
             val dbList = quickDecisionDtoMapper.mapList(quickDecisionDao.getAllQuickDecisions())
 
             if (dbList.isNotEmpty()) {
@@ -29,7 +29,7 @@ class QuickDecisionDataSource @Inject constructor(
                     fileName = "quick-decisions.json",
                     type = object : TypeToken<List<QuickDecision>>() {})
 
-                return@runCatching if (localList != null) {
+                return@catching if (localList != null) {
                     addQuickDecisions(localList).getOrThrow()
                     localList
                 } else {
@@ -40,13 +40,13 @@ class QuickDecisionDataSource @Inject constructor(
     }
 
     override suspend fun getQuickDecisionById(id: String): Result<QuickDecision?> =
-        quickDecisionDao.runCatching { getQuickDecisionById(id)?.let(quickDecisionDtoMapper::map) }
+        catching { quickDecisionDao.getQuickDecisionById(id)?.let(quickDecisionDtoMapper::map) }
 
     override suspend fun deleteQuickDecisionById(id: String): Result<Unit> =
-        quickDecisionDao.runCatching { deleteQuickDecisionById(id) }
+        catching { quickDecisionDao.deleteQuickDecisionById(id) }
 
     override suspend fun addQuickDecisions(list: List<QuickDecision>): Result<Unit> =
-        quickDecisionDao.runCatching { addQuickDecisions(quickDecisionDtoMapper.mapListReverse(list)) }
+        catching { quickDecisionDao.addQuickDecisions(quickDecisionDtoMapper.mapListReverse(list)) }
 }
 
 @Dao

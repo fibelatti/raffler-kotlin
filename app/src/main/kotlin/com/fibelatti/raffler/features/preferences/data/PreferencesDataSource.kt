@@ -6,8 +6,8 @@ import androidx.room.Query
 import androidx.room.Update
 import com.fibelatti.raffler.core.extension.orFalse
 import com.fibelatti.raffler.core.functional.Result
+import com.fibelatti.raffler.core.functional.catching
 import com.fibelatti.raffler.core.functional.getOrDefault
-import com.fibelatti.raffler.core.functional.runCatching
 import com.fibelatti.raffler.core.persistence.CurrentInstallSharedPreferences
 import com.fibelatti.raffler.core.persistence.database.AppDatabase
 import com.fibelatti.raffler.core.platform.AppConfig
@@ -30,7 +30,7 @@ class PreferencesDataSource @Inject constructor(
 ) : PreferencesRepository {
 
     override suspend fun getPreferences(): Result<Preferences> {
-        return runCatching {
+        return catching {
             preferencesDao.getPreferences().first().let {
                 preferencesDtoMapper.map(it).copy(
                     appTheme = currentInstallSharedPreferences.getTheme(),
@@ -86,7 +86,7 @@ class PreferencesDataSource @Inject constructor(
     override suspend fun setRaffleDetailsHintDismissed(): Result<Unit> = setHintDisplayed(HINT_KEY_RAFFLE_DETAILS)
 
     private fun getHintDisplayed(key: String): Boolean =
-        runCatching { preferencesDao.getPreferences().first().hintsDisplayed[key].orFalse() }
+        catching { preferencesDao.getPreferences().first().hintsDisplayed[key].orFalse() }
             .getOrDefault(false)
 
     private fun setHintDisplayed(key: String): Result<Unit> =
@@ -95,11 +95,11 @@ class PreferencesDataSource @Inject constructor(
         }
 
     private fun updateCurrentPreferences(block: (PreferencesDto) -> PreferencesDto): Result<Unit> {
-        return preferencesDao.runCatching {
+        return catching {
             appDatabase.runInTransaction {
-                val currentPreferences = getPreferences().first()
+                val currentPreferences = preferencesDao.getPreferences().first()
                 val updatedPreferences = block(currentPreferences)
-                updatePreferences(updatedPreferences)
+                preferencesDao.updatePreferences(updatedPreferences)
             }
         }
     }

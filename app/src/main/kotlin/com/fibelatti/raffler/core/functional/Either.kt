@@ -74,53 +74,45 @@ fun <R> Result<R>.getOrNull() = rightOrNull()
 fun <R> Result<R>.exceptionOrNull() = leftOrNull()
 
 fun <R> Result<R>.throwOnFailure() {
-    if (this is Failure) throw a
+    if (this is Failure) throw this.error
 }
 
 fun <R> Result<R>.getOrThrow(): R {
     return when (this) {
-        is Success -> b
-        is Failure -> throw a
+        is Success -> this.value
+        is Failure -> throw this.error
     }
 }
 
 fun <R> Result<R>.getOrElse(onFailure: (exception: Throwable) -> R): R {
     return when (this) {
-        is Success -> b
-        is Failure -> onFailure(a)
+        is Success -> this.value
+        is Failure -> onFailure(this.error)
     }
 }
 
 fun <R> Result<R>.getOrDefault(defaultValue: R): R {
     return when (this) {
-        is Success -> b
+        is Success -> this.value
         is Failure -> defaultValue
     }
 }
 
 fun <R> Result<R>.fold(onSuccess: (R) -> R, onFailure: (Throwable) -> R): R {
     return when (this) {
-        is Success -> onSuccess(b)
-        is Failure -> onFailure(a)
+        is Success -> onSuccess(this.value)
+        is Failure -> onFailure(this.error)
     }
 }
 
 fun <T, R> Result<R>.flatMapCatching(fn: (R) -> T): Result<T> {
     return when (this) {
-        is Success -> runCatching { fn(b) }
-        is Failure -> Failure(a)
+        is Success -> catching { fn(this.value) }
+        is Failure -> Failure(this.error)
     }
 }
 
-inline fun <R> runCatching(block: () -> R): Result<R> {
-    return try {
-        Success(block())
-    } catch (exception: Throwable) {
-        Failure(exception)
-    }
-}
-
-inline fun <T, R> T.runCatching(block: T.() -> R): Result<R> {
+inline fun <R> catching(block: () -> R): Result<R> {
     return try {
         Success(block())
     } catch (exception: Throwable) {
