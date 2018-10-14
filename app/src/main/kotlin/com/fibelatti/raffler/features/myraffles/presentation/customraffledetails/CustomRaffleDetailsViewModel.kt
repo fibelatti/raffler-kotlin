@@ -37,7 +37,7 @@ class CustomRaffleDetailsViewModel @Inject constructor(
     val invalidSelectionError by lazy { MutableLiveEvent<String>() }
     val showModeSelector by lazy { MutableLiveEvent<Unit>() }
     val showPreferredRaffleMode by lazy { MutableLiveEvent<AppConfig.RaffleMode>() }
-    val itensRemaining by lazy { MutableLiveEvent<Int>() }
+    val itemsRemaining by lazy { MutableLiveEvent<Int>() }
 
     fun getCustomRaffleById(id: Long?) {
         start {
@@ -78,7 +78,7 @@ class CustomRaffleDetailsViewModel @Inject constructor(
                         customRaffleRepository.getCustomRaffleById(id.orZero()).flatMapCatching(::prepareCustomRaffle)
                     }.onSuccess {
                         customRaffle.value = it
-                        itensRemaining.setEvent(it.includedItems.size)
+                        itemsRemaining.setEvent(it.includedItems.size)
                     }
                 }
             }

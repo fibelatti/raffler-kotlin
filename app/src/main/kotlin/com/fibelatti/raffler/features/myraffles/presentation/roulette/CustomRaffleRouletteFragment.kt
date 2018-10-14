@@ -31,7 +31,7 @@ class CustomRaffleRouletteFragment : BaseFragment() {
         injector.inject(this)
         customRaffleDetailsViewModel.run {
             error(error, ::handleError)
-            observeEvent(itensRemaining) {
+            observeEvent(itemsRemaining) {
                 if (it == 1) {
                     fab?.apply {
                         isEnabled = false

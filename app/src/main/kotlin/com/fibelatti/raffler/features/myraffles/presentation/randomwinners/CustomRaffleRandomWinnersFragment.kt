@@ -41,7 +41,7 @@ class CustomRaffleRandomWinnersFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         injector.inject(this)
         customRaffleDetailsViewModel.run {
-            observeEvent(itensRemaining) {
+            observeEvent(itemsRemaining) {
                 layoutRoot.snackbar(
                     resources.getQuantityString(R.plurals.custom_raffle_roulette_hint_items_remaining, it, it),
                     duration = Snackbar.LENGTH_LONG
