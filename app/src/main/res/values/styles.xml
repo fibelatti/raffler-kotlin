@@ -62,6 +62,11 @@
         <item name="colorAccent">@color/color_accent</item>
         <item name="colorControlNormal">@color/text_secondary</item>
         <item name="colorControlActivated">@color/color_accent</item>
+        <item name="errorTextAppearance">@style/AppTheme.InputLayoutError</item>
+    </style>
+
+    <style name="AppTheme.InputLayoutError" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/app_red</item>
     </style>
 
     <style name="AppTheme.Checkbox" parent="Base.Widget.AppCompat.CompoundButton.CheckBox">
