@@ -1,5 +1,7 @@
 package com.fibelatti.raffler.core.extension
 
+import kotlin.math.ceil
+
 // region Any
 val Unit?.exhaustive get() = this
 
@@ -61,7 +63,7 @@ fun <T> List<T>.batchesOf(quantity: Int): List<List<T>> {
         quantity <= 0 -> throw IllegalArgumentException("Quantity should not be less than zero (quantity = $quantity)")
         size <= 0 -> listOf()
         else -> {
-            val chunks = Math.ceil(size.toDouble() / quantity).toInt()
+            val chunks = ceil(size.toDouble() / quantity).toInt()
 
             (0 until chunks).map { n ->
                 subList(n * quantity, ((n + 1) * quantity).takeIf { it <= size } ?: size)
