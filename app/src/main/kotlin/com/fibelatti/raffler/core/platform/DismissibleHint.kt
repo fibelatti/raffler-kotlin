@@ -1,6 +1,7 @@
 package com.fibelatti.raffler.core.platform
 
-import android.widget.FrameLayout
+import android.view.View
+import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.annotation.StringRes
 import androidx.appcompat.widget.AppCompatTextView
@@ -11,14 +12,14 @@ import com.fibelatti.raffler.core.extension.setShapeBackgroundColor
 
 interface DismissibleHint {
     fun showDismissibleHint(
-        container: FrameLayout,
+        container: View,
         @StringRes hintTitle: Int,
         @StringRes hintMessage: Int,
         onHintDismissed: (() -> Unit)? = null
     )
 
     fun showDismissibleHint(
-        container: FrameLayout,
+        container: View,
         hintTitle: String,
         hintMessage: String,
         onHintDismissed: (() -> Unit)? = null
@@ -26,7 +27,7 @@ interface DismissibleHint {
 }
 
 class DismissibleHintDelegate : DismissibleHint {
-    override fun showDismissibleHint(container: FrameLayout, hintTitle: Int, hintMessage: Int, onHintDismissed: (() -> Unit)?) {
+    override fun showDismissibleHint(container: View, hintTitle: Int, hintMessage: Int, onHintDismissed: (() -> Unit)?) {
         showDismissibleHint(
             container = container,
             hintTitle = container.context.getString(hintTitle),
@@ -36,13 +37,13 @@ class DismissibleHintDelegate : DismissibleHint {
     }
 
     override fun showDismissibleHint(
-        container: FrameLayout,
+        container: View,
         hintTitle: String,
         hintMessage: String,
         onHintDismissed: (() -> Unit)?
     ) {
-        container.inflate(R.layout.layout_dismissible_hint)
-            .apply {
+        (container as? ViewGroup)?.inflate(R.layout.layout_dismissible_hint)
+            ?.apply {
                 val rootLayout = findViewById<LinearLayout>(R.id.layoutRoot)
                 val textViewHintTitle = findViewById<AppCompatTextView>(R.id.textViewHintTitle)
                 val textViewHintMessage = findViewById<AppCompatTextView>(R.id.textViewHintMessage)
@@ -58,6 +59,6 @@ class DismissibleHintDelegate : DismissibleHint {
                     container.removeView(this)
                 }
             }
-            .let { container.addView(it) }
+            ?.let { container.addView(it) }
     }
 }
