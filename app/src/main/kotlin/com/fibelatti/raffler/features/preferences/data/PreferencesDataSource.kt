@@ -1,9 +1,9 @@
 package com.fibelatti.raffler.features.preferences.data
 
 import androidx.room.Dao
+import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
-import androidx.room.Update
 import com.fibelatti.raffler.core.extension.orFalse
 import com.fibelatti.raffler.core.functional.Result
 import com.fibelatti.raffler.core.functional.catching
@@ -99,7 +99,7 @@ class PreferencesDataSource @Inject constructor(
             appDatabase.runInTransaction {
                 val currentPreferences = preferencesDao.getPreferences().first()
                 val updatedPreferences = block(currentPreferences)
-                preferencesDao.updatePreferences(updatedPreferences)
+                preferencesDao.setPreferences(updatedPreferences)
             }
         }
     }
@@ -110,6 +110,6 @@ interface PreferencesDao {
     @Query("select * from $PREFERENCES_DTO_TABLE_NAME")
     fun getPreferences(): List<PreferencesDto>
 
-    @Update(onConflict = REPLACE)
-    fun updatePreferences(preferencesDto: PreferencesDto)
+    @Insert(onConflict = REPLACE)
+    fun setPreferences(preferencesDto: PreferencesDto)
 }
