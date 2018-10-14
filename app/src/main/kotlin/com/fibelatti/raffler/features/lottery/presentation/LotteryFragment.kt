@@ -10,6 +10,7 @@ import com.fibelatti.raffler.core.extension.clearError
 import com.fibelatti.raffler.core.extension.error
 import com.fibelatti.raffler.core.extension.hideKeyboard
 import com.fibelatti.raffler.core.extension.observe
+import com.fibelatti.raffler.core.extension.observeEvent
 import com.fibelatti.raffler.core.extension.showError
 import com.fibelatti.raffler.core.extension.textAsString
 import com.fibelatti.raffler.core.extension.visible
@@ -26,9 +27,7 @@ class LotteryFragment : BaseFragment() {
     @Inject
     lateinit var adapter: LotteryAdapter
 
-    private val lotteryViewModel by lazy {
-        viewModelFactory.get<LotteryViewModel>(this)
-    }
+    private val lotteryViewModel by lazy { viewModelFactory.get<LotteryViewModel>(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +36,14 @@ class LotteryFragment : BaseFragment() {
             error(error, ::handleError)
             observe(defaultQuantityAvailable) { editTextTotalQuantity.setText(it) }
             observe(defaultQuantityToRaffle) { editTextRaffleQuantity.setText(it) }
+            observeEvent(showHint) {
+                showDismissibleHint(
+                    container = layoutHintContainer,
+                    hintTitle = getString(R.string.hint_quick_tip),
+                    hintMessage = getString(R.string.lottery_dismissible_hint),
+                    onHintDismissed = { lotteryViewModel.hintDismissed() }
+                )
+            }
             observe(lotteryNumbers, ::showResults)
             observe(quantityAvailableError, ::handleTotalQuantityError)
             observe(quantityToRaffleError, ::handleRaffleQuantityError)

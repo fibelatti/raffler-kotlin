@@ -8,12 +8,15 @@ import com.fibelatti.raffler.core.functional.isSuccess
 import com.fibelatti.raffler.core.functional.onFailure
 import com.fibelatti.raffler.core.functional.onSuccess
 import com.fibelatti.raffler.core.platform.BaseViewModel
+import com.fibelatti.raffler.core.platform.MutableLiveEvent
+import com.fibelatti.raffler.core.platform.postEvent
 import com.fibelatti.raffler.core.provider.ResourceProvider
 import com.fibelatti.raffler.core.provider.ThreadProvider
 import com.fibelatti.raffler.features.myraffles.CustomRaffleRepository
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleItemModel
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModel
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModelMapper
+import com.fibelatti.raffler.features.preferences.PreferencesRepository
 import com.fibelatti.raffler.features.quickdecision.QuickDecisionRepository
 import com.fibelatti.raffler.features.quickdecision.presentation.CustomRaffleToQuickDecisionMapper
 import javax.inject.Inject
@@ -21,6 +24,7 @@ import javax.inject.Inject
 class CreateCustomRaffleViewModel @Inject constructor(
     private val customRaffleRepository: CustomRaffleRepository,
     private val quickDecisionRepository: QuickDecisionRepository,
+    private val preferencesRepository: PreferencesRepository,
     private val customRaffleModelMapper: CustomRaffleModelMapper,
     private val customRaffleToQuickDecisionMapper: CustomRaffleToQuickDecisionMapper,
     private val resourceProvider: ResourceProvider,
@@ -31,6 +35,7 @@ class CreateCustomRaffleViewModel @Inject constructor(
     val showCreateCustomRaffleLayout by lazy { MutableLiveData<Unit>() }
     val customRaffle by lazy { MutableLiveData<CustomRaffleModel>() }
     val addAsQuickDecision by lazy { MutableLiveData<Boolean>() }
+    val showHint by lazy { MutableLiveEvent<Unit>() }
     val invalidDescriptionError by lazy { MutableLiveData<String>() }
     val invalidItemsQuantityError by lazy { MutableLiveData<String>() }
     val invalidItemDescriptionError by lazy { MutableLiveData<String>() }
@@ -51,8 +56,10 @@ class CreateCustomRaffleViewModel @Inject constructor(
                 customRaffle.value?.let { customRaffle ->
                     inBackground {
                         quickDecisionRepository.getQuickDecisionById(customRaffle.description)
-                    }.onSuccess { addAsQuickDecision.value = it != null }
-                        .onFailure(::handleError)
+                    }.onSuccess {
+                        addAsQuickDecision.value = it != null
+                        checkForHints()
+                    }.onFailure(::handleError)
                 }
             }
         } else {
@@ -129,6 +136,18 @@ class CreateCustomRaffleViewModel @Inject constructor(
                 } else {
                     error.value = Throwable(resourceProvider.getString(R.string.generic_msg_error))
                 }
+            }
+        }
+    }
+
+    fun hintDismissed() {
+        startInBackground { preferencesRepository.setAddNewQuickDecisionDismissed() }
+    }
+
+    private fun checkForHints() {
+        startInBackground {
+            if (!preferencesRepository.getAddNewQuickDecisionDisplayed()) {
+                showHint.postEvent(Unit)
             }
         }
     }

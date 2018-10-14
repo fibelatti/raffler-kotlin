@@ -18,6 +18,7 @@ import com.fibelatti.raffler.core.extension.gone
 import com.fibelatti.raffler.core.extension.hideKeyboard
 import com.fibelatti.raffler.core.extension.isKeyboardSubmit
 import com.fibelatti.raffler.core.extension.observe
+import com.fibelatti.raffler.core.extension.observeEvent
 import com.fibelatti.raffler.core.extension.orFalse
 import com.fibelatti.raffler.core.extension.showError
 import com.fibelatti.raffler.core.extension.textAsString
@@ -79,6 +80,14 @@ class CreateCustomRaffleFragment : BaseFragment() {
             observe(showEditCustomRaffleLayout) { showCustomRaffleEditLayout() }
             observe(customRaffle, ::showCustomRaffleDetails)
             observe(addAsQuickDecision) { checkboxAddShortcut.isChecked = it }
+            observeEvent(showHint) {
+                showDismissibleHint(
+                    container = layoutHintContainer,
+                    hintTitle = getString(R.string.hint_quick_tip),
+                    hintMessage = getString(R.string.custom_raffle_add_as_quick_decision_dismissible_hint),
+                    onHintDismissed = { createCustomRaffleViewModel.hintDismissed() }
+                )
+            }
             observe(invalidDescriptionError, ::handleInvalidDescriptionError)
             observe(invalidItemsQuantityError, ::handleInvalidItemsQuantityError)
             observe(invalidItemDescriptionError, ::handleInvalidItemDescriptionError)

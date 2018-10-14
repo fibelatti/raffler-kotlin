@@ -6,6 +6,8 @@ import com.fibelatti.raffler.core.extension.empty
 import com.fibelatti.raffler.core.extension.isInt
 import com.fibelatti.raffler.core.functional.onSuccess
 import com.fibelatti.raffler.core.platform.BaseViewModel
+import com.fibelatti.raffler.core.platform.MutableLiveEvent
+import com.fibelatti.raffler.core.platform.postEvent
 import com.fibelatti.raffler.core.provider.ResourceProvider
 import com.fibelatti.raffler.core.provider.ThreadProvider
 import com.fibelatti.raffler.features.preferences.PreferencesRepository
@@ -20,12 +22,14 @@ class LotteryViewModel @Inject constructor(
 
     val defaultQuantityAvailable by lazy { MutableLiveData<String>() }
     val defaultQuantityToRaffle by lazy { MutableLiveData<String>() }
+    val showHint by lazy { MutableLiveEvent<Unit>() }
     val lotteryNumbers by lazy { MutableLiveData<List<LotteryNumberModel>>() }
     val quantityAvailableError by lazy { MutableLiveData<String>() }
     val quantityToRaffleError by lazy { MutableLiveData<String>() }
 
     init {
         getDefaults()
+        checkForHints()
     }
 
     fun getLotteryNumbers(quantityAvailable: String, quantityToRaffle: String) {
@@ -39,6 +43,10 @@ class LotteryViewModel @Inject constructor(
         }
     }
 
+    fun hintDismissed() {
+        startInBackground { preferencesRepository.setLotteryHintDismissed() }
+    }
+
     private fun getDefaults() {
         startInBackground {
             preferencesRepository.getPreferences()
@@ -46,6 +54,14 @@ class LotteryViewModel @Inject constructor(
                     defaultQuantityAvailable.postValue(it.lotteryDefaultQuantityAvailable)
                     defaultQuantityToRaffle.postValue(it.lotteryDefaultQuantityToRaffle)
                 }
+        }
+    }
+
+    private fun checkForHints() {
+        startInBackground {
+            if (!preferencesRepository.getLotteryHintDisplayed()) {
+                showHint.postEvent(Unit)
+            }
         }
     }
 

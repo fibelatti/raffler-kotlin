@@ -13,6 +13,7 @@ import com.fibelatti.raffler.core.extension.error
 import com.fibelatti.raffler.core.extension.exhaustive
 import com.fibelatti.raffler.core.extension.getColorGradientForListSize
 import com.fibelatti.raffler.core.extension.observe
+import com.fibelatti.raffler.core.extension.observeEvent
 import com.fibelatti.raffler.core.extension.withDefaultDecoration
 import com.fibelatti.raffler.core.extension.withGridLayoutManager
 import com.fibelatti.raffler.core.platform.AddNewModel
@@ -34,9 +35,7 @@ class QuickDecisionFragment : BaseFragment() {
 
     private lateinit var sharedView: View
 
-    private val quickDecisionViewModel by lazy {
-        viewModelFactory.get<QuickDecisionViewModel>(this)
-    }
+    private val quickDecisionViewModel by lazy { viewModelFactory.get<QuickDecisionViewModel>(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +43,14 @@ class QuickDecisionFragment : BaseFragment() {
         quickDecisionViewModel.run {
             error(error, ::handleError)
             observe(state, ::handleState)
+            observeEvent(showHint) {
+                showDismissibleHint(
+                    container = layoutHintContainer,
+                    hintTitle = getString(R.string.hint_did_you_know),
+                    hintMessage = getString(R.string.quick_decision_dismissible_hint),
+                    onHintDismissed = { quickDecisionViewModel.hintDismissed() }
+                )
+            }
         }
     }
 
@@ -53,11 +60,6 @@ class QuickDecisionFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
-        showDismissibleHint(
-            container = layoutHintContainer,
-            hintTitle = getString(R.string.hint_did_you_know),
-            hintMessage = getString(R.string.quick_decision_dismissible_hint)
-        )
         quickDecisionViewModel.getAllQuickDecisions()
     }
 

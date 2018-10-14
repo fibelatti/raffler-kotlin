@@ -10,6 +10,7 @@ import com.fibelatti.raffler.core.functional.onSuccess
 import com.fibelatti.raffler.core.platform.AppConfig
 import com.fibelatti.raffler.core.platform.BaseViewModel
 import com.fibelatti.raffler.core.platform.MutableLiveEvent
+import com.fibelatti.raffler.core.platform.postEvent
 import com.fibelatti.raffler.core.platform.setEvent
 import com.fibelatti.raffler.core.provider.ResourceProvider
 import com.fibelatti.raffler.core.provider.ThreadProvider
@@ -34,10 +35,15 @@ class CustomRaffleDetailsViewModel @Inject constructor(
     val preferredRaffleMode by lazy { MutableLiveData<AppConfig.RaffleMode>() }
     val rouletteMusicEnabled by lazy { MutableLiveData<Boolean>() }
     val customRaffle by lazy { MutableLiveData<CustomRaffleModel>() }
+    val showHint by lazy { MutableLiveEvent<Unit>() }
     val invalidSelectionError by lazy { MutableLiveEvent<String>() }
     val showModeSelector by lazy { MutableLiveEvent<Unit>() }
     val showPreferredRaffleMode by lazy { MutableLiveEvent<AppConfig.RaffleMode>() }
     val itemsRemaining by lazy { MutableLiveEvent<Int>() }
+
+    init {
+        checkForHints()
+    }
 
     fun getCustomRaffleById(id: Long?) {
         start {
@@ -81,6 +87,18 @@ class CustomRaffleDetailsViewModel @Inject constructor(
                         itemsRemaining.setEvent(it.includedItems.size)
                     }
                 }
+            }
+        }
+    }
+
+    fun hintDismissed() {
+        startInBackground { preferencesRepository.setRaffleDetailsHintDismissed() }
+    }
+
+    private fun checkForHints() {
+        startInBackground {
+            if (!preferencesRepository.getRaffleDetailsHintDisplayed()) {
+                showHint.postEvent(Unit)
             }
         }
     }
