@@ -1,14 +1,13 @@
-package com.fibelatti.raffler.features.quickdecision.presentation.addnew
+package com.fibelatti.raffler.features.myraffles.presentation.common
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.inflate
-import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModel
-import kotlinx.android.synthetic.main.list_item_add_new_quick_decision.view.*
+import kotlinx.android.synthetic.main.list_item_custom_raffle_selector.view.*
 import javax.inject.Inject
 
-class AddNewQuickDecisionAdapter @Inject constructor() : RecyclerView.Adapter<AddNewQuickDecisionAdapter.DataViewHolder>() {
+class CustomRaffleSelectorAdapter @Inject constructor() : RecyclerView.Adapter<CustomRaffleSelectorAdapter.DataViewHolder>() {
 
     var clickListener: (customRaffle: CustomRaffleModel) -> Unit = { }
 
@@ -29,7 +28,7 @@ class AddNewQuickDecisionAdapter @Inject constructor() : RecyclerView.Adapter<Ad
     }
 
     inner class DataViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
-        parent.inflate(R.layout.list_item_add_new_quick_decision)
+        parent.inflate(R.layout.list_item_custom_raffle_selector)
     ) {
         fun bind(item: CustomRaffleModel) = with(itemView) {
             item.run {

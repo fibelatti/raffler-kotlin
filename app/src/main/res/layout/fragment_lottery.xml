@@ -17,12 +17,12 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/inputLayoutTotalQuantity"
+        style="@style/AppTheme.InputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_regular"
         android:layout_marginRight="@dimen/margin_regular"
         android:layout_marginBottom="@dimen/margin_small"
-        android:theme="@style/AppTheme.InputLayout"
         app:layout_constraintBottom_toTopOf="@+id/inputLayoutRaffleQuantity"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -40,11 +40,11 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/inputLayoutRaffleQuantity"
+        style="@style/AppTheme.InputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_regular"
         android:layout_marginRight="@dimen/margin_regular"
-        android:theme="@style/AppTheme.InputLayout"
         app:layout_constraintBottom_toBottomOf="@+id/buttonRaffle"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

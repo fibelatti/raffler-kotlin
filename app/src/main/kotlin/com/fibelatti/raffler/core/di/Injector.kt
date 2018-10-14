@@ -2,6 +2,7 @@ package com.fibelatti.raffler.core.di
 
 import com.fibelatti.raffler.core.platform.base.BaseActivity
 import com.fibelatti.raffler.features.lottery.presentation.LotteryFragment
+import com.fibelatti.raffler.features.myraffles.presentation.combination.CustomRaffleCombinationFragment
 import com.fibelatti.raffler.features.myraffles.presentation.createcustomraffle.CreateCustomRaffleFragment
 import com.fibelatti.raffler.features.myraffles.presentation.customraffledetails.CustomRaffleDetailsFragment
 import com.fibelatti.raffler.features.myraffles.presentation.grouping.CustomRaffleGroupingFragment
@@ -31,4 +32,6 @@ interface Injector {
     fun inject(customRaffleRandomWinnersFragment: CustomRaffleRandomWinnersFragment)
 
     fun inject(customRaffleGroupingFragment: CustomRaffleGroupingFragment)
+
+    fun inject(customRaffleCombinationFragment: CustomRaffleCombinationFragment)
 }

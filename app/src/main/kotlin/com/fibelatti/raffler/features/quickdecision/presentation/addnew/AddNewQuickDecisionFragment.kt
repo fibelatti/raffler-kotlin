@@ -12,6 +12,7 @@ import com.fibelatti.raffler.core.extension.withLinearLayoutManager
 import com.fibelatti.raffler.core.platform.base.BaseBottomSheetDialogFragment
 import com.fibelatti.raffler.core.platform.requestCode
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModel
+import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleSelectorAdapter
 import kotlinx.android.synthetic.main.fragment_add_custom_raffle_as_quick_decision.*
 import javax.inject.Inject
 
@@ -31,7 +32,7 @@ class AddNewQuickDecisionFragment : BaseBottomSheetDialogFragment() {
     }
 
     @Inject
-    lateinit var adapter: AddNewQuickDecisionAdapter
+    lateinit var adapter: CustomRaffleSelectorAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

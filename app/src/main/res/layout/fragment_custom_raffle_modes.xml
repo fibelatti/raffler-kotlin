@@ -154,8 +154,57 @@
             android:layout_height="@dimen/divider_size"
             android:layout_marginTop="@dimen/margin_regular"
             android:layout_marginBottom="@dimen/margin_regular"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/textViewCombinationTitle"
             app:layout_constraintTop_toBottomOf="@+id/textViewGroupingDescription" />
 
+        <!-- Combination -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewCombinationTitle"
+            style="@style/AppTheme.Text.Body"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/custom_raffle_details_mode_combination"
+            app:layout_constraintBottom_toTopOf="@+id/textViewCombinationDescription"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/buttonCombination"
+            app:layout_constraintTop_toBottomOf="@+id/dividerGrouping" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewCombinationDescription"
+            style="@style/AppTheme.Text.Detail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/custom_raffle_details_mode_combination_description"
+            app:layout_constraintBottom_toTopOf="@+id/dividerCombination"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/buttonCombination"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCombinationTitle" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonCombination"
+            style="@style/AppTheme.ExtendedFab.Small"
+            android:layout_marginLeft="@dimen/margin_regular"
+            android:text="@string/custom_raffle_details_mode_button"
+            app:icon="@drawable/ic_combination"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewCombinationDescription"
+            app:layout_constraintLeft_toRightOf="@+id/textViewCombinationDescription"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textViewCombinationTitle" />
+
+        <include
+            android:id="@+id/dividerCombination"
+            layout="@layout/layout_divider"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_size"
+            android:layout_marginTop="@dimen/margin_regular"
+            android:layout_marginBottom="@dimen/margin_regular"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCombinationDescription" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/groupCombinationViews"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:constraint_referenced_ids="textViewCombinationTitle,textViewCombinationDescription,buttonCombination,dividerCombination" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

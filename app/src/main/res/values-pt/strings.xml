@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Common -->
     <string name="hint_ok">OK</string>
     <string name="hint_yes">Sim</string>
@@ -83,6 +83,7 @@
     <string name="custom_raffle_details_mode_grouping_description">Crie grupos a partir dos itens do sorteio, escolhendo quantos grupos criar ou quantos itens por grupo</string>
 
     <string name="custom_raffle_details_mode_combination">Combinação</string>
+    <string name="custom_raffle_details_mode_combination_description">Crie pares entre os itens de 2 sorteios</string>
 
     <string name="custom_raffle_details_mode_secret_voting">Votação secreta</string>
 
@@ -91,7 +92,7 @@
     <string name="custom_raffle_roulette_hint_stop">Parar</string>
     <string name="custom_raffle_roulette_hint_stopping">Parando…</string>
     <plurals name="custom_raffle_roulette_hint_items_remaining">
-        <item quantity="one">Apenas 1 item restante</item>
+        <item quantity="one" tools:ignore="ImpliedQuantity">Apenas 1 item restante</item>
         <item quantity="other">%d itens restantes no sorteio</item>
     </plurals>
 
@@ -106,6 +107,14 @@
     <string name="custom_raffle_grouping_quantity_of_groups">Grupos</string>
     <string name="custom_raffle_grouping_quantity_of_items_per_group">Itens por grupo</string>
     <string name="custom_raffle_grouping_item_title">#%d Grupo</string>
+
+    <string name="custom_raffle_combination_title">Combinando com %s</string>
+    <string name="custom_raffle_combination_hint">Escolha outro sorteio</string>
+    <string name="custom_raffle_combination_selector_title">Escolha o sorteio para combinar com %s</string>
+    <string name="custom_raffle_combination_quantity_hint">Quantidade de pares</string>
+    <string name="custom_raffle_combination_invalid_quantity_too_few">Deve ser pelo menos 1</string>
+    <string name="custom_raffle_combination_invalid_quantity_too_many">Deve ser no máximo %d</string>
+    <string name="custom_raffle_combination_pair_title">Par #%d</string>
 
     <!-- Preferences -->
     <string name="preferences_changes_saved">Alterações salvas</string>

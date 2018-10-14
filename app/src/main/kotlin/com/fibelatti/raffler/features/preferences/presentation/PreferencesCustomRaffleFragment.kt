@@ -74,6 +74,9 @@ class PreferencesCustomRaffleFragment :
                 },
                 groupingClickListener = {
                     preferencesViewModel.setPreferredRaffleMode(AppConfig.RaffleMode.GROUPING)
+                },
+                combinationClickListener = {
+                    preferencesViewModel.setPreferredRaffleMode(AppConfig.RaffleMode.COMBINATION)
                 }
             )
         }

@@ -11,6 +11,8 @@ import com.fibelatti.raffler.core.provider.ThreadProvider
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleDraftedModel
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleItemModel
 import javax.inject.Inject
+import kotlin.math.ceil
+import kotlin.math.max
 
 class CustomRaffleGroupingViewModel @Inject constructor(
     private val resourceProvider: ResourceProvider,
@@ -23,7 +25,7 @@ class CustomRaffleGroupingViewModel @Inject constructor(
     fun getGroupsByQuantity(options: List<CustomRaffleItemModel>, quantity: String) {
         validateData(options, quantity) {
             startInBackground {
-                createBatches(options, Math.ceil(options.size.toDouble() / quantity.toInt()).toInt())
+                createBatches(options, ceil(options.size.toDouble() / quantity.toInt()).toInt())
                     .let(groups::postValue)
             }
         }
@@ -71,5 +73,5 @@ class CustomRaffleGroupingViewModel @Inject constructor(
     }
 
     private val List<CustomRaffleItemModel>.maxQuantity: Int
-        get() = Math.max(Math.ceil(size.toDouble() / 2), 2.0).toInt()
+        get() = max(Math.ceil(size.toDouble() / 2), 2.0).toInt()
 }

@@ -26,4 +26,6 @@
     <color name="text_white">#F5F5F5</color>
 
     <color name="button_primary">#FF4081</color>
+
+    <color name="app_red">#F44336</color>
 </resources>

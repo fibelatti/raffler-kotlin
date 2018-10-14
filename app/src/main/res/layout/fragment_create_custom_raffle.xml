@@ -33,12 +33,12 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/inputLayoutCustomRaffleDescription"
+        style="@style/AppTheme.InputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_regular"
         android:layout_marginTop="@dimen/margin_regular"
         android:layout_marginRight="@dimen/margin_regular"
-        android:theme="@style/AppTheme.InputLayout"
         app:layout_constraintBottom_toTopOf="@+id/checkboxAddShortcut"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -73,12 +73,12 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/inputLayoutCustomRaffleItemDescription"
+        style="@style/AppTheme.InputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_regular"
         android:layout_marginTop="@dimen/margin_regular"
         android:layout_marginRight="@dimen/margin_regular"
-        android:theme="@style/AppTheme.InputLayout"
         app:layout_constraintBottom_toTopOf="@+id/layoutHintContainer"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/imageButtonAddItem"

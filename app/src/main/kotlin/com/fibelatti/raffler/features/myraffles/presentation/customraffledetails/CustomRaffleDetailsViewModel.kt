@@ -32,6 +32,7 @@ class CustomRaffleDetailsViewModel @Inject constructor(
 ) : BaseViewModel(threadProvider) {
 
     private val rememberRaffledItems by lazy { MutableLiveData<Boolean>() }
+    private val customRaffleCount by lazy { MutableLiveData<Int>() }
     val preferredRaffleMode by lazy { MutableLiveData<AppConfig.RaffleMode>() }
     val rouletteMusicEnabled by lazy { MutableLiveData<Boolean>() }
     val customRaffle by lazy { MutableLiveData<CustomRaffleModel>() }
@@ -43,6 +44,7 @@ class CustomRaffleDetailsViewModel @Inject constructor(
 
     init {
         checkForHints()
+        getCustomRaffleCount()
     }
 
     fun getCustomRaffleById(id: Long?) {
@@ -100,6 +102,14 @@ class CustomRaffleDetailsViewModel @Inject constructor(
             if (!preferencesRepository.getRaffleDetailsHintDisplayed()) {
                 showHint.postEvent(Unit)
             }
+        }
+    }
+
+    private fun getCustomRaffleCount() {
+        startInBackground {
+            customRaffleRepository.getAllCustomRaffles()
+                .onSuccess { customRaffleCount.postValue(it.size) }
+                .onFailure { customRaffleCount.postValue(1) }
         }
     }
 

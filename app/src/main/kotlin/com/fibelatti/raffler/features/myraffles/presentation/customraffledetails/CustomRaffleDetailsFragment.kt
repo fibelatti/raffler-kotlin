@@ -131,7 +131,8 @@ class CustomRaffleDetailsFragment :
             requireContext(),
             rouletteClickListener = { goToRoulette() },
             randomWinnersClickListener = { goToRandomWinners() },
-            groupingClickListener = { goToGrouping() }
+            groupingClickListener = { goToGrouping() },
+            combinationClickListener = { goToCombination() }
         )
     }
 
@@ -140,8 +141,7 @@ class CustomRaffleDetailsFragment :
             AppConfig.RaffleMode.ROULETTE -> goToRoulette()
             AppConfig.RaffleMode.RANDOM_WINNERS -> goToRandomWinners()
             AppConfig.RaffleMode.GROUPING -> goToGrouping()
-            AppConfig.RaffleMode.COMBINATION -> { // TODO
-            }
+            AppConfig.RaffleMode.COMBINATION -> goToCombination()
             AppConfig.RaffleMode.SECRET_VOTING -> { // TODO
             }
             AppConfig.RaffleMode.NONE -> showRaffleModeSelector()
@@ -163,6 +163,12 @@ class CustomRaffleDetailsFragment :
     private fun goToGrouping() {
         layoutRoot.findNavController().navigate(
             R.id.action_fragmentCustomRaffleDetails_to_fragmentCustomRaffleGrouping
+        )
+    }
+
+    private fun goToCombination() {
+        layoutRoot.findNavController().navigate(
+            R.id.action_fragmentCustomRaffleDetails_to_fragmentCustomRaffleCombination
         )
     }
 }
