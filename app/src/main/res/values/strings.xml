@@ -83,6 +83,7 @@
     <string name="custom_raffle_details_mode_grouping_description">Split the raffle into smaller groups, choosing how many groups or many items per group</string>
 
     <string name="custom_raffle_details_mode_combination">Combination</string>
+    <string name="custom_raffle_details_mode_combination_description">Create pairs between the items of 2 different raffles</string>
 
     <string name="custom_raffle_details_mode_secret_voting">Secret voting</string>
 
@@ -106,6 +107,15 @@
     <string name="custom_raffle_grouping_quantity_of_groups">Groups</string>
     <string name="custom_raffle_grouping_quantity_of_items_per_group">Items per group</string>
     <string name="custom_raffle_grouping_item_title">Group #%d</string>
+
+    <!-- Custom Raffle - Combination -->
+    <string name="custom_raffle_combination_title">Combining with %s</string>
+    <string name="custom_raffle_combination_hint">Select another raffle</string>
+    <string name="custom_raffle_combination_selector_title">Select another raffle to combine with %s</string>
+    <string name="custom_raffle_combination_quantity_hint">Quantity of pairs</string>
+    <string name="custom_raffle_combination_invalid_quantity_too_few">Should be at least 1</string>
+    <string name="custom_raffle_combination_invalid_quantity_too_many">Should be at most %d</string>
+    <string name="custom_raffle_combination_pair_title">#%d Pair</string>
 
     <!-- Preferences -->
     <string name="preferences_changes_saved">Changes saved</string>
