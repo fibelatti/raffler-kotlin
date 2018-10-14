@@ -18,7 +18,7 @@ import javax.inject.Singleton
     PreferencesModule::class
 ])
 @Singleton
-interface AppComponent : ActivityInjector, FragmentInjector {
+interface AppComponent : Injector {
 
     @Component.Builder
     interface Builder {

@@ -1,5 +1,6 @@
 package com.fibelatti.raffler.core.di
 
+import com.fibelatti.raffler.core.platform.base.BaseActivity
 import com.fibelatti.raffler.features.lottery.presentation.LotteryFragment
 import com.fibelatti.raffler.features.myraffles.presentation.createcustomraffle.CreateCustomRaffleFragment
 import com.fibelatti.raffler.features.myraffles.presentation.customraffledetails.CustomRaffleDetailsFragment
@@ -10,7 +11,9 @@ import com.fibelatti.raffler.features.myraffles.presentation.roulette.CustomRaff
 import com.fibelatti.raffler.features.quickdecision.presentation.QuickDecisionFragment
 import com.fibelatti.raffler.features.quickdecision.presentation.addnew.AddNewQuickDecisionFragment
 
-interface FragmentInjector {
+interface Injector {
+    fun inject(baseActivity: BaseActivity)
+
     fun inject(quickDecisionFragment: QuickDecisionFragment)
 
     fun inject(addNewQuickDecisionFragment: AddNewQuickDecisionFragment)
