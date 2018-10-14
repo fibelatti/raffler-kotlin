@@ -22,5 +22,17 @@ interface PreferencesRepository {
 
     suspend fun getQuickDecisionHintDisplayed(): Boolean
 
-    suspend fun setQuickDecisionHintDisplayed(): Result<Unit>
+    suspend fun setQuickDecisionHintDismissed(): Result<Unit>
+
+    suspend fun getAddNewQuickDecisionDisplayed(): Boolean
+
+    suspend fun setAddNewQuickDecisionDismissed(): Result<Unit>
+
+    suspend fun getLotteryHintDisplayed(): Boolean
+
+    suspend fun setLotteryHintDismissed(): Result<Unit>
+
+    suspend fun getRaffleDetailsHintDisplayed(): Boolean
+
+    suspend fun setRaffleDetailsHintDismissed(): Result<Unit>
 }
