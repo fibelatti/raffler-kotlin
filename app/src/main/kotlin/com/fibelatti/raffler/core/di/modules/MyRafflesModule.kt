@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.fibelatti.raffler.core.di.modules.viewmodel.ViewModelKey
 import com.fibelatti.raffler.features.myraffles.CustomRaffleRepository
 import com.fibelatti.raffler.features.myraffles.data.CustomRaffleDataSource
+import com.fibelatti.raffler.features.myraffles.presentation.combination.CustomRaffleCombinationViewModel
 import com.fibelatti.raffler.features.myraffles.presentation.createcustomraffle.CreateCustomRaffleViewModel
 import com.fibelatti.raffler.features.myraffles.presentation.customraffledetails.CustomRaffleDetailsViewModel
 import com.fibelatti.raffler.features.myraffles.presentation.grouping.CustomRaffleGroupingViewModel
@@ -44,4 +45,9 @@ abstract class MyRafflesModule {
     @IntoMap
     @ViewModelKey(CustomRaffleGroupingViewModel::class)
     abstract fun bindCustomRaffleGroupingViewModel(customRaffleGroupingViewModel: CustomRaffleGroupingViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(CustomRaffleCombinationViewModel::class)
+    abstract fun bindCustomRaffleCombinationViewModel(customRaffleCombinationViewModel: CustomRaffleCombinationViewModel): ViewModel
 }
