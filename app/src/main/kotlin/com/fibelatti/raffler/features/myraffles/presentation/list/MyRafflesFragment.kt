@@ -95,7 +95,7 @@ class MyRafflesFragment : BaseFragment() {
                 R.color.color_primary,
                 dataSet.size
             )
-            submitList(dataSet)
+            setItems(dataSet)
         }
         recyclerViewItems.visible()
     }

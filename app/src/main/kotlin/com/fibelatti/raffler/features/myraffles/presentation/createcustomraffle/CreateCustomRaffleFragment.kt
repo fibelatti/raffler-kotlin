@@ -190,7 +190,7 @@ class CreateCustomRaffleFragment : BaseFragment() {
     }
 
     private fun showCustomRaffleDetails(customRaffleModel: CustomRaffleModel) {
-        adapter.submitList(customRaffleModel.items.toList())
+        adapter.setItems(customRaffleModel.items.toList())
     }
 
     private fun addItem() {

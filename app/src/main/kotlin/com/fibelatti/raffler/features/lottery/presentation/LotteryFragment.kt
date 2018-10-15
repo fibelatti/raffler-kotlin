@@ -84,7 +84,7 @@ class LotteryFragment : BaseFragment() {
 
         recyclerViewItems.layoutManager = GridLayoutManager(context, spanCount)
         recyclerViewItems.visible()
-        adapter.submitList(results)
+        adapter.setItems(results)
     }
 
     private fun handleTotalQuantityError(message: String) {
