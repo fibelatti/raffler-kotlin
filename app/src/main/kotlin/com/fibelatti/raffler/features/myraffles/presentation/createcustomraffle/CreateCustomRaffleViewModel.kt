@@ -3,8 +3,8 @@ package com.fibelatti.raffler.features.myraffles.presentation.createcustomraffle
 import androidx.lifecycle.MutableLiveData
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.empty
-import com.fibelatti.raffler.core.functional.flatMapCatching
 import com.fibelatti.raffler.core.functional.isSuccess
+import com.fibelatti.raffler.core.functional.mapCatching
 import com.fibelatti.raffler.core.functional.onFailure
 import com.fibelatti.raffler.core.functional.onSuccess
 import com.fibelatti.raffler.core.platform.MutableLiveEvent
@@ -47,7 +47,7 @@ class CreateCustomRaffleViewModel @Inject constructor(
             start {
                 inBackground {
                     customRaffleRepository.getCustomRaffleById(id)
-                        .flatMapCatching { customRaffle -> customRaffleModelMapper.map(customRaffle) }
+                        .mapCatching(customRaffleModelMapper::map)
                 }.onSuccess {
                     customRaffle.value = it
                     showEditCustomRaffleLayout.value = Unit

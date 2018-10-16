@@ -5,7 +5,7 @@ import com.fibelatti.raffler.core.extension.random
 import com.fibelatti.raffler.core.functional.Failure
 import com.fibelatti.raffler.core.functional.Success
 import com.fibelatti.raffler.core.functional.error
-import com.fibelatti.raffler.core.functional.flatMapCatching
+import com.fibelatti.raffler.core.functional.mapCatching
 import com.fibelatti.raffler.core.functional.value
 import com.fibelatti.raffler.core.platform.AppConfig.LOCALE_NONE
 import com.fibelatti.raffler.core.platform.MutableLiveEvent
@@ -39,7 +39,7 @@ class QuickDecisionViewModel @Inject constructor(
         start {
             val quickDecisions = inBackground {
                 quickDecisionRepository.getAllQuickDecisions()
-                    .flatMapCatching { it.filterByLocale() }
+                    .mapCatching { it.filterByLocale() }
             }
             val customRaffles = inBackground { customRaffleRepository.getAllCustomRaffles() }
 
@@ -74,7 +74,7 @@ class QuickDecisionViewModel @Inject constructor(
     }
 
     private fun List<QuickDecision>.filterByLocale(): List<QuickDecisionModel> =
-        filter { it.locale == locale.language || it.locale == LOCALE_NONE }.map(quickDecisionModelMapper::map)
+        filter { it.locale == locale.language || it.locale == LOCALE_NONE }.let(quickDecisionModelMapper::mapList)
 
     private fun showQuickDecisions(list: List<QuickDecisionModel>, hasCustomRaffles: Boolean = false) {
         state.postValue(State.ShowList(list, hasCustomRaffles))

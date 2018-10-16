@@ -1,7 +1,7 @@
 package com.fibelatti.raffler.features.myraffles.presentation.list
 
 import androidx.lifecycle.MutableLiveData
-import com.fibelatti.raffler.core.functional.flatMapCatching
+import com.fibelatti.raffler.core.functional.mapCatching
 import com.fibelatti.raffler.core.functional.onFailure
 import com.fibelatti.raffler.core.functional.onSuccess
 import com.fibelatti.raffler.core.platform.base.BaseViewModel
@@ -23,7 +23,7 @@ class MyRafflesViewModel @Inject constructor(
     fun getAllCustomRaffles() {
         startInBackground {
             customRaffleRepository.getAllCustomRaffles()
-                .flatMapCatching { it.map(customRaffleModelMapper::map) }
+                .mapCatching(customRaffleModelMapper::mapList)
                 .onSuccess { list ->
                     list.takeIf { it.isNotEmpty() }
                         ?.let(customRaffles::postValue)

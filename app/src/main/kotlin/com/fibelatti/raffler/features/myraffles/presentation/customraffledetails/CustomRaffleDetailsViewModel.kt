@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.orFalse
 import com.fibelatti.raffler.core.extension.orZero
-import com.fibelatti.raffler.core.functional.flatMapCatching
+import com.fibelatti.raffler.core.functional.mapCatching
 import com.fibelatti.raffler.core.functional.onFailure
 import com.fibelatti.raffler.core.functional.onSuccess
 import com.fibelatti.raffler.core.platform.AppConfig
@@ -52,7 +52,8 @@ class CustomRaffleDetailsViewModel @Inject constructor(
             getPreferences()
 
             inBackground {
-                customRaffleRepository.getCustomRaffleById(id.orZero()).flatMapCatching(::prepareCustomRaffle)
+                customRaffleRepository.getCustomRaffleById(id.orZero())
+                    .mapCatching(::prepareCustomRaffle)
             }.onSuccess(customRaffle::setValue)
                 .onFailure(::handleError)
         }
@@ -83,7 +84,8 @@ class CustomRaffleDetailsViewModel @Inject constructor(
                             rememberRaffled(RememberRaffled.Params(items[it], included = false))
                         }
 
-                        customRaffleRepository.getCustomRaffleById(id.orZero()).flatMapCatching(::prepareCustomRaffle)
+                        customRaffleRepository.getCustomRaffleById(id.orZero())
+                            .mapCatching(::prepareCustomRaffle)
                     }.onSuccess {
                         customRaffle.value = it
                         itemsRemaining.setEvent(it.includedItems.size)

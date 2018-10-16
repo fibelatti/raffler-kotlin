@@ -1,7 +1,7 @@
 package com.fibelatti.raffler.features.quickdecision.presentation.addnew
 
 import androidx.lifecycle.MutableLiveData
-import com.fibelatti.raffler.core.functional.flatMapCatching
+import com.fibelatti.raffler.core.functional.mapCatching
 import com.fibelatti.raffler.core.functional.onFailure
 import com.fibelatti.raffler.core.functional.onSuccess
 import com.fibelatti.raffler.core.platform.MutableLiveEvent
@@ -29,7 +29,7 @@ class AddNewQuickDecisionViewModel @Inject constructor(
     fun getAllCustomRaffles() {
         startInBackground {
             customRaffleRepository.getAllCustomRaffles()
-                .flatMapCatching { it.map(customRaffleModelMapper::map) }
+                .mapCatching(customRaffleModelMapper::mapList)
                 .onSuccess(customRaffles::postValue)
                 .onFailure(::handleError)
         }
