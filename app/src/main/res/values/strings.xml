@@ -74,18 +74,19 @@
     <string name="custom_raffle_details_mode_none">None</string>
 
     <string name="custom_raffle_details_mode_roulette">Roulette</string>
-    <string name="custom_raffle_details_mode_roulette_description">Choose a single winner randomly, with a spinning animation and an exciting music</string>
+    <string name="custom_raffle_details_mode_roulette_description">Choose a single winner randomly, with a spinning animation and an exciting music for a bit of suspense</string>
 
     <string name="custom_raffle_details_mode_random_winners">Random winners</string>
-    <string name="custom_raffle_details_mode_random_winners_description">Choose how many items to raffle and get the winners right away</string>
+    <string name="custom_raffle_details_mode_random_winners_description">Choose how many items to raffle and obtain the result immediately</string>
 
     <string name="custom_raffle_details_mode_grouping">Grouping</string>
     <string name="custom_raffle_details_mode_grouping_description">Split the raffle into smaller groups, choosing how many groups or many items per group</string>
 
     <string name="custom_raffle_details_mode_combination">Combination</string>
-    <string name="custom_raffle_details_mode_combination_description">Create pairs between the items of 2 different raffles</string>
+    <string name="custom_raffle_details_mode_combination_description">Create pairs between the items of 2 different raffles, useful to decide prizes or assign tasks</string>
 
     <string name="custom_raffle_details_mode_secret_voting">Secret voting</string>
+    <string name="custom_raffle_details_mode_secret_voting_description">Create a poll a let the majority decide. Hand the phone over for each person to vote and the result will be available at the end.</string>
 
     <!-- Custom Raffle - Roulette -->
     <string name="custom_raffle_roulette_hint_play">Play</string>
@@ -116,6 +117,10 @@
     <string name="custom_raffle_combination_invalid_quantity_too_few">Should be at least 1</string>
     <string name="custom_raffle_combination_invalid_quantity_too_many">Should be at most %d</string>
     <string name="custom_raffle_combination_pair_title">#%d Pair</string>
+
+    <!-- Custom Raffle - Voting -->
+    <string name="custom_raffle_voting_create_pin_title">Start voting</string>
+    <string name="custom_raffle_voting_create_pin_instructions">Let\'s start by creating a pin so only you can end the voting before sharing the results</string>
 
     <!-- Preferences -->
     <string name="preferences_changes_saved">Changes saved</string>

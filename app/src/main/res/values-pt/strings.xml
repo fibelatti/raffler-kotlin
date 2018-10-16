@@ -77,15 +77,16 @@
     <string name="custom_raffle_details_mode_roulette_description">Escolha o vencedor de forma aleatória, com a clássica música do peão</string>
 
     <string name="custom_raffle_details_mode_random_winners">Sorteados aleatórios</string>
-    <string name="custom_raffle_details_mode_random_winners_description">Escolha a quantidade de sorteados e obtenha o resultado imediatamente</string>
+    <string name="custom_raffle_details_mode_random_winners_description">Defina a quantidade de sorteados e obtenha o resultado imediatamente</string>
 
     <string name="custom_raffle_details_mode_grouping">Agrupamento</string>
     <string name="custom_raffle_details_mode_grouping_description">Crie grupos a partir dos itens do sorteio, escolhendo quantos grupos criar ou quantos itens por grupo</string>
 
     <string name="custom_raffle_details_mode_combination">Combinação</string>
-    <string name="custom_raffle_details_mode_combination_description">Crie pares entre os itens de 2 sorteios</string>
+    <string name="custom_raffle_details_mode_combination_description">Crie pares entre os itens de 2 sorteios, útil para definir prêmios ou atribuir tarefas</string>
 
     <string name="custom_raffle_details_mode_secret_voting">Votação secreta</string>
+    <string name="custom_raffle_details_mode_secret_voting_description">Crie uma enquete e deixe a maioria decidir. Cada pessoa registra seu voto e o resultado estará disponível ao final da votação.</string>
 
     <!-- Custom Raffle - Roulette -->
     <string name="custom_raffle_roulette_hint_play">Rodar</string>

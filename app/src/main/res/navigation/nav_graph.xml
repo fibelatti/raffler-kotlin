@@ -99,6 +99,9 @@
             app:exitAnim="@anim/slide_left_out"
             app:popEnterAnim="@anim/slide_left_in"
             app:popExitAnim="@anim/slide_right_out" />
+        <action
+            android:id="@+id/action_fragmentCustomRaffleDetails_to_fragmentCustomRaffleVoting"
+            app:destination="@id/fragmentCustomRaffleVoting" />
     </fragment>
 
     <fragment
@@ -120,6 +123,11 @@
         android:id="@+id/fragmentCustomRaffleCombination"
         android:name="com.fibelatti.raffler.features.myraffles.presentation.combination.CustomRaffleCombinationFragment"
         tools:layout="@layout/fragment_custom_raffle_combination" />
+
+    <fragment
+        android:id="@+id/fragmentCustomRaffleVoting"
+        android:name="com.fibelatti.raffler.features.myraffles.presentation.voting.CustomRaffleVotingPinEntryFragment"
+        tools:layout="@layout/fragment_custom_raffle_voting_pin_entry" />
 
     <fragment
         android:id="@+id/fragmentPreferences"

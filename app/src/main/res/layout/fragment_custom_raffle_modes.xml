@@ -69,6 +69,12 @@
             app:layout_constraintBottom_toTopOf="@+id/textViewRandomWinnersTitle"
             app:layout_constraintTop_toBottomOf="@+id/textViewRouletteDescription" />
 
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/groupRouletteViews"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:constraint_referenced_ids="textViewRouletteTitle,textViewRouletteDescription,buttonRoulette,dividerRoulette" />
+
         <!-- Random winners -->
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewRandomWinnersTitle"
@@ -112,6 +118,12 @@
             android:layout_marginBottom="@dimen/margin_regular"
             app:layout_constraintBottom_toTopOf="@+id/textViewGroupingTitle"
             app:layout_constraintTop_toBottomOf="@+id/textViewRandomWinnersDescription" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/groupRandomWinnersViews"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:constraint_referenced_ids="textViewRandomWinnersTitle,textViewRandomWinnersDescription,buttonRandomWinners,dividerRandomWinners" />
 
         <!-- Grouping -->
         <androidx.appcompat.widget.AppCompatTextView
@@ -157,6 +169,12 @@
             app:layout_constraintBottom_toTopOf="@+id/textViewCombinationTitle"
             app:layout_constraintTop_toBottomOf="@+id/textViewGroupingDescription" />
 
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/groupGroupingViews"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:constraint_referenced_ids="textViewGroupingTitle,textViewGroupingDescription,buttonGrouping,dividerGrouping" />
+
         <!-- Combination -->
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewCombinationTitle"
@@ -198,7 +216,7 @@
             android:layout_height="@dimen/divider_size"
             android:layout_marginTop="@dimen/margin_regular"
             android:layout_marginBottom="@dimen/margin_regular"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/textViewVotingTitle"
             app:layout_constraintTop_toBottomOf="@+id/textViewCombinationDescription" />
 
         <androidx.constraintlayout.widget.Group
@@ -206,5 +224,55 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:constraint_referenced_ids="textViewCombinationTitle,textViewCombinationDescription,buttonCombination,dividerCombination" />
+
+        <!-- Voting -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewVotingTitle"
+            style="@style/AppTheme.Text.Body"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/custom_raffle_details_mode_secret_voting"
+            app:layout_constraintBottom_toTopOf="@+id/textViewVotingDescription"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/buttonVoting"
+            app:layout_constraintTop_toBottomOf="@+id/dividerCombination" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewVotingDescription"
+            style="@style/AppTheme.Text.Detail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/custom_raffle_details_mode_secret_voting_description"
+            app:layout_constraintBottom_toTopOf="@+id/dividerVoting"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/buttonVoting"
+            app:layout_constraintTop_toBottomOf="@+id/textViewVotingTitle" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonVoting"
+            style="@style/AppTheme.ExtendedFab.Small"
+            android:layout_marginLeft="@dimen/margin_regular"
+            android:text="@string/custom_raffle_details_mode_button"
+            app:icon="@drawable/ic_combination"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewVotingDescription"
+            app:layout_constraintLeft_toRightOf="@+id/textViewVotingDescription"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textViewVotingTitle" />
+
+        <include
+            android:id="@+id/dividerVoting"
+            layout="@layout/layout_divider"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_size"
+            android:layout_marginTop="@dimen/margin_regular"
+            android:layout_marginBottom="@dimen/margin_regular"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewVotingDescription" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/groupVotingViews"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:constraint_referenced_ids="textViewVotingTitle,textViewVotingDescription,buttonVoting,dividerVoting" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
