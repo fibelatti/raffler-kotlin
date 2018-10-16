@@ -9,5 +9,5 @@ interface QuickDecisionRepository {
 
     suspend fun deleteQuickDecisionById(id: String): Result<Unit>
 
-    suspend fun addQuickDecisions(list: List<QuickDecision>): Result<Unit>
+    suspend fun addQuickDecisions(vararg quickDecision: QuickDecision): Result<Unit>
 }

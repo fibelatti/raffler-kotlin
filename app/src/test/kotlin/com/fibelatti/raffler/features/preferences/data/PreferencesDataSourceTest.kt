@@ -53,7 +53,7 @@ class PreferencesDataSourceTest : BaseTest() {
             val result = preferencesDataSource.getPreferences()
 
             // THEN
-            result shouldBeAnInstanceOf Failure::class
+            result.shouldBeAnInstanceOf<Failure>()
         }
     }
 
@@ -97,7 +97,7 @@ class PreferencesDataSourceTest : BaseTest() {
             val result = preferencesDataSource.getPreferences()
 
             // THEN
-            result shouldBeAnInstanceOf Success::class
+            result.shouldBeAnInstanceOf<Success<*>>()
             result.getOrNull() shouldBe expectedPreferences
         }
     }
@@ -400,7 +400,7 @@ class PreferencesDataSourceTest : BaseTest() {
             val result = methodCall()
 
             // THEN
-            result shouldBeAnInstanceOf Failure::class
+            result.shouldBeAnInstanceOf<Failure>()
             verify(mockPreferencesDao, never()).setPreferences(safeAny())
         }
     }
@@ -418,7 +418,7 @@ class PreferencesDataSourceTest : BaseTest() {
             val result = methodCall()
 
             // THEN
-            result shouldBeAnInstanceOf Success::class
+            result.shouldBeAnInstanceOf<Success<*>>()
             verify(mockPreferencesDao).setPreferences(updatedPreferences)
         }
     }

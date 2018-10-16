@@ -15,7 +15,6 @@ import org.mockito.BDDMockito.verify
 import org.mockito.Mockito
 import org.mockito.Mockito.never
 import org.mockito.Mockito.spy
-import kotlin.reflect.KClass
 
 inline fun <reified T> mock(): T = Mockito.mock(T::class.java)
 
@@ -85,10 +84,10 @@ fun List<Any>.shouldBeEmpty() {
     )
 }
 
-infix fun <T : Any> Any.shouldBeAnInstanceOf(KClass: KClass<T>) {
+inline fun <reified T : Any> Any.shouldBeAnInstanceOf() {
     assertTrue(
-        "Expected: ${KClass.java} - Actual: ${this::class.java}",
-        this::class == KClass
+        "Expected: ${T::class.java} - Actual: ${this::class.java}",
+        this::class == T::class
     )
 }
 

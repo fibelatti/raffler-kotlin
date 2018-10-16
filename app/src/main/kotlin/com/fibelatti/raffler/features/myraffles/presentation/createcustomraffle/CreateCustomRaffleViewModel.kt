@@ -105,7 +105,7 @@ class CreateCustomRaffleViewModel @Inject constructor(
                 }
                 val resultQuickDecision = inBackgroundForParallel {
                     if (saveAsQuickDecision) {
-                        quickDecisionRepository.addQuickDecisions(listOf(customRaffleToQuickDecisionMapper.map(it)))
+                        quickDecisionRepository.addQuickDecisions(customRaffleToQuickDecisionMapper.map(it))
                     } else {
                         quickDecisionRepository.deleteQuickDecisionById(it.description)
                     }

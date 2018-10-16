@@ -37,7 +37,7 @@ class AddNewQuickDecisionViewModel @Inject constructor(
 
     fun addCustomRaffleAsQuickDecision(customRaffleModel: CustomRaffleModel) {
         startInBackground {
-            quickDecisionRepository.addQuickDecisions(listOf(customRaffleToQuickDecisionMapper.map(customRaffleModel)))
+            quickDecisionRepository.addQuickDecisions(customRaffleToQuickDecisionMapper.map(customRaffleModel))
                 .onSuccess { updateFeedback.postEvent(Unit) }
         }
     }

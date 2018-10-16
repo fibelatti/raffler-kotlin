@@ -20,17 +20,18 @@ class QuickDecisionDataSource @Inject constructor(
 ) : QuickDecisionRepository {
     override suspend fun getAllQuickDecisions(): Result<List<QuickDecision>> {
         return catching {
-            val dbList = quickDecisionDtoMapper.mapList(quickDecisionDao.getAllQuickDecisions())
+            val dbList = quickDecisionDao.getAllQuickDecisions().let(quickDecisionDtoMapper::mapList)
 
             if (dbList.isNotEmpty()) {
                 dbList
             } else {
                 val localList = resourceProvider.getJsonFromAssets(
                     fileName = "quick-decisions.json",
-                    type = object : TypeToken<List<QuickDecision>>() {})
+                    type = object : TypeToken<List<QuickDecision>>() {}
+                )
 
                 return@catching if (localList != null) {
-                    addQuickDecisions(localList).getOrThrow()
+                    addQuickDecisions(*localList.toTypedArray()).getOrThrow()
                     localList
                 } else {
                     throw RuntimeException("The file quick-decisions.json was not found.")
@@ -45,8 +46,8 @@ class QuickDecisionDataSource @Inject constructor(
     override suspend fun deleteQuickDecisionById(id: String): Result<Unit> =
         catching { quickDecisionDao.deleteQuickDecisionById(id) }
 
-    override suspend fun addQuickDecisions(list: List<QuickDecision>): Result<Unit> =
-        catching { quickDecisionDao.addQuickDecisions(quickDecisionDtoMapper.mapListReverse(list)) }
+    override suspend fun addQuickDecisions(vararg quickDecision: QuickDecision): Result<Unit> =
+        catching { quickDecision.map(quickDecisionDtoMapper::mapReverse).let(quickDecisionDao::addQuickDecisions) }
 }
 
 @Dao
