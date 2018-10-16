@@ -59,11 +59,11 @@ typealias Result<T> = Either<Throwable, T>
 
 typealias Success<T> = Either.Right<T>
 
-typealias Failure<T> = Either.Left<T>
+typealias Failure = Either.Left<Throwable>
 
 val <T> Success<T>.value get() = b
 
-val <T> Failure<T>.error get() = a
+val Failure.error get() = a
 
 val <R> Result<R>.isSuccess get() = isRight
 
