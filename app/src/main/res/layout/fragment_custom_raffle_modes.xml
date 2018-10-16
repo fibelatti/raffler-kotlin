@@ -253,7 +253,7 @@
             style="@style/AppTheme.ExtendedFab.Small"
             android:layout_marginLeft="@dimen/margin_regular"
             android:text="@string/custom_raffle_details_mode_button"
-            app:icon="@drawable/ic_combination"
+            app:icon="@drawable/ic_voting"
             app:layout_constraintBottom_toBottomOf="@+id/textViewVotingDescription"
             app:layout_constraintLeft_toRightOf="@+id/textViewVotingDescription"
             app:layout_constraintRight_toRightOf="parent"
