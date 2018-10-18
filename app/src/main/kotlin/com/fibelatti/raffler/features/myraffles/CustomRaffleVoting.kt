@@ -1,4 +1,4 @@
-package com.fibelatti.raffler.features
+package com.fibelatti.raffler.features.myraffles
 
 data class CustomRaffleVoting(
     val customRaffleId: Long,

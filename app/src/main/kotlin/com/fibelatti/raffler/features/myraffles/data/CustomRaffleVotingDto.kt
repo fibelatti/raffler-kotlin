@@ -5,7 +5,7 @@ import androidx.room.ForeignKey
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.fibelatti.raffler.core.functional.Mapper
-import com.fibelatti.raffler.features.CustomRaffleVoting
+import com.fibelatti.raffler.features.myraffles.CustomRaffleVoting
 import javax.inject.Inject
 
 const val CUSTOM_RAFFLE_VOTING_TABLE_NAME = "CustomRaffleVoting"

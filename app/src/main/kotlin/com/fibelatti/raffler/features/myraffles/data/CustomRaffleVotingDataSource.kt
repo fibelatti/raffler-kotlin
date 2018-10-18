@@ -6,7 +6,7 @@ import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
 import com.fibelatti.raffler.core.functional.Result
 import com.fibelatti.raffler.core.functional.catching
-import com.fibelatti.raffler.features.CustomRaffleVoting
+import com.fibelatti.raffler.features.myraffles.CustomRaffleVoting
 import com.fibelatti.raffler.features.myraffles.CustomRaffleVotingRepository
 import javax.inject.Inject
 
