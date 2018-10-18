@@ -134,6 +134,8 @@
     <string name="custom_raffle_voting_new_vote_description">If you are the next to vote tap the button below</string>
     <string name="custom_raffle_voting_new_vote">See options</string>
 
+    <string name="custom_raffle_voting_confirm_vote">Confirm your vote in %s?</string>
+
     <plurals name="custom_raffle_voting_votes">
         <item quantity="one">%d vote</item>
         <item quantity="other">%d votes</item>

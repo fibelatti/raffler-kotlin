@@ -133,6 +133,8 @@
     <string name="custom_raffle_voting_new_vote_description">Se você é o(a) próximo(a) a votar pressione o botão abaixo</string>
     <string name="custom_raffle_voting_new_vote">Ver opções</string>
 
+    <string name="custom_raffle_voting_confirm_vote">Confirma seu voto em %s?</string>
+
     <plurals name="custom_raffle_voting_votes">
         <item quantity="zero">0 votos</item>
         <item quantity="one">%d voto</item>

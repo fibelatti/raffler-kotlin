@@ -45,10 +45,15 @@ class CustomRaffleVotingViewModel @Inject constructor(
             if (pin.length < MIN_PIN_LENGTH) {
                 pinError.postEvent(resourceProvider.getString(R.string.custom_raffle_voting_pin_invalid))
             } else {
-                customRaffleVotingModelMapper.map(pin.toInt(), customRaffle)
+                val newVoting = customRaffleVotingModelMapper.map(pin.toInt(), customRaffle)
+
+                newVoting
                     .let(customRaffleVotingModelMapper::mapReverse)
                     .let { customRaffleVotingDataSource.saveCustomRaffleVoting(it) }
-                    .onSuccess { readyToVote.postEvent(Unit) }
+                    .onSuccess {
+                        voting.postValue(newVoting)
+                        readyToVote.postEvent(Unit)
+                    }
             }
         }
     }
@@ -58,9 +63,7 @@ class CustomRaffleVotingViewModel @Inject constructor(
             when {
                 pin.isBlank() -> pinError.postEvent(resourceProvider.getString(R.string.custom_raffle_voting_pin_invalid))
                 it.pin == pin.toInt() -> readyToVote.postEvent(Unit)
-                else -> {
-                    pinError.postEvent(resourceProvider.getString(R.string.custom_raffle_voting_pin_incorrect))
-                }
+                else -> pinError.postEvent(resourceProvider.getString(R.string.custom_raffle_voting_pin_incorrect))
             }
         }
     }
@@ -68,14 +71,19 @@ class CustomRaffleVotingViewModel @Inject constructor(
     fun vote(description: String) {
         withVoting { currentVoting ->
             startInBackground {
-                currentVoting.copy(
+                val updatedVoting = currentVoting.copy(
                     totalVotes = currentVoting.totalVotes.inc(),
                     votes = currentVoting.votes.toMutableMap().apply {
                         set(description, currentVoting.votes.getOrDefaultValue(description, 0).inc())
                     }
-                ).let(customRaffleVotingModelMapper::mapReverse)
+                )
+
+                updatedVoting.let(customRaffleVotingModelMapper::mapReverse)
                     .let { customRaffleVotingDataSource.saveCustomRaffleVoting(it) }
-                    .onSuccess { readyToVote.postEvent(Unit) }
+                    .onSuccess {
+                        voting.postValue(updatedVoting)
+                        readyToVote.postEvent(Unit)
+                    }
             }
         }
     }

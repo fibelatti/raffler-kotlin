@@ -38,7 +38,9 @@ class CustomRaffleVotingMenuFragment : BaseFragment() {
         layoutTitle.navigateUp { layoutRoot.findNavController().navigateUp() }
 
         buttonNewVote.setOnClickListener {
-            it.snackbar("New vote clicked")
+            layoutRoot.findNavController().navigate(
+                R.id.action_fragmentCustomRaffleVotingMenu_to_fragmentCustomRaffleVotingVote
+            )
         }
 
         buttonSeeResults.setOnClickListener {
