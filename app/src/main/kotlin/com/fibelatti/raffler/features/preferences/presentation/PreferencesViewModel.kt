@@ -11,8 +11,8 @@ import com.fibelatti.raffler.core.platform.AppConfig
 import com.fibelatti.raffler.core.platform.MutableLiveEvent
 import com.fibelatti.raffler.core.platform.base.BaseViewModel
 import com.fibelatti.raffler.core.platform.postEvent
+import com.fibelatti.raffler.core.provider.CoroutineLauncher
 import com.fibelatti.raffler.core.provider.ResourceProvider
-import com.fibelatti.raffler.core.provider.ThreadProvider
 import com.fibelatti.raffler.features.preferences.Preferences
 import com.fibelatti.raffler.features.preferences.PreferencesRepository
 import javax.inject.Inject
@@ -20,8 +20,8 @@ import javax.inject.Inject
 class PreferencesViewModel @Inject constructor(
     private val preferencesRepository: PreferencesRepository,
     private val resourceProvider: ResourceProvider,
-    threadProvider: ThreadProvider
-) : BaseViewModel(threadProvider) {
+    coroutineLauncher: CoroutineLauncher
+) : BaseViewModel(coroutineLauncher) {
 
     val preferences by lazy { MutableLiveData<Preferences>() }
     val updateFeedback by lazy { MutableLiveEvent<String>() }

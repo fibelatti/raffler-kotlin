@@ -12,8 +12,8 @@ import com.fibelatti.raffler.core.platform.MutableLiveEvent
 import com.fibelatti.raffler.core.platform.base.BaseViewModel
 import com.fibelatti.raffler.core.platform.postEvent
 import com.fibelatti.raffler.core.platform.setEvent
+import com.fibelatti.raffler.core.provider.CoroutineLauncher
 import com.fibelatti.raffler.core.provider.ResourceProvider
-import com.fibelatti.raffler.core.provider.ThreadProvider
 import com.fibelatti.raffler.features.myraffles.CustomRaffle
 import com.fibelatti.raffler.features.myraffles.CustomRaffleRepository
 import com.fibelatti.raffler.features.myraffles.RememberRaffled
@@ -28,8 +28,8 @@ class CustomRaffleDetailsViewModel @Inject constructor(
     private val customRaffleModelMapper: CustomRaffleModelMapper,
     private val rememberRaffled: RememberRaffled,
     private val resourceProvider: ResourceProvider,
-    threadProvider: ThreadProvider
-) : BaseViewModel(threadProvider) {
+    coroutineLauncher: CoroutineLauncher
+) : BaseViewModel(coroutineLauncher) {
 
     private val rememberRaffledItems by lazy { MutableLiveData<Boolean>() }
     private val customRaffleCount by lazy { MutableLiveData<Int>() }
@@ -51,7 +51,7 @@ class CustomRaffleDetailsViewModel @Inject constructor(
         start {
             getPreferences()
 
-            inBackground {
+            callInBackground {
                 customRaffleRepository.getCustomRaffleById(id.orZero())
                     .mapCatching(::prepareCustomRaffle)
             }.onSuccess(customRaffle::setValue)
@@ -79,7 +79,7 @@ class CustomRaffleDetailsViewModel @Inject constructor(
         if (rememberRaffledItems.value == true) {
             start {
                 customRaffle.value?.run {
-                    inBackground {
+                    callInBackground {
                         index.forEach {
                             rememberRaffled(RememberRaffled.Params(items[it], included = false))
                         }
@@ -116,7 +116,7 @@ class CustomRaffleDetailsViewModel @Inject constructor(
     }
 
     private suspend fun getPreferences() {
-        inBackground { preferencesRepository.getPreferences() }
+        callInBackground { preferencesRepository.getPreferences() }
             .onSuccess {
                 preferredRaffleMode.value = it.preferredRaffleMode
                 rouletteMusicEnabled.value = it.rouletteMusicEnabled

@@ -11,7 +11,7 @@ import com.fibelatti.raffler.core.platform.AppConfig.LOCALE_NONE
 import com.fibelatti.raffler.core.platform.MutableLiveEvent
 import com.fibelatti.raffler.core.platform.base.BaseViewModel
 import com.fibelatti.raffler.core.platform.postEvent
-import com.fibelatti.raffler.core.provider.ThreadProvider
+import com.fibelatti.raffler.core.provider.CoroutineLauncher
 import com.fibelatti.raffler.features.myraffles.CustomRaffleRepository
 import com.fibelatti.raffler.features.preferences.PreferencesRepository
 import com.fibelatti.raffler.features.quickdecision.QuickDecision
@@ -25,8 +25,8 @@ class QuickDecisionViewModel @Inject constructor(
     private val customRaffleRepository: CustomRaffleRepository,
     private val preferencesRepository: PreferencesRepository,
     private val quickDecisionModelMapper: QuickDecisionModelMapper,
-    threadProvider: ThreadProvider
-) : BaseViewModel(threadProvider) {
+    coroutineLauncher: CoroutineLauncher
+) : BaseViewModel(coroutineLauncher) {
 
     val state by lazy { MutableLiveData<State>() }
     val showHint by lazy { MutableLiveEvent<Unit>() }
@@ -37,11 +37,11 @@ class QuickDecisionViewModel @Inject constructor(
 
     fun getAllQuickDecisions() {
         start {
-            val quickDecisions = inBackground {
+            val quickDecisions = callInBackground {
                 quickDecisionRepository.getAllQuickDecisions()
                     .mapCatching { it.filterByLocale() }
             }
-            val customRaffles = inBackground { customRaffleRepository.getAllCustomRaffles() }
+            val customRaffles = callInBackground { customRaffleRepository.getAllCustomRaffles() }
 
             when {
                 quickDecisions is Success && customRaffles is Success -> {

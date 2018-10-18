@@ -5,9 +5,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.fibelatti.raffler.App
 import com.fibelatti.raffler.core.di.modules.viewmodel.ViewModelFactory
 import com.fibelatti.raffler.core.platform.AppResourceProvider
-import com.fibelatti.raffler.core.provider.AppThreadProvider
+import com.fibelatti.raffler.core.provider.CoroutineLauncher
+import com.fibelatti.raffler.core.provider.CoroutineLauncherDelegate
 import com.fibelatti.raffler.core.provider.ResourceProvider
-import com.fibelatti.raffler.core.provider.ThreadProvider
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Binds
@@ -27,10 +27,10 @@ object CoreModule {
         fun bindContext(app: App): Context
 
         @Binds
-        fun bindThreadProvider(appThreadProvider: AppThreadProvider): ThreadProvider
+        fun bindResourceProvider(appResourceProvider: AppResourceProvider): ResourceProvider
 
         @Binds
-        fun bindResourceProvider(appResourceProvider: AppResourceProvider): ResourceProvider
+        fun bindCoroutineLauncher(coroutineLauncherDelegate: CoroutineLauncherDelegate): CoroutineLauncher
 
         @Binds
         fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
