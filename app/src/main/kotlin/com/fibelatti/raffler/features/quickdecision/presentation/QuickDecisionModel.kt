@@ -34,7 +34,7 @@ class QuickDecisionModelMapper @Inject constructor() : Mapper<QuickDecision, Qui
 class CustomRaffleToQuickDecisionMapper @Inject constructor() : Mapper<CustomRaffleModel, QuickDecision> {
     override fun map(param: CustomRaffleModel): QuickDecision = with(param) {
         QuickDecision(
-            id = description,
+            id = id.toString(),
             locale = AppConfig.LOCALE_NONE,
             description = description,
             values = items.map { it.description }

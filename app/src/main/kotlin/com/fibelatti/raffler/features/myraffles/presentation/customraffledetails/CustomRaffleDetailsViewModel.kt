@@ -43,8 +43,10 @@ class CustomRaffleDetailsViewModel @Inject constructor(
     val itemsRemaining by lazy { MutableLiveEvent<Int>() }
 
     init {
-        checkForHints()
-        getCustomRaffleCount()
+        startInBackground {
+            checkForHints()
+            getCustomRaffleCount()
+        }
     }
 
     fun getCustomRaffleById(id: Long?) {
@@ -80,9 +82,7 @@ class CustomRaffleDetailsViewModel @Inject constructor(
             start {
                 customRaffle.value?.run {
                     callInBackground {
-                        index.forEach {
-                            rememberRaffled(RememberRaffled.Params(items[it], included = false))
-                        }
+                        index.forEach { rememberRaffled(RememberRaffled.Params(items[it], included = false)) }
 
                         customRaffleRepository.getCustomRaffleById(id.orZero())
                             .mapCatching(::prepareCustomRaffle)
@@ -99,20 +99,18 @@ class CustomRaffleDetailsViewModel @Inject constructor(
         startInBackground { preferencesRepository.setRaffleDetailsHintDismissed() }
     }
 
-    private fun checkForHints() {
-        startInBackground {
+    private suspend fun checkForHints() {
+        callInBackground {
             if (!preferencesRepository.getRaffleDetailsHintDisplayed()) {
                 showHint.postEvent(Unit)
             }
         }
     }
 
-    private fun getCustomRaffleCount() {
-        startInBackground {
-            customRaffleRepository.getAllCustomRaffles()
-                .onSuccess { customRaffleCount.postValue(it.size) }
-                .onFailure { customRaffleCount.postValue(1) }
-        }
+    private suspend fun getCustomRaffleCount() {
+        callInBackground { customRaffleRepository.getAllCustomRaffles() }
+            .onSuccess { customRaffleCount.postValue(it.size) }
+            .onFailure { customRaffleCount.postValue(1) }
     }
 
     private suspend fun getPreferences() {
