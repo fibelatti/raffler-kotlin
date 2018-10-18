@@ -9,7 +9,7 @@
     android:elevation="@dimen/elevation_regular"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="@dimen/padding_small"
+    android:padding="@dimen/padding_regular"
     tools:layout_width="200dp">
 
     <androidx.appcompat.widget.AppCompatTextView
