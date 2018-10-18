@@ -109,7 +109,7 @@ class CreateCustomRaffleFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         setupLayout()
         setupRecyclerView()
-        createCustomRaffleViewModel.getCustomRaffleById(arguments?.customRaffleId)
+        createCustomRaffleViewModel.getCustomRaffleById(arguments?.customRaffleId, arguments?.addAsShortcut)
     }
 
     override fun onDestroyView() {

@@ -31,12 +31,10 @@ class QuickDecisionViewModel @Inject constructor(
     val state by lazy { MutableLiveData<State>() }
     val showHint by lazy { MutableLiveEvent<Unit>() }
 
-    init {
-        checkForHints()
-    }
-
     fun getAllQuickDecisions() {
         start {
+            checkForHints()
+
             val quickDecisions = callInBackground {
                 quickDecisionRepository.getAllQuickDecisions()
                     .mapCatching { it.filterByLocale() }
@@ -65,8 +63,8 @@ class QuickDecisionViewModel @Inject constructor(
         startInBackground { preferencesRepository.setQuickDecisionHintDismissed() }
     }
 
-    private fun checkForHints() {
-        startInBackground {
+    private suspend fun checkForHints() {
+        callInBackground {
             if (!preferencesRepository.getQuickDecisionHintDisplayed()) {
                 showHint.postEvent(Unit)
             }

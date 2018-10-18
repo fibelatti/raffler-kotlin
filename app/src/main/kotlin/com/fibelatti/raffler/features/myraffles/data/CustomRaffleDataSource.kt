@@ -7,14 +7,12 @@ import androidx.room.Query
 import androidx.room.Transaction
 import com.fibelatti.raffler.core.functional.Result
 import com.fibelatti.raffler.core.functional.catching
-import com.fibelatti.raffler.core.persistence.database.AppDatabase
 import com.fibelatti.raffler.features.myraffles.CustomRaffle
 import com.fibelatti.raffler.features.myraffles.CustomRaffleItem
 import com.fibelatti.raffler.features.myraffles.CustomRaffleRepository
 import javax.inject.Inject
 
 class CustomRaffleDataSource @Inject constructor(
-    private val appDatabase: AppDatabase,
     private val customRaffleDao: CustomRaffleDao,
     private val customRaffleItemDao: CustomRaffleItemDao,
     private val customRaffleWithItemsDtoMapper: CustomRaffleWithItemsDtoMapper,
@@ -26,16 +24,19 @@ class CustomRaffleDataSource @Inject constructor(
     override suspend fun getCustomRaffleById(id: Long): Result<CustomRaffle> =
         catching { customRaffleDao.getCustomRaffleById(id).let(customRaffleWithItemsDtoMapper::map) }
 
-    override suspend fun saveCustomRaffle(customRaffle: CustomRaffle): Result<Unit> {
+    override suspend fun saveCustomRaffle(customRaffle: CustomRaffle): Result<CustomRaffle> {
         return catching {
-            with(customRaffle.let(customRaffleWithItemsDtoMapper::mapReverse)) {
-                appDatabase.runInTransaction {
-                    customRaffleDao.deleteCustomRaffleById(customRaffleDto.id)
-                    val customRaffleId = customRaffleDao.saveCustomRaffle(customRaffleDto)
-                    val items = items.map { it.copy(customRaffleId = customRaffleId) }
-                    customRaffleItemDao.saveCustomRaffleItems(*items.toTypedArray())
-                }
-            }
+            val customRaffleId: Long
+            val customRaffleWithItemsDto = customRaffle.let(customRaffleWithItemsDtoMapper::mapReverse)
+
+            customRaffleId = customRaffleDao.saveCustomRaffle(customRaffleWithItemsDto.customRaffleDto)
+            val items = customRaffleWithItemsDto.items.map { it.copy(customRaffleId = customRaffleId) }
+
+            customRaffleItemDao.deleteCustomRaffleItemsByCustomRaffleId(customRaffleId)
+            customRaffleItemDao.saveCustomRaffleItems(*items.toTypedArray())
+
+            customRaffleDao.getCustomRaffleById(customRaffleId)
+                .let(customRaffleWithItemsDtoMapper::map)
         }
     }
 
@@ -69,4 +70,7 @@ interface CustomRaffleDao {
 interface CustomRaffleItemDao {
     @Insert(onConflict = REPLACE)
     fun saveCustomRaffleItems(vararg items: CustomRaffleItemDto)
+
+    @Query("delete from $CUSTOM_RAFFLE_ITEM_TABLE_NAME where $CUSTOM_RAFFLE_ITEM_CUSTOM_RAFFLE_ID_COLUMN_NAME = :customRaffleId")
+    fun deleteCustomRaffleItemsByCustomRaffleId(customRaffleId: Long)
 }
