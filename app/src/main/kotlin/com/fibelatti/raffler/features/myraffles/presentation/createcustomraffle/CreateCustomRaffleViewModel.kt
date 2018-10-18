@@ -19,7 +19,7 @@ import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffle
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModelMapper
 import com.fibelatti.raffler.features.preferences.PreferencesRepository
 import com.fibelatti.raffler.features.quickdecision.QuickDecisionRepository
-import com.fibelatti.raffler.features.quickdecision.presentation.CustomRaffleToQuickDecisionMapper
+import com.fibelatti.raffler.features.quickdecision.presentation.QuickDecisionModelMapper
 import javax.inject.Inject
 
 class CreateCustomRaffleViewModel @Inject constructor(
@@ -27,7 +27,7 @@ class CreateCustomRaffleViewModel @Inject constructor(
     private val quickDecisionRepository: QuickDecisionRepository,
     private val preferencesRepository: PreferencesRepository,
     private val customRaffleModelMapper: CustomRaffleModelMapper,
-    private val customRaffleToQuickDecisionMapper: CustomRaffleToQuickDecisionMapper,
+    private val quickDecisionModelMapper: QuickDecisionModelMapper,
     private val resourceProvider: ResourceProvider,
     coroutineLauncher: CoroutineLauncher
 ) : BaseViewModel(coroutineLauncher) {
@@ -104,7 +104,7 @@ class CreateCustomRaffleViewModel @Inject constructor(
                     .mapCatching(customRaffleModelMapper::map)
                     .onSuccess {
                         if (saveAsQuickDecision) {
-                            quickDecisionRepository.addQuickDecisions(customRaffleToQuickDecisionMapper.map(it))
+                            quickDecisionRepository.addQuickDecisions(quickDecisionModelMapper.map(it))
                         } else {
                             quickDecisionRepository.deleteQuickDecisionById(it.id.toString())
                         }

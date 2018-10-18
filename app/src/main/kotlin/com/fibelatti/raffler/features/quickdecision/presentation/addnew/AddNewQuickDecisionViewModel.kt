@@ -12,14 +12,14 @@ import com.fibelatti.raffler.features.myraffles.CustomRaffleRepository
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModel
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModelMapper
 import com.fibelatti.raffler.features.quickdecision.QuickDecisionRepository
-import com.fibelatti.raffler.features.quickdecision.presentation.CustomRaffleToQuickDecisionMapper
+import com.fibelatti.raffler.features.quickdecision.presentation.QuickDecisionModelMapper
 import javax.inject.Inject
 
 class AddNewQuickDecisionViewModel @Inject constructor(
     private val customRaffleRepository: CustomRaffleRepository,
     private val quickDecisionRepository: QuickDecisionRepository,
     private val customRaffleModelMapper: CustomRaffleModelMapper,
-    private val customRaffleToQuickDecisionMapper: CustomRaffleToQuickDecisionMapper,
+    private val quickDecisionModelMapper: QuickDecisionModelMapper,
     coroutineLauncher: CoroutineLauncher
 ) : BaseViewModel(coroutineLauncher) {
 
@@ -37,7 +37,7 @@ class AddNewQuickDecisionViewModel @Inject constructor(
 
     fun addCustomRaffleAsQuickDecision(customRaffleModel: CustomRaffleModel) {
         startInBackground {
-            quickDecisionRepository.addQuickDecisions(customRaffleToQuickDecisionMapper.map(customRaffleModel))
+            quickDecisionRepository.addQuickDecisions(quickDecisionModelMapper.map(customRaffleModel))
                 .onSuccess { updateFeedback.postEvent(Unit) }
         }
     }
