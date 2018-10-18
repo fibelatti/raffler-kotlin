@@ -14,10 +14,10 @@ class CustomRaffleVotingDataSource @Inject constructor(
     private val customRaffleVotingDao: CustomRaffleVotingDao,
     private val customRaffleVotingDtoMapper: CustomRaffleVotingDtoMapper
 ) : CustomRaffleVotingRepository {
-    override suspend fun getCustomRaffleVoting(customRaffleId: Long): Result<CustomRaffleVoting> =
+    override suspend fun getCustomRaffleVoting(customRaffleId: Long): Result<CustomRaffleVoting?> =
         catching {
             customRaffleVotingDao.getVotingForCustomRaffle(customRaffleId)
-                .let(customRaffleVotingDtoMapper::map)
+                ?.let(customRaffleVotingDtoMapper::map)
         }
 
     override suspend fun saveCustomRaffleVoting(customRaffleVoting: CustomRaffleVoting): Result<Unit> =
@@ -34,7 +34,7 @@ class CustomRaffleVotingDataSource @Inject constructor(
 interface CustomRaffleVotingDao {
 
     @Query("select * from $CUSTOM_RAFFLE_VOTING_TABLE_NAME where $CUSTOM_RAFFLE_VOTING_CUSTOM_RAFFLE_ID_COLUMN_NAME = :customRaffleId ")
-    fun getVotingForCustomRaffle(customRaffleId: Long): CustomRaffleVotingDto
+    fun getVotingForCustomRaffle(customRaffleId: Long): CustomRaffleVotingDto?
 
     @Insert(onConflict = REPLACE)
     fun saveVoting(customRaffleVotingDto: CustomRaffleVotingDto)
