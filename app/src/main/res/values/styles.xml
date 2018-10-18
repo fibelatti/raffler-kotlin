@@ -172,6 +172,15 @@
         <item name="iconSize">@dimen/extended_fab_icon_size_small</item>
     </style>
 
+    <style name="AppTheme.RecyclerView">
+        <item name="android:clipToPadding">false</item>
+        <item name="android:overScrollMode">never</item>
+        <item name="android:layout_marginTop">@dimen/margin_regular</item>
+        <item name="android:paddingLeft">@dimen/padding_regular</item>
+        <item name="android:paddingRight">@dimen/padding_regular</item>
+        <item name="android:paddingBottom">@dimen/padding_regular</item>
+    </style>
+
     <style name="AppTheme.Text" />
 
     <style name="AppTheme.Text.Title">
