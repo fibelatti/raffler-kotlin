@@ -117,6 +117,36 @@
     <string name="custom_raffle_combination_invalid_quantity_too_many">Deve ser no máximo %d</string>
     <string name="custom_raffle_combination_pair_title">Par #%d</string>
 
+    <!-- Custom Raffle - Voting -->
+    <string name="custom_raffle_voting_title">Votação para %s</string>
+    <string name="custom_raffle_voting_start_voting">Iniciar votação</string>
+    <string name="custom_raffle_voting_new_voting">Nova votação</string>
+    <string name="custom_raffle_voting_continue_voting">Continuar votação</string>
+    <string name="custom_raffle_voting_ongoing_voting">Já existe uma votação para esse sorteio. Você pode dar continuidade a ela ou iniciar uma nova votação, porém votos existentes serão perdidos.</string>
+    <string name="custom_raffle_voting_pin_instructions_new">Crie um pin de 4 dígitos para que somente você possa encerrar a votação antes de compartilhar os resultados:</string>
+    <string name="custom_raffle_voting_pin_instructions_existing">Confirme o pin de 4 dígitos utilizado para a criação desta votação:</string>
+
+    <string name="custom_raffle_voting_new_vote_description">Se você é o(a) próximo(a) a votar pressione o botão abaixo</string>
+    <string name="custom_raffle_voting_new_vote">Ver opções</string>
+
+    <plurals name="custom_raffle_voting_votes">
+        <item quantity="zero">0 votos</item>
+        <item quantity="one">%d voto</item>
+        <item quantity="other">%d votos</item>
+    </plurals>
+
+    <string name="custom_raffle_voting_see_results_description">Quando a votação estiver concluída pressione o botão abaixo para ver os resultados. Uma vez exibidos ninguém mais poderá votar.</string>
+    <string name="custom_raffle_voting_see_results">Ver resultados</string>
+
+    <string name="custom_raffle_voting_results_title">Resultados da votação para %s</string>
+    <string name="custom_raffle_voting_results_first_place">Primeiro colocado</string>
+    <string name="custom_raffle_voting_results_second_place">Segundo colocado</string>
+    <string name="custom_raffle_voting_results_third_place">Terceiro colocado</string>
+    <string name="custom_raffle_voting_results_others">Outros</string>
+
+    <string name="custom_raffle_voting_tie_break">Desempate</string>
+    <string name="custom_raffle_voting_tie_break_description">As opções a seguir estão empatadas:</string>
+
     <!-- Preferences -->
     <string name="preferences_changes_saved">Alterações salvas</string>
 
