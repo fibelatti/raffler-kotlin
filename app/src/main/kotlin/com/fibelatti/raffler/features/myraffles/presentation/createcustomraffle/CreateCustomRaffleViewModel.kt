@@ -72,14 +72,20 @@ class CreateCustomRaffleViewModel @Inject constructor(
     }
 
     fun addItem(newItemDescription: String) {
-        if (newItemDescription.isNotBlank()) {
-            val newItem = CustomRaffleItemModel.empty().copy(description = newItemDescription)
+        when {
+            newItemDescription.isBlank() -> {
+                invalidItemDescriptionError.value = resourceProvider.getString(R.string.custom_raffle_create_invalid_description)
+            }
+            customRaffle.value?.items?.find { it.description == newItemDescription } != null -> {
 
-            customRaffle.value = customRaffle.value?.apply { items.add(0, newItem) }
-                ?: CustomRaffleModel.empty().apply { items.add(0, newItem) }
-            invalidItemDescriptionError.value = String.empty()
-        } else {
-            invalidItemDescriptionError.value = resourceProvider.getString(R.string.custom_raffle_create_invalid_description)
+            }
+            else -> {
+                val newItem = CustomRaffleItemModel.empty().copy(description = newItemDescription)
+
+                customRaffle.value = customRaffle.value?.apply { items.add(0, newItem) }
+                    ?: CustomRaffleModel.empty().apply { items.add(0, newItem) }
+                invalidItemDescriptionError.value = String.empty()
+            }
         }
     }
 

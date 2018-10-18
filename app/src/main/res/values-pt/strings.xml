@@ -63,6 +63,7 @@
     <string name="custom_raffle_edit_title">Editando %s</string>
     <string name="custom_raffle_create_remove_all_items">Apagar todos os itens</string>
     <string name="custom_raffle_create_invalid_description">Entre uma descrição válida.</string>
+    <string name="custom_raffle_create_duplicate">Já existe um item com esta descrição.</string>
     <string name="custom_raffle_create_invalid_items_quantity">O sorteio deve ter pelo menos 2 itens.</string>
 
     <!-- Custom Raffle - Details -->

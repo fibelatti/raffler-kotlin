@@ -63,6 +63,7 @@
     <string name="custom_raffle_edit_title">Editing %s</string>
     <string name="custom_raffle_create_remove_all_items">Remove all items</string>
     <string name="custom_raffle_create_invalid_description">Please enter a valid description.</string>
+    <string name="custom_raffle_create_duplicate">An item with the same description was already added.</string>
     <string name="custom_raffle_create_invalid_items_quantity">A custom raffle should have at least 2 items.</string>
 
     <!-- Custom Raffle - Details -->
