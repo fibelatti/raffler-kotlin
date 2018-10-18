@@ -128,6 +128,9 @@
     <string name="custom_raffle_voting_pin_instructions_new">Create a 4 digit pin so only you can end the voting before sharing the results:</string>
     <string name="custom_raffle_voting_pin_instructions_existing">Enter the same 4 digit pin you used when you crated this voting:</string>
 
+    <string name="custom_raffle_voting_pin_invalid">Please enter a 4 digit pin.</string>
+    <string name="custom_raffle_voting_pin_incorrect">Incorrect pin. Please try again.</string>
+
     <string name="custom_raffle_voting_new_vote_description">If you are the next to vote tap the button below</string>
     <string name="custom_raffle_voting_new_vote">See options</string>
 

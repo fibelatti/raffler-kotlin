@@ -127,6 +127,9 @@
     <string name="custom_raffle_voting_pin_instructions_new">Crie um pin de 4 dígitos para que somente você possa encerrar a votação antes de compartilhar os resultados:</string>
     <string name="custom_raffle_voting_pin_instructions_existing">Confirme o pin de 4 dígitos utilizado para a criação desta votação:</string>
 
+    <string name="custom_raffle_voting_pin_invalid">Digite um pin de 4 dígitos.</string>
+    <string name="custom_raffle_voting_pin_incorrect">Pin incorreto, tente novamente.</string>
+
     <string name="custom_raffle_voting_new_vote_description">Se você é o(a) próximo(a) a votar pressione o botão abaixo</string>
     <string name="custom_raffle_voting_new_vote">Ver opções</string>
 

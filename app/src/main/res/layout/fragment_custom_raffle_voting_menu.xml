@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/padding_regular">
+
+    <com.fibelatti.raffler.core.platform.customview.TitleLayout
+        android:id="@+id/layoutTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_xlarge"
+        app:layout_constraintBottom_toTopOf="@+id/textViewNewVoteInstructions"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread_inside" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewNewVoteInstructions"
+        style="@style/AppTheme.Text.Body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_regular"
+        android:gravity="center"
+        android:text="@string/custom_raffle_voting_new_vote_description"
+        app:layout_constraintBottom_toTopOf="@+id/buttonNewVote"
+        app:layout_constraintTop_toBottomOf="@+id/layoutTitle" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonNewVote"
+        style="@style/AppTheme.ExtendedFab"
+        android:layout_marginBottom="@dimen/margin_regular"
+        android:text="@string/custom_raffle_voting_new_vote"
+        app:icon="@drawable/ic_voting"
+        app:layout_constraintBottom_toTopOf="@+id/spaceFiller"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewNewVoteInstructions" />
+
+    <Space
+        android:id="@+id/spaceFiller"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/layoutDivider"
+        app:layout_constraintTop_toBottomOf="@+id/buttonNewVote" />
+
+    <include
+        android:id="@+id/layoutDivider"
+        layout="@layout/layout_divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_size"
+        android:layout_marginBottom="@dimen/margin_regular"
+        app:layout_constraintBottom_toTopOf="@+id/textViewTotalVotes"
+        app:layout_constraintTop_toBottomOf="@+id/spaceFiller" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewTotalVotes"
+        style="@style/AppTheme.Text.SectionTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_regular"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@+id/textViewResultsInstructions"
+        app:layout_constraintTop_toBottomOf="@+id/layoutDivider"
+        tools:text="0 votes" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewResultsInstructions"
+        style="@style/AppTheme.Text.Body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_xlarge"
+        android:gravity="center"
+        android:text="@string/custom_raffle_voting_see_results_description"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSeeResults"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTotalVotes" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonSeeResults"
+        style="@style/AppTheme.ExtendedFab.Small"
+        android:text="@string/custom_raffle_voting_see_results"
+        app:icon="@drawable/ic_random_winners"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewResultsInstructions" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

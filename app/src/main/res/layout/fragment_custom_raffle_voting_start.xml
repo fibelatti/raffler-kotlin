@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/padding_regular">
+
+    <com.fibelatti.raffler.core.platform.customview.TitleLayout
+        android:id="@+id/layoutTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_regular"
+        app:layout_constraintBottom_toTopOf="@+id/textViewOngoingVotingDescription"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread_inside" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewOngoingVotingDescription"
+        style="@style/AppTheme.Text.Body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/custom_raffle_voting_ongoing_voting"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/layoutDivider"
+        app:layout_constraintTop_toBottomOf="@+id/layoutTitle"
+        tools:visibility="visible" />
+
+    <include
+        android:id="@+id/layoutDivider"
+        layout="@layout/layout_divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_size"
+        android:layout_marginTop="@dimen/margin_xlarge"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/textViewStartVotingPinInstructions"
+        app:layout_constraintTop_toBottomOf="@+id/textViewOngoingVotingDescription"
+        tools:visibility="visible" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewStartVotingPinInstructions"
+        style="@style/AppTheme.Text.Body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_xlarge"
+        android:layout_marginBottom="@dimen/margin_regular"
+        android:gravity="center"
+        android:text="@string/custom_raffle_voting_pin_instructions_new"
+        app:layout_constraintBottom_toTopOf="@+id/inputLayoutPin"
+        app:layout_constraintTop_toBottomOf="@+id/layoutDivider" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputLayoutPin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/spaceFiller"
+        app:layout_constraintTop_toBottomOf="@+id/textViewStartVotingPinInstructions">
+
+        <com.fibelatti.raffler.core.platform.customview.PinEntryEditText
+            android:id="@+id/editTextPin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="0000" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Space
+        android:id="@+id/spaceFiller"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/margin_regular"
+        app:layout_constraintBottom_toTopOf="@+id/buttonStartVoting"
+        app:layout_constraintTop_toBottomOf="@+id/inputLayoutPin" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/buttonResetVoting"
+        style="@style/AppTheme.TextButton"
+        android:layout_width="0dp"
+        android:text="@string/custom_raffle_voting_new_voting"
+        android:visibility="gone"
+        app:layout_constraintBaseline_toBaselineOf="@+id/buttonStartVoting"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/buttonStartVoting"
+        tools:visibility="visible" />
+
+    <Button
+        android:id="@+id/buttonStartVoting"
+        style="@style/AppTheme.ButtonPrimary"
+        android:layout_width="0dp"
+        android:text="@string/custom_raffle_voting_start_voting"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/buttonResetVoting"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spaceFiller" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -77,6 +77,9 @@ class PreferencesCustomRaffleFragment :
                 },
                 combinationClickListener = {
                     preferencesViewModel.setPreferredRaffleMode(AppConfig.RaffleMode.COMBINATION)
+                },
+                votingClickListener = {
+                    preferencesViewModel.setPreferredRaffleMode(AppConfig.RaffleMode.SECRET_VOTING)
                 }
             )
         }
