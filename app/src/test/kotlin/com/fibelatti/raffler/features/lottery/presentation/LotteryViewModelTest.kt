@@ -12,7 +12,6 @@ import com.fibelatti.raffler.core.functional.Success
 import com.fibelatti.raffler.core.provider.ResourceProvider
 import com.fibelatti.raffler.features.preferences.Preferences
 import com.fibelatti.raffler.features.preferences.PreferencesRepository
-import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 import org.mockito.ArgumentMatchers.anyInt
@@ -46,7 +45,7 @@ class LotteryViewModelTest : BaseTest() {
             mockPreferencesRepository,
             mockLotteryNumberModelMapper,
             mockResourceProvider,
-            testThreadProvider
+            testCoroutineLauncher
         )
 
         viewModel.defaultQuantityAvailable shouldReceive MockDataProvider.genericString
@@ -56,71 +55,61 @@ class LotteryViewModelTest : BaseTest() {
 
     @Test
     fun whenGetLotteryNumbersIsCalledAndQuantityAvailableIsEmptyThenQuantityAvailableErrorReceivesError() {
-        runBlocking {
-            // WHEN
-            viewModel.getLotteryNumbers(quantityAvailable = " ", quantityToRaffle = "15")
+        // WHEN
+        viewModel.getLotteryNumbers(quantityAvailable = " ", quantityToRaffle = "15")
 
-            // THEN
-            viewModel.quantityAvailableError shouldReceive MockDataProvider.genericString
-            viewModel.quantityToRaffleError.shouldNeverReceiveValues()
-            viewModel.lotteryNumbers.shouldNeverReceiveValues()
-        }
+        // THEN
+        viewModel.quantityAvailableError shouldReceive MockDataProvider.genericString
+        viewModel.quantityToRaffleError.shouldNeverReceiveValues()
+        viewModel.lotteryNumbers.shouldNeverReceiveValues()
     }
 
     @Test
     fun whenGetLotteryNumbersIsCalledAndQuantityAvailableIsInvalidThenQuantityAvailableErrorReceivesError() {
-        runBlocking {
-            // WHEN
-            viewModel.getLotteryNumbers(quantityAvailable = "abc", quantityToRaffle = "15")
+        // WHEN
+        viewModel.getLotteryNumbers(quantityAvailable = "abc", quantityToRaffle = "15")
 
-            // THEN
-            viewModel.quantityAvailableError shouldReceive MockDataProvider.genericString
-            viewModel.quantityToRaffleError.shouldNeverReceiveValues()
-            viewModel.lotteryNumbers.shouldNeverReceiveValues()
-        }
+        // THEN
+        viewModel.quantityAvailableError shouldReceive MockDataProvider.genericString
+        viewModel.quantityToRaffleError.shouldNeverReceiveValues()
+        viewModel.lotteryNumbers.shouldNeverReceiveValues()
     }
 
     @Test
     fun whenGetLotteryNumbersIsCalledAndQuantityToRaffleIsEmptyThenQuantityToRaffleErrorReceivesError() {
-        runBlocking {
-            // WHEN
-            viewModel.getLotteryNumbers(quantityAvailable = "10", quantityToRaffle = " ")
+        // WHEN
+        viewModel.getLotteryNumbers(quantityAvailable = "10", quantityToRaffle = " ")
 
-            // THEN
-            viewModel.quantityAvailableError shouldReceive String.empty()
-            viewModel.quantityToRaffleError shouldReceive MockDataProvider.genericString
-            viewModel.lotteryNumbers.shouldNeverReceiveValues()
-        }
+        // THEN
+        viewModel.quantityAvailableError shouldReceive String.empty()
+        viewModel.quantityToRaffleError shouldReceive MockDataProvider.genericString
+        viewModel.lotteryNumbers.shouldNeverReceiveValues()
     }
 
     @Test
     fun whenGetLotteryNumbersIsCalledAndQuantityToRaffleIsInvalidThenQuantityToRaffleErrorReceivesError() {
-        runBlocking {
-            // WHEN
-            viewModel.getLotteryNumbers(quantityAvailable = "10", quantityToRaffle = "abc")
+        // WHEN
+        viewModel.getLotteryNumbers(quantityAvailable = "10", quantityToRaffle = "abc")
 
-            // THEN
-            viewModel.quantityAvailableError shouldReceive String.empty()
-            viewModel.quantityToRaffleError shouldReceive MockDataProvider.genericString
-            viewModel.lotteryNumbers.shouldNeverReceiveValues()
-        }
+        // THEN
+        viewModel.quantityAvailableError shouldReceive String.empty()
+        viewModel.quantityToRaffleError shouldReceive MockDataProvider.genericString
+        viewModel.lotteryNumbers.shouldNeverReceiveValues()
     }
 
     @Test
     fun whenGetLotteryNumbersIsCalledThenLotteryNumbersReceivesValue() {
-        runBlocking {
-            // GIVEN
-            given(mockLotteryNumberModelMapper.mapList(safeAny()))
-                .willReturn(mockLotteryNumberList)
+        // GIVEN
+        given(mockLotteryNumberModelMapper.mapList(safeAny()))
+            .willReturn(mockLotteryNumberList)
 
-            // WHEN
-            viewModel.getLotteryNumbers(quantityAvailable = "10", quantityToRaffle = "5")
+        // WHEN
+        viewModel.getLotteryNumbers(quantityAvailable = "10", quantityToRaffle = "5")
 
-            // THEN
-            viewModel.quantityAvailableError shouldReceive String.empty()
-            viewModel.quantityToRaffleError shouldReceive String.empty()
-            viewModel.error.shouldNeverReceiveValues()
-            viewModel.lotteryNumbers shouldReceive mockLotteryNumberList
-        }
+        // THEN
+        viewModel.quantityAvailableError shouldReceive String.empty()
+        viewModel.quantityToRaffleError shouldReceive String.empty()
+        viewModel.error.shouldNeverReceiveValues()
+        viewModel.lotteryNumbers shouldReceive mockLotteryNumberList
     }
 }

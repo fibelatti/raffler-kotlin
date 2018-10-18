@@ -5,8 +5,8 @@ import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.empty
 import com.fibelatti.raffler.core.extension.isInt
 import com.fibelatti.raffler.core.platform.base.BaseViewModel
+import com.fibelatti.raffler.core.provider.CoroutineLauncher
 import com.fibelatti.raffler.core.provider.ResourceProvider
-import com.fibelatti.raffler.core.provider.ThreadProvider
 import com.fibelatti.raffler.features.myraffles.RememberRaffled
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleDraftedModel
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleItemModel
@@ -15,8 +15,8 @@ import javax.inject.Inject
 class CustomRaffleRandomWinnersViewModel @Inject constructor(
     private val rememberRaffled: RememberRaffled,
     private val resourceProvider: ResourceProvider,
-    threadProvider: ThreadProvider
-) : BaseViewModel(threadProvider) {
+    coroutineLauncher: CoroutineLauncher
+) : BaseViewModel(coroutineLauncher) {
 
     val randomWinners by lazy { MutableLiveData<List<CustomRaffleDraftedModel>>() }
     val quantityError by lazy { MutableLiveData<String>() }

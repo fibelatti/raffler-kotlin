@@ -10,8 +10,8 @@ import com.fibelatti.raffler.core.functional.onSuccess
 import com.fibelatti.raffler.core.platform.MutableLiveEvent
 import com.fibelatti.raffler.core.platform.base.BaseViewModel
 import com.fibelatti.raffler.core.platform.postEvent
+import com.fibelatti.raffler.core.provider.CoroutineLauncher
 import com.fibelatti.raffler.core.provider.ResourceProvider
-import com.fibelatti.raffler.core.provider.ThreadProvider
 import com.fibelatti.raffler.features.myraffles.CustomRaffleRepository
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleDraftedModel
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleItemModel
@@ -24,8 +24,8 @@ class CustomRaffleCombinationViewModel @Inject constructor(
     private val customRaffleRepository: CustomRaffleRepository,
     private val customRaffleModelMapper: CustomRaffleModelMapper,
     private val resourceProvider: ResourceProvider,
-    threadProvider: ThreadProvider
-) : BaseViewModel(threadProvider) {
+    coroutineLauncher: CoroutineLauncher
+) : BaseViewModel(coroutineLauncher) {
 
     val otherCustomRaffles by lazy { MutableLiveData<List<CustomRaffleModel>>() }
     val pairs by lazy { MutableLiveData<List<CustomRaffleDraftedModel>>() }

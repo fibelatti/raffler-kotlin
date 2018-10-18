@@ -6,8 +6,8 @@ import com.fibelatti.raffler.core.extension.batchesOf
 import com.fibelatti.raffler.core.extension.empty
 import com.fibelatti.raffler.core.extension.isInt
 import com.fibelatti.raffler.core.platform.base.BaseViewModel
+import com.fibelatti.raffler.core.provider.CoroutineLauncher
 import com.fibelatti.raffler.core.provider.ResourceProvider
-import com.fibelatti.raffler.core.provider.ThreadProvider
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleDraftedModel
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleItemModel
 import javax.inject.Inject
@@ -16,8 +16,8 @@ import kotlin.math.max
 
 class CustomRaffleGroupingViewModel @Inject constructor(
     private val resourceProvider: ResourceProvider,
-    threadProvider: ThreadProvider
-) : BaseViewModel(threadProvider) {
+    coroutineLauncher: CoroutineLauncher
+) : BaseViewModel(coroutineLauncher) {
 
     val groups by lazy { MutableLiveData<List<CustomRaffleDraftedModel>>() }
     val quantityError by lazy { MutableLiveData<String>() }

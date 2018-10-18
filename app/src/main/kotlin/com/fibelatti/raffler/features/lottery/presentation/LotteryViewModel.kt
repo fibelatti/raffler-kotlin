@@ -8,8 +8,8 @@ import com.fibelatti.raffler.core.functional.onSuccess
 import com.fibelatti.raffler.core.platform.MutableLiveEvent
 import com.fibelatti.raffler.core.platform.base.BaseViewModel
 import com.fibelatti.raffler.core.platform.postEvent
+import com.fibelatti.raffler.core.provider.CoroutineLauncher
 import com.fibelatti.raffler.core.provider.ResourceProvider
-import com.fibelatti.raffler.core.provider.ThreadProvider
 import com.fibelatti.raffler.features.preferences.PreferencesRepository
 import javax.inject.Inject
 
@@ -17,8 +17,8 @@ class LotteryViewModel @Inject constructor(
     private val preferencesRepository: PreferencesRepository,
     private val lotteryNumberModelMapper: LotteryNumberModelMapper,
     private val resourceProvider: ResourceProvider,
-    threadProvider: ThreadProvider
-) : BaseViewModel(threadProvider) {
+    coroutineLauncher: CoroutineLauncher
+) : BaseViewModel(coroutineLauncher) {
 
     val defaultQuantityAvailable by lazy { MutableLiveData<String>() }
     val defaultQuantityToRaffle by lazy { MutableLiveData<String>() }

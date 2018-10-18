@@ -1,6 +1,7 @@
 package com.fibelatti.raffler.features.preferences.data
 
 import com.fibelatti.raffler.BaseTest
+import com.fibelatti.raffler.core.extension.callSuspend
 import com.fibelatti.raffler.core.extension.mock
 import com.fibelatti.raffler.core.extension.safeAny
 import com.fibelatti.raffler.core.extension.shouldBe
@@ -13,7 +14,6 @@ import com.fibelatti.raffler.core.persistence.CurrentInstallSharedPreferences
 import com.fibelatti.raffler.core.persistence.database.AppDatabase
 import com.fibelatti.raffler.core.platform.AppConfig
 import com.fibelatti.raffler.features.preferences.Preferences
-import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 import org.mockito.BDDMockito.given
@@ -44,85 +44,77 @@ class PreferencesDataSourceTest : BaseTest() {
     // region getPreferences
     @Test
     fun `WHEN getPreferences is called AND error is thrown THEN Failure is returned`() {
-        runBlocking {
-            // GIVEN
-            given(mockPreferencesDao.getPreferences())
-                .willReturn(emptyList())
+        // GIVEN
+        given(mockPreferencesDao.getPreferences())
+            .willReturn(emptyList())
 
-            // WHEN
-            val result = preferencesDataSource.getPreferences()
+        // WHEN
+        val result = callSuspend { preferencesDataSource.getPreferences() }
 
-            // THEN
-            result.shouldBeAnInstanceOf<Failure>()
-        }
+        // THEN
+        result.shouldBeAnInstanceOf<Failure>()
     }
 
     @Test
     fun `WHEN getPreferences is called AND Success(Preferences) is returned`() {
-        runBlocking {
-            // GIVEN
-            val mappedPreferences = Preferences(
-                id = 0,
-                appTheme = AppConfig.AppTheme.CLASSIC,
-                appLanguage = AppConfig.AppLanguage.ENGLISH,
-                lotteryDefaultQuantityAvailable = "0",
-                lotteryDefaultQuantityToRaffle = "0",
-                preferredRaffleMode = AppConfig.RaffleMode.NONE,
-                rouletteMusicEnabled = false,
-                rememberRaffledItems = false,
-                hintsDisplayed = mutableMapOf()
-            )
-            val expectedPreferences = Preferences(
-                id = 0,
-                appTheme = AppConfig.AppTheme.DARK,
-                appLanguage = AppConfig.AppLanguage.PORTUGUESE,
-                lotteryDefaultQuantityAvailable = "0",
-                lotteryDefaultQuantityToRaffle = "0",
-                preferredRaffleMode = AppConfig.RaffleMode.NONE,
-                rouletteMusicEnabled = false,
-                rememberRaffledItems = false,
-                hintsDisplayed = mutableMapOf()
-            )
+        // GIVEN
+        val mappedPreferences = Preferences(
+            id = 0,
+            appTheme = AppConfig.AppTheme.CLASSIC,
+            appLanguage = AppConfig.AppLanguage.ENGLISH,
+            lotteryDefaultQuantityAvailable = "0",
+            lotteryDefaultQuantityToRaffle = "0",
+            preferredRaffleMode = AppConfig.RaffleMode.NONE,
+            rouletteMusicEnabled = false,
+            rememberRaffledItems = false,
+            hintsDisplayed = mutableMapOf()
+        )
+        val expectedPreferences = Preferences(
+            id = 0,
+            appTheme = AppConfig.AppTheme.DARK,
+            appLanguage = AppConfig.AppLanguage.PORTUGUESE,
+            lotteryDefaultQuantityAvailable = "0",
+            lotteryDefaultQuantityToRaffle = "0",
+            preferredRaffleMode = AppConfig.RaffleMode.NONE,
+            rouletteMusicEnabled = false,
+            rememberRaffledItems = false,
+            hintsDisplayed = mutableMapOf()
+        )
 
-            given(mockPreferencesDao.getPreferences())
-                .willReturn(listOf(originalPreferences))
-            given(mockPreferencesDtoMapper.map(originalPreferences))
-                .willReturn(mappedPreferences)
-            given(mockCurrentInstallSharedPreferences.getTheme())
-                .willReturn(AppConfig.AppTheme.DARK)
-            given(mockCurrentInstallSharedPreferences.getAppLanguage())
-                .willReturn(AppConfig.AppLanguage.PORTUGUESE)
+        given(mockPreferencesDao.getPreferences())
+            .willReturn(listOf(originalPreferences))
+        given(mockPreferencesDtoMapper.map(originalPreferences))
+            .willReturn(mappedPreferences)
+        given(mockCurrentInstallSharedPreferences.getTheme())
+            .willReturn(AppConfig.AppTheme.DARK)
+        given(mockCurrentInstallSharedPreferences.getAppLanguage())
+            .willReturn(AppConfig.AppLanguage.PORTUGUESE)
 
-            // WHEN
-            val result = preferencesDataSource.getPreferences()
+        // WHEN
+        val result = callSuspend { preferencesDataSource.getPreferences() }
 
-            // THEN
-            result.shouldBeAnInstanceOf<Success<*>>()
-            result.getOrNull() shouldBe expectedPreferences
-        }
+        // THEN
+        result.shouldBeAnInstanceOf<Success<*>>()
+        result.getOrNull() shouldBe expectedPreferences
     }
     // endregion
 
     @Test
     fun `WHEN setAppTheme THEN CurrentInstallSharedPreferences setAppTheme is called`() {
-        runBlocking {
-            // WHEN
-            preferencesDataSource.setAppTheme(AppConfig.AppTheme.DARK)
+        // WHEN
+        callSuspend { preferencesDataSource.setAppTheme(AppConfig.AppTheme.DARK) }
 
-            // THEN
-            verify(mockCurrentInstallSharedPreferences).setAppTheme(AppConfig.AppTheme.DARK)
-        }
+        // THEN
+        verify(mockCurrentInstallSharedPreferences).setAppTheme(AppConfig.AppTheme.DARK)
     }
 
     @Test
     fun `WHEN setLanguage THEN CurrentInstallSharedPreferences setAppLanguage is called`() {
-        runBlocking {
-            // WHEN
-            preferencesDataSource.setLanguage(AppConfig.AppLanguage.SPANISH)
+        // WHEN
+        callSuspend { preferencesDataSource.setLanguage(AppConfig.AppLanguage.SPANISH) }
 
-            // THEN
-            verify(mockCurrentInstallSharedPreferences).setAppLanguage(AppConfig.AppLanguage.SPANISH)
-        }
+        // THEN
+        verify(mockCurrentInstallSharedPreferences).setAppLanguage(AppConfig.AppLanguage.SPANISH)
     }
 
     // region setRouletteMusicEnabled
@@ -377,50 +369,44 @@ class PreferencesDataSourceTest : BaseTest() {
         expectedResult: Boolean,
         methodCall: suspend () -> Boolean
     ) {
-        runBlocking {
-            // GIVEN
-            given(mockPreferencesDao.getPreferences())
-                .willReturn(repositoryResponse)
+        // GIVEN
+        given(mockPreferencesDao.getPreferences())
+            .willReturn(repositoryResponse)
 
-            // WHEN
-            val result = methodCall()
+        // WHEN
+        val result = callSuspend { methodCall() }
 
-            // THEN
-            result shouldBe expectedResult
-        }
+        // THEN
+        result shouldBe expectedResult
     }
 
     private fun testUpdatePreferencesError(methodCall: suspend () -> Result<Unit>) {
-        runBlocking {
-            // GIVEN
-            given(mockPreferencesDao.getPreferences())
-                .willReturn(emptyList())
+        // GIVEN
+        given(mockPreferencesDao.getPreferences())
+            .willReturn(emptyList())
 
-            // WHEN
-            val result = methodCall()
+        // WHEN
+        val result = callSuspend { methodCall() }
 
-            // THEN
-            result.shouldBeAnInstanceOf<Failure>()
-            verify(mockPreferencesDao, never()).setPreferences(safeAny())
-        }
+        // THEN
+        result.shouldBeAnInstanceOf<Failure>()
+        verify(mockPreferencesDao, never()).setPreferences(safeAny())
     }
 
     private fun testUpdatePreferences(
         updatedPreferences: PreferencesDto,
         methodCall: suspend () -> Result<Unit>
     ) {
-        runBlocking {
-            // GIVEN
-            given(mockPreferencesDao.getPreferences())
-                .willReturn(listOf(originalPreferences))
+        // GIVEN
+        given(mockPreferencesDao.getPreferences())
+            .willReturn(listOf(originalPreferences))
 
-            // WHEN
-            val result = methodCall()
+        // WHEN
+        val result = callSuspend { methodCall() }
 
-            // THEN
-            result.shouldBeAnInstanceOf<Success<*>>()
-            verify(mockPreferencesDao).setPreferences(updatedPreferences)
-        }
+        // THEN
+        result.shouldBeAnInstanceOf<Success<*>>()
+        verify(mockPreferencesDao).setPreferences(updatedPreferences)
     }
 
     private fun setupDatabaseTransaction() {
