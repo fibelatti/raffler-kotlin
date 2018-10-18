@@ -77,7 +77,7 @@ class CreateCustomRaffleViewModel @Inject constructor(
                 invalidItemDescriptionError.value = resourceProvider.getString(R.string.custom_raffle_create_invalid_description)
             }
             customRaffle.value?.items?.find { it.description == newItemDescription } != null -> {
-
+                invalidItemDescriptionError.value = resourceProvider.getString(R.string.custom_raffle_create_duplicate)
             }
             else -> {
                 val newItem = CustomRaffleItemModel.empty().copy(description = newItemDescription)
