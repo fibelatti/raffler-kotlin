@@ -11,7 +11,7 @@ inline fun <reified T> Context.getSystemService(): T? =
     ContextCompat.getSystemService(this, T::class.java)
 
 fun Context.getUpdateContextForLocale(): Context {
-    val locale = when (getUserPreferences().get<String>(KEY_APP_LANGUAGE)) {
+    val locale = when (getUserPreferences().get(KEY_APP_LANGUAGE, Locale.getDefault().language)) {
         AppConfig.AppLanguage.PORTUGUESE.value -> Locale("pt", "BR")
         AppConfig.AppLanguage.SPANISH.value -> Locale("es", "ES")
         else -> Locale("en", "US")
