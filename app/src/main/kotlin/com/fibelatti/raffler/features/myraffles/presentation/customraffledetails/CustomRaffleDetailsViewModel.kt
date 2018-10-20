@@ -106,6 +106,10 @@ class CustomRaffleDetailsViewModel @Inject constructor(
         startInBackground { preferencesRepository.setRaffleDetailsHintDismissed() }
     }
 
+    fun setCustomRaffleForContinuation(customRaffleModel: CustomRaffleModel) {
+        customRaffle.value = customRaffleModel
+    }
+
     private fun checkForHints() {
         startInBackground {
             if (!preferencesRepository.getRaffleDetailsHintDisplayed()) {

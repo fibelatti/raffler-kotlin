@@ -11,7 +11,9 @@ data class CustomRaffleVotingModel(
     val pin: Int,
     val totalVotes: Int,
     val votes: Map<String, Int>
-)
+) {
+    val mostVoted: Map<String, Int> = votes.filter { it.value == votes.values.max() }
+}
 
 class CustomRaffleVotingModelMapper @Inject constructor() : Mapper<CustomRaffleVoting, CustomRaffleVotingModel> {
     override fun map(param: CustomRaffleVoting): CustomRaffleVotingModel {

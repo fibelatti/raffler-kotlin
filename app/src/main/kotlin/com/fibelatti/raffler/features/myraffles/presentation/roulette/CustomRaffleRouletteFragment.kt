@@ -13,6 +13,7 @@ import com.fibelatti.raffler.core.extension.exhaustive
 import com.fibelatti.raffler.core.extension.observeEvent
 import com.fibelatti.raffler.core.extension.orFalse
 import com.fibelatti.raffler.core.platform.base.BaseFragment
+import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModel
 import com.fibelatti.raffler.features.myraffles.presentation.customraffledetails.CustomRaffleDetailsViewModel
 import kotlinx.android.synthetic.main.fragment_custom_raffle_roulette.*
 import javax.inject.Inject
@@ -56,7 +57,7 @@ class CustomRaffleRouletteFragment : BaseFragment() {
         setupAnimations()
         setupFactory()
 
-        customRaffleDetailsViewModel.customRaffle.value?.let {
+        withCustomRaffle {
             layoutTitle.setTitle(it.description)
 
             rouletteDelegate.setup(
@@ -89,7 +90,7 @@ class CustomRaffleRouletteFragment : BaseFragment() {
                     fab.setText(R.string.custom_raffle_roulette_hint_stopping)
                 }
                 CustomRaffleRouletteDelegate.RouletteStatus.IDLE -> {
-                    customRaffleDetailsViewModel.customRaffle.value?.let { customRaffleModel ->
+                    withCustomRaffle { customRaffleModel ->
                         rouletteDelegate.startRoulette(
                             customRaffleModel = customRaffleModel,
                             onRouletteStarted = ::onRouletteStarted,
@@ -126,7 +127,7 @@ class CustomRaffleRouletteFragment : BaseFragment() {
     }
 
     private fun onRouletteIndexUpdated(newIndex: Int) {
-        customRaffleDetailsViewModel.customRaffle.value?.let {
+        withCustomRaffle {
             textSwitcher?.setText(it.items[newIndex].description)
         }
     }
@@ -138,5 +139,9 @@ class CustomRaffleRouletteFragment : BaseFragment() {
             setText(R.string.custom_raffle_roulette_hint_play)
             setIconResource(R.drawable.ic_play)
         }
+    }
+
+    private fun withCustomRaffle(body: (CustomRaffleModel) -> Unit) {
+        customRaffleDetailsViewModel.customRaffle.value?.let(body)
     }
 }

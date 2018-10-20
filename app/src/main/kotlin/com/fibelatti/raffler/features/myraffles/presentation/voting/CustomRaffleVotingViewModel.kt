@@ -30,6 +30,8 @@ class CustomRaffleVotingViewModel @Inject constructor(
     val readyToVote by lazy { MutableLiveEvent<Unit>() }
     val results by lazy { MutableLiveEvent<List<BaseViewType>>() }
     val pinError by lazy { MutableLiveEvent<String>() }
+    val showTieBreaker by lazy { MutableLiveEvent<Unit>() }
+    val showRandomDecision by lazy { MutableLiveEvent<CustomRaffleModel>() }
 
     fun checkForOngoingVoting(customRaffle: CustomRaffleModel) {
         startInBackground {
@@ -95,14 +97,44 @@ class CustomRaffleVotingViewModel @Inject constructor(
         withVoting { voting ->
             if (voting.pin == pin.toInt()) {
                 startInBackground {
-                    formatVotingResults(voting).onSuccess {
+                    formatVotingResults(voting).onSuccess { list ->
                         customRaffleVotingDataSource.deleteCustomRaffleVoting(voting.customRaffleId)
-                        results.postEvent(it)
+                        results.postEvent(list)
+
+                        if (voting.mostVoted.size > 1) showTieBreaker.postEvent(Unit)
                     }
                 }
             } else {
                 pinError.postEvent(resourceProvider.getString(R.string.custom_raffle_voting_pin_incorrect))
             }
+        }
+    }
+
+    fun setupTieBreakVoting() {
+        withVoting { originalVoting ->
+            startInBackground {
+                val tieBreakVoting = originalVoting.copy(
+                    totalVotes = 0,
+                    votes = originalVoting.mostVoted.mapValues { 0 }
+                )
+
+                tieBreakVoting.let(customRaffleVotingModelMapper::mapReverse)
+                    .let { customRaffleVotingDataSource.saveCustomRaffleVoting(it) }
+                    .onSuccess {
+                        voting.postValue(tieBreakVoting)
+                        readyToVote.postEvent(Unit)
+                    }
+            }
+        }
+    }
+
+    fun setupRandomDecision(customRaffle: CustomRaffleModel) {
+        withVoting { voting ->
+            customRaffle.apply {
+                items.forEach { it.included = it.description in voting.mostVoted.keys }
+            }
+
+            showRandomDecision.postEvent(customRaffle)
         }
     }
 

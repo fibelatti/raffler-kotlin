@@ -150,8 +150,9 @@
 
     <string name="custom_raffle_voting_results_item_votes">{0,choice,0#No votes|1#1 vote (\'{1,number,percent}\' of total votes)|1&lt;{0} votes (\'{1,number,percent}\' of total votes)}</string>
 
-    <string name="custom_raffle_voting_tie_break">Tie break</string>
-    <string name="custom_raffle_voting_tie_break_description">The following items are tied:</string>
+    <string name="custom_raffle_voting_tie_break_description">It was not possible to get a single winner after the first round of voting. How do you want to decide between the options tied in first place?</string>
+    <string name="custom_raffle_voting_tie_break_vote_again">Vote again</string>
+    <string name="custom_raffle_voting_tie_break_decide_randomly">Decide randomly</string>
 
     <!-- Preferences -->
     <string name="preferences_changes_saved">Changes saved</string>
