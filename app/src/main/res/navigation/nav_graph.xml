@@ -101,7 +101,11 @@
             app:popExitAnim="@anim/slide_right_out" />
         <action
             android:id="@+id/action_fragmentCustomRaffleDetails_to_fragmentCustomRaffleVotingStart"
-            app:destination="@id/fragmentCustomRaffleVotingStart" />
+            app:destination="@id/fragmentCustomRaffleVotingStart"
+            app:enterAnim="@anim/slide_up"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_down" />
     </fragment>
 
     <fragment
@@ -132,10 +136,10 @@
         <action
             android:id="@+id/action_fragmentCustomRaffleVotingStart_to_fragmentCustomRaffleVotingMenu"
             app:destination="@id/fragmentCustomRaffleVotingMenu"
-            app:enterAnim="@anim/slide_right_in"
-            app:exitAnim="@anim/slide_left_out"
-            app:popEnterAnim="@anim/slide_left_in"
-            app:popExitAnim="@anim/slide_right_out"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_down"
             app:popUpTo="@id/fragmentCustomRaffleDetails" />
     </fragment>
 
@@ -143,6 +147,7 @@
         android:id="@+id/fragmentCustomRaffleVotingMenu"
         android:name="com.fibelatti.raffler.features.myraffles.presentation.voting.CustomRaffleVotingMenuFragment"
         tools:layout="@layout/fragment_custom_raffle_voting_menu">
+
         <action
             android:id="@+id/action_fragmentCustomRaffleVotingMenu_to_fragmentCustomRaffleVotingVote"
             app:destination="@id/fragmentCustomRaffleVotingVote"
@@ -150,12 +155,25 @@
             app:exitAnim="@anim/slide_left_out"
             app:popEnterAnim="@anim/slide_left_in"
             app:popExitAnim="@anim/slide_right_out" />
+        <action
+            android:id="@+id/action_fragmentCustomRaffleVotingMenu_to_fragmentCustomRaffleVotingResults"
+            app:destination="@id/fragmentCustomRaffleVotingResults"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_down"
+            app:popUpTo="@id/fragmentCustomRaffleDetails" />
     </fragment>
 
     <fragment
         android:id="@+id/fragmentCustomRaffleVotingVote"
         android:name="com.fibelatti.raffler.features.myraffles.presentation.voting.CustomRaffleVotingVoteFragment"
         tools:layout="@layout/fragment_custom_raffle_voting_vote" />
+
+    <fragment
+        android:id="@+id/fragmentCustomRaffleVotingResults"
+        android:name="com.fibelatti.raffler.features.myraffles.presentation.voting.CustomRaffleVotingResultsFragment"
+        tools:layout="@layout/fragment_custom_raffle_voting_results" />
 
     <fragment
         android:id="@+id/fragmentPreferences"

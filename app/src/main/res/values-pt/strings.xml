@@ -135,11 +135,7 @@
 
     <string name="custom_raffle_voting_confirm_vote">Confirma seu voto em %s?</string>
 
-    <plurals name="custom_raffle_voting_votes">
-        <item quantity="zero">0 votos</item>
-        <item quantity="one">%d voto</item>
-        <item quantity="other">%d votos</item>
-    </plurals>
+    <string name="custom_raffle_voting_votes">{0,choice,0#Nenhum voto|1#1 voto|1&lt;{0} votos}</string>
 
     <string name="custom_raffle_voting_see_results_description">Quando a votação estiver concluída pressione o botão abaixo para ver os resultados. Uma vez exibidos ninguém mais poderá votar.</string>
     <string name="custom_raffle_voting_see_results">Ver resultados</string>
@@ -149,6 +145,8 @@
     <string name="custom_raffle_voting_results_second_place">Segundo colocado</string>
     <string name="custom_raffle_voting_results_third_place">Terceiro colocado</string>
     <string name="custom_raffle_voting_results_others">Outros</string>
+
+    <string name="custom_raffle_voting_results_item_votes">{0,choice,0#Nenhum voto|1#1 voto (\'{1,number,#,##%}\' do total)|1&lt;{0} votos (\'{1,number,#,##%}\' do total)}</string>
 
     <string name="custom_raffle_voting_tie_break">Desempate</string>
     <string name="custom_raffle_voting_tie_break_description">As opções a seguir estão empatadas:</string>

@@ -136,10 +136,7 @@
 
     <string name="custom_raffle_voting_confirm_vote">Confirm your vote in %s?</string>
 
-    <plurals name="custom_raffle_voting_votes">
-        <item quantity="one">%d vote</item>
-        <item quantity="other">%d votes</item>
-    </plurals>
+    <string name="custom_raffle_voting_votes">{0,choice,0#No votes|1#1 vote|1&lt;{0} votes}</string>
 
     <string name="custom_raffle_voting_see_results_description">When the voting is finished tap the button below to see the results. Once the results are displayed nobody will be able to vote anymore.</string>
     <string name="custom_raffle_voting_see_results">See results</string>
@@ -149,6 +146,8 @@
     <string name="custom_raffle_voting_results_second_place">Second place</string>
     <string name="custom_raffle_voting_results_third_place">Third place</string>
     <string name="custom_raffle_voting_results_others">Others</string>
+
+    <string name="custom_raffle_voting_results_item_votes">{0,choice,0#No votes|1#1 vote (\'{1,number,#,##%}\' of total votes)|1&lt;{0} votes (\'{1,number,#,##%}\' of total votes)}</string>
 
     <string name="custom_raffle_voting_tie_break">Tie break</string>
     <string name="custom_raffle_voting_tie_break_description">The following items are tied:</string>

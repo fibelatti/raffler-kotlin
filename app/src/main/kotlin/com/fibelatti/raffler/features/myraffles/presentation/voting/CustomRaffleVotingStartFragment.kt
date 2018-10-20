@@ -58,10 +58,7 @@ class CustomRaffleVotingStartFragment : BaseFragment() {
             layoutTitle.setTitle(getString(R.string.custom_raffle_voting_title, customRaffle.description))
 
             buttonStartVoting.setOnClickListener {
-                customRaffleVotingViewModel.setupNewVoting(
-                    pin = editTextPin.textAsString(),
-                    customRaffle = customRaffle
-                )
+                customRaffleVotingViewModel.setupNewVoting(editTextPin.textAsString(), customRaffle)
             }
         }
 
@@ -77,10 +74,7 @@ class CustomRaffleVotingStartFragment : BaseFragment() {
 
         buttonResetVoting.setOnClickListener {
             withCustomRaffle { customRaffle ->
-                customRaffleVotingViewModel.setupNewVoting(
-                    pin = editTextPin.textAsString(),
-                    customRaffle = customRaffle
-                )
+                customRaffleVotingViewModel.setupNewVoting(editTextPin.textAsString(), customRaffle)
             }
         }
 

@@ -6,12 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import com.fibelatti.raffler.R
+import com.fibelatti.raffler.core.extension.hideKeyboard
 import com.fibelatti.raffler.core.extension.observe
-import com.fibelatti.raffler.core.extension.snackbar
+import com.fibelatti.raffler.core.extension.observeEvent
 import com.fibelatti.raffler.core.platform.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_custom_raffle_voting_menu.*
+import java.text.MessageFormat
 
-class CustomRaffleVotingMenuFragment : BaseFragment() {
+class CustomRaffleVotingMenuFragment :
+    BaseFragment(),
+    CustomRaffleVotingPinConfirmation by CustomRaffleVotingPinConfirmationDelegate() {
 
     private val customRaffleVotingViewModel by lazy {
         viewModelFactory.get<CustomRaffleVotingViewModel>(requireActivity())
@@ -21,6 +25,8 @@ class CustomRaffleVotingMenuFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         customRaffleVotingViewModel.run {
             observe(voting, ::showVotingDetails)
+            observeEvent(pinError, ::handlePinError)
+            observeEvent(results) { goToResults() }
         }
     }
 
@@ -44,13 +50,29 @@ class CustomRaffleVotingMenuFragment : BaseFragment() {
         }
 
         buttonSeeResults.setOnClickListener {
-            it.snackbar("See results clicked")
+            showPinConfirmation(requireContext(), customRaffleVotingViewModel::getVotingResults)
         }
     }
 
     private fun showVotingDetails(voting: CustomRaffleVotingModel) {
         layoutTitle.setTitle(getString(R.string.custom_raffle_voting_title, voting.description))
-        textViewTotalVotes.text = resources.getQuantityString(R.plurals.custom_raffle_voting_votes, voting.totalVotes, voting.totalVotes)
+        textViewTotalVotes.text =
+            MessageFormat.format(
+                resources.getText(R.string.custom_raffle_voting_votes).toString(),
+                voting.totalVotes
+            )
+    }
+
+    private fun handlePinError(message: String) {
+        showPinError(message)
+    }
+
+    private fun goToResults() {
+        dismissPinConfirmation()
+        layoutRoot.hideKeyboard()
+        layoutRoot.findNavController().navigate(
+            R.id.action_fragmentCustomRaffleVotingMenu_to_fragmentCustomRaffleVotingResults
+        )
     }
 
     private fun withVoting(body: (CustomRaffleVotingModel) -> Unit) {
