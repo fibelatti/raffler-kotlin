@@ -47,6 +47,11 @@ class PinEntryEditText @JvmOverloads constructor(
 
     var onMaxLengthReached: () -> Unit = {}
 
+    var onBackPressed: PinEntryEditText.() -> Unit = {
+        clearFocus()
+        hideKeyboard()
+    }
+
     init {
         setBackgroundResource(0)
 
@@ -129,8 +134,7 @@ class PinEntryEditText @JvmOverloads constructor(
 
     override fun onKeyPreIme(keyCode: Int, event: KeyEvent?): Boolean {
         if (event?.keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_UP) {
-            clearFocus()
-            hideKeyboard()
+            onBackPressed()
         }
 
         return super.onKeyPreIme(keyCode, event)

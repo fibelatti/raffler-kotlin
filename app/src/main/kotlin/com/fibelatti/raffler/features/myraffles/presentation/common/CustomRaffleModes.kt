@@ -52,7 +52,7 @@ class CustomRaffleModesDelegate : CustomRaffleModes {
     private fun BottomSheetDialog.setupMode(clickListener: (() -> Unit)?, groupView: View?, buttonView: Button?) {
         groupView?.visibleIf(clickListener != null)
         buttonView?.setOnClickListener {
-            clickListener?.invoke()
+            setOnDismissListener { clickListener?.invoke() }
             dismiss()
         }
     }
