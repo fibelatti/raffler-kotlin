@@ -10,10 +10,9 @@ import com.fibelatti.raffler.core.platform.base.BaseViewType
 import com.fibelatti.raffler.core.platform.postEvent
 import com.fibelatti.raffler.core.provider.CoroutineLauncher
 import com.fibelatti.raffler.core.provider.ResourceProvider
+import com.fibelatti.raffler.features.myraffles.FormatVotingResults
 import com.fibelatti.raffler.features.myraffles.data.CustomRaffleVotingDataSource
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModel
-import com.fibelatti.raffler.features.myraffles.presentation.voting.results.CustomRaffleVotingResultModel
-import com.fibelatti.raffler.features.myraffles.presentation.voting.results.CustomRaffleVotingResultTitleModel
 import javax.inject.Inject
 
 private const val MIN_PIN_LENGTH = 4
@@ -21,6 +20,7 @@ private const val MIN_PIN_LENGTH = 4
 class CustomRaffleVotingViewModel @Inject constructor(
     private val customRaffleVotingDataSource: CustomRaffleVotingDataSource,
     private val customRaffleVotingModelMapper: CustomRaffleVotingModelMapper,
+    private val formatVotingResults: FormatVotingResults,
     private val resourceProvider: ResourceProvider,
     coroutineLauncher: CoroutineLauncher
 ) : BaseViewModel(coroutineLauncher) {
@@ -94,53 +94,15 @@ class CustomRaffleVotingViewModel @Inject constructor(
     fun getVotingResults(pin: String) {
         withVoting { voting ->
             if (voting.pin == pin.toInt()) {
-                formatResults(voting)
+                startInBackground {
+                    formatVotingResults(voting).onSuccess {
+                        customRaffleVotingDataSource.deleteCustomRaffleVoting(voting.customRaffleId)
+                        results.postEvent(it)
+                    }
+                }
             } else {
                 pinError.postEvent(resourceProvider.getString(R.string.custom_raffle_voting_pin_incorrect))
             }
-        }
-    }
-
-    private fun formatResults(voting: CustomRaffleVotingModel) {
-        startInBackground {
-            val resultList = mutableListOf<BaseViewType>()
-            val titleOthers = CustomRaffleVotingResultTitleModel(
-                resourceProvider.getString(R.string.custom_raffle_voting_results_others)
-            )
-
-            voting.votes.toList().sortedByDescending { (_, value) -> value }
-                .groupBy { (_, value) -> value }.toList()
-                .forEachIndexed { index, (_, tiedCandidates) ->
-                    when {
-                        tiedCandidates.all { (_, numberOfVotes) -> numberOfVotes == 0 } -> {
-                            CustomRaffleVotingResultTitleModel(
-                                resourceProvider.getString(R.string.custom_raffle_voting_results_no_votes)
-                            )
-                        }
-                        index == 0 -> CustomRaffleVotingResultTitleModel(
-                            resourceProvider.getString(R.string.custom_raffle_voting_results_first_place)
-                        )
-                        index == 1 -> CustomRaffleVotingResultTitleModel(
-                            resourceProvider.getString(R.string.custom_raffle_voting_results_second_place)
-                        )
-                        index == 2 -> CustomRaffleVotingResultTitleModel(
-                            resourceProvider.getString(R.string.custom_raffle_voting_results_third_place)
-                        )
-                        else -> if (!resultList.contains(titleOthers)) titleOthers else null
-                    }?.let(resultList::add)
-
-                    tiedCandidates.forEach { (description, numberOfVotes) ->
-                        CustomRaffleVotingResultModel(
-                            description = description,
-                            numberOfVotes = numberOfVotes,
-                            percentOfTotalVotes = numberOfVotes / voting.totalVotes.toFloat()
-                        ).let(resultList::add)
-                    }
-                }
-
-            customRaffleVotingDataSource.deleteCustomRaffleVoting(voting.customRaffleId)
-
-            results.postEvent(resultList)
         }
     }
 
