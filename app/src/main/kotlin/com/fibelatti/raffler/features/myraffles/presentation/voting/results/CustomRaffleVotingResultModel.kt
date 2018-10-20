@@ -1,4 +1,4 @@
-package com.fibelatti.raffler.features.myraffles.presentation.voting
+package com.fibelatti.raffler.features.myraffles.presentation.voting.results
 
 data class CustomRaffleVotingResultModel(
     val description: String,

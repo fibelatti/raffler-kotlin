@@ -12,6 +12,7 @@ import com.fibelatti.raffler.core.provider.CoroutineLauncher
 import com.fibelatti.raffler.core.provider.ResourceProvider
 import com.fibelatti.raffler.features.myraffles.data.CustomRaffleVotingDataSource
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModel
+import com.fibelatti.raffler.features.myraffles.presentation.voting.results.CustomRaffleVotingResultModel
 import javax.inject.Inject
 
 private const val MIN_PIN_LENGTH = 4

@@ -1,4 +1,4 @@
-package com.fibelatti.raffler.features.myraffles.presentation.voting
+package com.fibelatti.raffler.features.myraffles.presentation.voting.vote
 
 import android.view.View
 import com.fibelatti.raffler.R

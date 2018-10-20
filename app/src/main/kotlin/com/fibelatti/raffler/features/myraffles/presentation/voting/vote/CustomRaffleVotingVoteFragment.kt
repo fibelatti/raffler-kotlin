@@ -1,4 +1,4 @@
-package com.fibelatti.raffler.features.myraffles.presentation.voting
+package com.fibelatti.raffler.features.myraffles.presentation.voting.vote
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,6 +11,8 @@ import com.fibelatti.raffler.core.extension.observeEvent
 import com.fibelatti.raffler.core.extension.withDefaultDecoration
 import com.fibelatti.raffler.core.extension.withLinearLayoutManager
 import com.fibelatti.raffler.core.platform.base.BaseFragment
+import com.fibelatti.raffler.features.myraffles.presentation.voting.CustomRaffleVotingModel
+import com.fibelatti.raffler.features.myraffles.presentation.voting.CustomRaffleVotingViewModel
 import kotlinx.android.synthetic.main.fragment_custom_raffle_voting_vote.*
 import javax.inject.Inject
 
