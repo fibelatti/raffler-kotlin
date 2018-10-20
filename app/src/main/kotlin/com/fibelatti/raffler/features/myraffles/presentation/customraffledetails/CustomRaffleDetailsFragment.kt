@@ -74,6 +74,10 @@ class CustomRaffleDetailsFragment :
         super.onViewCreated(view, savedInstanceState)
         setupLayout()
         setupRecyclerView()
+    }
+
+    override fun onResume() {
+        super.onResume()
         customRaffleDetailsViewModel.getCustomRaffleById(arguments?.customRaffleId)
     }
 
