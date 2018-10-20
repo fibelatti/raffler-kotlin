@@ -31,7 +31,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:visibility="gone"
-        app:constraint_referenced_ids="textViewTieBreakerDescription,buttonVoteAgain,buttonDecideRandomly" />
+        app:constraint_referenced_ids="layoutDividerTieBreaker,textViewTieBreakerDescription,buttonVoteAgain,buttonDecideRandomly" />
 
     <include
         android:id="@+id/layoutDividerTieBreaker"
