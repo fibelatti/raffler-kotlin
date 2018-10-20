@@ -23,6 +23,6 @@
         android:id="@+id/imageViewGo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/padding_small"
+        android:padding="@dimen/padding_xsmall"
         app:srcCompat="@drawable/ic_add_circle" />
 </LinearLayout>
