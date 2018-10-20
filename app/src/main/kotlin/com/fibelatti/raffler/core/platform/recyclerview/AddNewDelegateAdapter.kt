@@ -1,9 +1,8 @@
 package com.fibelatti.raffler.core.platform.recyclerview
 
-import android.view.ViewGroup
+import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.fibelatti.raffler.R
-import com.fibelatti.raffler.core.extension.inflate
 import com.fibelatti.raffler.core.extension.setShapeBackgroundColor
 import com.fibelatti.raffler.core.platform.base.BaseDelegateAdapter
 import com.fibelatti.raffler.core.platform.base.BaseViewType
@@ -14,17 +13,11 @@ class AddNewDelegateAdapter @Inject constructor() : BaseDelegateAdapter {
     var colorList: List<Int> = ArrayList()
     var clickListener: () -> Unit = {}
 
-    override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder = ViewHolder(parent)
+    override fun getLayoutRes(): Int = R.layout.list_item_add_new
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: BaseViewType) {
-        (holder as? ViewHolder)?.bind()
-    }
-
-    inner class ViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
-        parent.inflate(R.layout.list_item_add_new)
-    ) {
-        fun bind() = with(itemView) {
-            layoutRoot.setShapeBackgroundColor(colorList[layoutPosition % colorList.size])
+    override fun bindView(itemView: View, item: BaseViewType, viewHolder: RecyclerView.ViewHolder) {
+        with(itemView) {
+            layoutRoot.setShapeBackgroundColor(colorList[viewHolder.layoutPosition % colorList.size])
             setOnClickListener { clickListener() }
         }
     }
