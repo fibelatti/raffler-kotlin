@@ -149,8 +149,9 @@
 
     <string name="custom_raffle_voting_results_item_votes">{0,choice,0#Nenhum voto|1#1 voto (\'{1,number,percent}\' do total)|1&lt;{0} votos (\'{1,number,percent}\' do total)}</string>
 
-    <string name="custom_raffle_voting_tie_break">Desempate</string>
-    <string name="custom_raffle_voting_tie_break_description">As opções a seguir estão empatadas:</string>
+    <string name="custom_raffle_voting_tie_break_description">Não foi possível decidir o vencedor após a primeira rodada de votação. Como você quer escolher entre as opções empatadas em primeiro colocado?</string>
+    <string name="custom_raffle_voting_tie_break_vote_again">Votar novamente</string>
+    <string name="custom_raffle_voting_tie_break_decide_randomly">Decidir aleatoriamente</string>
 
     <!-- Preferences -->
     <string name="preferences_changes_saved">Alterações salvas</string>
