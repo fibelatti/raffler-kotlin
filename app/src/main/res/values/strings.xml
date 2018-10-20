@@ -148,7 +148,7 @@
     <string name="custom_raffle_voting_results_others">Others</string>
     <string name="custom_raffle_voting_results_no_votes">No votes</string>
 
-    <string name="custom_raffle_voting_results_item_votes">{0,choice,0#No votes|1#1 vote (\'{1,number,#,##%}\' of total votes)|1&lt;{0} votes (\'{1,number,#,##%}\' of total votes)}</string>
+    <string name="custom_raffle_voting_results_item_votes">{0,choice,0#No votes|1#1 vote (\'{1,number,percent}\' of total votes)|1&lt;{0} votes (\'{1,number,percent}\' of total votes)}</string>
 
     <string name="custom_raffle_voting_tie_break">Tie break</string>
     <string name="custom_raffle_voting_tie_break_description">The following items are tied:</string>

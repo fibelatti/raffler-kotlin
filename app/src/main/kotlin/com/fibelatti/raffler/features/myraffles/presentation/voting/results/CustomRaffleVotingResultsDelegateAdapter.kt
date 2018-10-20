@@ -11,6 +11,7 @@ import java.text.MessageFormat
 import javax.inject.Inject
 
 private const val ANIM_DURATION = 1000L
+private const val PROGRESS_MULTIPLIER = 100
 
 class CustomRaffleVotingResultsDelegateAdapter @Inject constructor() : BaseDelegateAdapter {
 
@@ -26,8 +27,11 @@ class CustomRaffleVotingResultsDelegateAdapter @Inject constructor() : BaseDeleg
                     item.percentOfTotalVotes
                 )
 
-                val anim = ProgressBarAnimation(progressBarPercent, from = 0f, to = item.percentOfTotalVotes)
-                    .apply { duration = ANIM_DURATION }
+                val anim = ProgressBarAnimation(
+                    progressBarPercent,
+                    from = 0f,
+                    to = item.percentOfTotalVotes * PROGRESS_MULTIPLIER
+                ).apply { duration = ANIM_DURATION }
 
                 progressBarPercent.startAnimation(anim)
             }

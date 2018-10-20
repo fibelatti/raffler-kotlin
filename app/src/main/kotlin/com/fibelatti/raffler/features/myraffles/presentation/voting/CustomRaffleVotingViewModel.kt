@@ -17,7 +17,6 @@ import com.fibelatti.raffler.features.myraffles.presentation.voting.results.Cust
 import javax.inject.Inject
 
 private const val MIN_PIN_LENGTH = 4
-private const val ONE_HUNDRED_PERCENT_MULTIPLIER = 100
 
 class CustomRaffleVotingViewModel @Inject constructor(
     private val customRaffleVotingDataSource: CustomRaffleVotingDataSource,
@@ -134,7 +133,7 @@ class CustomRaffleVotingViewModel @Inject constructor(
                         CustomRaffleVotingResultModel(
                             description = description,
                             numberOfVotes = numberOfVotes,
-                            percentOfTotalVotes = (numberOfVotes / voting.totalVotes.toFloat()) * ONE_HUNDRED_PERCENT_MULTIPLIER
+                            percentOfTotalVotes = numberOfVotes / voting.totalVotes.toFloat()
                         ).let(resultList::add)
                     }
                 }
