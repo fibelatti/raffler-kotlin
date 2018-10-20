@@ -35,7 +35,7 @@ class CustomRaffleVotingMenuFragment : BaseFragment() {
     }
 
     private fun setupLayout() {
-        layoutTitle.navigateUp { layoutRoot.findNavController().navigateUp() }
+        layoutTitle.setNavigateUp { layoutRoot.findNavController().navigateUp() }
 
         buttonNewVote.setOnClickListener {
             layoutRoot.findNavController().navigate(

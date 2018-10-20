@@ -48,7 +48,7 @@ class PreferencesCustomRaffleFragment :
 
     private fun setupLayout() {
         layoutTitle.setTitle(R.string.preferences_section_my_raffles)
-        layoutTitle.navigateUp { layoutRoot.findNavController().navigateUp() }
+        layoutTitle.setNavigateUp { layoutRoot.findNavController().navigateUp() }
     }
 
     private fun setupPreferredRaffleMode(raffleMode: AppConfig.RaffleMode) {

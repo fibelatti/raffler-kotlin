@@ -46,7 +46,7 @@ class CustomRaffleVotingVoteFragment : BaseFragment() {
     }
 
     private fun setupLayout() {
-        layoutTitle.navigateUp { layoutRoot.findNavController().navigateUp() }
+        layoutTitle.setNavigateUp { layoutRoot.findNavController().navigateUp() }
     }
 
     private fun setupRecyclerView() {

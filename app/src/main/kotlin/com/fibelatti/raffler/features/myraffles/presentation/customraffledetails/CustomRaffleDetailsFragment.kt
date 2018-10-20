@@ -78,7 +78,7 @@ class CustomRaffleDetailsFragment :
     }
 
     private fun setupLayout() {
-        layoutTitle.navigateUp { layoutRoot.findNavController().navigateUp() }
+        layoutTitle.setNavigateUp { layoutRoot.findNavController().navigateUp() }
 
         buttonEdit.setOnClickListener {
             layoutRoot.findNavController().navigate(

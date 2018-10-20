@@ -52,7 +52,7 @@ class CustomRaffleVotingStartFragment : BaseFragment() {
     }
 
     private fun setupLayout() {
-        layoutTitle.navigateUp { layoutRoot.findNavController().navigateUp() }
+        layoutTitle.setNavigateUp(R.drawable.ic_close) { layoutRoot.findNavController().navigateUp() }
 
         withCustomRaffle { customRaffle ->
             layoutTitle.setTitle(getString(R.string.custom_raffle_voting_title, customRaffle.description))

@@ -28,7 +28,7 @@ class TitleLayout @JvmOverloads constructor(
         textViewTitle.text = title
     }
 
-    fun navigateUp(@DrawableRes iconRes: Int = R.drawable.ic_back_arrow, navigateUp: () -> Unit) {
+    fun setNavigateUp(@DrawableRes iconRes: Int = R.drawable.ic_back_arrow, navigateUp: () -> Unit) {
         buttonNavigateBack.apply {
             setImageDrawable(context.getDrawable(iconRes))
             setOnClickListener { navigateUp() }
