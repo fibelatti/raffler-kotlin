@@ -9,6 +9,7 @@ import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.withDefaultDecoration
 import com.fibelatti.raffler.core.extension.withLinearLayoutManager
 import com.fibelatti.raffler.core.platform.base.BaseFragment
+import com.fibelatti.raffler.core.platform.base.BaseViewType
 import com.fibelatti.raffler.features.myraffles.presentation.voting.CustomRaffleVotingModel
 import com.fibelatti.raffler.features.myraffles.presentation.voting.CustomRaffleVotingViewModel
 import kotlinx.android.synthetic.main.fragment_custom_raffle_voting_results.*
@@ -57,7 +58,7 @@ class CustomRaffleVotingResultsFragment : BaseFragment() {
         customRaffleVotingViewModel.voting.value?.let(body)
     }
 
-    private fun withResults(body: (List<CustomRaffleVotingResultModel>) -> Unit) {
+    private fun withResults(body: (List<BaseViewType>) -> Unit) {
         customRaffleVotingViewModel.results.value?.peekContent()?.let(body)
     }
 }

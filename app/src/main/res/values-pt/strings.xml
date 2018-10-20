@@ -145,6 +145,7 @@
     <string name="custom_raffle_voting_results_second_place">Segundo colocado</string>
     <string name="custom_raffle_voting_results_third_place">Terceiro colocado</string>
     <string name="custom_raffle_voting_results_others">Outros</string>
+    <string name="custom_raffle_voting_results_no_votes">Sem votos</string>
 
     <string name="custom_raffle_voting_results_item_votes">{0,choice,0#Nenhum voto|1#1 voto (\'{1,number,#,##%}\' do total)|1&lt;{0} votos (\'{1,number,#,##%}\' do total)}</string>
 
