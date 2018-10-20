@@ -50,7 +50,7 @@ class CustomRaffleRouletteFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         layoutRoot.animateChangingTransitions()
-        layoutTitle.setNavigateUp { layoutRoot.findNavController().navigateUp() }
+        layoutTitle.setNavigateUp(R.drawable.ic_close) { layoutRoot.findNavController().navigateUp() }
 
         setupFab()
         setupAnimations()

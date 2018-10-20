@@ -74,7 +74,7 @@ class CustomRaffleRandomWinnersFragment : BaseFragment() {
 
     private fun setupLayout() {
         layoutTitle.setTitle(R.string.custom_raffle_details_mode_random_winners)
-        layoutTitle.setNavigateUp { layoutRoot.findNavController().navigateUp() }
+        layoutTitle.setNavigateUp(R.drawable.ic_close) { layoutRoot.findNavController().navigateUp() }
 
         buttonRaffle.setOnClickListener {
             customRaffleDetailsViewModel.customRaffle.value?.let { raffle ->

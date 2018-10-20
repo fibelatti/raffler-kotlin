@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
-import androidx.navigation.navOptions
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.withDefaultDecoration
 import com.fibelatti.raffler.core.extension.withLinearLayoutManager
@@ -15,12 +13,6 @@ import kotlinx.android.synthetic.main.fragment_custom_raffle_voting_results.*
 import javax.inject.Inject
 
 class CustomRaffleVotingResultsFragment : BaseFragment() {
-
-    companion object {
-        fun navigationOptions(): NavOptions = navOptions {
-            popUpTo = R.id.fragmentCustomRaffleDetails
-        }
-    }
 
     private val customRaffleVotingViewModel by lazy {
         viewModelFactory.get<CustomRaffleVotingViewModel>(requireActivity())
