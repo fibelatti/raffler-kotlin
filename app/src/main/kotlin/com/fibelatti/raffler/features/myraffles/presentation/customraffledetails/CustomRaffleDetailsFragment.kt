@@ -78,7 +78,7 @@ class CustomRaffleDetailsFragment :
     }
 
     private fun setupLayout() {
-        layoutTitle.setNavigateUp { layoutRoot.findNavController().navigateUp() }
+        layoutTitle.setNavigateUp(R.drawable.ic_close) { layoutRoot.findNavController().navigateUp() }
 
         buttonEdit.setOnClickListener {
             layoutRoot.findNavController().navigate(
