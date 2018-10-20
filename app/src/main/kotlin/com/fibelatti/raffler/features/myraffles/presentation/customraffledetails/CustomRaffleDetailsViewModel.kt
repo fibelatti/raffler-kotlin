@@ -43,20 +43,27 @@ class CustomRaffleDetailsViewModel @Inject constructor(
     val itemsRemaining by lazy { MutableLiveEvent<Int>() }
 
     init {
-        startInBackground {
-            checkForHints()
-            getCustomRaffleCount()
-        }
+        checkForHints()
+        getCustomRaffleCount()
     }
 
     fun getCustomRaffleById(id: Long?) {
-        start {
-            getPreferences()
+        startInBackground {
+            preferencesRepository.getPreferences()
+                .onSuccess {
+                    preferredRaffleMode.postValue(it.preferredRaffleMode)
+                    rouletteMusicEnabled.postValue(it.rouletteMusicEnabled)
+                    rememberRaffledItems.postValue(it.rememberRaffledItems)
+                }
+                .onFailure {
+                    preferredRaffleMode.postValue(AppConfig.RaffleMode.NONE)
+                    rouletteMusicEnabled.postValue(false)
+                    rememberRaffledItems.postValue(false)
+                }
 
-            callInBackground {
-                customRaffleRepository.getCustomRaffleById(id.orZero())
-                    .mapCatching(::prepareCustomRaffle)
-            }.onSuccess(customRaffle::setValue)
+            customRaffleRepository.getCustomRaffleById(id.orZero())
+                .mapCatching(::prepareCustomRaffle)
+                .onSuccess(customRaffle::postValue)
                 .onFailure(::handleError)
         }
     }
@@ -99,32 +106,20 @@ class CustomRaffleDetailsViewModel @Inject constructor(
         startInBackground { preferencesRepository.setRaffleDetailsHintDismissed() }
     }
 
-    private suspend fun checkForHints() {
-        callInBackground {
+    private fun checkForHints() {
+        startInBackground {
             if (!preferencesRepository.getRaffleDetailsHintDisplayed()) {
                 showHint.postEvent(Unit)
             }
         }
     }
 
-    private suspend fun getCustomRaffleCount() {
-        callInBackground { customRaffleRepository.getAllCustomRaffles() }
-            .onSuccess { customRaffleCount.postValue(it.size) }
-            .onFailure { customRaffleCount.postValue(1) }
-    }
-
-    private suspend fun getPreferences() {
-        callInBackground { preferencesRepository.getPreferences() }
-            .onSuccess {
-                preferredRaffleMode.value = it.preferredRaffleMode
-                rouletteMusicEnabled.value = it.rouletteMusicEnabled
-                rememberRaffledItems.value = it.rememberRaffledItems
-            }
-            .onFailure {
-                preferredRaffleMode.value = AppConfig.RaffleMode.NONE
-                rouletteMusicEnabled.value = false
-                rememberRaffledItems.value = false
-            }
+    private fun getCustomRaffleCount() {
+        startInBackground {
+            customRaffleRepository.getAllCustomRaffles()
+                .onSuccess { customRaffleCount.postValue(it.size) }
+                .onFailure { customRaffleCount.postValue(1) }
+        }
     }
 
     private fun prepareCustomRaffle(customRaffle: CustomRaffle): CustomRaffleModel =
