@@ -36,5 +36,5 @@
         style="@style/AppTheme.TextButton.White"
         android:layout_width="match_parent"
         android:layout_height="@dimen/button_height"
-        android:text="@string/hint_dismiss" />
+        android:text="@string/quick_decision_result_dismiss" />
 </LinearLayout>
