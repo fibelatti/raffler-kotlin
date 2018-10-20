@@ -29,19 +29,13 @@ class QuickDecisionModelMapper @Inject constructor() : Mapper<QuickDecision, Qui
     override fun mapReverse(param: QuickDecisionModel): QuickDecision = with(param) {
         QuickDecision(id, locale, description, values)
     }
-}
 
-class CustomRaffleToQuickDecisionMapper @Inject constructor() : Mapper<CustomRaffleModel, QuickDecision> {
-    override fun map(param: CustomRaffleModel): QuickDecision = with(param) {
+    fun map(param: CustomRaffleModel): QuickDecision = with(param) {
         QuickDecision(
             id = id.toString(),
             locale = AppConfig.LOCALE_NONE,
             description = description,
             values = items.map { it.description }
         )
-    }
-
-    override fun mapReverse(param: QuickDecision): CustomRaffleModel {
-        throw RuntimeException("Invalid mapReverse call.")
     }
 }

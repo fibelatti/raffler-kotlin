@@ -46,7 +46,7 @@ class PreferencesGeneralFragment : BaseFragment() {
 
     private fun setupLayout() {
         layoutTitle.setTitle(R.string.preferences_section_general)
-        layoutTitle.navigateUp { layoutRoot.findNavController().navigateUp() }
+        layoutTitle.setNavigateUp { layoutRoot.findNavController().navigateUp() }
         buttonResetHints.setOnClickListener { preferencesViewModel.resetAllHints() }
     }
 

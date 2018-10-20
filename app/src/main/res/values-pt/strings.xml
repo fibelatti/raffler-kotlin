@@ -63,6 +63,7 @@
     <string name="custom_raffle_edit_title">Editando %s</string>
     <string name="custom_raffle_create_remove_all_items">Apagar todos os itens</string>
     <string name="custom_raffle_create_invalid_description">Entre uma descrição válida.</string>
+    <string name="custom_raffle_create_duplicate">Já existe um item com esta descrição.</string>
     <string name="custom_raffle_create_invalid_items_quantity">O sorteio deve ter pelo menos 2 itens.</string>
 
     <!-- Custom Raffle - Details -->
@@ -77,15 +78,16 @@
     <string name="custom_raffle_details_mode_roulette_description">Escolha o vencedor de forma aleatória, com a clássica música do peão</string>
 
     <string name="custom_raffle_details_mode_random_winners">Sorteados aleatórios</string>
-    <string name="custom_raffle_details_mode_random_winners_description">Escolha a quantidade de sorteados e obtenha o resultado imediatamente</string>
+    <string name="custom_raffle_details_mode_random_winners_description">Defina a quantidade de sorteados e obtenha o resultado imediatamente</string>
 
     <string name="custom_raffle_details_mode_grouping">Agrupamento</string>
     <string name="custom_raffle_details_mode_grouping_description">Crie grupos a partir dos itens do sorteio, escolhendo quantos grupos criar ou quantos itens por grupo</string>
 
     <string name="custom_raffle_details_mode_combination">Combinação</string>
-    <string name="custom_raffle_details_mode_combination_description">Crie pares entre os itens de 2 sorteios</string>
+    <string name="custom_raffle_details_mode_combination_description">Crie pares entre os itens de 2 sorteios, útil para definir prêmios ou atribuir tarefas</string>
 
     <string name="custom_raffle_details_mode_secret_voting">Votação secreta</string>
+    <string name="custom_raffle_details_mode_secret_voting_description">Crie uma enquete e deixe a maioria decidir. Cada pessoa registra seu voto e o resultado estará disponível ao final da votação.</string>
 
     <!-- Custom Raffle - Roulette -->
     <string name="custom_raffle_roulette_hint_play">Rodar</string>
@@ -115,6 +117,39 @@
     <string name="custom_raffle_combination_invalid_quantity_too_few">Deve ser pelo menos 1</string>
     <string name="custom_raffle_combination_invalid_quantity_too_many">Deve ser no máximo %d</string>
     <string name="custom_raffle_combination_pair_title">Par #%d</string>
+
+    <!-- Custom Raffle - Voting -->
+    <string name="custom_raffle_voting_title">Votação para %s</string>
+    <string name="custom_raffle_voting_start_voting">Iniciar votação</string>
+    <string name="custom_raffle_voting_new_voting">Nova votação</string>
+    <string name="custom_raffle_voting_continue_voting">Continuar votação</string>
+    <string name="custom_raffle_voting_ongoing_voting">Já existe uma votação para esse sorteio. Você pode dar continuidade a ela ou iniciar uma nova votação, porém votos existentes serão perdidos.</string>
+    <string name="custom_raffle_voting_pin_instructions_new">Crie um pin de 4 dígitos para que somente você possa encerrar a votação antes de compartilhar os resultados:</string>
+    <string name="custom_raffle_voting_pin_instructions_existing">Confirme o pin de 4 dígitos utilizado para a criação desta votação:</string>
+
+    <string name="custom_raffle_voting_pin_invalid">Digite um pin de 4 dígitos.</string>
+    <string name="custom_raffle_voting_pin_incorrect">Pin incorreto, tente novamente.</string>
+
+    <string name="custom_raffle_voting_new_vote_description">Se você é o(a) próximo(a) a votar pressione o botão abaixo</string>
+    <string name="custom_raffle_voting_new_vote">Ver opções</string>
+
+    <string name="custom_raffle_voting_confirm_vote">Confirma seu voto em %s?</string>
+
+    <string name="custom_raffle_voting_votes">{0,choice,0#Nenhum voto|1#1 voto|1&lt;{0} votos}</string>
+
+    <string name="custom_raffle_voting_see_results_description">Quando a votação estiver concluída pressione o botão abaixo para ver os resultados. Uma vez exibidos ninguém mais poderá votar.</string>
+    <string name="custom_raffle_voting_see_results">Ver resultados</string>
+
+    <string name="custom_raffle_voting_results_title">Resultados da votação para %s</string>
+    <string name="custom_raffle_voting_results_first_place">Primeiro colocado</string>
+    <string name="custom_raffle_voting_results_second_place">Segundo colocado</string>
+    <string name="custom_raffle_voting_results_third_place">Terceiro colocado</string>
+    <string name="custom_raffle_voting_results_others">Outros</string>
+
+    <string name="custom_raffle_voting_results_item_votes">{0,choice,0#Nenhum voto|1#1 voto (\'{1,number,#,##%}\' do total)|1&lt;{0} votos (\'{1,number,#,##%}\' do total)}</string>
+
+    <string name="custom_raffle_voting_tie_break">Desempate</string>
+    <string name="custom_raffle_voting_tie_break_description">As opções a seguir estão empatadas:</string>
 
     <!-- Preferences -->
     <string name="preferences_changes_saved">Alterações salvas</string>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutRoot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/padding_regular"
+    android:paddingTop="@dimen/padding_xlarge"
+    android:paddingRight="@dimen/padding_regular"
+    android:paddingBottom="@dimen/padding_xlarge">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewMessage"
+        style="@style/AppTheme.Text.Body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_regular"
+        android:gravity="center"
+        android:text="@string/custom_raffle_voting_pin_instructions_existing" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputLayoutPin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.fibelatti.raffler.core.platform.customview.PinEntryEditText
+            android:id="@+id/editTextPin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="0000" />
+    </com.google.android.material.textfield.TextInputLayout>
+</LinearLayout>

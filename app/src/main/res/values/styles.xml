@@ -16,6 +16,7 @@
         <item name="fontFamily">@font/opensansregular</item>
         <item name="buttonStyle">@style/AppTheme.ButtonPrimary</item>
         <item name="checkboxStyle">@style/AppTheme.Checkbox</item>
+        <item name="pinEntryEditTextStyle">@style/AppTheme.PinEntryEditText</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -69,10 +70,24 @@
         <item name="android:textColor">@color/app_red</item>
     </style>
 
+    <style name="AppTheme.PinEntryEditText" parent="Base.Widget.AppCompat.EditText">
+        <item name="android:inputType">number</item>
+        <item name="android:maxLength">4</item>
+        <item name="android:cursorVisible">false</item>
+        <item name="android:textSize">@dimen/text_size_xlarge</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="pin_entry_activated">@color/color_accent</item>
+        <item name="pin_entry_focused">@color/color_primary</item>
+        <item name="pin_entry_not_focused">@color/color_grey</item>
+        <item name="pin_entry_error">@color/app_red</item>
+        <item name="char_spacing">@dimen/pin_entry_char_spacing</item>
+        <item name="line_spacing">@dimen/pin_entry_line_spacing</item>
+        <item name="line_stroke">@dimen/pin_entry_line_stroke</item>
+    </style>
+
     <style name="AppTheme.Checkbox" parent="Base.Widget.AppCompat.CompoundButton.CheckBox">
         <item name="android:textColor">@color/text_primary</item>
         <item name="android:textSize">@dimen/text_size_regular</item>
-        <item name="android:fontFamily">@font/opensansregular</item>
     </style>
 
     <style name="AppTheme.ButtonPrimary" parent="Base.Widget.AppCompat.Button.Borderless.Colored">
@@ -155,6 +170,15 @@
         <item name="android:paddingRight">@dimen/padding_small</item>
         <item name="android:textSize">@dimen/text_size_small</item>
         <item name="iconSize">@dimen/extended_fab_icon_size_small</item>
+    </style>
+
+    <style name="AppTheme.RecyclerView">
+        <item name="android:clipToPadding">false</item>
+        <item name="android:overScrollMode">never</item>
+        <item name="android:layout_marginTop">@dimen/margin_regular</item>
+        <item name="android:paddingLeft">@dimen/padding_regular</item>
+        <item name="android:paddingRight">@dimen/padding_regular</item>
+        <item name="android:paddingBottom">@dimen/padding_regular</item>
     </style>
 
     <style name="AppTheme.Text" />

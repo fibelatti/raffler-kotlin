@@ -115,11 +115,9 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewItems"
+        style="@style/AppTheme.RecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:clipToPadding="false"
-        android:overScrollMode="never"
-        android:padding="@dimen/padding_regular"
         app:layout_constraintBottom_toTopOf="@+id/dividerDeleteAll"
         app:layout_constraintTop_toBottomOf="@+id/layoutHintContainer"
         tools:listitem="@layout/list_item_create_custom_raffle_item" />

@@ -3,6 +3,7 @@ package com.fibelatti.raffler.core.platform.customview
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.fibelatti.raffler.R
@@ -27,10 +28,11 @@ class TitleLayout @JvmOverloads constructor(
         textViewTitle.text = title
     }
 
-    fun navigateUp(navigateUp: () -> Unit) {
+    fun setNavigateUp(@DrawableRes iconRes: Int = R.drawable.ic_back_arrow, navigateUp: () -> Unit) {
         buttonNavigateBack.apply {
-            visible()
+            setImageDrawable(context.getDrawable(iconRes))
             setOnClickListener { navigateUp() }
+            visible()
         }
     }
 }

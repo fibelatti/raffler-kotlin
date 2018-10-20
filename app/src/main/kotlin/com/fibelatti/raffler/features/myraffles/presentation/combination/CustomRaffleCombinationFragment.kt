@@ -69,7 +69,7 @@ class CustomRaffleCombinationFragment :
     }
 
     private fun setupLayout() {
-        layoutTitle.navigateUp { layoutRoot.findNavController().navigateUp() }
+        layoutTitle.setNavigateUp { layoutRoot.findNavController().navigateUp() }
 
         customRaffleDetailsViewModel.customRaffle.value?.let { raffle ->
             layoutTitle.setTitle(getString(R.string.custom_raffle_combination_title, raffle.description))

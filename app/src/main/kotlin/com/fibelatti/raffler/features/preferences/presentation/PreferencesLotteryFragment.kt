@@ -53,7 +53,7 @@ class PreferencesLotteryFragment : BaseFragment() {
 
     private fun setupLayout() {
         layoutTitle.setTitle(R.string.preferences_section_lottery)
-        layoutTitle.navigateUp { layoutRoot.findNavController().navigateUp() }
+        layoutTitle.setNavigateUp { layoutRoot.findNavController().navigateUp() }
 
         buttonLotteryDefaults.setOnClickListener {
             preferencesViewModel.setLotteryDefaultValues(

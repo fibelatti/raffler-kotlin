@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutRootVotingResultItem"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/selector_custom_raffle_item_background"
+    android:gravity="center_vertical"
+    android:minHeight="@dimen/list_item_row_height"
+    android:orientation="vertical"
+    android:padding="@dimen/padding_regular">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewAdditionalInfo"
+        style="@style/AppTheme.Text.SectionTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        tools:text="@string/custom_raffle_voting_results_first_place"
+        tools:visibility="visible" />
+
+    <include
+        android:id="@+id/layoutDivider"
+        layout="@layout/layout_divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_size"
+        android:layout_marginBottom="@dimen/margin_regular"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewDescription"
+        style="@style/AppTheme.Text.Body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Some custom raffle item" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewNumberOfVotes"
+        style="@style/AppTheme.Text.Detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="10 votes (50% of total)" />
+
+    <ProgressBar
+        android:id="@+id/progressBarPercent"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

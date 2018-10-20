@@ -18,7 +18,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin_regular"
             android:layout_marginRight="@dimen/margin_regular"
-            android:layout_marginBottom="@dimen/margin_regular"
             android:text="@string/quick_decision_add_new_title"
             app:layout_constraintBottom_toTopOf="@+id/recyclerViewItems"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -27,11 +26,9 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewItems"
+            style="@style/AppTheme.RecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:overScrollMode="never"
-            android:padding="@dimen/padding_regular"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewSelectCustomRaffleTitle"
             tools:listitem="@layout/list_item_create_custom_raffle_item" />

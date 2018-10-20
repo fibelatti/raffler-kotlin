@@ -8,8 +8,8 @@
     android:gravity="center_vertical"
     android:minHeight="@dimen/list_item_row_height"
     android:orientation="horizontal"
-    android:paddingLeft="@dimen/padding_small"
-    android:paddingRight="@dimen/padding_small">
+    android:paddingLeft="@dimen/padding_regular"
+    android:paddingRight="@dimen/padding_regular">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewCreateCustomRaffleItemDescription"

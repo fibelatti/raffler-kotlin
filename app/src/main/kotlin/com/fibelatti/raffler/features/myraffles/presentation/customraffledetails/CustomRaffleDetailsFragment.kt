@@ -78,7 +78,7 @@ class CustomRaffleDetailsFragment :
     }
 
     private fun setupLayout() {
-        layoutTitle.navigateUp { layoutRoot.findNavController().navigateUp() }
+        layoutTitle.setNavigateUp { layoutRoot.findNavController().navigateUp() }
 
         buttonEdit.setOnClickListener {
             layoutRoot.findNavController().navigate(
@@ -132,7 +132,8 @@ class CustomRaffleDetailsFragment :
             rouletteClickListener = { goToRoulette() },
             randomWinnersClickListener = { goToRandomWinners() },
             groupingClickListener = { goToGrouping() },
-            combinationClickListener = { goToCombination() }
+            combinationClickListener = { goToCombination() },
+            votingClickListener = { goToVoting() }
         )
     }
 
@@ -142,8 +143,7 @@ class CustomRaffleDetailsFragment :
             AppConfig.RaffleMode.RANDOM_WINNERS -> goToRandomWinners()
             AppConfig.RaffleMode.GROUPING -> goToGrouping()
             AppConfig.RaffleMode.COMBINATION -> goToCombination()
-            AppConfig.RaffleMode.SECRET_VOTING -> { // TODO
-            }
+            AppConfig.RaffleMode.SECRET_VOTING -> goToVoting()
             AppConfig.RaffleMode.NONE -> showRaffleModeSelector()
         }.exhaustive
     }
@@ -169,6 +169,12 @@ class CustomRaffleDetailsFragment :
     private fun goToCombination() {
         layoutRoot.findNavController().navigate(
             R.id.action_fragmentCustomRaffleDetails_to_fragmentCustomRaffleCombination
+        )
+    }
+
+    private fun goToVoting() {
+        layoutRoot.findNavController().navigate(
+            R.id.action_fragmentCustomRaffleDetails_to_fragmentCustomRaffleVotingStart
         )
     }
 }

@@ -74,7 +74,7 @@ fun EditText.clearText() {
 inline fun EditText.addTextChangedListener(
     crossinline beforeTextChanged: (charSequence: CharSequence, start: Int, count: Int, after: Int) -> Unit = { _, _, _, _ -> },
     crossinline onTextChanged: (charSequence: CharSequence, start: Int, before: Int, count: Int) -> Unit = { _, _, _, _ -> },
-    crossinline afterTextChanged: (text: String) -> Unit = { _ -> }
+    crossinline afterTextChanged: (text: String) -> Unit = {}
 ) {
     addTextChangedListener(object : TextWatcher {
         override fun beforeTextChanged(charSequence: CharSequence, start: Int, count: Int, after: Int) {

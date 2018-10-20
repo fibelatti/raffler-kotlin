@@ -7,6 +7,8 @@ import com.fibelatti.raffler.features.myraffles.data.CustomRaffleDao
 import com.fibelatti.raffler.features.myraffles.data.CustomRaffleDto
 import com.fibelatti.raffler.features.myraffles.data.CustomRaffleItemDao
 import com.fibelatti.raffler.features.myraffles.data.CustomRaffleItemDto
+import com.fibelatti.raffler.features.myraffles.data.CustomRaffleVotingDao
+import com.fibelatti.raffler.features.myraffles.data.CustomRaffleVotingDto
 import com.fibelatti.raffler.features.preferences.data.PreferencesDao
 import com.fibelatti.raffler.features.preferences.data.PreferencesDto
 import com.fibelatti.raffler.features.quickdecision.data.QuickDecisionDao
@@ -26,6 +28,7 @@ const val DATABASE_VERSION_5 = 5
         QuickDecisionDto::class,
         CustomRaffleDto::class,
         CustomRaffleItemDto::class,
+        CustomRaffleVotingDto::class,
         PreferencesDto::class
     ],
     version = DATABASE_VERSION_5,
@@ -33,11 +36,13 @@ const val DATABASE_VERSION_5 = 5
 )
 @TypeConverters(
     StringListTypeConverter::class,
-    MapStringBooleanTypeConverter::class
+    MapStringBooleanTypeConverter::class,
+    MapStringIntTypeConverter::class
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun getQuickDecisionDao(): QuickDecisionDao
     abstract fun getCustomRaffleDao(): CustomRaffleDao
     abstract fun getCustomRaffleItemDao(): CustomRaffleItemDao
+    abstract fun getCustomRaffleVotingDao(): CustomRaffleVotingDao
     abstract fun getPreferencesDao(): PreferencesDao
 }

@@ -10,6 +10,7 @@ import com.fibelatti.raffler.features.myraffles.presentation.customraffledetails
 import com.fibelatti.raffler.features.myraffles.presentation.grouping.CustomRaffleGroupingViewModel
 import com.fibelatti.raffler.features.myraffles.presentation.list.MyRafflesViewModel
 import com.fibelatti.raffler.features.myraffles.presentation.randomwinners.CustomRaffleRandomWinnersViewModel
+import com.fibelatti.raffler.features.myraffles.presentation.voting.CustomRaffleVotingViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -50,4 +51,9 @@ abstract class MyRafflesModule {
     @IntoMap
     @ViewModelKey(CustomRaffleCombinationViewModel::class)
     abstract fun bindCustomRaffleCombinationViewModel(customRaffleCombinationViewModel: CustomRaffleCombinationViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(CustomRaffleVotingViewModel::class)
+    abstract fun bindCustomRaffleVotingViewModel(customRaffleVotingViewModel: CustomRaffleVotingViewModel): ViewModel
 }

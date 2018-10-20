@@ -60,7 +60,7 @@ class CustomRaffleGroupingFragment : BaseFragment() {
 
     private fun setupLayout() {
         layoutTitle.setTitle(R.string.custom_raffle_details_mode_grouping)
-        layoutTitle.navigateUp { layoutRoot.findNavController().navigateUp() }
+        layoutTitle.setNavigateUp { layoutRoot.findNavController().navigateUp() }
 
         buttonRaffle.setOnClickListener {
             customRaffleDetailsViewModel.customRaffle.value?.let { raffle ->

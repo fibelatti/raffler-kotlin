@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PinEntryEditText">
+        <attr name="char_spacing" format="reference|dimension" />
+        <attr name="line_spacing" format="reference|dimension" />
+        <attr name="line_stroke" format="reference|dimension" />
+        <attr name="pin_entry_activated" format="reference|color" />
+        <attr name="pin_entry_focused" format="reference|color" />
+        <attr name="pin_entry_not_focused" format="reference|color" />
+        <attr name="pin_entry_error" format="reference|color" />
+    </declare-styleable>
+
+    <declare-styleable name="PinEntryEditTextDefStyle">
+        <attr name="pinEntryEditTextStyle" format="reference" />
+    </declare-styleable>
+</resources>

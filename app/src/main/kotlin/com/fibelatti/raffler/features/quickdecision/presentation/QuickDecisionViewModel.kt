@@ -63,8 +63,8 @@ class QuickDecisionViewModel @Inject constructor(
         startInBackground { preferencesRepository.setQuickDecisionHintDismissed() }
     }
 
-    private suspend fun checkForHints() {
-        callInBackground {
+    private fun checkForHints() {
+        startInBackground {
             if (!preferencesRepository.getQuickDecisionHintDisplayed()) {
                 showHint.postEvent(Unit)
             }

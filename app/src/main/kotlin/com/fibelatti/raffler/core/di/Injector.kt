@@ -9,6 +9,8 @@ import com.fibelatti.raffler.features.myraffles.presentation.grouping.CustomRaff
 import com.fibelatti.raffler.features.myraffles.presentation.list.MyRafflesFragment
 import com.fibelatti.raffler.features.myraffles.presentation.randomwinners.CustomRaffleRandomWinnersFragment
 import com.fibelatti.raffler.features.myraffles.presentation.roulette.CustomRaffleRouletteFragment
+import com.fibelatti.raffler.features.myraffles.presentation.voting.CustomRaffleVotingResultsFragment
+import com.fibelatti.raffler.features.myraffles.presentation.voting.CustomRaffleVotingVoteFragment
 import com.fibelatti.raffler.features.quickdecision.presentation.QuickDecisionFragment
 import com.fibelatti.raffler.features.quickdecision.presentation.addnew.AddNewQuickDecisionFragment
 
@@ -34,4 +36,8 @@ interface Injector {
     fun inject(customRaffleGroupingFragment: CustomRaffleGroupingFragment)
 
     fun inject(customRaffleCombinationFragment: CustomRaffleCombinationFragment)
+
+    fun inject(customRaffleVotingVoteFragment: CustomRaffleVotingVoteFragment)
+
+    fun inject(customRaffleVotingResultsFragment: CustomRaffleVotingResultsFragment)
 }

@@ -127,7 +127,7 @@ class CreateCustomRaffleFragment : BaseFragment() {
     }
 
     private fun setupLayout() {
-        layoutTitle.navigateUp { layoutRoot.findNavController().navigateUp() }
+        layoutTitle.setNavigateUp { layoutRoot.findNavController().navigateUp() }
 
         buttonSave.setOnClickListener { createCustomRaffleViewModel.save(checkboxAddShortcut.isChecked) }
 
