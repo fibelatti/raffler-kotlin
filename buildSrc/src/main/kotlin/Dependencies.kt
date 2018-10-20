@@ -14,8 +14,8 @@ object Versions {
     internal const val materialDesignVersion = "1.0.0"
     internal const val constraintLayoutVersion = "2.0.0-alpha1"
 
-    internal const val coroutinesCoreVersion = "0.30.0-eap13"
-    internal const val coroutinesAndroidVersion = "0.30.0-eap13"
+    internal const val coroutinesCoreVersion = "1.0.0-RC1"
+    internal const val coroutinesAndroidVersion = "1.0.0-RC1"
 
     internal const val archComponentsVersion = "2.0.0"
     internal const val navigationVersion = "1.0.0-alpha06"
