@@ -167,12 +167,12 @@
 
     <fragment
         android:id="@+id/fragmentCustomRaffleVotingVote"
-        android:name="com.fibelatti.raffler.features.myraffles.presentation.voting.CustomRaffleVotingVoteFragment"
+        android:name="com.fibelatti.raffler.features.myraffles.presentation.voting.vote.CustomRaffleVotingVoteFragment"
         tools:layout="@layout/fragment_custom_raffle_voting_vote" />
 
     <fragment
         android:id="@+id/fragmentCustomRaffleVotingResults"
-        android:name="com.fibelatti.raffler.features.myraffles.presentation.voting.CustomRaffleVotingResultsFragment"
+        android:name="com.fibelatti.raffler.features.myraffles.presentation.voting.results.CustomRaffleVotingResultsFragment"
         tools:layout="@layout/fragment_custom_raffle_voting_results" />
 
     <fragment

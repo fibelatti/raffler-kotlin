@@ -77,11 +77,10 @@
         app:layout_constraintBottom_toTopOf="@+id/buttonSeeResults"
         app:layout_constraintTop_toBottomOf="@+id/textViewTotalVotes" />
 
-    <com.google.android.material.button.MaterialButton
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/buttonSeeResults"
-        style="@style/AppTheme.ExtendedFab.Small"
+        style="@style/AppTheme.TextButton.Small"
         android:text="@string/custom_raffle_voting_see_results"
-        app:icon="@drawable/ic_random_winners"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

@@ -37,7 +37,7 @@ abstract class BaseAdapter<T> : RecyclerView.Adapter<BaseAdapter<T>.ViewHolder>(
     }
 }
 
-abstract class BaseAdapterWithDelegates : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+abstract class BaseAdapterWithDelegates : RecyclerView.Adapter<BaseAdapterWithDelegates.ViewHolder>() {
 
     protected val items: MutableList<BaseViewType> = mutableListOf()
 
@@ -45,12 +45,12 @@ abstract class BaseAdapterWithDelegates : RecyclerView.Adapter<RecyclerView.View
 
     override fun getItemCount(): Int = items.size
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        delegateAdapters[getItemViewType(position)]?.onBindViewHolder(holder, items[position])
+    override fun onBindViewHolder(holder: BaseAdapterWithDelegates.ViewHolder, position: Int) {
+        holder.bind(items[position])
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
-        delegateAdapters[viewType]?.onCreateViewHolder(parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseAdapterWithDelegates.ViewHolder =
+        delegateAdapters[viewType]?.getLayoutRes()?.let { ViewHolder(parent, it) }
             ?: throw RuntimeException("No adapter mapped to viewType: $viewType")
 
     override fun getItemViewType(position: Int): Int = items[position].getViewType()
@@ -60,12 +60,21 @@ abstract class BaseAdapterWithDelegates : RecyclerView.Adapter<RecyclerView.View
         this.items.addAll(items)
         notifyDataSetChanged()
     }
+
+    inner class ViewHolder(
+        parent: ViewGroup,
+        @LayoutRes layoutRes: Int
+    ) : RecyclerView.ViewHolder(parent.inflate(layoutRes)) {
+
+        fun bind(item: BaseViewType) = delegateAdapters[item.getViewType()]?.bindView(itemView, item, this)
+    }
 }
 
 interface BaseDelegateAdapter {
-    fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder
+    @LayoutRes
+    fun getLayoutRes(): Int
 
-    fun onBindViewHolder(holder: RecyclerView.ViewHolder, item: BaseViewType)
+    fun bindView(itemView: View, item: BaseViewType, viewHolder: RecyclerView.ViewHolder)
 }
 
 interface BaseViewType {
