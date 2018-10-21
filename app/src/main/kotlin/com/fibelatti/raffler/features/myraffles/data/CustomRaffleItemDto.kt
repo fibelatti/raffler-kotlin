@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.CASCADE
 import androidx.room.Ignore
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.fibelatti.raffler.core.functional.Mapper
 import com.fibelatti.raffler.features.myraffles.CustomRaffleItem
@@ -19,7 +20,8 @@ const val CUSTOM_RAFFLE_ITEM_CUSTOM_RAFFLE_ID_COLUMN_NAME = "customRaffleId"
         parentColumns = [CUSTOM_RAFFLE_ID_COLUMN_NAME],
         childColumns = [CUSTOM_RAFFLE_ITEM_CUSTOM_RAFFLE_ID_COLUMN_NAME],
         onDelete = CASCADE)
-    ]
+    ],
+    indices = [Index(CUSTOM_RAFFLE_ITEM_CUSTOM_RAFFLE_ID_COLUMN_NAME)]
 )
 data class CustomRaffleItemDto(
     @PrimaryKey(autoGenerate = true)
