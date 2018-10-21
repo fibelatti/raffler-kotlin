@@ -15,11 +15,11 @@ object AppConfig {
     }
 
     enum class RaffleMode(val value: String) {
-        NONE("None"),
-        ROULETTE("Roulette"),
-        RANDOM_WINNERS("Random Winners"),
-        GROUPING("Grouping"),
-        COMBINATION("Combination"),
-        SECRET_VOTING("Secret Voting")
+        NONE("none"),
+        ROULETTE("roulette"),
+        RANDOM_WINNERS("random_winners"),
+        GROUPING("grouping"),
+        COMBINATION("combination"),
+        SECRET_VOTING("secret_voting")
     }
 }
