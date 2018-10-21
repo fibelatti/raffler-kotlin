@@ -4,12 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.Navigation.findNavController
+import androidx.navigation.findNavController
 import androidx.transition.TransitionInflater
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.setShapeBackgroundColor
 import com.fibelatti.raffler.core.platform.BundleDelegate
 import com.fibelatti.raffler.core.platform.base.BaseFragment
+import com.fibelatti.raffler.core.platform.customview.ViewOnTouchListener
 import kotlinx.android.synthetic.main.fragment_quick_decision_result.*
 
 private var Bundle.transitionName by BundleDelegate.String("TRANSITION_NAME")
@@ -51,8 +52,12 @@ class QuickDecisionResultFragment
         arguments?.run {
             layoutQuickDecisionRoot.transitionName = transitionName
             layoutQuickDecisionRoot.setShapeBackgroundColor(color)
+            layoutQuickDecisionRoot.setOnTouchListener(ViewOnTouchListener().apply {
+                onTopToBottomSwipe = { layoutQuickDecisionRoot.findNavController().navigateUp() }
+            })
+
             textViewQuickDecisionName.text = title
-            textViewButtonDismiss.setOnClickListener { findNavController(layoutQuickDecisionRoot).navigateUp() }
+            textViewButtonDismiss.setOnClickListener { layoutQuickDecisionRoot.findNavController().navigateUp() }
             textViewResult.text = result
         }
     }
