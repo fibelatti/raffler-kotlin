@@ -67,6 +67,10 @@
     <!-- Custom Raffle - Details -->
     <string name="custom_raffle_details_dismissible_hint">Personalice cada sorteo fácilmente. Presione los artículos que los incluirá o los excluya del próximo sorteo.</string>
     <string name="custom_raffle_details_mode_invalid_quantity">Elige al menos 2 artículos para sortear.</string>
+
+    <string name="custom_raffle_details_include_all">Seleccionar todos</string>
+    <string name="custom_raffle_details_exclude_all">Deseleccionar todos</string>
+
     <string name="custom_raffle_details_mode_title">Elige el modo de sorteo</string>
     <string name="custom_raffle_details_mode_button">Elegir</string>
 

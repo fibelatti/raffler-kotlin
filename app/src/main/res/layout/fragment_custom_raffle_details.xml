@@ -33,17 +33,31 @@
         layout="@layout/layout_hint_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerViewItems"
+        app:layout_constraintBottom_toTopOf="@+id/textViewToggleAll"
         app:layout_constraintTop_toBottomOf="@+id/layoutTitle" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewToggleAll"
+        style="@style/AppTheme.TextButton.Link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_regular"
+        android:layout_marginTop="@dimen/margin_regular"
+        android:drawablePadding="@dimen/padding_regular"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerViewItems"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutHintContainer"
+        tools:text="@string/custom_raffle_details_include_all" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewItems"
         style="@style/AppTheme.RecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="0dp"
         android:layoutAnimation="@anim/custom_raffle_item_animation"
         app:layout_constraintBottom_toTopOf="@+id/buttonRaffle"
-        app:layout_constraintTop_toBottomOf="@+id/layoutHintContainer" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewToggleAll" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/buttonSelectMode"

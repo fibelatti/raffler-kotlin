@@ -64,6 +64,7 @@ class CustomRaffleDetailsFragment :
             observeEvent(invalidSelectionError, ::handleInvalidSelectionError)
             observeEvent(showModeSelector) { showRaffleModeSelector() }
             observeEvent(showPreferredRaffleMode) { showPreferredRaffleMode(it) }
+            observeEvent(toggleState, ::handleToggleState)
         }
     }
 
@@ -91,6 +92,8 @@ class CustomRaffleDetailsFragment :
                 CreateCustomRaffleFragment.navOptionsEdit()
             )
         }
+
+        textViewToggleAll.setOnClickListener { customRaffleDetailsViewModel.toggleAll() }
     }
 
     private fun setupRaffleButtons(raffleMode: AppConfig.RaffleMode) {
@@ -150,6 +153,13 @@ class CustomRaffleDetailsFragment :
             AppConfig.RaffleMode.SECRET_VOTING -> goToVoting()
             AppConfig.RaffleMode.NONE -> showRaffleModeSelector()
         }.exhaustive
+    }
+
+    private fun handleToggleState(toggleState: CustomRaffleDetailsViewModel.ToggleState) {
+        textViewToggleAll.setText(when (toggleState) {
+            CustomRaffleDetailsViewModel.ToggleState.INCLUDE_ALL -> R.string.custom_raffle_details_include_all
+            CustomRaffleDetailsViewModel.ToggleState.EXCLUDE_ALL -> R.string.custom_raffle_details_exclude_all
+        })
     }
 
     private fun goToRoulette() {

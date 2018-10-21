@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.orFalse
 import com.fibelatti.raffler.core.extension.orZero
+import com.fibelatti.raffler.core.functional.Success
 import com.fibelatti.raffler.core.functional.mapCatching
 import com.fibelatti.raffler.core.functional.onFailure
 import com.fibelatti.raffler.core.functional.onSuccess
@@ -41,6 +42,7 @@ class CustomRaffleDetailsViewModel @Inject constructor(
     val showModeSelector by lazy { MutableLiveEvent<Unit>() }
     val showPreferredRaffleMode by lazy { MutableLiveEvent<AppConfig.RaffleMode>() }
     val itemsRemaining by lazy { MutableLiveEvent<Int>() }
+    val toggleState by lazy { MutableLiveEvent<ToggleState>() }
 
     init {
         checkForHints()
@@ -63,16 +65,24 @@ class CustomRaffleDetailsViewModel @Inject constructor(
 
             customRaffleRepository.getCustomRaffleById(id.orZero())
                 .mapCatching(::prepareCustomRaffle)
-                .onSuccess(customRaffle::postValue)
+                .onSuccess { raffle ->
+                    customRaffle.postValue(raffle)
+                    toggleState.postEvent(when {
+                        raffle.items.any { !it.included } -> ToggleState.INCLUDE_ALL
+                        raffle.items.all { !it.included } -> ToggleState.INCLUDE_ALL
+                        else -> ToggleState.EXCLUDE_ALL
+                    })
+                }
                 .onFailure(::handleError)
         }
     }
 
     fun updateItemSelection(index: Int, isSelected: Boolean) {
-        customRaffle.value?.run {
-            customRaffle.value = apply { items[index].included = isSelected }
-
-            startInBackground { rememberRaffled(RememberRaffled.Params(items[index], isSelected)) }
+        withCustomRaffle {
+            startInBackground {
+                rememberRaffled(RememberRaffled.Params(it.items[index], isSelected))
+                customRaffle.postValue(it.apply { it.items[index].included = isSelected })
+            }
         }
     }
 
@@ -86,16 +96,17 @@ class CustomRaffleDetailsViewModel @Inject constructor(
 
     fun itemRaffled(vararg index: Int) {
         if (rememberRaffledItems.value == true) {
-            start {
-                customRaffle.value?.run {
-                    callInBackground {
-                        index.forEach { rememberRaffled(RememberRaffled.Params(items[it], included = false)) }
+            withCustomRaffle { raffle ->
+                startInBackground {
+                    val rememberRaffleResult = index.map { rememberRaffled(RememberRaffled.Params(raffle.items[it], included = false)) }
 
-                        customRaffleRepository.getCustomRaffleById(id.orZero())
+                    if (rememberRaffleResult.all { it is Success }) {
+                        customRaffleRepository.getCustomRaffleById(raffle.id.orZero())
                             .mapCatching(::prepareCustomRaffle)
-                    }.onSuccess {
-                        customRaffle.value = it
-                        itemsRemaining.setEvent(it.includedItems.size)
+                            .onSuccess {
+                                customRaffle.postValue(it)
+                                itemsRemaining.setEvent(it.includedItems.size)
+                            }
                     }
                 }
             }
@@ -108,6 +119,26 @@ class CustomRaffleDetailsViewModel @Inject constructor(
 
     fun setCustomRaffleForContinuation(customRaffleModel: CustomRaffleModel) {
         customRaffle.value = customRaffleModel
+    }
+
+    fun toggleAll() {
+        withCustomRaffle { raffle ->
+            withToggleState { state ->
+                startInBackground {
+                    val rememberRaffleResult = raffle.items.map {
+                        rememberRaffled(RememberRaffled.Params(it, included = state == ToggleState.INCLUDE_ALL))
+                    }
+
+                    if (rememberRaffleResult.all { it is Success }) {
+                        customRaffle.postValue(raffle.apply { items.forEach { it.included = state == ToggleState.INCLUDE_ALL } })
+                        toggleState.postEvent(when (state) {
+                            ToggleState.INCLUDE_ALL -> ToggleState.EXCLUDE_ALL
+                            ToggleState.EXCLUDE_ALL -> ToggleState.INCLUDE_ALL
+                        })
+                    }
+                }
+            }
+        }
     }
 
     private fun checkForHints() {
@@ -137,5 +168,17 @@ class CustomRaffleDetailsViewModel @Inject constructor(
         } else {
             invalidSelectionError.setEvent(resourceProvider.getString(R.string.custom_raffle_details_mode_invalid_quantity))
         }
+    }
+
+    private fun withCustomRaffle(body: (CustomRaffleModel) -> Unit) {
+        customRaffle.value?.let(body)
+    }
+
+    private fun withToggleState(body: (ToggleState) -> Unit) {
+        toggleState.value?.peekContent()?.let(body)
+    }
+
+    enum class ToggleState {
+        INCLUDE_ALL, EXCLUDE_ALL
     }
 }
