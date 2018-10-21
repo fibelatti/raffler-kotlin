@@ -47,20 +47,10 @@ public class AppResourceProvider implements ResourceProvider {
     @Nullable
     @Override
     public <T> T getJsonFromAssets(@NotNull String fileName, @NotNull TypeToken<T> type) {
-        InputStreamReader reader = null;
-        try {
-            reader = new InputStreamReader(context.getAssets().open(fileName));
+        try (InputStreamReader reader = new InputStreamReader(context.getAssets().open(fileName))) {
             return gson.fromJson(reader, type.getType());
         } catch (Exception exception) {
             Log.d(TAG, TAG + ".getJsonFromAssets", exception);
-        } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (Exception ignored) {
-
-                }
-            }
         }
 
         return null;
