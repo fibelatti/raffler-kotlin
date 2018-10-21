@@ -37,66 +37,70 @@ object MigrationFrom4To5 : Migration(DATABASE_VERSION_4, DATABASE_VERSION_5) {
     override fun migrate(database: SupportSQLiteDatabase) {
         logMigration()
 
-        // region Migration helpers
-        fun migrateGroupsToCustomRaffle() {
-            try {
-                // Migrate old data
-                database.execSQL("INSERT INTO `CustomRaffle` " +
-                    "SELECT _id, group_name FROM groups")
-                database.execSQL("INSERT INTO `CustomRaffleItem` " +
-                    "SELECT _id, group_id, item_name FROM group_items")
+        // Drop legacy tables
+        database.execSQL("DROP TABLE IF EXISTS quick_decision")
 
-                // Drop old tables
-                database.execSQL("DROP TABLE IF EXISTS groups")
-                database.execSQL("DROP TABLE IF EXISTS group_items")
+        // region Create new tables
+        database.execSQL("CREATE TABLE IF NOT EXISTS `QuickDecision` (`id` TEXT NOT NULL, " +
+            "`locale` TEXT NOT NULL, `description` TEXT NOT NULL, `values` TEXT NOT NULL, " +
+            "PRIMARY KEY(`id`, `locale`))")
 
-                logLegacySuccess()
-            } catch (e: Exception) {
-                logLegacyError()
-            }
-        }
+        database.execSQL("CREATE TABLE IF NOT EXISTS `CustomRaffle` " +
+            "(`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `description` TEXT NOT NULL)")
+        database.execSQL("CREATE TABLE IF NOT EXISTS `CustomRaffleItem` " +
+            "(`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `customRaffleId` INTEGER NOT NULL, " +
+            "`description` TEXT NOT NULL, `included` INTEGER NOT NULL, " +
+            "FOREIGN KEY(`customRaffleId`) REFERENCES `CustomRaffle`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )")
+        database.execSQL("CREATE  INDEX `index_CustomRaffleItem_customRaffleId` " +
+            "ON `CustomRaffleItem` (`customRaffleId`)")
 
-        fun migrateSettingsToPreferences() {
-            try {
-                // Migrate old data
-                database.execSQL("INSERT INTO `Preferences`" +
-                    "SELECT 1, roulette_music_enabled, '' FROM settings")
+        database.execSQL("CREATE TABLE IF NOT EXISTS `CustomRaffleVoting` " +
+            "(`customRaffleId` INTEGER NOT NULL, `description` TEXT NOT NULL, " +
+            "`pin` INTEGER NOT NULL, `totalVotes` INTEGER NOT NULL, `votes` TEXT NOT NULL, " +
+            "PRIMARY KEY(`customRaffleId`), FOREIGN KEY(`customRaffleId`) " +
+            "REFERENCES `CustomRaffle`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )")
 
-                // Drop old table
-                database.execSQL("DROP TABLE IF EXISTS settings")
+        database.execSQL("CREATE TABLE IF NOT EXISTS `Preferences` " +
+            "(`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+            "`lotteryDefaultQuantityAvailable` INTEGER NOT NULL, " +
+            "`lotteryDefaultQuantityToRaffle` INTEGER NOT NULL, " +
+            "`preferredRaffleMode` TEXT NOT NULL, `rouletteMusicEnabled` INTEGER NOT NULL, " +
+            "`rememberRaffledItems` INTEGER NOT NULL, `hintsDisplayed` TEXT NOT NULL)")
+        // endregion
 
-                logLegacySuccess()
-            } catch (e: Exception) {
-                logLegacyError()
+        // Region migrate settings to Preferences
+        try {
+            // Migrate old data
+            database.execSQL("INSERT INTO `Preferences`" +
+                "SELECT 1, 0, 0, '', roulette_music_enabled, 0, '' FROM settings")
 
-                database.execSQL(PREFERENCES_TABLE_INITIAL_SETUP)
-            }
-        }
+            // Drop old table
+            database.execSQL("DROP TABLE IF EXISTS settings")
 
-        fun createNewTables() {
-            database.execSQL("CREATE TABLE IF NOT EXISTS `QuickDecision` (`id` TEXT NOT NULL, " +
-                "`locale` TEXT NOT NULL, `description` TEXT NOT NULL, `values` TEXT NOT NULL, " +
-                "PRIMARY KEY(`id`, `locale`))")
+            logLegacySuccess()
+        } catch (e: Exception) {
+            logLegacyError()
 
-            database.execSQL("CREATE TABLE IF NOT EXISTS `CustomRaffle` " +
-                "(`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `description` TEXT NOT NULL)")
-            database.execSQL("CREATE TABLE IF NOT EXISTS `CustomRaffleItem` " +
-                "(`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `customRaffleId` INTEGER NOT NULL, " +
-                "`description` TEXT NOT NULL, FOREIGN KEY(`customRaffleId`) REFERENCES " +
-                "`CustomRaffle`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )")
-
-            database.execSQL("CREATE TABLE IF NOT EXISTS `Preferences` " +
-                "(`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-                "`rouletteMusicEnabled` INTEGER NOT NULL, " +
-                "`hintsDisplayed` TEXT NOT NULL)")
+            database.execSQL(PREFERENCES_TABLE_INITIAL_SETUP)
         }
         // endregion
 
-        // region Actual migration steps
-        database.execSQL("DROP TABLE IF EXISTS `quick_decision`")
-        createNewTables()
-        migrateSettingsToPreferences()
-        migrateGroupsToCustomRaffle()
+        // region Migrate groups to CustomRaffle
+        try {
+            // Migrate old data
+            database.execSQL("INSERT INTO `CustomRaffle` " +
+                "SELECT _id, group_name FROM groups")
+            database.execSQL("INSERT INTO `CustomRaffleItem` " +
+                "SELECT _id, group_id, item_name, 1 FROM group_items")
+
+            // Drop old tables
+            database.execSQL("DROP TABLE IF EXISTS groups")
+            database.execSQL("DROP TABLE IF EXISTS group_items")
+
+            logLegacySuccess()
+        } catch (e: Exception) {
+            logLegacyError()
+        }
         // endregion
     }
 }
