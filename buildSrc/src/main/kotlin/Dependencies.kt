@@ -4,7 +4,7 @@ object Versions {
     const val dexCountPlugin = "0.8.2"
     const val jacocoVersion = "0.8.1"
 
-    const val minSdkVersion = 21
+    const val minSdkVersion = 19
     const val targetSdkVersion = 28
     const val compileSdkVersion = 28
 
