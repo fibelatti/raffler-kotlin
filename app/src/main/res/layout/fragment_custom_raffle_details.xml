@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/padding_regular">
+
+    <com.fibelatti.raffler.core.platform.customview.TitleLayout
+        android:id="@+id/layoutTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_regular"
+        android:layout_marginRight="@dimen/margin_regular"
+        app:layout_constraintBottom_toTopOf="@+id/layoutHintContainer"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/buttonEdit"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonEdit"
+        style="@style/AppTheme.ButtonPrimary.Small"
+        android:layout_marginRight="@dimen/margin_regular"
+        android:text="@string/hint_edit"
+        app:layout_constraintLeft_toRightOf="@+id/layoutTitle"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/layoutTitle" />
+
+    <include
+        android:id="@+id/layoutHintContainer"
+        layout="@layout/layout_hint_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/textViewToggleAll"
+        app:layout_constraintTop_toBottomOf="@+id/layoutTitle" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewToggleAll"
+        style="@style/AppTheme.TextButton.Link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_regular"
+        android:layout_marginTop="@dimen/margin_regular"
+        android:drawablePadding="@dimen/padding_regular"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerViewItems"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutHintContainer"
+        tools:text="@string/custom_raffle_details_include_all" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewItems"
+        style="@style/AppTheme.RecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="0dp"
+        android:layoutAnimation="@anim/custom_raffle_item_animation"
+        app:layout_constraintBottom_toTopOf="@+id/buttonRaffle"
+        app:layout_constraintTop_toBottomOf="@+id/textViewToggleAll" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/buttonSelectMode"
+        style="@style/AppTheme.TextButton"
+        android:layout_width="0dp"
+        android:layout_margin="@dimen/margin_regular"
+        android:text="@string/my_raffles_select_mode_button"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/buttonRaffle"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerViewItems"
+        tools:visibility="visible" />
+
+    <Button
+        android:id="@+id/buttonRaffle"
+        style="@style/AppTheme.ButtonPrimary"
+        android:layout_width="0dp"
+        android:layout_margin="@dimen/margin_regular"
+        android:text="@string/hint_raffle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/buttonSelectMode"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerViewItems" />
+</androidx.constraintlayout.widget.ConstraintLayout>

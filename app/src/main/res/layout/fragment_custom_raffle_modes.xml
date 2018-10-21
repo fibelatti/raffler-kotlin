@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutRoot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/padding_regular"
+        android:paddingRight="@dimen/padding_regular"
+        android:paddingBottom="@dimen/padding_xlarge">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewChooseModeTitle"
+            style="@style/AppTheme.Text.Title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_regular"
+            android:text="@string/custom_raffle_details_mode_title"
+            app:layout_constraintBottom_toTopOf="@+id/textViewRouletteTitle"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/buttonRoulette"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Roulette -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewRouletteTitle"
+            style="@style/AppTheme.Text.Body"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/custom_raffle_details_mode_roulette"
+            app:layout_constraintBottom_toTopOf="@+id/textViewRouletteDescription"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/buttonRoulette"
+            app:layout_constraintTop_toBottomOf="@+id/textViewChooseModeTitle" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewRouletteDescription"
+            style="@style/AppTheme.Text.Detail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/custom_raffle_details_mode_roulette_description"
+            app:layout_constraintBottom_toTopOf="@+id/dividerRoulette"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/buttonRoulette"
+            app:layout_constraintTop_toBottomOf="@+id/textViewRouletteTitle" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonRoulette"
+            style="@style/AppTheme.ExtendedFab.Small"
+            android:layout_marginLeft="@dimen/margin_regular"
+            android:text="@string/custom_raffle_details_mode_button"
+            app:icon="@drawable/ic_roulette"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewRouletteDescription"
+            app:layout_constraintLeft_toRightOf="@+id/textViewRouletteDescription"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textViewRouletteTitle" />
+
+        <include
+            android:id="@+id/dividerRoulette"
+            layout="@layout/layout_divider"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_size"
+            android:layout_marginTop="@dimen/margin_regular"
+            android:layout_marginBottom="@dimen/margin_regular"
+            app:layout_constraintBottom_toTopOf="@+id/textViewRandomWinnersTitle"
+            app:layout_constraintTop_toBottomOf="@+id/textViewRouletteDescription" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/groupRouletteViews"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:constraint_referenced_ids="textViewRouletteTitle,textViewRouletteDescription,buttonRoulette,dividerRoulette" />
+
+        <!-- Random winners -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewRandomWinnersTitle"
+            style="@style/AppTheme.Text.Body"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/custom_raffle_details_mode_random_winners"
+            app:layout_constraintBottom_toTopOf="@+id/textViewRandomWinnersDescription"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/buttonRandomWinners"
+            app:layout_constraintTop_toBottomOf="@+id/dividerRoulette" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewRandomWinnersDescription"
+            style="@style/AppTheme.Text.Detail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/custom_raffle_details_mode_random_winners_description"
+            app:layout_constraintBottom_toTopOf="@+id/dividerRandomWinners"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/buttonRandomWinners"
+            app:layout_constraintTop_toBottomOf="@+id/textViewRandomWinnersTitle" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonRandomWinners"
+            style="@style/AppTheme.ExtendedFab.Small"
+            android:layout_marginLeft="@dimen/margin_regular"
+            android:text="@string/custom_raffle_details_mode_button"
+            app:icon="@drawable/ic_random_winners"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewRandomWinnersDescription"
+            app:layout_constraintLeft_toRightOf="@+id/textViewRandomWinnersDescription"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textViewRandomWinnersTitle" />
+
+        <include
+            android:id="@+id/dividerRandomWinners"
+            layout="@layout/layout_divider"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_size"
+            android:layout_marginTop="@dimen/margin_regular"
+            android:layout_marginBottom="@dimen/margin_regular"
+            app:layout_constraintBottom_toTopOf="@+id/textViewGroupingTitle"
+            app:layout_constraintTop_toBottomOf="@+id/textViewRandomWinnersDescription" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/groupRandomWinnersViews"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:constraint_referenced_ids="textViewRandomWinnersTitle,textViewRandomWinnersDescription,buttonRandomWinners,dividerRandomWinners" />
+
+        <!-- Grouping -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewGroupingTitle"
+            style="@style/AppTheme.Text.Body"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/custom_raffle_details_mode_grouping"
+            app:layout_constraintBottom_toTopOf="@+id/textViewGroupingDescription"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/buttonGrouping"
+            app:layout_constraintTop_toBottomOf="@+id/dividerRandomWinners" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewGroupingDescription"
+            style="@style/AppTheme.Text.Detail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/custom_raffle_details_mode_grouping_description"
+            app:layout_constraintBottom_toTopOf="@+id/dividerGrouping"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/buttonGrouping"
+            app:layout_constraintTop_toBottomOf="@+id/textViewGroupingTitle" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonGrouping"
+            style="@style/AppTheme.ExtendedFab.Small"
+            android:layout_marginLeft="@dimen/margin_regular"
+            android:text="@string/custom_raffle_details_mode_button"
+            app:icon="@drawable/ic_grouping"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewGroupingDescription"
+            app:layout_constraintLeft_toRightOf="@+id/textViewGroupingDescription"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textViewGroupingTitle" />
+
+        <include
+            android:id="@+id/dividerGrouping"
+            layout="@layout/layout_divider"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_size"
+            android:layout_marginTop="@dimen/margin_regular"
+            android:layout_marginBottom="@dimen/margin_regular"
+            app:layout_constraintBottom_toTopOf="@+id/textViewCombinationTitle"
+            app:layout_constraintTop_toBottomOf="@+id/textViewGroupingDescription" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/groupGroupingViews"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:constraint_referenced_ids="textViewGroupingTitle,textViewGroupingDescription,buttonGrouping,dividerGrouping" />
+
+        <!-- Combination -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewCombinationTitle"
+            style="@style/AppTheme.Text.Body"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/custom_raffle_details_mode_combination"
+            app:layout_constraintBottom_toTopOf="@+id/textViewCombinationDescription"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/buttonCombination"
+            app:layout_constraintTop_toBottomOf="@+id/dividerGrouping" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewCombinationDescription"
+            style="@style/AppTheme.Text.Detail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/custom_raffle_details_mode_combination_description"
+            app:layout_constraintBottom_toTopOf="@+id/dividerCombination"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/buttonCombination"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCombinationTitle" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonCombination"
+            style="@style/AppTheme.ExtendedFab.Small"
+            android:layout_marginLeft="@dimen/margin_regular"
+            android:text="@string/custom_raffle_details_mode_button"
+            app:icon="@drawable/ic_combination"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewCombinationDescription"
+            app:layout_constraintLeft_toRightOf="@+id/textViewCombinationDescription"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textViewCombinationTitle" />
+
+        <include
+            android:id="@+id/dividerCombination"
+            layout="@layout/layout_divider"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_size"
+            android:layout_marginTop="@dimen/margin_regular"
+            android:layout_marginBottom="@dimen/margin_regular"
+            app:layout_constraintBottom_toTopOf="@+id/textViewVotingTitle"
+            app:layout_constraintTop_toBottomOf="@+id/textViewCombinationDescription" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/groupCombinationViews"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:constraint_referenced_ids="textViewCombinationTitle,textViewCombinationDescription,buttonCombination,dividerCombination" />
+
+        <!-- Voting -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewVotingTitle"
+            style="@style/AppTheme.Text.Body"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/custom_raffle_details_mode_secret_voting"
+            app:layout_constraintBottom_toTopOf="@+id/textViewVotingDescription"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/buttonVoting"
+            app:layout_constraintTop_toBottomOf="@+id/dividerCombination" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewVotingDescription"
+            style="@style/AppTheme.Text.Detail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/custom_raffle_details_mode_secret_voting_description"
+            app:layout_constraintBottom_toTopOf="@+id/dividerVoting"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/buttonVoting"
+            app:layout_constraintTop_toBottomOf="@+id/textViewVotingTitle" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonVoting"
+            style="@style/AppTheme.ExtendedFab.Small"
+            android:layout_marginLeft="@dimen/margin_regular"
+            android:text="@string/custom_raffle_details_mode_button"
+            app:icon="@drawable/ic_voting"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewVotingDescription"
+            app:layout_constraintLeft_toRightOf="@+id/textViewVotingDescription"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textViewVotingTitle" />
+
+        <include
+            android:id="@+id/dividerVoting"
+            layout="@layout/layout_divider"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_size"
+            android:layout_marginTop="@dimen/margin_regular"
+            android:layout_marginBottom="@dimen/margin_regular"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewVotingDescription" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/groupVotingViews"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:constraint_referenced_ids="textViewVotingTitle,textViewVotingDescription,buttonVoting,dividerVoting" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

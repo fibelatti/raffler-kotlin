@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_background"
+    android:paddingTop="@dimen/padding_regular">
+
+    <com.fibelatti.raffler.core.platform.customview.TitleLayout
+        android:id="@+id/layoutTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_regular"
+        android:layout_marginRight="@dimen/margin_regular"
+        android:layout_marginBottom="@dimen/margin_regular"
+        app:layout_constraintBottom_toTopOf="@+id/layoutFirstCustomRaffle"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/layoutFirstCustomRaffle"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/list_item_card_height"
+        android:layout_marginLeft="@dimen/margin_regular"
+        android:layout_marginRight="@dimen/margin_small"
+        android:background="@drawable/background_combination"
+        android:elevation="@dimen/elevation_regular"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/padding_regular"
+        app:layout_constraintBottom_toTopOf="@+id/inputLayoutQuantity"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/layoutSecondCustomRaffle"
+        app:layout_constraintTop_toBottomOf="@+id/layoutTitle">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewFirstCustomRaffleDescription"
+            style="@style/AppTheme.Text.Body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:maxLines="2"
+            tools:text="My custom raffle" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewFirstCustomRaffleItems"
+            style="@style/AppTheme.Text.Detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            tools:text="3 items" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutSecondCustomRaffle"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/list_item_card_height"
+        android:layout_marginLeft="@dimen/margin_small"
+        android:layout_marginRight="@dimen/margin_regular"
+        android:background="@drawable/background_combination"
+        android:clickable="true"
+        android:elevation="@dimen/elevation_regular"
+        android:focusable="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/padding_regular"
+        app:layout_constraintBottom_toTopOf="@+id/inputLayoutQuantity"
+        app:layout_constraintLeft_toRightOf="@+id/layoutFirstCustomRaffle"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutTitle">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewSecondCustomRaffleDescription"
+            style="@style/AppTheme.Text.Body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:maxLines="2"
+            tools:text="My custom raffle" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewSecondCustomRaffleItems"
+            style="@style/AppTheme.Text.Detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:visibility="gone"
+            tools:text="3 items" />
+    </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputLayoutQuantity"
+        style="@style/AppTheme.InputLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_regular"
+        android:layout_marginTop="@dimen/margin_regular"
+        android:layout_marginRight="@dimen/margin_regular"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerViewItems"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/buttonRaffle"
+        app:layout_constraintTop_toBottomOf="@+id/layoutFirstCustomRaffle">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextTotalQuantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/custom_raffle_combination_quantity_hint"
+            android:imeOptions="actionGo"
+            android:inputType="number"
+            android:singleLine="true" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/buttonRaffle"
+        style="@style/AppTheme.ButtonPrimary.Small"
+        android:layout_marginTop="@dimen/margin_regular"
+        android:layout_marginRight="@dimen/margin_regular"
+        android:text="@string/hint_raffle"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerViewItems"
+        app:layout_constraintLeft_toRightOf="@+id/inputLayoutQuantity"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutFirstCustomRaffle" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewItems"
+        style="@style/AppTheme.RecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputLayoutQuantity"
+        tools:listitem="@layout/list_item_custom_raffle_drafted_item" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

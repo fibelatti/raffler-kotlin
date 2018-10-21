@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layoutRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="@color/color_background"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/padding_regular">
+
+    <com.fibelatti.raffler.core.platform.customview.TitleLayout
+        android:id="@+id/layoutTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_regular"
+        android:layout_marginRight="@dimen/margin_regular" />
+
+    <TextSwitcher
+        android:id="@+id/textSwitcher"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/fab"
+        style="@style/AppTheme.ExtendedFab"
+        android:layout_gravity="center|bottom"
+        android:layout_marginBottom="@dimen/margin_regular"
+        android:text="@string/custom_raffle_roulette_hint_stop"
+        app:icon="@drawable/ic_stop" />
+
+</LinearLayout>

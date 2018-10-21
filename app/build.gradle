@@ -18,7 +18,7 @@ android {
 
         resConfigs "en", "pt", "es"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
 
@@ -61,7 +61,6 @@ android {
         androidTest {
             java.srcDir sharedTestDir
             java.srcDirs += 'src/androidTest/kotlin'
-            java.srcDirs += 'src/test/resources'
         }
     }
 
@@ -72,12 +71,6 @@ android {
             returnDefaultValues = true
             includeAndroidResources = true
         }
-    }
-}
-
-kotlin {
-    experimental {
-        coroutines 'enable'
     }
 }
 
@@ -94,11 +87,16 @@ dependencies {
 
     // Support Library
     implementation SupportLibraryDependencies.supportLibrary
-    implementation SupportLibraryDependencies.designLibrary
+    implementation SupportLibraryDependencies.materialDesign
+    implementation SupportLibraryDependencies.constraintLayout
 
-    // Persistence
-    implementation PersistenceDependencies.room
-    kapt PersistenceDependencies.roomCompiler
+    // Architecture Components
+    implementation ArchitectureComponentDependencies.archComponents
+    kapt ArchitectureComponentDependencies.archComponentsCompiler
+    implementation ArchitectureComponentDependencies.room
+    kapt ArchitectureComponentDependencies.roomCompiler
+    implementation ArchitectureComponentDependencies.navigationFragment
+    implementation ArchitectureComponentDependencies.navigationUi
 
     // DI
     implementation DIDependencies.dagger
@@ -110,7 +108,9 @@ dependencies {
     // Testing
     testImplementation TestDependencies.junit
     testImplementation TestDependencies.mockitoCore
+    testImplementation TestDependencies.archComponentsTest
     androidTestImplementation TestDependencies.mockitoAndroid
+    androidTestImplementation TestDependencies.archComponentsTest
     androidTestImplementation TestDependencies.supportAnnotations
     androidTestImplementation TestDependencies.testRunner
     androidTestImplementation TestDependencies.kotlinTest

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layoutRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_background"
+    android:clipToPadding="false"
+    android:paddingLeft="@dimen/padding_regular"
+    android:paddingTop="@dimen/padding_regular"
+    android:paddingRight="@dimen/padding_regular">
+
+    <LinearLayout
+        android:id="@+id/layoutSectionGeneral"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/list_item_row_height"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/layoutSectionLottery"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/margin_regular"
+            app:srcCompat="@drawable/ic_preferences"
+            app:tint="@color/color_icon" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/AppTheme.Text.SectionTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/preferences_section_general" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutSectionLottery"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/list_item_row_height"
+        android:layout_marginTop="@dimen/margin_regular"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/layoutSectionMyRaffles"
+        app:layout_constraintTop_toBottomOf="@+id/layoutSectionGeneral">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/margin_regular"
+            app:srcCompat="@drawable/ic_lottery"
+            app:tint="@color/color_icon" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/AppTheme.Text.SectionTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/preferences_section_lottery" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutSectionMyRaffles"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/list_item_row_height"
+        android:layout_marginTop="@dimen/margin_regular"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/spaceFiller"
+        app:layout_constraintTop_toBottomOf="@+id/layoutSectionLottery">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/margin_regular"
+            app:srcCompat="@drawable/ic_group"
+            app:tint="@color/color_icon" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/AppTheme.Text.SectionTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/preferences_section_my_raffles" />
+    </LinearLayout>
+
+    <Space
+        android:id="@+id/spaceFiller"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/margin_regular"
+        app:layout_constraintBottom_toTopOf="@+id/layoutDividerFooter"
+        app:layout_constraintTop_toBottomOf="@+id/layoutSectionMyRaffles" />
+
+    <include
+        android:id="@+id/layoutDividerFooter"
+        layout="@layout/layout_divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_size"
+        app:layout_constraintBottom_toTopOf="@+id/buttonShare"
+        app:layout_constraintTop_toBottomOf="@+id/spaceFiller" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/buttonShare"
+        style="@style/AppTheme.TextButton"
+        android:text="@string/preferences_share"
+        app:layout_constraintBottom_toTopOf="@+id/textViewAbout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/buttonRate"
+        app:layout_constraintTop_toBottomOf="@+id/layoutDividerFooter" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/buttonRate"
+        style="@style/AppTheme.TextButton"
+        android:text="@string/preferences_rate"
+        app:layout_constraintBaseline_toBaselineOf="@+id/buttonShare"
+        app:layout_constraintBottom_toTopOf="@+id/textViewAbout"
+        app:layout_constraintLeft_toRightOf="@+id/buttonShare"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutDividerFooter" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewAbout"
+        style="@style/AppTheme.Text.Body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small"
+        android:gravity="center_horizontal"
+        android:text="@string/preferences_about"
+        app:layout_constraintBottom_toTopOf="@+id/textViewAppVersion"
+        app:layout_constraintTop_toBottomOf="@+id/buttonRate" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewAppVersion"
+        style="@style/AppTheme.Text.Body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_regular"
+        android:gravity="center_horizontal"
+        android:text="@string/preferences_app_version"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAbout" />
+</androidx.constraintlayout.widget.ConstraintLayout>

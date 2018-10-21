@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_background"
+    android:paddingTop="@dimen/padding_regular">
+
+    <com.fibelatti.raffler.core.platform.customview.TitleLayout
+        android:id="@+id/layoutTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_regular"
+        android:layout_marginRight="@dimen/margin_regular"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerViewItems"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewItems"
+        style="@style/AppTheme.RecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/layoutDividerTieBreaker"
+        app:layout_constraintTop_toBottomOf="@+id/layoutTitle"
+        tools:listitem="@layout/list_item_custom_raffle_voting_result" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/groupTieBreakerViews"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:constraint_referenced_ids="layoutDividerTieBreaker,textViewTieBreakerDescription,buttonVoteAgain,buttonDecideRandomly" />
+
+    <include
+        android:id="@+id/layoutDividerTieBreaker"
+        layout="@layout/layout_divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_size"
+        android:layout_marginLeft="@dimen/margin_regular"
+        android:layout_marginRight="@dimen/margin_regular"
+        android:layout_marginBottom="@dimen/margin_regular"
+        app:layout_constraintBottom_toTopOf="@+id/textViewTieBreakerDescription"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerViewItems" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewTieBreakerDescription"
+        style="@style/AppTheme.Text.Body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_regular"
+        android:layout_marginRight="@dimen/margin_regular"
+        android:layout_marginBottom="@dimen/margin_regular"
+        android:text="@string/custom_raffle_voting_tie_break_description"
+        app:layout_constraintBottom_toTopOf="@+id/buttonVoteAgain"
+        app:layout_constraintTop_toBottomOf="@+id/layoutDividerTieBreaker" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/buttonVoteAgain"
+        style="@style/AppTheme.TextButton"
+        android:layout_marginBottom="@dimen/margin_regular"
+        android:text="@string/custom_raffle_voting_tie_break_vote_again"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/buttonDecideRandomly"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTieBreakerDescription" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/buttonDecideRandomly"
+        style="@style/AppTheme.TextButton"
+        android:text="@string/custom_raffle_voting_tie_break_decide_randomly"
+        app:layout_constraintBaseline_toBaselineOf="@+id/buttonVoteAgain"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/buttonVoteAgain"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTieBreakerDescription" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

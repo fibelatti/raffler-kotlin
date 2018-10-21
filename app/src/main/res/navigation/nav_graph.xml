@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@+id/fragmentQuickDecision">
+
+    <fragment
+        android:id="@+id/fragmentQuickDecision"
+        android:name="com.fibelatti.raffler.features.quickdecision.presentation.QuickDecisionFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_quick_decisions">
+
+        <action
+            android:id="@+id/action_fragmentQuickDecision_to_fragmentQuickDecisionResult"
+            app:destination="@id/fragmentQuickDecisionResult"
+            app:exitAnim="@anim/fade_out"
+            app:popExitAnim="@anim/slide_down" />
+        <action
+            android:id="@+id/action_fragmentQuickDecision_to_fragmentCreateCustomRaffle"
+            app:destination="@id/fragmentCreateCustomRaffle" />
+        <action
+            android:id="@+id/action_fragmentQuickDecision_to_dialogFragmentAddNewQuickDecision"
+            app:destination="@id/dialogFragmentAddNewQuickDecision" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentQuickDecisionResult"
+        android:name="com.fibelatti.raffler.features.quickdecision.presentation.QuickDecisionResultFragment"
+        tools:layout="@layout/fragment_quick_decision_result" />
+
+    <dialog_fragment
+        android:id="@+id/dialogFragmentAddNewQuickDecision"
+        android:name="com.fibelatti.raffler.features.quickdecision.presentation.addnew.AddNewQuickDecisionFragment"
+        tools:layout="@layout/fragment_custom_raffle_modes" />
+
+    <fragment
+        android:id="@+id/fragmentLottery"
+        android:name="com.fibelatti.raffler.features.lottery.presentation.LotteryFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_lottery" />
+
+    <fragment
+        android:id="@+id/fragmentMyRaffles"
+        android:name="com.fibelatti.raffler.features.myraffles.presentation.list.MyRafflesFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_my_raffles">
+
+        <action
+            android:id="@+id/action_fragmentMyRaffles_to_fragmentCreateCustomRaffle"
+            app:destination="@id/fragmentCreateCustomRaffle" />
+        <action
+            android:id="@+id/action_fragmentMyRaffles_to_fragmentCustomRaffleDetails"
+            app:destination="@id/fragmentCustomRaffleDetails"
+            app:enterAnim="@anim/slide_up"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_down" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentCreateCustomRaffle"
+        android:name="com.fibelatti.raffler.features.myraffles.presentation.createcustomraffle.CreateCustomRaffleFragment"
+        tools:layout="@layout/fragment_create_custom_raffle" />
+
+    <fragment
+        android:id="@+id/fragmentCustomRaffleDetails"
+        android:name="com.fibelatti.raffler.features.myraffles.presentation.customraffledetails.CustomRaffleDetailsFragment"
+        tools:layout="@layout/fragment_custom_raffle_details">
+
+        <action
+            android:id="@+id/action_fragmentCustomRaffleDetails_to_fragmentCreateCustomRaffle"
+            app:destination="@id/fragmentCreateCustomRaffle" />
+        <action
+            android:id="@+id/action_fragmentCustomRaffleDetails_to_fragmentCustomRaffleRoulette"
+            app:destination="@id/fragmentCustomRaffleRoulette"
+            app:enterAnim="@anim/slide_up"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_down"  />
+        <action
+            android:id="@+id/action_fragmentCustomRaffleDetails_to_fragmentCustomRaffleRandomWinners"
+            app:destination="@id/fragmentCustomRaffleRandomWinners"
+            app:enterAnim="@anim/slide_up"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_down"  />
+        <action
+            android:id="@+id/action_fragmentCustomRaffleDetails_to_fragmentCustomRaffleGrouping"
+            app:destination="@id/fragmentCustomRaffleGrouping"
+            app:enterAnim="@anim/slide_up"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_down"  />
+        <action
+            android:id="@+id/action_fragmentCustomRaffleDetails_to_fragmentCustomRaffleCombination"
+            app:destination="@id/fragmentCustomRaffleCombination"
+            app:enterAnim="@anim/slide_up"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_down"  />
+        <action
+            android:id="@+id/action_fragmentCustomRaffleDetails_to_fragmentCustomRaffleVotingStart"
+            app:destination="@id/fragmentCustomRaffleVotingStart"
+            app:enterAnim="@anim/slide_up"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_down" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentCustomRaffleRoulette"
+        android:name="com.fibelatti.raffler.features.myraffles.presentation.roulette.CustomRaffleRouletteFragment"
+        tools:layout="@layout/fragment_custom_raffle_roulette" />
+
+    <fragment
+        android:id="@+id/fragmentCustomRaffleRandomWinners"
+        android:name="com.fibelatti.raffler.features.myraffles.presentation.randomwinners.CustomRaffleRandomWinnersFragment"
+        tools:layout="@layout/fragment_custom_raffle_random_winners" />
+
+    <fragment
+        android:id="@+id/fragmentCustomRaffleGrouping"
+        android:name="com.fibelatti.raffler.features.myraffles.presentation.grouping.CustomRaffleGroupingFragment"
+        tools:layout="@layout/fragment_custom_raffle_grouping" />
+
+    <fragment
+        android:id="@+id/fragmentCustomRaffleCombination"
+        android:name="com.fibelatti.raffler.features.myraffles.presentation.combination.CustomRaffleCombinationFragment"
+        tools:layout="@layout/fragment_custom_raffle_combination" />
+
+    <fragment
+        android:id="@+id/fragmentCustomRaffleVotingStart"
+        android:name="com.fibelatti.raffler.features.myraffles.presentation.voting.CustomRaffleVotingStartFragment"
+        tools:layout="@layout/fragment_custom_raffle_voting_start">
+
+        <action
+            android:id="@+id/action_fragmentCustomRaffleVotingStart_to_fragmentCustomRaffleVotingMenu"
+            app:destination="@id/fragmentCustomRaffleVotingMenu"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_down"
+            app:popUpTo="@id/fragmentCustomRaffleDetails" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentCustomRaffleVotingMenu"
+        android:name="com.fibelatti.raffler.features.myraffles.presentation.voting.CustomRaffleVotingMenuFragment"
+        tools:layout="@layout/fragment_custom_raffle_voting_menu">
+
+        <action
+            android:id="@+id/action_fragmentCustomRaffleVotingMenu_to_fragmentCustomRaffleVotingVote"
+            app:destination="@id/fragmentCustomRaffleVotingVote"
+            app:enterAnim="@anim/slide_right_in"
+            app:exitAnim="@anim/slide_left_out"
+            app:popEnterAnim="@anim/slide_left_in"
+            app:popExitAnim="@anim/slide_right_out" />
+        <action
+            android:id="@+id/action_fragmentCustomRaffleVotingMenu_to_fragmentCustomRaffleVotingResults"
+            app:destination="@id/fragmentCustomRaffleVotingResults"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_down"
+            app:popUpTo="@id/fragmentCustomRaffleDetails" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentCustomRaffleVotingVote"
+        android:name="com.fibelatti.raffler.features.myraffles.presentation.voting.vote.CustomRaffleVotingVoteFragment"
+        tools:layout="@layout/fragment_custom_raffle_voting_vote" />
+
+    <fragment
+        android:id="@+id/fragmentCustomRaffleVotingResults"
+        android:name="com.fibelatti.raffler.features.myraffles.presentation.voting.results.CustomRaffleVotingResultsFragment"
+        tools:layout="@layout/fragment_custom_raffle_voting_results" />
+
+    <fragment
+        android:id="@+id/fragmentPreferences"
+        android:name="com.fibelatti.raffler.features.preferences.presentation.PreferencesFragment"
+        tools:layout="@layout/fragment_preferences">
+
+        <action
+            android:id="@+id/action_fragmentPreferences_to_fragmentPreferencesGeneral"
+            app:destination="@id/fragmentPreferencesGeneral"
+            app:enterAnim="@anim/slide_right_in"
+            app:exitAnim="@anim/slide_left_out"
+            app:popEnterAnim="@anim/slide_left_in"
+            app:popExitAnim="@anim/slide_right_out" />
+        <action
+            android:id="@+id/action_fragmentPreferences_to_fragmentPreferencesLottery"
+            app:destination="@id/fragmentPreferencesLottery"
+            app:enterAnim="@anim/slide_right_in"
+            app:exitAnim="@anim/slide_left_out"
+            app:popEnterAnim="@anim/slide_left_in"
+            app:popExitAnim="@anim/slide_right_out" />
+        <action
+            android:id="@+id/action_fragmentPreferences_to_fragmentPreferencesCustomRaffle"
+            app:destination="@id/fragmentPreferencesCustomRaffle"
+            app:enterAnim="@anim/slide_right_in"
+            app:exitAnim="@anim/slide_left_out"
+            app:popEnterAnim="@anim/slide_left_in"
+            app:popExitAnim="@anim/slide_right_out" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentPreferencesGeneral"
+        android:name="com.fibelatti.raffler.features.preferences.presentation.PreferencesGeneralFragment"
+        tools:layout="@layout/fragment_preferences_general" />
+
+    <fragment
+        android:id="@+id/fragmentPreferencesLottery"
+        android:name="com.fibelatti.raffler.features.preferences.presentation.PreferencesLotteryFragment"
+        tools:layout="@layout/fragment_preferences_lottery" />
+
+    <fragment
+        android:id="@+id/fragmentPreferencesCustomRaffle"
+        android:name="com.fibelatti.raffler.features.preferences.presentation.PreferencesCustomRaffleFragment"
+        tools:layout="@layout/fragment_preferences_custom_raffle" />
+</navigation>
