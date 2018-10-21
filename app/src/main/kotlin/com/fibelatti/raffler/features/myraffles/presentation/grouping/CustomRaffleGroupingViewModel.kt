@@ -2,7 +2,6 @@ package com.fibelatti.raffler.features.myraffles.presentation.grouping
 
 import androidx.lifecycle.MutableLiveData
 import com.fibelatti.raffler.R
-import com.fibelatti.raffler.core.extension.batchesOf
 import com.fibelatti.raffler.core.extension.empty
 import com.fibelatti.raffler.core.extension.isInt
 import com.fibelatti.raffler.core.platform.base.BaseViewModel
@@ -41,7 +40,7 @@ class CustomRaffleGroupingViewModel @Inject constructor(
     }
 
     private fun createBatches(options: List<CustomRaffleItemModel>, quantity: Int): List<CustomRaffleDraftedModel> {
-        return options.toList().shuffled().batchesOf(quantity)
+        return options.toList().shuffled().chunked(quantity)
             .mapIndexed { index, item ->
                 CustomRaffleDraftedModel(
                     title = resourceProvider.getString(R.string.custom_raffle_grouping_item_title, index + 1),
