@@ -67,6 +67,10 @@
     <!-- Custom Raffle - Details -->
     <string name="custom_raffle_details_dismissible_hint">Customize raffles with ease. Tapping items will either include or exclude them from the next raffle.</string>
     <string name="custom_raffle_details_mode_invalid_quantity">Select at least 2 items to raffle.</string>
+
+    <string name="custom_raffle_details_include_all">Select all</string>
+    <string name="custom_raffle_details_exclude_all">Unselect all</string>
+
     <string name="custom_raffle_details_mode_title">Choose the raffle mode</string>
     <string name="custom_raffle_details_mode_button">Select</string>
 
