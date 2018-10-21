@@ -4,15 +4,12 @@
     <string name="hint_ok">OK</string>
     <string name="hint_yes">Yes</string>
     <string name="hint_no">No</string>
-    <string name="hint_done">Done</string>
     <string name="hint_save">Save</string>
     <string name="hint_edit">Edit</string>
     <string name="hint_delete">Delete</string>
     <string name="hint_continue">Continue</string>
     <string name="hint_cancel">Cancel</string>
     <string name="hint_search">Search</string>
-    <string name="hint_try_again">Try again</string>
-    <string name="hint_loading">Loading</string>
     <string name="hint_dismiss">Dismiss</string>
     <string name="hint_reset">Reset</string>
     <string name="hint_raffle">Raffle</string>
@@ -101,8 +98,8 @@
 
     <!-- Custom Raffle - Random Winners -->
     <string name="custom_raffle_random_winners_hint">Quantity of winners</string>
-    <string name="custom_raffle_random_winners_invalid_quantity_too_few">Should be at least 1</string>
-    <string name="custom_raffle_random_winners_invalid_quantity_too_many">Should be at most %d</string>
+    <string name="custom_raffle_random_winners_invalid_quantity_too_few">Should be at least 1.</string>
+    <string name="custom_raffle_random_winners_invalid_quantity_too_many">Should be at most %d.</string>
     <string name="custom_raffle_random_winners_item_title">#%d Winner</string>
 
     <!-- Custom Raffle - Grouping -->

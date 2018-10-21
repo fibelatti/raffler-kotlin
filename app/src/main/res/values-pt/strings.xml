@@ -4,17 +4,14 @@
     <string name="hint_ok">OK</string>
     <string name="hint_yes">Sim</string>
     <string name="hint_no">Não</string>
-    <string name="hint_done">Pronto</string>
     <string name="hint_save">Salvar</string>
     <string name="hint_edit">Editar</string>
     <string name="hint_delete">Apagar</string>
     <string name="hint_continue">Continar</string>
     <string name="hint_cancel">Cancelar</string>
     <string name="hint_search">Buscar</string>
-    <string name="hint_try_again">Tentar novamente</string>
-    <string name="hint_loading">Carregador</string>
     <string name="hint_dismiss">Entendi</string>
-    <string name="hint_reset">Resetar</string>
+    <string name="hint_reset">Redefinir</string>
     <string name="hint_raffle">Sortear</string>
     <string name="hint_did_you_know">Você sabia?</string>
     <string name="hint_quick_tip">Uma dica</string>
@@ -109,15 +106,15 @@
     <string name="custom_raffle_grouping_quantity_hint">Quantidade</string>
     <string name="custom_raffle_grouping_quantity_of_groups">Grupos</string>
     <string name="custom_raffle_grouping_quantity_of_items_per_group">Itens por grupo</string>
-    <string name="custom_raffle_grouping_item_title">#%d Grupo</string>
+    <string name="custom_raffle_grouping_item_title">Grupo #%d</string>
 
     <string name="custom_raffle_combination_title">Combinando com %s</string>
     <string name="custom_raffle_combination_hint">Escolha outro sorteio</string>
     <string name="custom_raffle_combination_selector_title">Escolha o sorteio para combinar com %s</string>
     <string name="custom_raffle_combination_quantity_hint">Quantidade de pares</string>
-    <string name="custom_raffle_combination_invalid_quantity_too_few">Deve ser pelo menos 1</string>
-    <string name="custom_raffle_combination_invalid_quantity_too_many">Deve ser no máximo %d</string>
-    <string name="custom_raffle_combination_pair_title">Par #%d</string>
+    <string name="custom_raffle_combination_invalid_quantity_too_few">Deve ser pelo menos 1.</string>
+    <string name="custom_raffle_combination_invalid_quantity_too_many">Deve ser no máximo %d.</string>
+    <string name="custom_raffle_combination_pair_title">#%d par</string>
 
     <!-- Custom Raffle - Voting -->
     <string name="custom_raffle_voting_title">Votação para %s</string>
