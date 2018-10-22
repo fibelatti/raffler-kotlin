@@ -80,25 +80,12 @@ class CreateCustomRaffleFragment : BaseFragment() {
             observe(showEditCustomRaffleLayout) { showCustomRaffleEditLayout() }
             observe(customRaffle, ::showCustomRaffleDetails)
             observe(addAsQuickDecision) { checkboxAddShortcut.isChecked = it }
-            observeEvent(showHint) {
-                showDismissibleHint(
-                    container = layoutHintContainer,
-                    hintTitle = getString(R.string.hint_quick_tip),
-                    hintMessage = getString(R.string.custom_raffle_add_as_quick_decision_dismissible_hint),
-                    onHintDismissed = { createCustomRaffleViewModel.hintDismissed() }
-                )
-            }
+            observeEvent(showHint) { showAddAsQuickDecisionHint() }
             observe(invalidDescriptionError, ::handleInvalidDescriptionError)
             observe(invalidItemsQuantityError, ::handleInvalidItemsQuantityError)
             observe(invalidItemDescriptionError, ::handleInvalidItemDescriptionError)
-            observe(onChangedSaved) { layoutRoot.findNavController().navigateUp() }
-            observe(onDeleted) {
-                layoutRoot.findNavController().navigate(
-                    R.id.fragmentMyRaffles,
-                    null,
-                    navOptions { popUpTo = R.id.fragmentQuickDecision }
-                )
-            }
+            observeEvent(onChangedSaved) { handleChangesSaved() }
+            observeEvent(onDeleted) { handleDeleted() }
         }
     }
 
@@ -198,6 +185,15 @@ class CreateCustomRaffleFragment : BaseFragment() {
         editTextCustomRaffleItemDescription.clearText()
     }
 
+    private fun showAddAsQuickDecisionHint() {
+        showDismissibleHint(
+            container = layoutHintContainer,
+            hintTitle = getString(R.string.hint_quick_tip),
+            hintMessage = getString(R.string.custom_raffle_add_as_quick_decision_dismissible_hint),
+            onHintDismissed = { createCustomRaffleViewModel.hintDismissed() }
+        )
+    }
+
     private fun handleInvalidDescriptionError(message: String) {
         if (message.isNotEmpty()) {
             inputLayoutCustomRaffleDescription.showError(message)
@@ -222,5 +218,17 @@ class CreateCustomRaffleFragment : BaseFragment() {
         } else {
             inputLayoutCustomRaffleItemDescription.clearError()
         }
+    }
+
+    private fun handleChangesSaved() {
+        layoutRoot.findNavController().navigateUp()
+    }
+
+    private fun handleDeleted() {
+        layoutRoot.findNavController().navigate(
+            R.id.fragmentMyRaffles,
+            null,
+            navOptions { popUpTo = R.id.fragmentQuickDecision }
+        )
     }
 }

@@ -12,7 +12,6 @@ import com.fibelatti.raffler.core.platform.AppConfig
 import com.fibelatti.raffler.core.platform.MutableLiveEvent
 import com.fibelatti.raffler.core.platform.base.BaseViewModel
 import com.fibelatti.raffler.core.platform.postEvent
-import com.fibelatti.raffler.core.platform.setEvent
 import com.fibelatti.raffler.core.provider.CoroutineLauncher
 import com.fibelatti.raffler.core.provider.ResourceProvider
 import com.fibelatti.raffler.features.myraffles.CustomRaffle
@@ -87,11 +86,11 @@ class CustomRaffleDetailsViewModel @Inject constructor(
     }
 
     fun raffle() {
-        validateSelection { showPreferredRaffleMode.setEvent(preferredRaffleMode.value) }
+        validateSelection { showPreferredRaffleMode.postEvent(preferredRaffleMode.value) }
     }
 
     fun selectMode() {
-        validateSelection { showModeSelector.setEvent(Unit) }
+        validateSelection { showModeSelector.postEvent(Unit) }
     }
 
     fun itemRaffled(vararg index: Int) {
@@ -105,7 +104,7 @@ class CustomRaffleDetailsViewModel @Inject constructor(
                             .mapCatching(::prepareCustomRaffle)
                             .onSuccess {
                                 customRaffle.postValue(it)
-                                itemsRemaining.setEvent(it.includedItems.size)
+                                itemsRemaining.postEvent(it.includedItems.size)
                             }
                     }
                 }
@@ -118,7 +117,7 @@ class CustomRaffleDetailsViewModel @Inject constructor(
     }
 
     fun setCustomRaffleForContinuation(customRaffleModel: CustomRaffleModel) {
-        customRaffle.value = customRaffleModel
+        customRaffle.postValue(customRaffleModel)
     }
 
     fun toggleAll() {
@@ -166,7 +165,7 @@ class CustomRaffleDetailsViewModel @Inject constructor(
         if (customRaffle.value?.itemSelectionIsValid.orFalse()) {
             ifValid()
         } else {
-            invalidSelectionError.setEvent(resourceProvider.getString(R.string.custom_raffle_details_mode_invalid_quantity))
+            invalidSelectionError.postEvent(resourceProvider.getString(R.string.custom_raffle_details_mode_invalid_quantity))
         }
     }
 
