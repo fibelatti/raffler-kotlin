@@ -6,7 +6,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.fibelatti.raffler.core.functional.Result
 import com.fibelatti.raffler.core.functional.catching
-import com.fibelatti.raffler.core.functional.getOrThrow
 import com.fibelatti.raffler.core.provider.ResourceProvider
 import com.fibelatti.raffler.features.quickdecision.QuickDecision
 import com.fibelatti.raffler.features.quickdecision.QuickDecisionRepository
@@ -27,12 +26,12 @@ class QuickDecisionDataSource @Inject constructor(
             } else {
                 val localList = resourceProvider.getJsonFromAssets(
                     fileName = "quick-decisions.json",
-                    type = object : TypeToken<List<QuickDecision>>() {}
+                    type = object : TypeToken<List<QuickDecisionDto>>() {}
                 )
 
                 return@catching if (localList != null) {
-                    addQuickDecisions(*localList.toTypedArray()).getOrThrow()
-                    localList
+                    quickDecisionDao.addQuickDecisions(localList)
+                    quickDecisionDtoMapper.mapList(localList)
                 } else {
                     throw RuntimeException("The file quick-decisions.json was not found.")
                 }
