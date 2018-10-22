@@ -52,19 +52,19 @@ class CustomRaffleGroupingViewModel @Inject constructor(
     private fun validateData(options: List<CustomRaffleItemModel>, quantity: String, ifValid: () -> Unit) {
         when {
             quantity.isBlank() || !quantity.isInt() -> {
-                quantityError.value = resourceProvider.getString(R.string.lottery_quantity_validation_error)
+                quantityError.postValue(resourceProvider.getString(R.string.lottery_quantity_validation_error))
             }
             quantity.toInt() > options.maxQuantity -> {
-                quantityError.value = resourceProvider.getString(
+                quantityError.postValue(resourceProvider.getString(
                     R.string.custom_raffle_random_winners_invalid_quantity_too_many,
                     options.maxQuantity
-                )
+                ))
             }
             quantity.toInt() < 1 -> {
-                quantityError.value = resourceProvider.getString(R.string.custom_raffle_random_winners_invalid_quantity_too_few)
+                quantityError.postValue(resourceProvider.getString(R.string.custom_raffle_random_winners_invalid_quantity_too_few))
             }
             else -> {
-                quantityError.value = String.empty()
+                quantityError.postValue(String.empty())
 
                 ifValid()
             }
