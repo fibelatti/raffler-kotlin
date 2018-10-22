@@ -40,8 +40,8 @@ class CreateCustomRaffleViewModel @Inject constructor(
     val invalidDescriptionError by lazy { MutableLiveData<String>() }
     val invalidItemsQuantityError by lazy { MutableLiveData<String>() }
     val invalidItemDescriptionError by lazy { MutableLiveData<String>() }
-    val onChangedSaved by lazy { MutableLiveData<CustomRaffleModel>() }
-    val onDeleted by lazy { MutableLiveData<Boolean>() }
+    val onChangedSaved by lazy { MutableLiveEvent<CustomRaffleModel>() }
+    val onDeleted by lazy { MutableLiveEvent<Unit>() }
 
     fun getCustomRaffleById(id: Long?, addAsShortcut: Boolean?) {
         if (id != null && id != 0L) {
@@ -60,41 +60,41 @@ class CreateCustomRaffleViewModel @Inject constructor(
         } else {
             if (addAsShortcut.orFalse()) startInBackground { checkForHints() }
 
-            showCreateCustomRaffleLayout.value = Unit
-            customRaffle.value = CustomRaffleModel.empty()
+            showCreateCustomRaffleLayout.postValue(Unit)
+            customRaffle.postValue(CustomRaffleModel.empty())
         }
     }
 
     fun setDescription(newDescription: String) {
-        customRaffle.value = customRaffle.value
+        customRaffle.postValue(customRaffle.value
             ?.copy(description = newDescription)
-            ?: CustomRaffleModel.empty().copy(description = newDescription)
+            ?: CustomRaffleModel.empty().copy(description = newDescription))
     }
 
     fun addItem(newItemDescription: String) {
         when {
             newItemDescription.isBlank() -> {
-                invalidItemDescriptionError.value = resourceProvider.getString(R.string.custom_raffle_create_invalid_description)
+                invalidItemDescriptionError.postValue(resourceProvider.getString(R.string.custom_raffle_create_invalid_description))
             }
             customRaffle.value?.items?.find { it.description == newItemDescription } != null -> {
-                invalidItemDescriptionError.value = resourceProvider.getString(R.string.custom_raffle_create_duplicate)
+                invalidItemDescriptionError.postValue(resourceProvider.getString(R.string.custom_raffle_create_duplicate))
             }
             else -> {
                 val newItem = CustomRaffleItemModel.empty().copy(description = newItemDescription)
 
-                customRaffle.value = customRaffle.value?.apply { items.add(0, newItem) }
-                    ?: CustomRaffleModel.empty().apply { items.add(0, newItem) }
-                invalidItemDescriptionError.value = String.empty()
+                customRaffle.postValue(customRaffle.value?.apply { items.add(0, newItem) }
+                    ?: CustomRaffleModel.empty().apply { items.add(0, newItem) })
+                invalidItemDescriptionError.postValue(String.empty())
             }
         }
     }
 
     fun removeItem(position: Int) {
-        customRaffle.value = customRaffle.value?.apply { items.removeAt(position) }
+        customRaffle.postValue(customRaffle.value?.apply { items.removeAt(position) })
     }
 
     fun removeAllItems() {
-        customRaffle.value = customRaffle.value?.apply { items.clear() }
+        customRaffle.postValue(customRaffle.value?.apply { items.clear() })
     }
 
     fun save(saveAsQuickDecision: Boolean) {
@@ -109,7 +109,7 @@ class CreateCustomRaffleViewModel @Inject constructor(
                             quickDecisionRepository.deleteQuickDecisionById(it.id.toString())
                         }
 
-                        onChangedSaved.postValue(it)
+                        onChangedSaved.postEvent(it)
                     }
                     .onFailure {
                         error.postValue(Throwable(resourceProvider.getString(R.string.generic_msg_error)))
@@ -130,9 +130,9 @@ class CreateCustomRaffleViewModel @Inject constructor(
                 }
 
                 if (resultCustomRaffle.await().isSuccess && resultQuickDecision.await().isSuccess) {
-                    onDeleted.value = true
+                    onDeleted.postEvent(Unit)
                 } else {
-                    error.value = Throwable(resourceProvider.getString(R.string.generic_msg_error))
+                    error.postValue(Throwable(resourceProvider.getString(R.string.generic_msg_error)))
                 }
             }
         }
