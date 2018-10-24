@@ -108,7 +108,7 @@ fun <R> Result<R>.fold(onSuccess: (R) -> R, onFailure: (Throwable) -> R): R {
 fun <T, R> Result<R>.mapCatching(fn: (R) -> T): Result<T> {
     return when (this) {
         is Success -> catching { fn(this.value) }
-        is Failure -> Failure(this.error)
+        is Failure -> this
     }
 }
 
