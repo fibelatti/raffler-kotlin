@@ -1,5 +1,5 @@
 object Versions {
-    const val gradleVersion = "3.2.0"
+    const val gradlePluginVersion = "3.2.1"
     const val kotlinVersion = "1.3.0-rc-190"
     const val dexCountPlugin = "0.8.2"
     const val jacocoVersion = "0.8.1"
@@ -8,7 +8,7 @@ object Versions {
     const val targetSdkVersion = 28
     const val compileSdkVersion = 28
 
-    const val buildToolsVersion = "28.0.2"
+    const val buildToolsVersion = "28.0.3"
 
     internal const val appCompatVersion = "1.0.0"
     internal const val materialDesignVersion = "1.0.0"
@@ -32,7 +32,7 @@ object Versions {
 }
 
 object Classpaths {
-    val gradlePlugin = "com.android.tools.build:gradle:${Versions.gradleVersion}"
+    val gradlePlugin = "com.android.tools.build:gradle:${Versions.gradlePluginVersion}"
     val kotlinPlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlinVersion}"
     val junit5Plugin = "de.mannodermaus.gradle.plugins:android-junit5:${Versions.junit5pluginVersion}"
     val jacocoPlugin = "org.jacoco:org.jacoco.core:${Versions.jacocoVersion}"
