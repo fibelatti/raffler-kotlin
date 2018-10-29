@@ -27,6 +27,7 @@ object Versions {
     internal const val jUnitVersion = "4.12"
     internal const val testRunnerVersion = "1.0.1"
     internal const val mockitoVersion = "2.23.0"
+    internal const val mockitoAndroidVersion = "2.18.3"
     internal const val junit5pluginVersion = "1.2.0.0"
     internal const val junit5Version = "5.2.0"
 }
@@ -78,7 +79,7 @@ object TestDependencies {
     val testRunner = "com.android.support.test:runner:${Versions.testRunnerVersion}"
     val kotlinTest = "org.jetbrains.kotlin:kotlin-test-junit:${Versions.kotlinVersion}"
     val mockitoCore = "org.mockito:mockito-core:${Versions.mockitoVersion}"
-    val mockitoAndroid = "org.mockito:mockito-android:${Versions.mockitoVersion}"
+    val mockitoAndroid = "org.mockito:mockito-android:${Versions.mockitoAndroidVersion}"
     val supportAnnotations = "androidx.annotation:annotation:${Versions.appCompatVersion}"
     val archComponentsTest = "android.arch.core:core-testing:${Versions.archComponentsVersion}"
 }
