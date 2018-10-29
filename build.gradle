@@ -3,15 +3,16 @@ buildscript {
     apply from: 'detekt.gradle'
 
     repositories {
-        mavenCentral()
-        jcenter()
         google()
+        jcenter()
+        mavenCentral()
         maven { url "https://dl.bintray.com/kotlin/kotlin-eap" }
     }
 
     dependencies {
         classpath Classpaths.gradlePlugin
         classpath Classpaths.kotlinPlugin
+        classpath Classpaths.junit5Plugin
         classpath Classpaths.jacocoPlugin
         classpath Classpaths.dexCountPlugin
     }
@@ -19,9 +20,9 @@ buildscript {
 
 allprojects {
     repositories {
-        mavenCentral()
-        jcenter()
         google()
+        jcenter()
+        mavenCentral()
         maven { url "https://dl.bintray.com/kotlin/kotlin-eap" }
     }
 }

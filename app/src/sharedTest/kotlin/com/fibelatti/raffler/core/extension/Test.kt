@@ -63,10 +63,10 @@ fun <T> callSuspend(methodCall: suspend () -> T): T = runBlocking { methodCall()
 
 // region Assertions
 fun throwAssertionError() {
-    throw AssertionFailedError("Object should not be null")
+    throw AssertionFailedError("The expected condition was not fulfilled.")
 }
 
-infix fun Any?.shouldBe(otherValue: Any) {
+infix fun Any?.shouldBe(otherValue: Any?) {
     assertEquals(otherValue, this)
 }
 
