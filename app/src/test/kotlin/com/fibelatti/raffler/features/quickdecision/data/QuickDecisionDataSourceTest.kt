@@ -7,7 +7,6 @@ import com.fibelatti.raffler.core.extension.givenSuspend
 import com.fibelatti.raffler.core.extension.mock
 import com.fibelatti.raffler.core.extension.shouldBe
 import com.fibelatti.raffler.core.extension.shouldBeAnInstanceOf
-import com.fibelatti.raffler.core.extension.throwAssertionError
 import com.fibelatti.raffler.core.functional.Failure
 import com.fibelatti.raffler.core.functional.Success
 import com.fibelatti.raffler.core.functional.exceptionOrNull
@@ -15,8 +14,8 @@ import com.fibelatti.raffler.core.functional.getOrNull
 import com.fibelatti.raffler.core.provider.ResourceProvider
 import com.fibelatti.raffler.features.quickdecision.QuickDecision
 import com.google.gson.reflect.TypeToken
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.BDDMockito.given
 
@@ -41,7 +40,7 @@ class QuickDecisionDataSourceTest : BaseTest() {
         )
     }
 
-    @Before
+    @BeforeEach
     fun setup() {
         given(mockResourceProvider.getString(anyInt()))
             .willReturn(MockDataProvider.genericString)
@@ -66,13 +65,13 @@ class QuickDecisionDataSourceTest : BaseTest() {
 
         // THEN
         result.shouldBeAnInstanceOf<Success<*>>()
-        result.getOrNull()?.let { it shouldBe mockQuickDecisionList } ?: throwAssertionError()
+        result.getOrNull() shouldBe mockQuickDecisionList
     }
 
     @Test
     fun `WHEN quickDecisionDao getAllQuickDecisions returns empty AND getJsonFromAssets is returns null THEN Failure is returned`() {
         // GIVEN
-        val typeToken = object : TypeToken<List<QuickDecision>>() {}
+        val typeToken = object : TypeToken<List<QuickDecisionDto>>() {}
 
         givenSuspend { mockQuickDecisionDao.getAllQuickDecisions() }
             .willReturn(emptyList())
@@ -90,12 +89,12 @@ class QuickDecisionDataSourceTest : BaseTest() {
     @Test
     fun `WHEN quickDecisionDao getAllQuickDecisions returns empty AND getJsonFromAssets is returns a list AND addQuickDecisions fails THEN Failure is returned`() {
         // GIVEN
-        val typeToken = object : TypeToken<List<QuickDecision>>() {}
+        val typeToken = object : TypeToken<List<QuickDecisionDto>>() {}
 
         givenSuspend { mockQuickDecisionDao.getAllQuickDecisions() }
             .willReturn(emptyList())
         given(mockResourceProvider.getJsonFromAssets("quick-decisions.json", typeToken))
-            .willReturn(mockQuickDecisionList)
+            .willReturn(mockQuickDecisionDtoList)
 
         givenSuspend { mockQuickDecisionDao.addQuickDecisions(mockQuickDecisionDtoList) }
             .willAnswer { throw mockError }
@@ -105,25 +104,25 @@ class QuickDecisionDataSourceTest : BaseTest() {
 
         // THEN
         result.shouldBeAnInstanceOf<Failure>()
-        result.exceptionOrNull()?.let { it shouldBe mockError } ?: throwAssertionError()
+        result.exceptionOrNull() shouldBe mockError
     }
 
     @Test
     fun `WHEN quickDecisionDao getAllQuickDecisions returns empty AND getJsonFromAssets is returns a list AND addQuickDecisions succeeds THEN Success is returned`() {
         // GIVEN
-        val typeToken = object : TypeToken<List<QuickDecision>>() {}
+        val typeToken = object : TypeToken<List<QuickDecisionDto>>() {}
 
         givenSuspend { mockQuickDecisionDao.getAllQuickDecisions() }
             .willReturn(emptyList())
         given(mockResourceProvider.getJsonFromAssets("quick-decisions.json", typeToken))
-            .willReturn(mockQuickDecisionList)
+            .willReturn(mockQuickDecisionDtoList)
 
         // WHEN
         val result = callSuspend { quickDecisionDataSource.getAllQuickDecisions() }
 
         // THEN
         result.shouldBeAnInstanceOf<Success<*>>()
-        result.getOrNull()?.let { it shouldBe mockQuickDecisionList } ?: throwAssertionError()
+        result.getOrNull() shouldBe mockQuickDecisionList
     }
 
     @Test
@@ -137,7 +136,7 @@ class QuickDecisionDataSourceTest : BaseTest() {
 
         // THEN
         result.shouldBeAnInstanceOf<Failure>()
-        result.exceptionOrNull()?.let { it shouldBe mockError } ?: throwAssertionError()
+        result.exceptionOrNull() shouldBe mockError
     }
 
     @Test

@@ -1,7 +1,7 @@
 package com.fibelatti.raffler.core.extension
 
 import com.fibelatti.raffler.BaseTest
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 class TypeTest : BaseTest() {
     // region Boolean
