@@ -17,23 +17,20 @@ sealed class Either<out L, out R> {
     val isRight get() = this is Right<R>
     val isLeft get() = this is Left<L>
 
-    fun either(fnL: (L) -> Unit, fnR: (R) -> Unit): Any =
-        when (this) {
-            is Left -> fnL(a)
-            is Right -> fnR(b)
-        }
+    fun either(fnL: (L) -> Unit, fnR: (R) -> Unit): Any = when (this) {
+        is Left -> fnL(a)
+        is Right -> fnR(b)
+    }
 
-    fun leftOrNull(): L? =
-        when (this) {
-            is Left -> a
-            is Right -> null
-        }
+    fun leftOrNull(): L? = when (this) {
+        is Left -> a
+        is Right -> null
+    }
 
-    fun rightOrNull(): R? =
-        when (this) {
-            is Left -> null
-            is Right -> b
-        }
+    fun rightOrNull(): R? = when (this) {
+        is Left -> null
+        is Right -> b
+    }
 
     companion object {
         @JvmStatic
@@ -77,57 +74,43 @@ fun <R> Result<R>.throwOnFailure() {
     if (this is Failure) throw this.error
 }
 
-fun <R> Result<R>.getOrThrow(): R {
-    return when (this) {
-        is Success -> this.value
-        is Failure -> throw this.error
-    }
+fun <R> Result<R>.getOrThrow(): R = when (this) {
+    is Success -> this.value
+    is Failure -> throw this.error
 }
 
-fun <R> Result<R>.getOrElse(onFailure: (exception: Throwable) -> R): R {
-    return when (this) {
-        is Success -> this.value
-        is Failure -> onFailure(this.error)
-    }
+fun <R> Result<R>.getOrElse(onFailure: (exception: Throwable) -> R): R = when (this) {
+    is Success -> this.value
+    is Failure -> onFailure(this.error)
 }
 
-fun <R> Result<R>.getOrDefault(defaultValue: R): R {
-    return when (this) {
-        is Success -> this.value
-        is Failure -> defaultValue
-    }
+fun <R> Result<R>.getOrDefault(defaultValue: R): R = when (this) {
+    is Success -> this.value
+    is Failure -> defaultValue
 }
 
-fun <R> Result<R>.fold(onSuccess: (R) -> R, onFailure: (Throwable) -> R): R {
-    return when (this) {
-        is Success -> onSuccess(this.value)
-        is Failure -> onFailure(this.error)
-    }
+fun <R> Result<R>.fold(onSuccess: (R) -> R, onFailure: (Throwable) -> R): R = when (this) {
+    is Success -> onSuccess(this.value)
+    is Failure -> onFailure(this.error)
 }
 
-fun <T, R> Result<R>.mapCatching(fn: (R) -> T): Result<T> {
-    return when (this) {
-        is Success -> catching { fn(this.value) }
-        is Failure -> this
-    }
+fun <T, R> Result<R>.mapCatching(fn: (R) -> T): Result<T> = when (this) {
+    is Success -> catching { fn(this.value) }
+    is Failure -> this
 }
 
-inline fun <R> catching(block: () -> R): Result<R> {
-    return try {
-        Success(block())
-    } catch (exception: Throwable) {
-        Failure(exception)
-    }
+inline fun <R> catching(block: () -> R): Result<R> = try {
+    Success(block())
+} catch (exception: Throwable) {
+    Failure(exception)
 }
 
-inline fun <T> Result<T>.onFailure(action: (exception: Throwable) -> Unit): Result<T> {
-    exceptionOrNull()?.let { action(it) }
-    return this
+inline fun <T> Result<T>.onFailure(action: (exception: Throwable) -> Unit): Result<T> = also {
+    it.exceptionOrNull()?.let(action)
 }
 
-inline fun <T> Result<T>.onSuccess(action: (value: T) -> Unit): Result<T> {
-    getOrNull()?.let { action(it) }
-    return this
+inline fun <T> Result<T>.onSuccess(action: (value: T) -> Unit): Result<T> = also {
+    it.getOrNull()?.let(action)
 }
 // endregion
 
@@ -138,9 +121,8 @@ fun <A, B, C> ((A) -> B).c(f: (B) -> C): (A) -> C = {
 
 fun <T, L, R> Either<L, R>.map(fn: (R) -> (T)): Either<L, T> = flatMap(fn.c(::right))
 
-fun <T, L, R> Either<L, R>.flatMap(fn: (R) -> Either<L, T>): Either<L, T> =
-    when (this) {
-        is Either.Left -> Either.left(a)
-        is Either.Right -> fn(b)
-    }
+fun <T, L, R> Either<L, R>.flatMap(fn: (R) -> Either<L, T>): Either<L, T> = when (this) {
+    is Either.Left -> Either.left(a)
+    is Either.Right -> fn(b)
+}
 // endregion
