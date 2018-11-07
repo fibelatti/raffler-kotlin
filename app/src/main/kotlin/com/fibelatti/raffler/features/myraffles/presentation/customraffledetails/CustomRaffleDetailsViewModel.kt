@@ -20,6 +20,7 @@ import com.fibelatti.raffler.features.myraffles.RememberRaffled
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModel
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModelMapper
 import com.fibelatti.raffler.features.preferences.PreferencesRepository
+import kotlinx.coroutines.awaitAll
 import javax.inject.Inject
 
 class CustomRaffleDetailsViewModel @Inject constructor(
@@ -97,7 +98,9 @@ class CustomRaffleDetailsViewModel @Inject constructor(
         if (rememberRaffledItems.value == true) {
             withCustomRaffle { raffle ->
                 startInBackground {
-                    val rememberRaffleResult = index.map { rememberRaffled(RememberRaffled.Params(raffle.items[it], included = false)) }
+                    val rememberRaffleResult = index.map {
+                        defer { rememberRaffled(RememberRaffled.Params(raffle.items[it], included = false)) }
+                    }.awaitAll()
 
                     if (rememberRaffleResult.all { it is Success }) {
                         customRaffleRepository.getCustomRaffleById(raffle.id.orZero())
@@ -125,15 +128,19 @@ class CustomRaffleDetailsViewModel @Inject constructor(
             withToggleState { state ->
                 startInBackground {
                     val rememberRaffleResult = raffle.items.map {
-                        rememberRaffled(RememberRaffled.Params(it, included = state == ToggleState.INCLUDE_ALL))
-                    }
+                        defer { rememberRaffled(RememberRaffled.Params(it, included = state == ToggleState.INCLUDE_ALL)) }
+                    }.awaitAll()
 
                     if (rememberRaffleResult.all { it is Success }) {
-                        customRaffle.postValue(raffle.apply { items.forEach { it.included = state == ToggleState.INCLUDE_ALL } })
-                        toggleState.postEvent(when (state) {
-                            ToggleState.INCLUDE_ALL -> ToggleState.EXCLUDE_ALL
-                            ToggleState.EXCLUDE_ALL -> ToggleState.INCLUDE_ALL
-                        })
+                        customRaffle.postValue(
+                            raffle.apply { items.forEach { it.included = state == ToggleState.INCLUDE_ALL } }
+                        )
+                        toggleState.postEvent(
+                            when (state) {
+                                ToggleState.INCLUDE_ALL -> ToggleState.EXCLUDE_ALL
+                                ToggleState.EXCLUDE_ALL -> ToggleState.INCLUDE_ALL
+                            }
+                        )
                     }
                 }
             }
