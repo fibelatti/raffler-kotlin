@@ -7,10 +7,12 @@ import com.fibelatti.raffler.MockDataProvider.mockCustomRaffleItem
 import com.fibelatti.raffler.MockDataProvider.mockCustomRaffleItemModel
 import com.fibelatti.raffler.MockDataProvider.mockCustomRaffleModel
 import com.fibelatti.raffler.MockDataProvider.mockPreferences
+import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.givenSuspend
 import com.fibelatti.raffler.core.extension.mock
 import com.fibelatti.raffler.core.extension.shouldReceive
 import com.fibelatti.raffler.core.extension.shouldReceiveEventWithValue
+import com.fibelatti.raffler.core.extension.verifySuspend
 import com.fibelatti.raffler.core.functional.Failure
 import com.fibelatti.raffler.core.functional.Success
 import com.fibelatti.raffler.core.platform.AppConfig
@@ -24,6 +26,7 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.BDDMockito.given
+import org.mockito.Mockito.verify
 
 class CustomRaffleDetailsViewModelTest : BaseTest() {
 
@@ -185,6 +188,103 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
             rouletteMusicEnabled shouldReceive true
             rememberRaffledItems shouldReceive rememberRaffled
         }
+    }
+    // endregion
+
+    // region raffle
+    @Test
+    fun `GIVEN the item selection is invalid WHEN raffle is called THEN  invalidSelectionError receives an error message`() {
+        // GIVEN
+        viewModel.customRaffle.value = mockCustomRaffleModel(
+            items = mutableListOf(
+                mockCustomRaffleItemModel(included = false),
+                mockCustomRaffleItemModel(included = false)
+            )
+        )
+
+        // WHEN
+        viewModel.raffle()
+
+        // THEN
+        verify(mockResourceProvider).getString(R.string.custom_raffle_details_mode_invalid_quantity)
+        viewModel.invalidSelectionError shouldReceiveEventWithValue MockDataProvider.genericString
+    }
+
+    @Test
+    fun `GIVEN the item selection is valid WHEN raffle is called THEN showPreferredRaffleMode receives a value`() {
+        // GIVEN
+        viewModel.customRaffle.value = mockCustomRaffleModel(
+            items = mutableListOf(
+                mockCustomRaffleItemModel(included = true),
+                mockCustomRaffleItemModel(included = true)
+            )
+        )
+        viewModel.preferredRaffleMode.value = AppConfig.RaffleMode.ROULETTE
+
+        // WHEN
+        viewModel.raffle()
+
+        // THEN
+        viewModel.showPreferredRaffleMode shouldReceiveEventWithValue AppConfig.RaffleMode.ROULETTE
+    }
+    // endregion
+
+    // region selectMode
+    @Test
+    fun `GIVEN the item selection is invalid WHEN selectMode is called THEN  invalidSelectionError receives an error message`() {
+        // GIVEN
+        viewModel.customRaffle.value = mockCustomRaffleModel(
+            items = mutableListOf(
+                mockCustomRaffleItemModel(included = false),
+                mockCustomRaffleItemModel(included = false)
+            )
+        )
+
+        // WHEN
+        viewModel.selectMode()
+
+        // THEN
+        verify(mockResourceProvider).getString(R.string.custom_raffle_details_mode_invalid_quantity)
+        viewModel.invalidSelectionError shouldReceiveEventWithValue MockDataProvider.genericString
+    }
+
+    @Test
+    fun `GIVEN the item selection is valid WHEN selectMode is called THEN showModeSelector receives a value`() {
+        // GIVEN
+        viewModel.customRaffle.value = mockCustomRaffleModel(
+            items = mutableListOf(
+                mockCustomRaffleItemModel(included = true),
+                mockCustomRaffleItemModel(included = true)
+            )
+        )
+
+        // WHEN
+        viewModel.selectMode()
+
+        // THEN
+        viewModel.showModeSelector shouldReceiveEventWithValue Unit
+    }
+    // endregion
+
+    // region hintDismissed
+    @Test
+    fun `WHEN hintDismissed is called THEN preferencesRepository setRaffleDetailsHintDismissed is called`() {
+        // WHEN
+        viewModel.hintDismissed()
+
+        // THEN
+        verifySuspend(mockPreferencesRepository) { setRaffleDetailsHintDismissed() }
+    }
+    // endregion
+
+    // region setCustomRaffleForContinuation
+    @Test
+    fun `WHEN setCustomRaffleForContinuation is called THEN customRaffle value is updated`() {
+        // WHEN
+        viewModel.setCustomRaffleForContinuation(mockCustomRaffleModel())
+
+        // THEN
+        viewModel.customRaffle shouldReceive mockCustomRaffleModel()
     }
     // endregion
 }

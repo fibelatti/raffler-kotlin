@@ -60,6 +60,10 @@ fun <T> givenSuspend(methodCall: suspend () -> T): BDDMockito.BDDMyOngoingStubbi
     given(runBlocking { methodCall() })
 
 fun <T> callSuspend(methodCall: suspend () -> T): T = runBlocking { methodCall() }
+
+fun <T> verifySuspend(mock: T, methodCall: suspend T.() -> Any) {
+    runBlocking { verify(mock).run { methodCall() } }
+}
 // endregion
 
 // region Assertions
