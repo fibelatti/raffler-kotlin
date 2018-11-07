@@ -32,8 +32,7 @@ class CustomRaffleDetailsViewModel @Inject constructor(
     coroutineLauncher: CoroutineLauncher
 ) : BaseViewModel(coroutineLauncher) {
 
-    private val rememberRaffledItems by lazy { MutableLiveData<Boolean>() }
-    private val customRaffleCount by lazy { MutableLiveData<Int>() }
+    val rememberRaffledItems by lazy { MutableLiveData<Boolean>() }
     val preferredRaffleMode by lazy { MutableLiveData<AppConfig.RaffleMode>() }
     val rouletteMusicEnabled by lazy { MutableLiveData<Boolean>() }
     val customRaffle by lazy { MutableLiveData<CustomRaffleModel>() }
@@ -46,7 +45,6 @@ class CustomRaffleDetailsViewModel @Inject constructor(
 
     init {
         checkForHints()
-        getCustomRaffleCount()
     }
 
     fun getCustomRaffleById(id: Long?) {
@@ -81,7 +79,7 @@ class CustomRaffleDetailsViewModel @Inject constructor(
         withCustomRaffle {
             startInBackground {
                 rememberRaffled(RememberRaffled.Params(it.items[index], isSelected))
-                customRaffle.postValue(it.apply { it.items[index].included = isSelected })
+                customRaffle.postValue(it.apply { it.items.getOrNull(index)?.included = isSelected })
             }
         }
     }
@@ -152,14 +150,6 @@ class CustomRaffleDetailsViewModel @Inject constructor(
             if (!preferencesRepository.getRaffleDetailsHintDisplayed()) {
                 showHint.postEvent(Unit)
             }
-        }
-    }
-
-    private fun getCustomRaffleCount() {
-        startInBackground {
-            customRaffleRepository.getAllCustomRaffles()
-                .onSuccess { customRaffleCount.postValue(it.size) }
-                .onFailure { customRaffleCount.postValue(1) }
         }
     }
 

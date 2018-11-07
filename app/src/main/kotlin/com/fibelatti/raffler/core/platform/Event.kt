@@ -9,7 +9,7 @@ import androidx.lifecycle.Observer
  *
  * @param <T> The type of data hold by this instance
  */
-class Event<out T>(private val content: T?) {
+data class Event<out T>(private val content: T?) {
 
     private var alreadyObserved = false
 

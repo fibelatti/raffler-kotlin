@@ -4,6 +4,7 @@ package com.fibelatti.raffler.core.extension
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import com.fibelatti.raffler.core.platform.Event
 import junit.framework.AssertionFailedError
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
@@ -108,6 +109,10 @@ infix fun <T> LiveData<T>.shouldReceive(expectedValue: T) {
     observeForever(observer)
     assertEquals(expectedValue, value)
     removeObserver(observer)
+}
+
+infix fun <T> LiveData<Event<T>>.shouldReceiveEventWithValue(expectedValue: T) {
+    shouldReceive(Event(expectedValue))
 }
 
 fun <T> LiveData<T>.shouldNeverReceiveValues() {

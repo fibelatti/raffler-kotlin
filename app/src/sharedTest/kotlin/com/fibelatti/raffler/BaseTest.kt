@@ -6,6 +6,8 @@ import com.fibelatti.raffler.core.provider.TestCoroutineLauncher
 import org.junit.Rule
 
 abstract class BaseTest {
+
+    /* ViewModel tests should use jUnit 4 as rules are not supported in jUnit 5 */
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
