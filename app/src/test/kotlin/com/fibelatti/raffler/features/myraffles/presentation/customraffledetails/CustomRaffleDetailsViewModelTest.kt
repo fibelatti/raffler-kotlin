@@ -8,6 +8,7 @@ import com.fibelatti.raffler.MockDataProvider.mockCustomRaffleItemModel
 import com.fibelatti.raffler.MockDataProvider.mockCustomRaffleModel
 import com.fibelatti.raffler.MockDataProvider.mockPreferences
 import com.fibelatti.raffler.R
+import com.fibelatti.raffler.core.extension.asLiveData
 import com.fibelatti.raffler.core.extension.givenSuspend
 import com.fibelatti.raffler.core.extension.mock
 import com.fibelatti.raffler.core.extension.shouldReceive
@@ -26,6 +27,7 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.BDDMockito.given
+import org.mockito.Mockito.spy
 import org.mockito.Mockito.verify
 
 class CustomRaffleDetailsViewModelTest : BaseTest() {
@@ -48,14 +50,14 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
         givenSuspend { mockPreferencesRepository.getRaffleDetailsHintDisplayed() }
             .willReturn(false)
 
-        viewModel = CustomRaffleDetailsViewModel(
+        viewModel = spy(CustomRaffleDetailsViewModel(
             mockPreferencesRepository,
             mockCustomRaffleRepository,
             mockCustomRaffleModelMapper,
             mockRememberRaffled,
             mockResourceProvider,
             testCoroutineLauncher
-        )
+        ))
 
         viewModel.showHint shouldReceiveEventWithValue Unit
     }
@@ -195,12 +197,15 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
     @Test
     fun `GIVEN the item selection is invalid WHEN raffle is called THEN  invalidSelectionError receives an error message`() {
         // GIVEN
-        viewModel.customRaffle.value = mockCustomRaffleModel(
-            items = mutableListOf(
-                mockCustomRaffleItemModel(included = false),
-                mockCustomRaffleItemModel(included = false)
+        given(viewModel.customRaffle)
+            .willReturn(
+                mockCustomRaffleModel(
+                    items = mutableListOf(
+                        mockCustomRaffleItemModel(included = false),
+                        mockCustomRaffleItemModel(included = false)
+                    )
+                ).asLiveData()
             )
-        )
 
         // WHEN
         viewModel.raffle()
@@ -213,13 +218,17 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
     @Test
     fun `GIVEN the item selection is valid WHEN raffle is called THEN showPreferredRaffleMode receives a value`() {
         // GIVEN
-        viewModel.customRaffle.value = mockCustomRaffleModel(
-            items = mutableListOf(
-                mockCustomRaffleItemModel(included = true),
-                mockCustomRaffleItemModel(included = true)
+        given(viewModel.customRaffle)
+            .willReturn(
+                mockCustomRaffleModel(
+                    items = mutableListOf(
+                        mockCustomRaffleItemModel(included = true),
+                        mockCustomRaffleItemModel(included = true)
+                    )
+                ).asLiveData()
             )
-        )
-        viewModel.preferredRaffleMode.value = AppConfig.RaffleMode.ROULETTE
+        given(viewModel.preferredRaffleMode)
+            .willReturn(AppConfig.RaffleMode.ROULETTE.asLiveData())
 
         // WHEN
         viewModel.raffle()
@@ -233,12 +242,15 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
     @Test
     fun `GIVEN the item selection is invalid WHEN selectMode is called THEN  invalidSelectionError receives an error message`() {
         // GIVEN
-        viewModel.customRaffle.value = mockCustomRaffleModel(
-            items = mutableListOf(
-                mockCustomRaffleItemModel(included = false),
-                mockCustomRaffleItemModel(included = false)
+        given(viewModel.customRaffle)
+            .willReturn(
+                mockCustomRaffleModel(
+                    items = mutableListOf(
+                        mockCustomRaffleItemModel(included = false),
+                        mockCustomRaffleItemModel(included = false)
+                    )
+                ).asLiveData()
             )
-        )
 
         // WHEN
         viewModel.selectMode()
@@ -251,12 +263,15 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
     @Test
     fun `GIVEN the item selection is valid WHEN selectMode is called THEN showModeSelector receives a value`() {
         // GIVEN
-        viewModel.customRaffle.value = mockCustomRaffleModel(
-            items = mutableListOf(
-                mockCustomRaffleItemModel(included = true),
-                mockCustomRaffleItemModel(included = true)
+        given(viewModel.customRaffle)
+            .willReturn(
+                mockCustomRaffleModel(
+                    items = mutableListOf(
+                        mockCustomRaffleItemModel(included = true),
+                        mockCustomRaffleItemModel(included = true)
+                    )
+                ).asLiveData()
             )
-        )
 
         // WHEN
         viewModel.selectMode()

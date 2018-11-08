@@ -1,8 +1,12 @@
 package com.fibelatti.raffler.core.extension
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+
 // region Any
 val Unit?.exhaustive get() = this
 
+fun <T> T?.asLiveData(): LiveData<T> = MutableLiveData<T>().apply { value = this@asLiveData }
 // endregion
 // region Boolean
 fun Boolean?.orFalse(): Boolean = this ?: false
