@@ -11,6 +11,7 @@ import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.asLiveData
 import com.fibelatti.raffler.core.extension.givenSuspend
 import com.fibelatti.raffler.core.extension.mock
+import com.fibelatti.raffler.core.extension.safeAny
 import com.fibelatti.raffler.core.extension.shouldReceive
 import com.fibelatti.raffler.core.extension.shouldReceiveEventWithValue
 import com.fibelatti.raffler.core.extension.verifySuspend
@@ -26,8 +27,11 @@ import com.fibelatti.raffler.features.preferences.PreferencesRepository
 import org.junit.Before
 import org.junit.Test
 import org.mockito.ArgumentMatchers.anyInt
+import org.mockito.ArgumentMatchers.anyLong
 import org.mockito.BDDMockito.given
+import org.mockito.Mockito.never
 import org.mockito.Mockito.spy
+import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
 
 class CustomRaffleDetailsViewModelTest : BaseTest() {
@@ -193,6 +197,47 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
     }
     // endregion
 
+    // region updateItemSelection
+    @Test
+    fun `GIVEN index is not valid for current CustomRaffle WHEN updateItemSelection is called THEN nothing happens`() {
+        // GIVEN
+        val initialValue = mockCustomRaffleModel(
+            items = mutableListOf(mockCustomRaffleItemModel(included = false))
+        )
+
+        given(viewModel.customRaffle)
+            .willReturn(initialValue.asLiveData())
+
+        // WHEN
+        viewModel.updateItemSelection(index = 1, isSelected = true)
+
+        // THEN
+        verifySuspend(mockRememberRaffled, never()) { invoke(safeAny()) }
+        viewModel.customRaffle shouldReceive initialValue
+    }
+
+    @Test
+    fun `GIVEN index is valid for current CustomRaffle WHEN updateItemSelection is called THEN rememberRaffle is called AND customRaffle receives the updated value`() {
+        // GIVEN
+        val initialItem = mockCustomRaffleItemModel(included = false)
+        val initialValue = mockCustomRaffleModel(items = mutableListOf(initialItem))
+        val expectedValue = mockCustomRaffleModel(
+            items = mutableListOf(mockCustomRaffleItemModel(included = true))
+        )
+
+        given(viewModel.customRaffle)
+            .willReturn(initialValue.asLiveData())
+            .willCallRealMethod()
+
+        // WHEN
+        viewModel.updateItemSelection(index = 0, isSelected = true)
+
+        // THEN
+        verifySuspend(mockRememberRaffled) { invoke(RememberRaffled.Params(initialItem, true)) }
+        viewModel.customRaffle shouldReceive expectedValue
+    }
+    // endregion
+
     // region raffle
     @Test
     fun `GIVEN the item selection is invalid WHEN raffle is called THEN  invalidSelectionError receives an error message`() {
@@ -281,6 +326,113 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
     }
     // endregion
 
+    // region itemRaffled
+    @Test
+    fun `GIVEN rememberRaffledItems is false WHEN itemRaffled is called THEN nothing happens`() {
+        // GIVEN
+        given(viewModel.rememberRaffledItems)
+            .willReturn(false.asLiveData())
+        given(viewModel.customRaffle)
+            .willReturn(
+                mockCustomRaffleModel(
+                    items = mutableListOf(
+                        mockCustomRaffleItemModel(included = false),
+                        mockCustomRaffleItemModel(included = false)
+                    )
+                ).asLiveData()
+            )
+
+        // WHEN
+        viewModel.itemRaffled(0)
+
+        // THEN
+        verifySuspend(mockRememberRaffled, never()) { invoke(safeAny()) }
+        verifySuspend(mockCustomRaffleRepository, never()) { getCustomRaffleById(anyLong()) }
+    }
+
+    @Test
+    fun `GIVEN rememberRaffledItems is true AND the index is invalid WHEN itemRaffled is called THEN nothing happens`() {
+        // GIVEN
+        given(viewModel.rememberRaffledItems)
+            .willReturn(true.asLiveData())
+        given(viewModel.customRaffle)
+            .willReturn(
+                mockCustomRaffleModel(
+                    items = mutableListOf(mockCustomRaffleItemModel(included = false))
+                ).asLiveData()
+            )
+
+        // WHEN
+        viewModel.itemRaffled(1)
+
+        // THEN
+        verifySuspend(mockRememberRaffled, never()) { invoke(safeAny()) }
+        verifySuspend(mockCustomRaffleRepository, never()) { getCustomRaffleById(anyLong()) }
+    }
+
+    @Test
+    fun `GIVEN rememberRaffledItems is true AND rememberRaffled fails WHEN itemRaffled is called THEN no new values are posted`() {
+        // GIVEN
+        val firstItem = mockCustomRaffleItemModel(id = 1, included = false)
+        val secondItem = mockCustomRaffleItemModel(id = 2, included = false)
+
+        given(viewModel.rememberRaffledItems)
+            .willReturn(true.asLiveData())
+        given(viewModel.customRaffle)
+            .willReturn(
+                mockCustomRaffleModel(items = mutableListOf(firstItem, secondItem))
+                    .asLiveData()
+            )
+        givenSuspend { mockRememberRaffled(RememberRaffled.Params(firstItem, included = false)) }
+            .willReturn(Success(Unit))
+        givenSuspend { mockRememberRaffled(RememberRaffled.Params(secondItem, included = false)) }
+            .willReturn(mockFailure)
+
+        // WHEN
+        viewModel.itemRaffled(0, 1)
+
+        // THEN
+        verifySuspend(mockRememberRaffled, times(2)) { invoke(safeAny()) }
+        verifySuspend(mockCustomRaffleRepository, never()) { getCustomRaffleById(anyLong()) }
+    }
+
+    @Test
+    fun `GIVEN rememberRaffledItems is true AND rememberRaffled succeeds WHEN itemRaffled is called THEN updated values are posted`() {
+        // GIVEN
+        val startingCustomRaffleModel = mockCustomRaffleModel(
+            items = mutableListOf(mockCustomRaffleItemModel(), mockCustomRaffleItemModel())
+        )
+        val customRaffle = mockCustomRaffle(
+            items = listOf(mockCustomRaffleItem(included = false), mockCustomRaffleItem(included = false))
+        )
+        val expectedCustomRaffleModel = mockCustomRaffleModel(
+            id = 2,
+            items = mutableListOf(mockCustomRaffleItemModel(), mockCustomRaffleItemModel())
+        )
+
+        given(viewModel.rememberRaffledItems)
+            .willReturn(true.asLiveData())
+        given(viewModel.customRaffle)
+            .willReturn(startingCustomRaffleModel.asLiveData())
+            .willCallRealMethod()
+        givenSuspend { mockRememberRaffled(safeAny()) }
+            .willReturn(Success(Unit))
+        givenSuspend { mockCustomRaffleRepository.getCustomRaffleById(startingCustomRaffleModel.id) }
+            .willReturn(Success(customRaffle))
+        given(mockCustomRaffleModelMapper.map(customRaffle))
+            .willReturn(expectedCustomRaffleModel)
+
+        // WHEN
+        viewModel.itemRaffled(0, 1)
+
+        // THEN
+        verifySuspend(mockRememberRaffled, times(2)) { invoke(safeAny()) }
+        verifySuspend(mockCustomRaffleRepository) { getCustomRaffleById(startingCustomRaffleModel.id) }
+        viewModel.customRaffle shouldReceive expectedCustomRaffleModel
+        viewModel.itemsRemaining shouldReceiveEventWithValue expectedCustomRaffleModel.includedItems.size
+    }
+    // endregion
+
     // region hintDismissed
     @Test
     fun `WHEN hintDismissed is called THEN preferencesRepository setRaffleDetailsHintDismissed is called`() {
@@ -300,6 +452,20 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
 
         // THEN
         viewModel.customRaffle shouldReceive mockCustomRaffleModel()
+    }
+    // endregion
+
+    // region toggleAll
+    @Test
+    fun `GIVEN any rememberRaffled fails WHEN toggleAll is called THEN nothing else happens`() {
+    }
+
+    @Test
+    fun `GIVEN all rememberRaffled succeeds AND toggleState is INCLUDE_ALL WHEN toggleAll is called THEN customRaffle receives a value with all items included AND toggleState receives EXCLUDE_ALL`() {
+    }
+
+    @Test
+    fun `GIVEN all rememberRaffled succeeds AND toggleState is EXCLUDE_ALL WHEN toggleAll is called THEN customRaffle receives a value with all items not included AND toggleState receives INCLUDE_ALL`() {
     }
     // endregion
 }

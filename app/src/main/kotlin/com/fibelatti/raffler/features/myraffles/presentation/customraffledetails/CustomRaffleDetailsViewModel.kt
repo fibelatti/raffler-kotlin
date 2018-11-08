@@ -112,11 +112,12 @@ class CustomRaffleDetailsViewModel @Inject constructor(
         if (rememberRaffledItems.value == true) {
             withCustomRaffle { raffle ->
                 startInBackground {
-                    val rememberRaffleResult = index.map {
-                        defer { rememberRaffled(RememberRaffled.Params(raffle.items[it], included = false)) }
-                    }.awaitAll()
+                    val rememberRaffleResult = raffle.items.filterIndexed { idx, _ -> idx in index }
+                        .map { item ->
+                            defer { rememberRaffled(RememberRaffled.Params(item, included = false)) }
+                        }.awaitAll()
 
-                    if (rememberRaffleResult.all { it is Success }) {
+                    if (rememberRaffleResult.isNotEmpty() && rememberRaffleResult.all { it is Success }) {
                         customRaffleRepository.getCustomRaffleById(raffle.id.orZero())
                             .mapCatching(::prepareCustomRaffle)
                             .onSuccess {
