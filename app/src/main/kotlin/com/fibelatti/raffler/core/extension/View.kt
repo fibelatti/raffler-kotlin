@@ -17,6 +17,7 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import androidx.annotation.LayoutRes
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -50,7 +51,7 @@ fun View.snackbar(message: String, duration: Int = Snackbar.LENGTH_SHORT) {
             view.layoutParams = (view.layoutParams as ViewGroup.MarginLayoutParams).apply {
                 setMargins(margin, margin, margin, margin)
             }
-            view.background = context.getDrawable(R.drawable.background_snackbar)
+            view.background = ContextCompat.getDrawable(context, R.drawable.background_snackbar)
         }
         .show()
 }

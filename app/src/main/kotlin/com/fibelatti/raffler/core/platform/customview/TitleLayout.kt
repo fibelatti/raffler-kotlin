@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.visible
 import kotlinx.android.synthetic.main.layout_title.view.*
@@ -30,7 +31,7 @@ class TitleLayout @JvmOverloads constructor(
 
     fun setNavigateUp(@DrawableRes iconRes: Int = R.drawable.ic_back_arrow, navigateUp: () -> Unit) {
         buttonNavigateBack.apply {
-            setImageDrawable(context.getDrawable(iconRes))
+            setImageDrawable(ContextCompat.getDrawable(context, iconRes))
             setOnClickListener { navigateUp() }
             visible()
         }
