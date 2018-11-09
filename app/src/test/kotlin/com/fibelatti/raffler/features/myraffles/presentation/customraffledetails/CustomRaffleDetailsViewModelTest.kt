@@ -13,8 +13,8 @@ import com.fibelatti.raffler.core.extension.asLiveEvent
 import com.fibelatti.raffler.core.extension.givenSuspend
 import com.fibelatti.raffler.core.extension.mock
 import com.fibelatti.raffler.core.extension.safeAny
-import com.fibelatti.raffler.core.extension.shouldReceiveOnly
-import com.fibelatti.raffler.core.extension.shouldReceiveSingleEventWithValue
+import com.fibelatti.raffler.core.extension.currentValueShouldBe
+import com.fibelatti.raffler.core.extension.currentEventShouldBe
 import com.fibelatti.raffler.core.extension.verifySuspend
 import com.fibelatti.raffler.core.functional.Failure
 import com.fibelatti.raffler.core.functional.Success
@@ -64,7 +64,7 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
             testCoroutineLauncher
         ))
 
-        viewModel.showHint shouldReceiveSingleEventWithValue Unit
+        viewModel.showHint currentEventShouldBe Unit
     }
 
     // region getCustomRaffleById
@@ -81,10 +81,10 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
 
         // THEN
         with(viewModel) {
-            preferredRaffleMode shouldReceiveOnly AppConfig.RaffleMode.NONE
-            rouletteMusicEnabled shouldReceiveOnly false
-            rememberRaffledItems shouldReceiveOnly false
-            error shouldReceiveOnly mockException
+            preferredRaffleMode currentValueShouldBe AppConfig.RaffleMode.NONE
+            rouletteMusicEnabled currentValueShouldBe false
+            rememberRaffledItems currentValueShouldBe false
+            error currentValueShouldBe mockException
         }
     }
 
@@ -100,7 +100,7 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
 
         // THEN
         assertPreferences()
-        viewModel.error shouldReceiveOnly mockException
+        viewModel.error currentValueShouldBe mockException
     }
 
     @Test
@@ -174,8 +174,8 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
 
         // THEN
         assertPreferences(rememberRaffled)
-        viewModel.customRaffle shouldReceiveOnly expectedRaffleModel
-        viewModel.toggleState shouldReceiveSingleEventWithValue expectedToggleState
+        viewModel.customRaffle currentValueShouldBe expectedRaffleModel
+        viewModel.toggleState currentEventShouldBe expectedToggleState
     }
 
     private fun arrangePreferences(rememberRaffled: Boolean = true) {
@@ -191,9 +191,9 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
 
     private fun assertPreferences(rememberRaffled: Boolean = true) {
         with(viewModel) {
-            preferredRaffleMode shouldReceiveOnly AppConfig.RaffleMode.ROULETTE
-            rouletteMusicEnabled shouldReceiveOnly true
-            rememberRaffledItems shouldReceiveOnly rememberRaffled
+            preferredRaffleMode currentValueShouldBe AppConfig.RaffleMode.ROULETTE
+            rouletteMusicEnabled currentValueShouldBe true
+            rememberRaffledItems currentValueShouldBe rememberRaffled
         }
     }
     // endregion
@@ -214,7 +214,7 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
 
         // THEN
         verifySuspend(mockRememberRaffled, never()) { invoke(safeAny()) }
-        viewModel.customRaffle shouldReceiveOnly initialValue
+        viewModel.customRaffle currentValueShouldBe initialValue
     }
 
     @Test
@@ -235,7 +235,7 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
 
         // THEN
         verifySuspend(mockRememberRaffled) { invoke(RememberRaffled.Params(initialItem, true)) }
-        viewModel.customRaffle shouldReceiveOnly expectedValue
+        viewModel.customRaffle currentValueShouldBe expectedValue
     }
     // endregion
 
@@ -258,7 +258,7 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
 
         // THEN
         verify(mockResourceProvider).getString(R.string.custom_raffle_details_mode_invalid_quantity)
-        viewModel.invalidSelectionError shouldReceiveSingleEventWithValue MockDataProvider.genericString
+        viewModel.invalidSelectionError currentEventShouldBe MockDataProvider.genericString
     }
 
     @Test
@@ -280,7 +280,7 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
         viewModel.raffle()
 
         // THEN
-        viewModel.showPreferredRaffleMode shouldReceiveSingleEventWithValue AppConfig.RaffleMode.ROULETTE
+        viewModel.showPreferredRaffleMode currentEventShouldBe AppConfig.RaffleMode.ROULETTE
     }
     // endregion
 
@@ -303,7 +303,7 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
 
         // THEN
         verify(mockResourceProvider).getString(R.string.custom_raffle_details_mode_invalid_quantity)
-        viewModel.invalidSelectionError shouldReceiveSingleEventWithValue MockDataProvider.genericString
+        viewModel.invalidSelectionError currentEventShouldBe MockDataProvider.genericString
     }
 
     @Test
@@ -323,7 +323,7 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
         viewModel.selectMode()
 
         // THEN
-        viewModel.showModeSelector shouldReceiveSingleEventWithValue Unit
+        viewModel.showModeSelector currentEventShouldBe Unit
     }
     // endregion
 
@@ -429,8 +429,8 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
         // THEN
         verifySuspend(mockRememberRaffled, times(2)) { invoke(safeAny()) }
         verifySuspend(mockCustomRaffleRepository) { getCustomRaffleById(startingCustomRaffleModel.id) }
-        viewModel.customRaffle shouldReceiveOnly expectedCustomRaffleModel
-        viewModel.itemsRemaining shouldReceiveSingleEventWithValue expectedCustomRaffleModel.includedItems.size
+        viewModel.customRaffle currentValueShouldBe expectedCustomRaffleModel
+        viewModel.itemsRemaining currentEventShouldBe expectedCustomRaffleModel.includedItems.size
     }
     // endregion
 
@@ -452,7 +452,7 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
         viewModel.setCustomRaffleForContinuation(mockCustomRaffleModel())
 
         // THEN
-        viewModel.customRaffle shouldReceiveOnly mockCustomRaffleModel()
+        viewModel.customRaffle currentValueShouldBe mockCustomRaffleModel()
     }
     // endregion
 
@@ -479,8 +479,8 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
         viewModel.toggleAll()
 
         // THEN
-        viewModel.customRaffle shouldReceiveOnly initialCustomRaffle
-        viewModel.toggleState shouldReceiveSingleEventWithValue initialToggleState
+        viewModel.customRaffle currentValueShouldBe initialCustomRaffle
+        viewModel.toggleState currentEventShouldBe initialToggleState
     }
 
     @Test
@@ -508,8 +508,8 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
         viewModel.toggleAll()
 
         // THEN
-        viewModel.customRaffle shouldReceiveOnly expectedRaffleModel
-        viewModel.toggleState shouldReceiveSingleEventWithValue expectedToggleState
+        viewModel.customRaffle currentValueShouldBe expectedRaffleModel
+        viewModel.toggleState currentEventShouldBe expectedToggleState
     }
 
     @Test
@@ -537,8 +537,8 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
         viewModel.toggleAll()
 
         // THEN
-        viewModel.customRaffle shouldReceiveOnly expectedRaffleModel
-        viewModel.toggleState shouldReceiveSingleEventWithValue expectedToggleState
+        viewModel.customRaffle currentValueShouldBe expectedRaffleModel
+        viewModel.toggleState currentEventShouldBe expectedToggleState
     }
     // endregion
 }

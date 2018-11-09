@@ -7,7 +7,7 @@ import com.fibelatti.raffler.core.extension.givenSuspend
 import com.fibelatti.raffler.core.extension.mock
 import com.fibelatti.raffler.core.extension.safeAny
 import com.fibelatti.raffler.core.extension.shouldNeverReceiveValues
-import com.fibelatti.raffler.core.extension.shouldReceiveOnly
+import com.fibelatti.raffler.core.extension.currentValueShouldBe
 import com.fibelatti.raffler.core.functional.Success
 import com.fibelatti.raffler.core.provider.ResourceProvider
 import com.fibelatti.raffler.features.preferences.Preferences
@@ -48,8 +48,8 @@ class LotteryViewModelTest : BaseTest() {
             testCoroutineLauncher
         )
 
-        viewModel.defaultQuantityAvailable shouldReceiveOnly MockDataProvider.genericString
-        viewModel.defaultQuantityToRaffle shouldReceiveOnly MockDataProvider.genericString
+        viewModel.defaultQuantityAvailable currentValueShouldBe MockDataProvider.genericString
+        viewModel.defaultQuantityToRaffle currentValueShouldBe MockDataProvider.genericString
         viewModel.showHint.shouldNeverReceiveValues()
     }
 
@@ -59,7 +59,7 @@ class LotteryViewModelTest : BaseTest() {
         viewModel.getLotteryNumbers(quantityAvailable = " ", quantityToRaffle = "15")
 
         // THEN
-        viewModel.quantityAvailableError shouldReceiveOnly MockDataProvider.genericString
+        viewModel.quantityAvailableError currentValueShouldBe MockDataProvider.genericString
         viewModel.quantityToRaffleError.shouldNeverReceiveValues()
         viewModel.lotteryNumbers.shouldNeverReceiveValues()
     }
@@ -70,7 +70,7 @@ class LotteryViewModelTest : BaseTest() {
         viewModel.getLotteryNumbers(quantityAvailable = "abc", quantityToRaffle = "15")
 
         // THEN
-        viewModel.quantityAvailableError shouldReceiveOnly MockDataProvider.genericString
+        viewModel.quantityAvailableError currentValueShouldBe MockDataProvider.genericString
         viewModel.quantityToRaffleError.shouldNeverReceiveValues()
         viewModel.lotteryNumbers.shouldNeverReceiveValues()
     }
@@ -81,8 +81,8 @@ class LotteryViewModelTest : BaseTest() {
         viewModel.getLotteryNumbers(quantityAvailable = "10", quantityToRaffle = " ")
 
         // THEN
-        viewModel.quantityAvailableError shouldReceiveOnly String.empty()
-        viewModel.quantityToRaffleError shouldReceiveOnly MockDataProvider.genericString
+        viewModel.quantityAvailableError currentValueShouldBe String.empty()
+        viewModel.quantityToRaffleError currentValueShouldBe MockDataProvider.genericString
         viewModel.lotteryNumbers.shouldNeverReceiveValues()
     }
 
@@ -92,8 +92,8 @@ class LotteryViewModelTest : BaseTest() {
         viewModel.getLotteryNumbers(quantityAvailable = "10", quantityToRaffle = "abc")
 
         // THEN
-        viewModel.quantityAvailableError shouldReceiveOnly String.empty()
-        viewModel.quantityToRaffleError shouldReceiveOnly MockDataProvider.genericString
+        viewModel.quantityAvailableError currentValueShouldBe String.empty()
+        viewModel.quantityToRaffleError currentValueShouldBe MockDataProvider.genericString
         viewModel.lotteryNumbers.shouldNeverReceiveValues()
     }
 
@@ -107,9 +107,9 @@ class LotteryViewModelTest : BaseTest() {
         viewModel.getLotteryNumbers(quantityAvailable = "10", quantityToRaffle = "5")
 
         // THEN
-        viewModel.quantityAvailableError shouldReceiveOnly String.empty()
-        viewModel.quantityToRaffleError shouldReceiveOnly String.empty()
+        viewModel.quantityAvailableError currentValueShouldBe String.empty()
+        viewModel.quantityToRaffleError currentValueShouldBe String.empty()
         viewModel.error.shouldNeverReceiveValues()
-        viewModel.lotteryNumbers shouldReceiveOnly mockLotteryNumberList
+        viewModel.lotteryNumbers currentValueShouldBe mockLotteryNumberList
     }
 }

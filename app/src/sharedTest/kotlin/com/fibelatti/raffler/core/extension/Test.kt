@@ -82,18 +82,17 @@ infix fun <T> List<T>.shouldContain(subList: List<T>) {
     )
 }
 
-infix fun <T> LiveData<T>.shouldReceiveOnly(expectedValue: T) {
-    val values = mutableListOf<T>()
-    val observer = Observer<T> { values.add(it) }
+infix fun <T> LiveData<T>.currentValueShouldBe(expectedValue: T) {
+    var value: T? = null
+    val observer = Observer<T> { value = it }
 
     observeForever(observer)
-    values sizeShouldBe 1
-    assertEquals(expectedValue, values.first())
+    assertEquals(expectedValue, value)
     removeObserver(observer)
 }
 
-infix fun <T> LiveData<Event<T>>.shouldReceiveSingleEventWithValue(expectedValue: T) {
-    shouldReceiveOnly(Event(expectedValue))
+infix fun <T> LiveData<Event<T>>.currentEventShouldBe(expectedValue: T) {
+    currentValueShouldBe(Event(expectedValue))
 }
 
 fun <T> LiveData<T>.shouldNeverReceiveValues() {
