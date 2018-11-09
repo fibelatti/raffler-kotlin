@@ -50,14 +50,14 @@ infix fun Any?.shouldBe(otherValue: Any?) {
     assertEquals(otherValue, this)
 }
 
-infix fun List<Any>.sizeShouldBe(value: Int) {
+infix fun <ListType, T : List<ListType>> T.sizeShouldBe(value: Int) {
     assertTrue(
         "Expected size: $value - Actual size: $size",
         size == value
     )
 }
 
-fun List<Any>.shouldBeEmpty() {
+fun <T> List<T>.shouldBeEmpty() {
     assertTrue(
         "Expected size: 0 - Actual size: $size",
         this.isEmpty()
@@ -82,20 +82,22 @@ infix fun <T> List<T>.shouldContain(subList: List<T>) {
     )
 }
 
-infix fun <T> LiveData<T>.shouldReceive(expectedValue: T) {
-    var value: T? = null
-    val observer = Observer<T> { value = it }
+infix fun <T> LiveData<T>.shouldReceiveOnly(expectedValue: T) {
+    val values = mutableListOf<T>()
+    val observer = Observer<T> { values.add(it) }
+
     observeForever(observer)
-    assertEquals(expectedValue, value)
+    values sizeShouldBe 1
+    assertEquals(expectedValue, values.first())
     removeObserver(observer)
 }
 
 infix fun <T> LiveData<Event<T>>.shouldReceiveEventWithValue(expectedValue: T) {
-    shouldReceive(Event(expectedValue))
+    shouldReceiveOnly(Event(expectedValue))
 }
 
 fun <T> LiveData<T>.shouldNeverReceiveValues() {
-    val observer = spy(Observer<T> { })
+    val observer = spy(Observer<T> {})
     observeForever(observer)
     verify(observer, never()).onChanged(any())
     removeObserver(observer)

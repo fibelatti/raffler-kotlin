@@ -12,7 +12,7 @@ import com.fibelatti.raffler.core.extension.asLiveData
 import com.fibelatti.raffler.core.extension.givenSuspend
 import com.fibelatti.raffler.core.extension.mock
 import com.fibelatti.raffler.core.extension.safeAny
-import com.fibelatti.raffler.core.extension.shouldReceive
+import com.fibelatti.raffler.core.extension.shouldReceiveOnly
 import com.fibelatti.raffler.core.extension.shouldReceiveEventWithValue
 import com.fibelatti.raffler.core.extension.verifySuspend
 import com.fibelatti.raffler.core.functional.Failure
@@ -80,10 +80,10 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
 
         // THEN
         with(viewModel) {
-            preferredRaffleMode shouldReceive AppConfig.RaffleMode.NONE
-            rouletteMusicEnabled shouldReceive false
-            rememberRaffledItems shouldReceive false
-            error shouldReceive mockException
+            preferredRaffleMode shouldReceiveOnly AppConfig.RaffleMode.NONE
+            rouletteMusicEnabled shouldReceiveOnly false
+            rememberRaffledItems shouldReceiveOnly false
+            error shouldReceiveOnly mockException
         }
     }
 
@@ -99,7 +99,7 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
 
         // THEN
         assertPreferences()
-        viewModel.error shouldReceive mockException
+        viewModel.error shouldReceiveOnly mockException
     }
 
     @Test
@@ -173,7 +173,7 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
 
         // THEN
         assertPreferences(rememberRaffled)
-        viewModel.customRaffle shouldReceive expectedRaffleModel
+        viewModel.customRaffle shouldReceiveOnly expectedRaffleModel
         viewModel.toggleState shouldReceiveEventWithValue expectedToggleState
     }
 
@@ -190,9 +190,9 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
 
     private fun assertPreferences(rememberRaffled: Boolean = true) {
         with(viewModel) {
-            preferredRaffleMode shouldReceive AppConfig.RaffleMode.ROULETTE
-            rouletteMusicEnabled shouldReceive true
-            rememberRaffledItems shouldReceive rememberRaffled
+            preferredRaffleMode shouldReceiveOnly AppConfig.RaffleMode.ROULETTE
+            rouletteMusicEnabled shouldReceiveOnly true
+            rememberRaffledItems shouldReceiveOnly rememberRaffled
         }
     }
     // endregion
@@ -213,7 +213,7 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
 
         // THEN
         verifySuspend(mockRememberRaffled, never()) { invoke(safeAny()) }
-        viewModel.customRaffle shouldReceive initialValue
+        viewModel.customRaffle shouldReceiveOnly initialValue
     }
 
     @Test
@@ -234,7 +234,7 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
 
         // THEN
         verifySuspend(mockRememberRaffled) { invoke(RememberRaffled.Params(initialItem, true)) }
-        viewModel.customRaffle shouldReceive expectedValue
+        viewModel.customRaffle shouldReceiveOnly expectedValue
     }
     // endregion
 
@@ -428,7 +428,7 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
         // THEN
         verifySuspend(mockRememberRaffled, times(2)) { invoke(safeAny()) }
         verifySuspend(mockCustomRaffleRepository) { getCustomRaffleById(startingCustomRaffleModel.id) }
-        viewModel.customRaffle shouldReceive expectedCustomRaffleModel
+        viewModel.customRaffle shouldReceiveOnly expectedCustomRaffleModel
         viewModel.itemsRemaining shouldReceiveEventWithValue expectedCustomRaffleModel.includedItems.size
     }
     // endregion
@@ -451,13 +451,19 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
         viewModel.setCustomRaffleForContinuation(mockCustomRaffleModel())
 
         // THEN
-        viewModel.customRaffle shouldReceive mockCustomRaffleModel()
+        viewModel.customRaffle shouldReceiveOnly mockCustomRaffleModel()
     }
     // endregion
 
     // region toggleAll
     @Test
     fun `GIVEN any rememberRaffled fails WHEN toggleAll is called THEN nothing else happens`() {
+        // GIVEN
+
+        // WHEN
+        viewModel.toggleAll()
+
+        // THEN
     }
 
     @Test
