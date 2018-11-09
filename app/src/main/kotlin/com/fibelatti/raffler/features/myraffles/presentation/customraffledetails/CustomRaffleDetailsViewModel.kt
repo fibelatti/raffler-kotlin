@@ -1,5 +1,6 @@
 package com.fibelatti.raffler.features.myraffles.presentation.customraffledetails
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.orFalse
@@ -9,6 +10,7 @@ import com.fibelatti.raffler.core.functional.mapCatching
 import com.fibelatti.raffler.core.functional.onFailure
 import com.fibelatti.raffler.core.functional.onSuccess
 import com.fibelatti.raffler.core.platform.AppConfig
+import com.fibelatti.raffler.core.platform.LiveEvent
 import com.fibelatti.raffler.core.platform.MutableLiveEvent
 import com.fibelatti.raffler.core.platform.base.BaseViewModel
 import com.fibelatti.raffler.core.platform.postEvent
@@ -32,42 +34,52 @@ class CustomRaffleDetailsViewModel @Inject constructor(
     coroutineLauncher: CoroutineLauncher
 ) : BaseViewModel(coroutineLauncher) {
 
-    private val rememberRaffledItems by lazy { MutableLiveData<Boolean>() }
-    private val customRaffleCount by lazy { MutableLiveData<Int>() }
-    val preferredRaffleMode by lazy { MutableLiveData<AppConfig.RaffleMode>() }
-    val rouletteMusicEnabled by lazy { MutableLiveData<Boolean>() }
-    val customRaffle by lazy { MutableLiveData<CustomRaffleModel>() }
-    val showHint by lazy { MutableLiveEvent<Unit>() }
-    val invalidSelectionError by lazy { MutableLiveEvent<String>() }
-    val showModeSelector by lazy { MutableLiveEvent<Unit>() }
-    val showPreferredRaffleMode by lazy { MutableLiveEvent<AppConfig.RaffleMode>() }
-    val itemsRemaining by lazy { MutableLiveEvent<Int>() }
-    val toggleState by lazy { MutableLiveEvent<ToggleState>() }
+    // region Properties and Backing properties
+    val rememberRaffledItems: LiveData<Boolean> get() = _rememberRaffledItems
+    private val _rememberRaffledItems by lazy { MutableLiveData<Boolean>() }
+    val preferredRaffleMode: LiveData<AppConfig.RaffleMode> get() = _preferredRaffleMode
+    private val _preferredRaffleMode by lazy { MutableLiveData<AppConfig.RaffleMode>() }
+    val rouletteMusicEnabled: LiveData<Boolean> get() = _rouletteMusicEnabled
+    private val _rouletteMusicEnabled by lazy { MutableLiveData<Boolean>() }
+    val customRaffle: LiveData<CustomRaffleModel> get() = _customRaffle
+    private val _customRaffle by lazy { MutableLiveData<CustomRaffleModel>() }
+    val showHint: LiveEvent<Unit> get() = _showHint
+    private val _showHint by lazy { MutableLiveEvent<Unit>() }
+    val invalidSelectionError: LiveEvent<String> get() = _invalidSelectionError
+    private val _invalidSelectionError by lazy { MutableLiveEvent<String>() }
+    val showModeSelector: LiveEvent<Unit> get() = _showModeSelector
+    private val _showModeSelector by lazy { MutableLiveEvent<Unit>() }
+    val showPreferredRaffleMode: LiveEvent<AppConfig.RaffleMode> get() = _showPreferredRaffleMode
+    private val _showPreferredRaffleMode by lazy { MutableLiveEvent<AppConfig.RaffleMode>() }
+    val itemsRemaining: LiveEvent<Int> get() = _itemsRemaining
+    private val _itemsRemaining by lazy { MutableLiveEvent<Int>() }
+    val toggleState: LiveEvent<ToggleState> get() = _toggleState
+    private val _toggleState by lazy { MutableLiveEvent<ToggleState>() }
+    // endregion
 
     init {
         checkForHints()
-        getCustomRaffleCount()
     }
 
     fun getCustomRaffleById(id: Long?) {
         startInBackground {
             preferencesRepository.getPreferences()
                 .onSuccess {
-                    preferredRaffleMode.postValue(it.preferredRaffleMode)
-                    rouletteMusicEnabled.postValue(it.rouletteMusicEnabled)
-                    rememberRaffledItems.postValue(it.rememberRaffledItems)
+                    _preferredRaffleMode.postValue(it.preferredRaffleMode)
+                    _rouletteMusicEnabled.postValue(it.rouletteMusicEnabled)
+                    _rememberRaffledItems.postValue(it.rememberRaffledItems)
                 }
                 .onFailure {
-                    preferredRaffleMode.postValue(AppConfig.RaffleMode.NONE)
-                    rouletteMusicEnabled.postValue(false)
-                    rememberRaffledItems.postValue(false)
+                    _preferredRaffleMode.postValue(AppConfig.RaffleMode.NONE)
+                    _rouletteMusicEnabled.postValue(false)
+                    _rememberRaffledItems.postValue(false)
                 }
 
             customRaffleRepository.getCustomRaffleById(id.orZero())
                 .mapCatching(::prepareCustomRaffle)
                 .onSuccess { raffle ->
-                    customRaffle.postValue(raffle)
-                    toggleState.postEvent(when {
+                    _customRaffle.postValue(raffle)
+                    _toggleState.postEvent(when {
                         raffle.items.any { !it.included } -> ToggleState.INCLUDE_ALL
                         raffle.items.all { !it.included } -> ToggleState.INCLUDE_ALL
                         else -> ToggleState.EXCLUDE_ALL
@@ -80,34 +92,37 @@ class CustomRaffleDetailsViewModel @Inject constructor(
     fun updateItemSelection(index: Int, isSelected: Boolean) {
         withCustomRaffle {
             startInBackground {
-                rememberRaffled(RememberRaffled.Params(it.items[index], isSelected))
-                customRaffle.postValue(it.apply { it.items[index].included = isSelected })
+                it.items.getOrNull(index)?.let { item ->
+                    rememberRaffled(RememberRaffled.Params(item, isSelected))
+                    _customRaffle.postValue(it.apply { items[index].included = isSelected })
+                }
             }
         }
     }
 
     fun raffle() {
-        validateSelection { showPreferredRaffleMode.postEvent(preferredRaffleMode.value) }
+        validateSelection { _showPreferredRaffleMode.postEvent(preferredRaffleMode.value) }
     }
 
     fun selectMode() {
-        validateSelection { showModeSelector.postEvent(Unit) }
+        validateSelection { _showModeSelector.postEvent(Unit) }
     }
 
     fun itemRaffled(vararg index: Int) {
         if (rememberRaffledItems.value == true) {
             withCustomRaffle { raffle ->
                 startInBackground {
-                    val rememberRaffleResult = index.map {
-                        defer { rememberRaffled(RememberRaffled.Params(raffle.items[it], included = false)) }
-                    }.awaitAll()
+                    val rememberRaffleResult = raffle.items.filterIndexed { idx, _ -> idx in index }
+                        .map { item ->
+                            defer { rememberRaffled(RememberRaffled.Params(item, included = false)) }
+                        }.awaitAll()
 
-                    if (rememberRaffleResult.all { it is Success }) {
+                    if (rememberRaffleResult.isNotEmpty() && rememberRaffleResult.all { it is Success }) {
                         customRaffleRepository.getCustomRaffleById(raffle.id.orZero())
                             .mapCatching(::prepareCustomRaffle)
                             .onSuccess {
-                                customRaffle.postValue(it)
-                                itemsRemaining.postEvent(it.includedItems.size)
+                                _customRaffle.postValue(it)
+                                _itemsRemaining.postEvent(it.includedItems.size)
                             }
                     }
                 }
@@ -120,7 +135,7 @@ class CustomRaffleDetailsViewModel @Inject constructor(
     }
 
     fun setCustomRaffleForContinuation(customRaffleModel: CustomRaffleModel) {
-        customRaffle.postValue(customRaffleModel)
+        _customRaffle.postValue(customRaffleModel)
     }
 
     fun toggleAll() {
@@ -132,10 +147,10 @@ class CustomRaffleDetailsViewModel @Inject constructor(
                     }.awaitAll()
 
                     if (rememberRaffleResult.all { it is Success }) {
-                        customRaffle.postValue(
+                        _customRaffle.postValue(
                             raffle.apply { items.forEach { it.included = state == ToggleState.INCLUDE_ALL } }
                         )
-                        toggleState.postEvent(
+                        _toggleState.postEvent(
                             when (state) {
                                 ToggleState.INCLUDE_ALL -> ToggleState.EXCLUDE_ALL
                                 ToggleState.EXCLUDE_ALL -> ToggleState.INCLUDE_ALL
@@ -150,16 +165,8 @@ class CustomRaffleDetailsViewModel @Inject constructor(
     private fun checkForHints() {
         startInBackground {
             if (!preferencesRepository.getRaffleDetailsHintDisplayed()) {
-                showHint.postEvent(Unit)
+                _showHint.postEvent(Unit)
             }
-        }
-    }
-
-    private fun getCustomRaffleCount() {
-        startInBackground {
-            customRaffleRepository.getAllCustomRaffles()
-                .onSuccess { customRaffleCount.postValue(it.size) }
-                .onFailure { customRaffleCount.postValue(1) }
         }
     }
 
@@ -172,7 +179,7 @@ class CustomRaffleDetailsViewModel @Inject constructor(
         if (customRaffle.value?.itemSelectionIsValid.orFalse()) {
             ifValid()
         } else {
-            invalidSelectionError.postEvent(resourceProvider.getString(R.string.custom_raffle_details_mode_invalid_quantity))
+            _invalidSelectionError.postEvent(resourceProvider.getString(R.string.custom_raffle_details_mode_invalid_quantity))
         }
     }
 
