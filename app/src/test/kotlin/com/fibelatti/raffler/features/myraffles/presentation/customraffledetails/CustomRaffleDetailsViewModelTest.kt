@@ -9,11 +9,12 @@ import com.fibelatti.raffler.MockDataProvider.mockCustomRaffleModel
 import com.fibelatti.raffler.MockDataProvider.mockPreferences
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.asLiveData
+import com.fibelatti.raffler.core.extension.asLiveEvent
 import com.fibelatti.raffler.core.extension.givenSuspend
 import com.fibelatti.raffler.core.extension.mock
 import com.fibelatti.raffler.core.extension.safeAny
 import com.fibelatti.raffler.core.extension.shouldReceiveOnly
-import com.fibelatti.raffler.core.extension.shouldReceiveEventWithValue
+import com.fibelatti.raffler.core.extension.shouldReceiveSingleEventWithValue
 import com.fibelatti.raffler.core.extension.verifySuspend
 import com.fibelatti.raffler.core.functional.Failure
 import com.fibelatti.raffler.core.functional.Success
@@ -63,7 +64,7 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
             testCoroutineLauncher
         ))
 
-        viewModel.showHint shouldReceiveEventWithValue Unit
+        viewModel.showHint shouldReceiveSingleEventWithValue Unit
     }
 
     // region getCustomRaffleById
@@ -174,7 +175,7 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
         // THEN
         assertPreferences(rememberRaffled)
         viewModel.customRaffle shouldReceiveOnly expectedRaffleModel
-        viewModel.toggleState shouldReceiveEventWithValue expectedToggleState
+        viewModel.toggleState shouldReceiveSingleEventWithValue expectedToggleState
     }
 
     private fun arrangePreferences(rememberRaffled: Boolean = true) {
@@ -226,8 +227,8 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
         )
 
         given(viewModel.customRaffle)
-            .willReturn(initialValue.asLiveData())
-            .willCallRealMethod()
+            .willReturn(initialValue.asLiveData()) /* test setup */
+            .willCallRealMethod() /* assertion call */
 
         // WHEN
         viewModel.updateItemSelection(index = 0, isSelected = true)
@@ -257,7 +258,7 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
 
         // THEN
         verify(mockResourceProvider).getString(R.string.custom_raffle_details_mode_invalid_quantity)
-        viewModel.invalidSelectionError shouldReceiveEventWithValue MockDataProvider.genericString
+        viewModel.invalidSelectionError shouldReceiveSingleEventWithValue MockDataProvider.genericString
     }
 
     @Test
@@ -279,7 +280,7 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
         viewModel.raffle()
 
         // THEN
-        viewModel.showPreferredRaffleMode shouldReceiveEventWithValue AppConfig.RaffleMode.ROULETTE
+        viewModel.showPreferredRaffleMode shouldReceiveSingleEventWithValue AppConfig.RaffleMode.ROULETTE
     }
     // endregion
 
@@ -302,7 +303,7 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
 
         // THEN
         verify(mockResourceProvider).getString(R.string.custom_raffle_details_mode_invalid_quantity)
-        viewModel.invalidSelectionError shouldReceiveEventWithValue MockDataProvider.genericString
+        viewModel.invalidSelectionError shouldReceiveSingleEventWithValue MockDataProvider.genericString
     }
 
     @Test
@@ -322,7 +323,7 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
         viewModel.selectMode()
 
         // THEN
-        viewModel.showModeSelector shouldReceiveEventWithValue Unit
+        viewModel.showModeSelector shouldReceiveSingleEventWithValue Unit
     }
     // endregion
 
@@ -413,8 +414,8 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
         given(viewModel.rememberRaffledItems)
             .willReturn(true.asLiveData())
         given(viewModel.customRaffle)
-            .willReturn(startingCustomRaffleModel.asLiveData())
-            .willCallRealMethod()
+            .willReturn(startingCustomRaffleModel.asLiveData()) /* test setup */
+            .willCallRealMethod() /* assertion call */
         givenSuspend { mockRememberRaffled(safeAny()) }
             .willReturn(Success(Unit))
         givenSuspend { mockCustomRaffleRepository.getCustomRaffleById(startingCustomRaffleModel.id) }
@@ -429,7 +430,7 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
         verifySuspend(mockRememberRaffled, times(2)) { invoke(safeAny()) }
         verifySuspend(mockCustomRaffleRepository) { getCustomRaffleById(startingCustomRaffleModel.id) }
         viewModel.customRaffle shouldReceiveOnly expectedCustomRaffleModel
-        viewModel.itemsRemaining shouldReceiveEventWithValue expectedCustomRaffleModel.includedItems.size
+        viewModel.itemsRemaining shouldReceiveSingleEventWithValue expectedCustomRaffleModel.includedItems.size
     }
     // endregion
 
@@ -459,19 +460,85 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
     @Test
     fun `GIVEN any rememberRaffled fails WHEN toggleAll is called THEN nothing else happens`() {
         // GIVEN
+        val firstItem = mockCustomRaffleItemModel(id = 1, included = false)
+        val secondItem = mockCustomRaffleItemModel(id = 2, included = false)
+        val initialCustomRaffle = mockCustomRaffleModel(items = mutableListOf(firstItem, secondItem))
+        val initialToggleState = CustomRaffleDetailsViewModel.ToggleState.INCLUDE_ALL
+
+        given(viewModel.customRaffle)
+            .willReturn(initialCustomRaffle.asLiveData())
+        given(viewModel.toggleState)
+            .willReturn(initialToggleState.asLiveEvent())
+
+        givenSuspend { mockRememberRaffled(RememberRaffled.Params(firstItem, included = false)) }
+            .willReturn(Success(Unit))
+        givenSuspend { mockRememberRaffled(RememberRaffled.Params(secondItem, included = false)) }
+            .willReturn(mockFailure)
 
         // WHEN
         viewModel.toggleAll()
 
         // THEN
+        viewModel.customRaffle shouldReceiveOnly initialCustomRaffle
+        viewModel.toggleState shouldReceiveSingleEventWithValue initialToggleState
     }
 
     @Test
     fun `GIVEN all rememberRaffled succeeds AND toggleState is INCLUDE_ALL WHEN toggleAll is called THEN customRaffle receives a value with all items included AND toggleState receives EXCLUDE_ALL`() {
+        // GIVEN
+        val firstItem = mockCustomRaffleItemModel(id = 1, included = false)
+        val secondItem = mockCustomRaffleItemModel(id = 2, included = false)
+        val initialCustomRaffle = mockCustomRaffleModel(items = mutableListOf(firstItem, secondItem))
+        val initialToggleState = CustomRaffleDetailsViewModel.ToggleState.INCLUDE_ALL
+
+        val expectedRaffleModel = initialCustomRaffle.apply { items.forEach { it.included = true } }
+        val expectedToggleState = CustomRaffleDetailsViewModel.ToggleState.EXCLUDE_ALL
+
+        given(viewModel.customRaffle)
+            .willReturn(initialCustomRaffle.asLiveData()) /* test setup */
+            .willCallRealMethod() /* assertion call */
+        given(viewModel.toggleState)
+            .willReturn(initialToggleState.asLiveEvent())
+            .willCallRealMethod() /* assertion call */
+
+        givenSuspend { mockRememberRaffled(safeAny()) }
+            .willReturn(Success(Unit))
+
+        // WHEN
+        viewModel.toggleAll()
+
+        // THEN
+        viewModel.customRaffle shouldReceiveOnly expectedRaffleModel
+        viewModel.toggleState shouldReceiveSingleEventWithValue expectedToggleState
     }
 
     @Test
     fun `GIVEN all rememberRaffled succeeds AND toggleState is EXCLUDE_ALL WHEN toggleAll is called THEN customRaffle receives a value with all items not included AND toggleState receives INCLUDE_ALL`() {
+        // GIVEN
+        val firstItem = mockCustomRaffleItemModel(id = 1, included = true)
+        val secondItem = mockCustomRaffleItemModel(id = 2, included = true)
+        val initialCustomRaffle = mockCustomRaffleModel(items = mutableListOf(firstItem, secondItem))
+        val initialToggleState = CustomRaffleDetailsViewModel.ToggleState.EXCLUDE_ALL
+
+        val expectedRaffleModel = initialCustomRaffle.apply { items.forEach { it.included = false } }
+        val expectedToggleState = CustomRaffleDetailsViewModel.ToggleState.INCLUDE_ALL
+
+        given(viewModel.customRaffle)
+            .willReturn(initialCustomRaffle.asLiveData()) /* test setup */
+            .willCallRealMethod() /* assertion call */
+        given(viewModel.toggleState)
+            .willReturn(initialToggleState.asLiveEvent())
+            .willCallRealMethod() /* assertion call */
+
+        givenSuspend { mockRememberRaffled(safeAny()) }
+            .willReturn(Success(Unit))
+
+        // WHEN
+        viewModel.toggleAll()
+
+        // THEN
+        viewModel.customRaffle shouldReceiveOnly expectedRaffleModel
+        viewModel.toggleState shouldReceiveSingleEventWithValue expectedToggleState
     }
     // endregion
 }

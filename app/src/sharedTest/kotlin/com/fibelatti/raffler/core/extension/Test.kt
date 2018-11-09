@@ -92,7 +92,7 @@ infix fun <T> LiveData<T>.shouldReceiveOnly(expectedValue: T) {
     removeObserver(observer)
 }
 
-infix fun <T> LiveData<Event<T>>.shouldReceiveEventWithValue(expectedValue: T) {
+infix fun <T> LiveData<Event<T>>.shouldReceiveSingleEventWithValue(expectedValue: T) {
     shouldReceiveOnly(Event(expectedValue))
 }
 
