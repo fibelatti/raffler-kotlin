@@ -116,7 +116,10 @@ class CreateCustomRaffleFragment : BaseFragment() {
     private fun setupLayout() {
         layoutTitle.setNavigateUp { layoutRoot.findNavController().navigateUp() }
 
-        buttonSave.setOnClickListener { createCustomRaffleViewModel.save(checkboxAddShortcut.isChecked) }
+        buttonSave.setOnClickListener {
+            if (editTextCustomRaffleItemDescription.textAsString().isNotBlank()) addItem()
+            createCustomRaffleViewModel.save(checkboxAddShortcut.isChecked)
+        }
 
         editTextCustomRaffleDescription.addTextChangedListener(afterTextChanged = createCustomRaffleViewModel::setDescription)
 

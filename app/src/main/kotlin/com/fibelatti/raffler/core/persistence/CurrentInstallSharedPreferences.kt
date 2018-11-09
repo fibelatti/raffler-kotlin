@@ -13,10 +13,10 @@ class CurrentInstallSharedPreferences @Inject constructor(
     private val sharedPreferences: SharedPreferences
 ) {
     fun getTheme(): AppConfig.AppTheme {
-        return if (sharedPreferences.get<String>(KEY_APP_THEME) == AppConfig.AppTheme.CLASSIC.value) {
-            AppConfig.AppTheme.CLASSIC
-        } else {
+        return if (sharedPreferences.get<String>(KEY_APP_THEME) == AppConfig.AppTheme.DARK.value) {
             AppConfig.AppTheme.DARK
+        } else {
+            AppConfig.AppTheme.CLASSIC
         }
     }
 

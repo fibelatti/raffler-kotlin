@@ -1,5 +1,6 @@
 package com.fibelatti.raffler.core.platform
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 
@@ -9,7 +10,7 @@ import androidx.lifecycle.Observer
  *
  * @param <T> The type of data hold by this instance
  */
-class Event<out T>(private val content: T?) {
+data class Event<out T>(private val content: T?) {
 
     private var alreadyObserved = false
 
@@ -24,6 +25,13 @@ class Event<out T>(private val content: T?) {
      */
     fun peekContent(): T? = content
 }
+
+/**
+ * Alias to simplify declarations of [LiveData] with type [Event] of <T>.
+ *
+ * @param <T> The type of data hold by this instance
+ */
+typealias LiveEvent<T> = LiveData<Event<T>>
 
 /**
  * Alias to simplify declarations of [MutableLiveData] with type [Event] of <T>.

@@ -33,11 +33,11 @@ class CustomRaffleModesDelegate : CustomRaffleModes {
         BottomSheetDialog(context, R.style.AppTheme_BaseBottomSheetDialog_BottomSheetDialog).apply {
             setContentView(R.layout.fragment_custom_raffle_modes)
 
-            setupMode(rouletteClickListener, groupRouletteViews, buttonRoulette)
-            setupMode(randomWinnersClickListener, groupRandomWinnersViews, buttonRandomWinners)
-            setupMode(groupingClickListener, groupGroupingViews, buttonGrouping)
-            setupMode(combinationClickListener, groupCombinationViews, buttonCombination)
-            setupMode(votingClickListener, groupVotingViews, buttonVoting)
+            setupMode(rouletteClickListener, layoutRoulette, buttonRoulette)
+            setupMode(randomWinnersClickListener, layoutRandomWinners, buttonRandomWinners)
+            setupMode(groupingClickListener, layoutGrouping, buttonGrouping)
+            setupMode(combinationClickListener, layoutCombination, buttonCombination)
+            setupMode(votingClickListener, layoutVoting, buttonVoting)
 
             setOnShowListener {
                 findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)?.let { bottomSheet ->
@@ -49,11 +49,20 @@ class CustomRaffleModesDelegate : CustomRaffleModes {
         }
     }
 
-    private fun BottomSheetDialog.setupMode(clickListener: (() -> Unit)?, groupView: View?, buttonView: Button?) {
-        groupView?.visibleIf(clickListener != null)
-        buttonView?.setOnClickListener {
+    private fun BottomSheetDialog.setupMode(
+        clickListener: (() -> Unit)?,
+        layoutView: View?,
+        button: Button?
+    ) {
+        val onClick = {
             setOnDismissListener { clickListener?.invoke() }
             dismiss()
         }
+
+        layoutView?.apply {
+            visibleIf(clickListener != null)
+            setOnClickListener { onClick() }
+        }
+        button?.setOnClickListener { onClick() }
     }
 }

@@ -3,6 +3,7 @@ package com.fibelatti.raffler.core.provider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -12,10 +13,10 @@ import kotlin.coroutines.CoroutineContext
 
 class TestCoroutineLauncher @Inject constructor() : CoroutineLauncher, CoroutineScope {
     private val parentJob by lazy { Job() }
-    private val main get() = Dispatchers.Unconfined
-    private val background get() = Dispatchers.Unconfined
 
-    override val coroutineContext: CoroutineContext get() = main + parentJob
+    @ExperimentalCoroutinesApi
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Unconfined + parentJob
 
     override fun cancelAllJobs() {
         parentJob.cancel()
@@ -25,7 +26,7 @@ class TestCoroutineLauncher @Inject constructor() : CoroutineLauncher, Coroutine
 
     override fun startInBackground(
         block: suspend CoroutineScope.() -> Unit
-    ): Job = launch(background) { runBlocking { block() } }
+    ): Job = launch { runBlocking { block() } }
 
     override suspend fun <T> callInBackground(
         block: suspend CoroutineScope.() -> T
@@ -33,5 +34,5 @@ class TestCoroutineLauncher @Inject constructor() : CoroutineLauncher, Coroutine
 
     override suspend fun <T> CoroutineScope.defer(
         block: suspend CoroutineScope.() -> T
-    ): Deferred<T> = async(background) { runBlocking { block() } }
+    ): Deferred<T> = async { runBlocking { block() } }
 }

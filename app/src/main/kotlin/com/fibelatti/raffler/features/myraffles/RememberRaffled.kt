@@ -15,17 +15,15 @@ class RememberRaffled @Inject constructor(
     private val preferencesRepository: PreferencesRepository,
     private val customRaffleItemModelMapper: CustomRaffleItemModelMapper
 ) : UseCase<Unit, RememberRaffled.Params>() {
-    override suspend fun run(params: RememberRaffled.Params): Result<Unit> {
-        return catching {
-            return if (preferencesRepository.getPreferences().getOrThrow().rememberRaffledItems) {
-                val item = params.customRaffleItemModel
-                    .apply { included = params.included }
-                    .let(customRaffleItemModelMapper::mapReverse)
+    override suspend fun run(params: RememberRaffled.Params): Result<Unit> = catching {
+        return if (preferencesRepository.getPreferences().getOrThrow().rememberRaffledItems) {
+            val item = params.customRaffleItemModel
+                .apply { included = params.included }
+                .let(customRaffleItemModelMapper::mapReverse)
 
-                customRaffleRepository.updateCustomRaffleItem(item)
-            } else {
-                Success(Unit)
-            }
+            customRaffleRepository.updateCustomRaffleItem(item)
+        } else {
+            Success(Unit)
         }
     }
 

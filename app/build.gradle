@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: "de.mannodermaus.android-junit5"
 apply plugin: 'com.getkeepsafe.dexcount'
 apply from: 'coverage-report.gradle'
 
@@ -48,18 +49,20 @@ android {
     }
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
-
         debug.java.srcDirs += 'src/debug/kotlin'
 
         String sharedTestDir = 'src/sharedTest/kotlin'
+        String sharedTestResDir = 'src/sharedTest/resources'
 
         test {
             java.srcDir sharedTestDir
+            java.srcDirs += sharedTestResDir
             java.srcDirs += 'src/test/kotlin'
         }
 
         androidTest {
             java.srcDir sharedTestDir
+            java.srcDirs += sharedTestResDir
             java.srcDirs += 'src/androidTest/kotlin'
         }
     }
@@ -76,6 +79,12 @@ android {
 
 preBuild.dependsOn ':ktlint'
 preBuild.dependsOn ':detekt'
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -107,8 +116,14 @@ dependencies {
 
     // Testing
     testImplementation TestDependencies.junit
+    testImplementation TestDependencies.junit5
+    testImplementation TestDependencies.junit5Params
     testImplementation TestDependencies.mockitoCore
     testImplementation TestDependencies.archComponentsTest
+
+    testRuntimeOnly TestDependencies.junit5Engine
+    testRuntimeOnly TestDependencies.junitVintage
+
     androidTestImplementation TestDependencies.mockitoAndroid
     androidTestImplementation TestDependencies.archComponentsTest
     androidTestImplementation TestDependencies.supportAnnotations
