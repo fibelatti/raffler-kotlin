@@ -9,8 +9,8 @@ import com.fibelatti.raffler.core.extension.observe
 import com.fibelatti.raffler.core.extension.observeEvent
 import com.fibelatti.raffler.core.extension.withDefaultDecoration
 import com.fibelatti.raffler.core.extension.withLinearLayoutManager
+import com.fibelatti.raffler.core.platform.BundleDelegate
 import com.fibelatti.raffler.core.platform.base.BaseBottomSheetDialogFragment
-import com.fibelatti.raffler.core.platform.requestCode
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModel
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleSelectorAdapter
 import kotlinx.android.synthetic.main.fragment_add_custom_raffle_as_quick_decision.*
@@ -18,6 +18,8 @@ import javax.inject.Inject
 
 const val ADD_NEW_QUICK_DECISION_REQUEST_CODE = 1
 const val ADD_NEW_QUICK_DECISION_SUCCESS = 1
+
+private var Bundle.requestCode by BundleDelegate.Int("REQUEST_CODE")
 
 class AddNewQuickDecisionFragment : BaseBottomSheetDialogFragment() {
 

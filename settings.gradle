@@ -1,1 +1,4 @@
-include ':app'
+rootProject.name = "Raffler"
+rootProject.buildFileName = "build.gradle.kts"
+
+include ":app"

@@ -1,26 +1,40 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
-apply plugin: "de.mannodermaus.android-junit5"
-apply plugin: 'com.getkeepsafe.dexcount'
-apply from: 'coverage-report.gradle'
+plugins {
+    id("com.android.application")
+    id("kotlin-android")
+    id("kotlin-android-extensions")
+    id("kotlin-kapt")
+}
+
+if (jacocoEnabled.toBoolean()) {
+    println("Applying coverage-report.gradle")
+    apply {
+        from("coverage-report.gradle")
+    }
+}
 
 android {
-    compileSdkVersion Versions.compileSdkVersion
-    buildToolsVersion Versions.buildToolsVersion
+    compileSdkVersion(Versions.compileSdkVersion)
 
     defaultConfig {
-        applicationId AppInfo.applicationId
-        versionCode AppInfo.versionCode
-        versionName AppInfo.versionName
-        minSdkVersion Versions.minSdkVersion
-        targetSdkVersion Versions.targetSdkVersion
+        applicationId = AppInfo.applicationId
+        versionCode = AppInfo.versionCode
+        versionName = AppInfo.versionName
+        minSdkVersion(Versions.minSdkVersion)
+        targetSdkVersion(Versions.targetSdkVersion)
 
-        resConfigs "en", "pt", "es"
+        resConfigs("en", "pt", "es")
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [
+                    "room.schemaLocation":"$projectDir/schemas".toString(),
+                    "room.incremental":"true"
+                ]
+            }
+        }
     }
 
     signingConfigs {
@@ -37,16 +51,18 @@ android {
             applicationIdSuffix ".debug"
             resValue "string", "app_name", AppInfo.appName + " Dev"
 
-            testCoverageEnabled = true
+            testCoverageEnabled = jacocoEnabled.toBoolean()
             minifyEnabled false
         }
         release {
             resValue "string", "app_name", AppInfo.appName
 
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }
     }
+
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
         debug.java.srcDirs += 'src/debug/kotlin'
@@ -67,66 +83,80 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility(JavaVersion.VERSION_1_8)
+        targetCompatibility(JavaVersion.VERSION_1_8)
+    }
+
     testOptions {
         animationsDisabled true
 
         unitTests {
             returnDefaultValues = true
             includeAndroidResources = true
+
+            all {
+                useJUnitPlatform()
+            }
         }
     }
 }
 
-preBuild.dependsOn ':ktlint'
-preBuild.dependsOn ':detekt'
-
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-}
-
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation(Dependencies.coreLib)
+    implementation(Dependencies.coreLibArch)
 
     // Kotlin
-    implementation KotlinDependencies.kotlin
-    implementation KotlinDependencies.coroutinesCore
-    implementation KotlinDependencies.coroutinesAndroid
+    implementation(Dependencies.kotlin)
+    implementation(Dependencies.coroutinesCore)
+    implementation(Dependencies.coroutinesAndroid)
 
-    // Support Library
-    implementation SupportLibraryDependencies.supportLibrary
-    implementation SupportLibraryDependencies.materialDesign
-    implementation SupportLibraryDependencies.constraintLayout
+    // Android
+    implementation(Dependencies.appCompat)
+    implementation(Dependencies.activity)
+    implementation(Dependencies.fragments)
+    implementation(Dependencies.materialDesign)
+    implementation(Dependencies.constraintLayout)
 
-    // Architecture Components
-    implementation ArchitectureComponentDependencies.archComponents
-    kapt ArchitectureComponentDependencies.archComponentsCompiler
-    implementation ArchitectureComponentDependencies.room
-    kapt ArchitectureComponentDependencies.roomCompiler
-    implementation ArchitectureComponentDependencies.navigationFragment
-    implementation ArchitectureComponentDependencies.navigationUi
+    implementation(Dependencies.archComponents)
+    kapt(Dependencies.archComponentsCompiler)
 
-    // DI
-    implementation DIDependencies.dagger
-    kapt DIDependencies.daggerCompiler
+    implementation(Dependencies.room)
+    kapt(Dependencies.roomCompiler)
 
-    // Third Party
-    implementation ThirdPartyDependencies.gson
+    implementation(Dependencies.navigationFragment)
+    implementation(Dependencies.navigationUi)
 
-    // Testing
-    testImplementation TestDependencies.junit
-    testImplementation TestDependencies.junit5
-    testImplementation TestDependencies.junit5Params
-    testImplementation TestDependencies.mockitoCore
-    testImplementation TestDependencies.archComponentsTest
+    // Misc
+    implementation(Dependencies.dagger)
+    kapt(Dependencies.daggerCompiler)
 
-    testRuntimeOnly TestDependencies.junit5Engine
-    testRuntimeOnly TestDependencies.junitVintage
+    implementation(Dependencies.gson)
 
-    androidTestImplementation TestDependencies.mockitoAndroid
-    androidTestImplementation TestDependencies.archComponentsTest
-    androidTestImplementation TestDependencies.supportAnnotations
-    androidTestImplementation TestDependencies.testRunner
-    androidTestImplementation TestDependencies.kotlinTest
+    implementation(Dependencies.playCore)
+
+    debugImplementation(Dependencies.leakCanary)
+
+    // Test
+    testRuntimeOnly(TestDependencies.junit5Engine)
+    testRuntimeOnly(TestDependencies.junitVintage)
+
+    testCompileOnly(TestDependencies.junit)
+
+    testImplementation(TestDependencies.coreLibTest)
+    testImplementation(TestDependencies.coreLibArchTest)
+
+    testImplementation(TestDependencies.junit5)
+    testImplementation(TestDependencies.junit5Params)
+    testImplementation(TestDependencies.mockitoCore)
+    testImplementation(TestDependencies.coroutinesTest)
+    testImplementation(TestDependencies.archComponentsTest)
+
+    androidTestImplementation(TestDependencies.coreLibTest)
+
+    androidTestImplementation(Dependencies.supportAnnotations)
+    androidTestImplementation(TestDependencies.archComponentsTest)
+    androidTestImplementation(TestDependencies.roomTest)
+    androidTestImplementation(TestDependencies.testRunner)
+    androidTestImplementation(TestDependencies.kotlinTest)
 }
