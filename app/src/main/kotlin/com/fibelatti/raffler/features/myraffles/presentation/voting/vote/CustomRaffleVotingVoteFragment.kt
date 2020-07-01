@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
+import com.fibelatti.core.archcomponents.extension.activityViewModel
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.alertDialogBuilder
 import com.fibelatti.raffler.core.extension.observeEvent
@@ -12,22 +13,19 @@ import com.fibelatti.raffler.core.extension.withDefaultDecoration
 import com.fibelatti.raffler.core.extension.withLinearLayoutManager
 import com.fibelatti.raffler.core.platform.base.BaseFragment
 import com.fibelatti.raffler.features.myraffles.presentation.voting.CustomRaffleVotingModel
-import com.fibelatti.raffler.features.myraffles.presentation.voting.CustomRaffleVotingViewModel
 import kotlinx.android.synthetic.main.fragment_custom_raffle_voting_vote.*
 import javax.inject.Inject
 
-class CustomRaffleVotingVoteFragment : BaseFragment() {
+class CustomRaffleVotingVoteFragment @Inject constructor(
+    private val customRaffleVotingVoteAdapter: CustomRaffleVotingVoteAdapter
+) : BaseFragment() {
 
-    private val customRaffleVotingViewModel by lazy {
-        viewModelFactory.get<CustomRaffleVotingViewModel>(requireActivity())
+    private val customRaffleVotingViewModel by activityViewModel {
+        viewModelProvider.customRaffleVotingViewModel()
     }
-
-    @Inject
-    lateinit var adapter: CustomRaffleVotingVoteAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        injector.inject(this)
         customRaffleVotingViewModel.run {
             observeEvent(readyToVote) { handleReadyToVote() }
         }
@@ -43,7 +41,7 @@ class CustomRaffleVotingVoteFragment : BaseFragment() {
 
         withVoting {
             layoutTitle.setTitle(getString(R.string.custom_raffle_voting_title, it.description))
-            adapter.setItems(it.votes.map { item -> item.key })
+            customRaffleVotingVoteAdapter.setItems(it.votes.map { item -> item.key })
         }
     }
 
@@ -54,9 +52,9 @@ class CustomRaffleVotingVoteFragment : BaseFragment() {
     private fun setupRecyclerView() {
         recyclerViewItems.withDefaultDecoration()
             .withLinearLayoutManager()
-            .adapter = adapter
+            .adapter = customRaffleVotingVoteAdapter
 
-        adapter.clickListener = { vote ->
+        customRaffleVotingVoteAdapter.clickListener = { vote ->
             alertDialogBuilder {
                 setMessage(getString(R.string.custom_raffle_voting_confirm_vote, vote))
                 setPositiveButton(R.string.hint_yes) { _, _ ->

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
+import com.fibelatti.core.archcomponents.extension.viewModel
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.clearError
 import com.fibelatti.raffler.core.extension.error
@@ -22,16 +23,14 @@ import javax.inject.Inject
 private const val EVEN_SPAN_COUNT = 4
 private const val ODD_SPAN_COUNT = 3
 
-class LotteryFragment : BaseFragment() {
+class LotteryFragment @Inject constructor(
+    private val lotteryAdapter: LotteryAdapter
+) : BaseFragment() {
 
-    @Inject
-    lateinit var adapter: LotteryAdapter
-
-    private val lotteryViewModel by lazy { viewModelFactory.get<LotteryViewModel>(this) }
+    private val lotteryViewModel by viewModel { viewModelProvider.lotteryViewModel() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        injector.inject(this)
         lotteryViewModel.run {
             error(error, ::handleError)
             observe(defaultQuantityAvailable) { editTextTotalQuantity.setText(it) }
@@ -70,7 +69,7 @@ class LotteryFragment : BaseFragment() {
 
     private fun setupRecyclerView() {
         recyclerViewItems.withDefaultDecoration()
-        recyclerViewItems.adapter = adapter
+        recyclerViewItems.adapter = lotteryAdapter
     }
 
     private fun showResults(results: List<LotteryNumberModel>) {
@@ -84,7 +83,7 @@ class LotteryFragment : BaseFragment() {
 
         recyclerViewItems.layoutManager = GridLayoutManager(context, spanCount)
         recyclerViewItems.visible()
-        adapter.setItems(results)
+        lotteryAdapter.setItems(results)
     }
 
     private fun handleTotalQuantityError(message: String) {

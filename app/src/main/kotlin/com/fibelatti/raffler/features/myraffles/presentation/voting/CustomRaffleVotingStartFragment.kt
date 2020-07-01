@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
+import com.fibelatti.core.archcomponents.extension.activityViewModel
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.clearError
 import com.fibelatti.raffler.core.extension.hideKeyboard
@@ -15,16 +16,16 @@ import com.fibelatti.raffler.core.extension.textAsString
 import com.fibelatti.raffler.core.extension.visible
 import com.fibelatti.raffler.core.platform.base.BaseFragment
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModel
-import com.fibelatti.raffler.features.myraffles.presentation.customraffledetails.CustomRaffleDetailsViewModel
 import kotlinx.android.synthetic.main.fragment_custom_raffle_voting_start.*
+import javax.inject.Inject
 
-class CustomRaffleVotingStartFragment : BaseFragment() {
+class CustomRaffleVotingStartFragment @Inject constructor() : BaseFragment() {
 
-    private val customRaffleDetailsViewModel by lazy {
-        viewModelFactory.get<CustomRaffleDetailsViewModel>(requireActivity())
+    private val customRaffleDetailsViewModel by activityViewModel {
+        viewModelProvider.customRaffleDetailsViewModel()
     }
-    private val customRaffleVotingViewModel by lazy {
-        viewModelFactory.get<CustomRaffleVotingViewModel>(requireActivity())
+    private val customRaffleVotingViewModel by activityViewModel {
+        viewModelProvider.customRaffleVotingViewModel()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

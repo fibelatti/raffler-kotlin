@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
+import com.fibelatti.core.archcomponents.extension.activityViewModel
+import com.fibelatti.core.archcomponents.extension.viewModel
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.clearError
 import com.fibelatti.raffler.core.extension.error
@@ -18,25 +20,18 @@ import com.fibelatti.raffler.core.extension.withLinearLayoutManager
 import com.fibelatti.raffler.core.platform.base.BaseFragment
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleDraftedAdapter
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleDraftedModel
-import com.fibelatti.raffler.features.myraffles.presentation.customraffledetails.CustomRaffleDetailsViewModel
 import kotlinx.android.synthetic.main.fragment_custom_raffle_grouping.*
 import javax.inject.Inject
 
-class CustomRaffleGroupingFragment : BaseFragment() {
+class CustomRaffleGroupingFragment @Inject constructor(
+    private val customRaffleDraftedAdapter: CustomRaffleDraftedAdapter
+) : BaseFragment() {
 
-    @Inject
-    lateinit var adapter: CustomRaffleDraftedAdapter
-
-    private val customRaffleDetailsViewModel by lazy {
-        viewModelFactory.get<CustomRaffleDetailsViewModel>(requireActivity())
-    }
-    private val customRaffleGroupingViewModel by lazy {
-        viewModelFactory.get<CustomRaffleGroupingViewModel>(this)
-    }
+    private val customRaffleDetailsViewModel by activityViewModel { viewModelProvider.customRaffleDetailsViewModel() }
+    private val customRaffleGroupingViewModel by viewModel { viewModelProvider.customRaffleGroupingViewModel() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        injector.inject(this)
         customRaffleGroupingViewModel.run {
             error(error, ::handleError)
             observe(quantityError, ::handleQuantityError)
@@ -82,7 +77,7 @@ class CustomRaffleGroupingFragment : BaseFragment() {
     private fun setupRecyclerView() {
         recyclerViewItems.withLinearLayoutManager()
             .withDefaultDecoration()
-            .adapter = adapter
+            .adapter = customRaffleDraftedAdapter
     }
 
     private fun handleQuantityError(message: String) {
@@ -95,7 +90,7 @@ class CustomRaffleGroupingFragment : BaseFragment() {
 
     private fun handleGroups(winners: List<CustomRaffleDraftedModel>) {
         layoutRoot.hideKeyboard()
-        adapter.run {
+        customRaffleDraftedAdapter.run {
             colorList = getColorGradientForListSize(
                 requireContext(),
                 R.color.color_accent,

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.navigation.findNavController
+import com.fibelatti.core.archcomponents.extension.activityViewModel
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.animateChangingTransitions
 import com.fibelatti.raffler.core.extension.error
@@ -14,22 +15,19 @@ import com.fibelatti.raffler.core.extension.observeEvent
 import com.fibelatti.raffler.core.extension.orFalse
 import com.fibelatti.raffler.core.platform.base.BaseFragment
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModel
-import com.fibelatti.raffler.features.myraffles.presentation.customraffledetails.CustomRaffleDetailsViewModel
 import kotlinx.android.synthetic.main.fragment_custom_raffle_roulette.*
 import javax.inject.Inject
 
-class CustomRaffleRouletteFragment : BaseFragment() {
+class CustomRaffleRouletteFragment @Inject constructor(
+    private val customRaffleRouletteDelegate: CustomRaffleRouletteDelegate
+) : BaseFragment() {
 
-    @Inject
-    lateinit var rouletteDelegate: CustomRaffleRouletteDelegate
-
-    private val customRaffleDetailsViewModel by lazy {
-        viewModelFactory.get<CustomRaffleDetailsViewModel>(requireActivity())
+    private val customRaffleDetailsViewModel by activityViewModel {
+        viewModelProvider.customRaffleDetailsViewModel()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        injector.inject(this)
         customRaffleDetailsViewModel.run {
             error(error, ::handleError)
             observeEvent(itemsRemaining) {
@@ -60,7 +58,7 @@ class CustomRaffleRouletteFragment : BaseFragment() {
         withCustomRaffle {
             layoutTitle.setTitle(it.description)
 
-            rouletteDelegate.setup(
+            customRaffleRouletteDelegate.setup(
                 context = requireContext(),
                 rouletteMusicEnabled = customRaffleDetailsViewModel.rouletteMusicEnabled.value.orFalse()
             ).startRoulette(
@@ -79,19 +77,19 @@ class CustomRaffleRouletteFragment : BaseFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        rouletteDelegate.tearDown()
+        customRaffleRouletteDelegate.tearDown()
     }
 
     private fun setupFab() {
         fab.setOnClickListener {
-            when (rouletteDelegate.status) {
+            when (customRaffleRouletteDelegate.status) {
                 CustomRaffleRouletteDelegate.RouletteStatus.PLAYING -> {
-                    rouletteDelegate.stopRoulette()
+                    customRaffleRouletteDelegate.stopRoulette()
                     fab.setText(R.string.custom_raffle_roulette_hint_stopping)
                 }
                 CustomRaffleRouletteDelegate.RouletteStatus.IDLE -> {
                     withCustomRaffle { customRaffleModel ->
-                        rouletteDelegate.startRoulette(
+                        customRaffleRouletteDelegate.startRoulette(
                             customRaffleModel = customRaffleModel,
                             onRouletteStarted = ::onRouletteStarted,
                             onRouletteIndexUpdated = ::onRouletteIndexUpdated,

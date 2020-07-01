@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.navigation.navOptions
+import com.fibelatti.core.archcomponents.extension.activityViewModel
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.observeEvent
 import com.fibelatti.raffler.core.extension.visible
@@ -14,27 +15,23 @@ import com.fibelatti.raffler.core.extension.withLinearLayoutManager
 import com.fibelatti.raffler.core.platform.base.BaseFragment
 import com.fibelatti.raffler.core.platform.base.BaseViewType
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModel
-import com.fibelatti.raffler.features.myraffles.presentation.customraffledetails.CustomRaffleDetailsViewModel
 import com.fibelatti.raffler.features.myraffles.presentation.voting.CustomRaffleVotingModel
-import com.fibelatti.raffler.features.myraffles.presentation.voting.CustomRaffleVotingViewModel
 import kotlinx.android.synthetic.main.fragment_custom_raffle_voting_results.*
 import javax.inject.Inject
 
-class CustomRaffleVotingResultsFragment : BaseFragment() {
+class CustomRaffleVotingResultsFragment @Inject constructor(
+    private val customRaffleVotingResultsAdapter: CustomRaffleVotingResultsAdapter
+): BaseFragment() {
 
-    private val customRaffleVotingViewModel by lazy {
-        viewModelFactory.get<CustomRaffleVotingViewModel>(requireActivity())
+    private val customRaffleVotingViewModel by activityViewModel {
+        viewModelProvider.customRaffleVotingViewModel()
     }
-    private val customRaffleDetailsViewModel by lazy {
-        viewModelFactory.get<CustomRaffleDetailsViewModel>(requireActivity())
+    private val customRaffleDetailsViewModel by activityViewModel {
+        viewModelProvider.customRaffleDetailsViewModel()
     }
-
-    @Inject
-    lateinit var adapter: CustomRaffleVotingResultsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        injector.inject(this)
         customRaffleVotingViewModel.run {
             observeEvent(showTieBreaker) { setupTieBreaker() }
             observeEvent(readyToVote) { startTieBreakVoting() }
@@ -54,7 +51,7 @@ class CustomRaffleVotingResultsFragment : BaseFragment() {
             layoutTitle.setTitle(getString(R.string.custom_raffle_voting_results_title, it.description))
         }
 
-        withResults { adapter.setItems(it) }
+        withResults { customRaffleVotingResultsAdapter.setItems(it) }
     }
 
     private fun setupLayout() {
@@ -64,7 +61,7 @@ class CustomRaffleVotingResultsFragment : BaseFragment() {
     private fun setupRecyclerView() {
         recyclerViewItems.withDefaultDecoration()
             .withLinearLayoutManager()
-            .adapter = adapter
+            .adapter = customRaffleVotingResultsAdapter
     }
 
     private fun setupTieBreaker() {

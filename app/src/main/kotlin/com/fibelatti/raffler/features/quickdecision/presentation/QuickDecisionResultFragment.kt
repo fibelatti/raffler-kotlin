@@ -12,14 +12,14 @@ import com.fibelatti.raffler.core.platform.BundleDelegate
 import com.fibelatti.raffler.core.platform.base.BaseFragment
 import com.fibelatti.raffler.core.platform.customview.ViewOnTouchListener
 import kotlinx.android.synthetic.main.fragment_quick_decision_result.*
+import javax.inject.Inject
 
 private var Bundle.transitionName by BundleDelegate.String("TRANSITION_NAME")
 private var Bundle.title by BundleDelegate.String("TITLE")
 private var Bundle.result by BundleDelegate.String("RESULT")
 private var Bundle.color by BundleDelegate.Int("COLOR")
 
-class QuickDecisionResultFragment
-    : BaseFragment() {
+class QuickDecisionResultFragment @Inject constructor() : BaseFragment() {
 
     companion object {
         fun bundle(

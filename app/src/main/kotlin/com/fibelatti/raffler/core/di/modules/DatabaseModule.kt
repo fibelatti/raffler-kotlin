@@ -16,10 +16,10 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-object PersistenceModule {
+object DatabaseModule {
+
     @Provides
     @Singleton
-    @JvmStatic
     fun providesDatabase(context: Context): AppDatabase =
         Room.databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME)
             .addMigrations(*getDatabaseMigrations())
@@ -27,32 +27,17 @@ object PersistenceModule {
             .build()
 
     @Provides
-    @JvmStatic
-    fun provideQuickDecisionDao(
-        appDatabase: AppDatabase
-    ): QuickDecisionDao = appDatabase.getQuickDecisionDao()
+    fun AppDatabase.quickDecisionDao(): QuickDecisionDao = getQuickDecisionDao()
 
     @Provides
-    @JvmStatic
-    fun provideCustomRaffleDao(
-        appDatabase: AppDatabase
-    ): CustomRaffleDao = appDatabase.getCustomRaffleDao()
+    fun AppDatabase.customRaffleDao(): CustomRaffleDao = getCustomRaffleDao()
 
     @Provides
-    @JvmStatic
-    fun provideCustomRaffleItemDao(
-        appDatabase: AppDatabase
-    ): CustomRaffleItemDao = appDatabase.getCustomRaffleItemDao()
+    fun AppDatabase.customRaffleItemDao(): CustomRaffleItemDao = getCustomRaffleItemDao()
 
     @Provides
-    @JvmStatic
-    fun provideCustomRaffleVotingDao(
-        appDatabase: AppDatabase
-    ): CustomRaffleVotingDao = appDatabase.getCustomRaffleVotingDao()
+    fun AppDatabase.customRaffleVotingDao(): CustomRaffleVotingDao = getCustomRaffleVotingDao()
 
     @Provides
-    @JvmStatic
-    fun providePreferencesDao(
-        appDatabase: AppDatabase
-    ): PreferencesDao = appDatabase.getPreferencesDao()
+    fun AppDatabase.preferencesDao(): PreferencesDao = getPreferencesDao()
 }

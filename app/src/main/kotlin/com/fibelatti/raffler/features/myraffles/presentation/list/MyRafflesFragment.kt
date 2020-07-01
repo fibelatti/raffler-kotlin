@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
+import com.fibelatti.core.archcomponents.extension.viewModel
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.error
 import com.fibelatti.raffler.core.extension.getColorGradientForListSize
@@ -23,18 +24,14 @@ import kotlinx.android.synthetic.main.fragment_my_raffles.*
 import kotlinx.android.synthetic.main.layout_hint_container.*
 import javax.inject.Inject
 
-class MyRafflesFragment : BaseFragment() {
+class MyRafflesFragment @Inject constructor(
+    private val customRaffleAdapter: CustomRaffleAdapter
+): BaseFragment() {
 
-    @Inject
-    lateinit var adapter: CustomRaffleAdapter
-
-    private val myRafflesViewModel by lazy {
-        viewModelFactory.get<MyRafflesViewModel>(this)
-    }
+    private val myRafflesViewModel by viewModel { viewModelProvider.myRafflesViewModel() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        injector.inject(this)
         myRafflesViewModel.run {
             error(error, ::handleError)
             observe(customRaffles, ::showCustomRaffles)
@@ -65,7 +62,7 @@ class MyRafflesFragment : BaseFragment() {
     private fun setupRecyclerView() {
         recyclerViewItems.withDefaultDecoration()
             .withGridLayoutManager(spanCount = 2)
-            .adapter = adapter
+            .adapter = customRaffleAdapter
     }
 
     private fun showCustomRaffles(list: List<CustomRaffleModel>) {
@@ -75,7 +72,7 @@ class MyRafflesFragment : BaseFragment() {
                 addAll(list)
             }
 
-        adapter.apply {
+        customRaffleAdapter.apply {
             addNewClickListener = {
                 layoutRoot.findNavController().navigate(
                     R.id.action_fragmentMyRaffles_to_fragmentCreateCustomRaffle,

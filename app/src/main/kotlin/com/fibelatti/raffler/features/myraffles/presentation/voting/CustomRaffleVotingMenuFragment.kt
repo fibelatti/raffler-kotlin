@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
+import com.fibelatti.core.archcomponents.extension.activityViewModel
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.hideKeyboard
 import com.fibelatti.raffler.core.extension.observe
@@ -12,14 +13,12 @@ import com.fibelatti.raffler.core.extension.observeEvent
 import com.fibelatti.raffler.core.platform.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_custom_raffle_voting_menu.*
 import java.text.MessageFormat
+import javax.inject.Inject
 
-class CustomRaffleVotingMenuFragment :
-    BaseFragment(),
+class CustomRaffleVotingMenuFragment @Inject constructor() : BaseFragment(),
     CustomRaffleVotingPinConfirmation by CustomRaffleVotingPinConfirmationDelegate() {
 
-    private val customRaffleVotingViewModel by lazy {
-        viewModelFactory.get<CustomRaffleVotingViewModel>(requireActivity())
-    }
+    private val customRaffleVotingViewModel by activityViewModel { viewModelProvider.customRaffleVotingViewModel() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

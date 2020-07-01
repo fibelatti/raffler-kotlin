@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.fibelatti.core.archcomponents.extension.viewModel
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.observe
 import com.fibelatti.raffler.core.extension.observeEvent
@@ -21,7 +22,9 @@ const val ADD_NEW_QUICK_DECISION_SUCCESS = 1
 
 private var Bundle.requestCode by BundleDelegate.Int("REQUEST_CODE")
 
-class AddNewQuickDecisionFragment : BaseBottomSheetDialogFragment() {
+class AddNewQuickDecisionFragment @Inject constructor(
+    private val customRaffleSelectorAdapter: CustomRaffleSelectorAdapter
+) : BaseBottomSheetDialogFragment() {
 
     companion object {
         fun bundle() = Bundle().apply {
@@ -29,16 +32,12 @@ class AddNewQuickDecisionFragment : BaseBottomSheetDialogFragment() {
         }
     }
 
-    private val addNewQuickDecisionViewModel by lazy {
-        viewModelFactory.get<AddNewQuickDecisionViewModel>(this)
+    private val addNewQuickDecisionViewModel by viewModel {
+        viewModelProvider.addNewQuickDecisionViewModel()
     }
-
-    @Inject
-    lateinit var adapter: CustomRaffleSelectorAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        injector.inject(this)
         addNewQuickDecisionViewModel.run {
             observe(customRaffles, ::showCustomRaffles)
             observeEvent(updateFeedback) { sendResult() }
@@ -57,11 +56,11 @@ class AddNewQuickDecisionFragment : BaseBottomSheetDialogFragment() {
     private fun setupRecyclerView() {
         recyclerViewItems.withDefaultDecoration()
             .withLinearLayoutManager()
-            .adapter = adapter
+            .adapter = customRaffleSelectorAdapter
     }
 
     private fun showCustomRaffles(list: List<CustomRaffleModel>) {
-        adapter.apply {
+        customRaffleSelectorAdapter.apply {
             clickListener = addNewQuickDecisionViewModel::addCustomRaffleAsQuickDecision
             setItems(list)
         }

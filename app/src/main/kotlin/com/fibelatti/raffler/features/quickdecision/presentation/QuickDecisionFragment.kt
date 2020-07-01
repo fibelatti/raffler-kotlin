@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.FragmentNavigatorExtras
+import com.fibelatti.core.archcomponents.extension.viewModel
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.error
 import com.fibelatti.raffler.core.extension.exhaustive
@@ -28,18 +29,16 @@ import kotlinx.android.synthetic.main.fragment_quick_decisions.*
 import kotlinx.android.synthetic.main.layout_hint_container.*
 import javax.inject.Inject
 
-class QuickDecisionFragment : BaseFragment() {
-
-    @Inject
-    lateinit var adapter: QuickDecisionAdapter
+class QuickDecisionFragment @Inject constructor(
+    private val quickDecisionAdapter: QuickDecisionAdapter
+) : BaseFragment() {
 
     private lateinit var sharedView: View
 
-    private val quickDecisionViewModel by lazy { viewModelFactory.get<QuickDecisionViewModel>(this) }
+    private val quickDecisionViewModel by viewModel { viewModelProvider.quickDecisionViewModel() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        injector.inject(this)
         quickDecisionViewModel.run {
             error(error, ::handleError)
             observe(state, ::handleState)
@@ -83,7 +82,7 @@ class QuickDecisionFragment : BaseFragment() {
                 addAll(state.quickDecisions)
             }
 
-        adapter.apply {
+        quickDecisionAdapter.apply {
             addNewClickListener = {
                 if (state.hasCustomRaffles) {
                     findNavController(layoutRoot).navigate(
@@ -131,6 +130,6 @@ class QuickDecisionFragment : BaseFragment() {
     private fun setupRecyclerView() {
         recyclerViewItems.withDefaultDecoration()
             .withGridLayoutManager(2)
-            .adapter = adapter
+            .adapter = quickDecisionAdapter
     }
 }

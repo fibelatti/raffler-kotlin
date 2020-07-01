@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
+import com.fibelatti.core.archcomponents.extension.activityViewModel
+import com.fibelatti.core.archcomponents.extension.viewModel
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.clearError
 import com.fibelatti.raffler.core.extension.error
@@ -20,26 +22,23 @@ import com.fibelatti.raffler.core.extension.withLinearLayoutManager
 import com.fibelatti.raffler.core.platform.base.BaseFragment
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleDraftedAdapter
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleDraftedModel
-import com.fibelatti.raffler.features.myraffles.presentation.customraffledetails.CustomRaffleDetailsViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_custom_raffle_random_winners.*
 import javax.inject.Inject
 
-class CustomRaffleRandomWinnersFragment : BaseFragment() {
+class CustomRaffleRandomWinnersFragment @Inject constructor(
+    private val customRaffleDraftedAdapter: CustomRaffleDraftedAdapter
+) : BaseFragment() {
 
-    @Inject
-    lateinit var adapter: CustomRaffleDraftedAdapter
-
-    private val customRaffleDetailsViewModel by lazy {
-        viewModelFactory.get<CustomRaffleDetailsViewModel>(requireActivity())
+    private val customRaffleDetailsViewModel by activityViewModel {
+        viewModelProvider.customRaffleDetailsViewModel()
     }
-    private val randomWinnersViewModel by lazy {
-        viewModelFactory.get<CustomRaffleRandomWinnersViewModel>(this)
+    private val randomWinnersViewModel by viewModel {
+        viewModelProvider.customRaffleRandomWinnersViewModel()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        injector.inject(this)
         customRaffleDetailsViewModel.run {
             observeEvent(itemsRemaining) {
                 layoutRoot.snackbar(
@@ -89,7 +88,7 @@ class CustomRaffleRandomWinnersFragment : BaseFragment() {
     private fun setupRecyclerView() {
         recyclerViewItems.withLinearLayoutManager()
             .withDefaultDecoration()
-            .adapter = adapter
+            .adapter = customRaffleDraftedAdapter
     }
 
     private fun handleQuantityError(message: String) {
@@ -103,7 +102,7 @@ class CustomRaffleRandomWinnersFragment : BaseFragment() {
     private fun handleWinners(winners: List<CustomRaffleDraftedModel>) {
         customRaffleDetailsViewModel.itemRaffled()
         layoutRoot.hideKeyboard()
-        adapter.run {
+        customRaffleDraftedAdapter.run {
             colorList = getColorGradientForListSize(
                 requireContext(),
                 R.color.color_accent,

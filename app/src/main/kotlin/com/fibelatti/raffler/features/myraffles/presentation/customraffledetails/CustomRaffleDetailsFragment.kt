@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
+import com.fibelatti.core.archcomponents.extension.activityViewModel
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.alertDialogBuilder
 import com.fibelatti.raffler.core.extension.error
@@ -27,8 +28,9 @@ import javax.inject.Inject
 
 private var Bundle.customRaffleId by BundleDelegate.Long("CUSTOM_RAFFLE_ID")
 
-class CustomRaffleDetailsFragment :
-    BaseFragment(),
+class CustomRaffleDetailsFragment @Inject constructor(
+    private val customRaffleDetailsAdapter: CustomRaffleDetailsAdapter
+) : BaseFragment(),
     CustomRaffleModes by CustomRaffleModesDelegate() {
 
     companion object {
@@ -39,16 +41,10 @@ class CustomRaffleDetailsFragment :
         }
     }
 
-    @Inject
-    lateinit var adapter: CustomRaffleDetailsAdapter
-
-    private val customRaffleDetailsViewModel by lazy {
-        viewModelFactory.get<CustomRaffleDetailsViewModel>(requireActivity())
-    }
+    private val customRaffleDetailsViewModel by activityViewModel { viewModelProvider.customRaffleDetailsViewModel() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        injector.inject(this)
         customRaffleDetailsViewModel.run {
             error(error, ::handleError)
             observe(preferredRaffleMode, ::setupRaffleButtons)
@@ -115,14 +111,14 @@ class CustomRaffleDetailsFragment :
     private fun setupRecyclerView() {
         recyclerViewItems.withDefaultDecoration()
             .withLinearLayoutManager()
-            .adapter = adapter
+            .adapter = customRaffleDetailsAdapter
 
-        adapter.clickListener = customRaffleDetailsViewModel::updateItemSelection
+        customRaffleDetailsAdapter.clickListener = customRaffleDetailsViewModel::updateItemSelection
     }
 
     private fun showCustomRaffleDetails(customRaffleModel: CustomRaffleModel) {
         layoutTitle.setTitle(customRaffleModel.description)
-        adapter.setItems(customRaffleModel.items)
+        customRaffleDetailsAdapter.setItems(customRaffleModel.items)
     }
 
     private fun handleInvalidSelectionError(message: String) {

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
+import com.fibelatti.core.archcomponents.extension.activityViewModel
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.error
 import com.fibelatti.raffler.core.extension.observe
@@ -15,14 +16,12 @@ import com.fibelatti.raffler.core.platform.base.BaseFragment
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModes
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModesDelegate
 import kotlinx.android.synthetic.main.fragment_preferences_custom_raffle.*
+import javax.inject.Inject
 
-class PreferencesCustomRaffleFragment :
-    BaseFragment(),
+class PreferencesCustomRaffleFragment @Inject constructor() : BaseFragment(),
     CustomRaffleModes by CustomRaffleModesDelegate() {
 
-    private val preferencesViewModel by lazy {
-        viewModelFactory.get<PreferencesViewModel>(requireActivity())
-    }
+    private val preferencesViewModel by activityViewModel { viewModelProvider.preferencesViewModel() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

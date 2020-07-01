@@ -8,6 +8,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.navOptions
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.fibelatti.core.archcomponents.extension.viewModel
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.addTextChangedListener
 import com.fibelatti.raffler.core.extension.alertDialogBuilder
@@ -35,7 +36,9 @@ import javax.inject.Inject
 private var Bundle.addAsShortcut by BundleDelegate.Boolean("ADD_AS_SHORTCUT", false)
 private var Bundle.customRaffleId by BundleDelegate.Long("CUSTOM_RAFFLE_ID")
 
-class CreateCustomRaffleFragment : BaseFragment() {
+class CreateCustomRaffleFragment @Inject constructor(
+    private val createCustomRaffleAdapter: CreateCustomRaffleAdapter
+) : BaseFragment() {
 
     companion object {
         fun bundle(
@@ -64,16 +67,10 @@ class CreateCustomRaffleFragment : BaseFragment() {
         }
     }
 
-    @Inject
-    lateinit var adapter: CreateCustomRaffleAdapter
-
-    private val createCustomRaffleViewModel by lazy {
-        viewModelFactory.get<CreateCustomRaffleViewModel>(this)
-    }
+    private val createCustomRaffleViewModel by viewModel { viewModelProvider.createCustomRaffleViewModel() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        injector.inject(this)
         createCustomRaffleViewModel.run {
             error(error, ::handleError)
             observe(showCreateCustomRaffleLayout) { showCustomRaffleNewLayout() }
@@ -155,7 +152,7 @@ class CreateCustomRaffleFragment : BaseFragment() {
     private fun setupRecyclerView() {
         recyclerViewItems.withDefaultDecoration()
             .withLinearLayoutManager()
-            .adapter = adapter
+            .adapter = createCustomRaffleAdapter
 
         val swipeHandler = object : RecyclerViewSwipeToDeleteCallback(requireContext()) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
@@ -180,7 +177,7 @@ class CreateCustomRaffleFragment : BaseFragment() {
     }
 
     private fun showCustomRaffleDetails(customRaffleModel: CustomRaffleModel) {
-        adapter.setItems(customRaffleModel.items.toList())
+        createCustomRaffleAdapter.setItems(customRaffleModel.items)
     }
 
     private fun addItem() {

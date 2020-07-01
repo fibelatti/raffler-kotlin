@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
+import com.fibelatti.core.archcomponents.extension.activityViewModel
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.clearError
 import com.fibelatti.raffler.core.extension.error
@@ -16,12 +17,11 @@ import com.fibelatti.raffler.core.extension.snackbar
 import com.fibelatti.raffler.core.extension.textAsString
 import com.fibelatti.raffler.core.platform.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_preferences_lottery.*
+import javax.inject.Inject
 
-class PreferencesLotteryFragment : BaseFragment() {
+class PreferencesLotteryFragment @Inject constructor() : BaseFragment() {
 
-    private val preferencesViewModel by lazy {
-        viewModelFactory.get<PreferencesViewModel>(requireActivity())
-    }
+    private val preferencesViewModel by activityViewModel { viewModelProvider.preferencesViewModel() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

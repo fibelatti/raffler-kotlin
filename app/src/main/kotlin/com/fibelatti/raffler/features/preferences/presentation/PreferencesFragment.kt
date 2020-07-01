@@ -15,8 +15,9 @@ import com.fibelatti.raffler.core.platform.AppConfig.MARKET_BASE_URL
 import com.fibelatti.raffler.core.platform.AppConfig.PLAY_STORE_BASE_URL
 import com.fibelatti.raffler.core.platform.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_preferences.*
+import javax.inject.Inject
 
-class PreferencesFragment : BaseFragment() {
+class PreferencesFragment @Inject constructor() : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         inflater.inflate(R.layout.fragment_preferences, container, false)

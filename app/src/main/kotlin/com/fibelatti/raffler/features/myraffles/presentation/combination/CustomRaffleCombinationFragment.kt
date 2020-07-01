@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
+import com.fibelatti.core.archcomponents.extension.activityViewModel
+import com.fibelatti.core.archcomponents.extension.viewModel
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.clearError
 import com.fibelatti.raffler.core.extension.error
@@ -23,29 +25,21 @@ import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffle
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModel
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleSelector
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleSelectorDelegate
-import com.fibelatti.raffler.features.myraffles.presentation.customraffledetails.CustomRaffleDetailsViewModel
 import kotlinx.android.synthetic.main.fragment_custom_raffle_combination.*
 import javax.inject.Inject
 
-class CustomRaffleCombinationFragment :
-    BaseFragment(),
+class CustomRaffleCombinationFragment @Inject constructor(
+    private val customRaffleDraftedAdapter: CustomRaffleDraftedAdapter
+): BaseFragment(),
     CustomRaffleSelector by CustomRaffleSelectorDelegate() {
-
-    @Inject
-    lateinit var adapter: CustomRaffleDraftedAdapter
 
     private lateinit var secondCustomRaffle: CustomRaffleModel
 
-    private val customRaffleDetailsViewModel by lazy {
-        viewModelFactory.get<CustomRaffleDetailsViewModel>(requireActivity())
-    }
-    private val customRaffleCombinationViewModel by lazy {
-        viewModelFactory.get<CustomRaffleCombinationViewModel>(this)
-    }
+    private val customRaffleDetailsViewModel by activityViewModel { viewModelProvider.customRaffleDetailsViewModel() }
+    private val customRaffleCombinationViewModel by viewModel { viewModelProvider.customRaffleCombinationViewModel() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        injector.inject(this)
         customRaffleCombinationViewModel.run {
             error(error, ::handleError)
             observe(otherCustomRaffles, ::showSelector)
@@ -96,7 +90,7 @@ class CustomRaffleCombinationFragment :
     private fun setupRecyclerView() {
         recyclerViewItems.withLinearLayoutManager()
             .withDefaultDecoration()
-            .adapter = adapter
+            .adapter = customRaffleDraftedAdapter
     }
 
     private fun handleQuantityError(message: String) {
@@ -129,7 +123,7 @@ class CustomRaffleCombinationFragment :
 
     private fun handlePairs(pairs: List<CustomRaffleDraftedModel>) {
         layoutRoot.hideKeyboard()
-        adapter.run {
+        customRaffleDraftedAdapter.run {
             colorList = getColorGradientForListSize(
                 requireContext(),
                 R.color.color_accent,

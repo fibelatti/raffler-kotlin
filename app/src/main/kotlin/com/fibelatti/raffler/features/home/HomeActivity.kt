@@ -11,18 +11,16 @@ import kotlinx.android.synthetic.main.layout_toolbar_default.*
 
 class HomeActivity : BaseActivity() {
 
-    private val bottomBarEnabledFragments: List<Int> by lazy {
-        listOf(
-            R.id.fragmentQuickDecision,
-            R.id.fragmentQuickDecisionResult,
-            R.id.fragmentLottery,
-            R.id.fragmentMyRaffles,
-            R.id.fragmentPreferences,
-            R.id.fragmentPreferencesGeneral,
-            R.id.fragmentPreferencesLottery,
-            R.id.fragmentPreferencesCustomRaffle
-        )
-    }
+    private val bottomBarEnabledFragments: List<Int> = listOf(
+        R.id.fragmentQuickDecision,
+        R.id.fragmentQuickDecisionResult,
+        R.id.fragmentLottery,
+        R.id.fragmentMyRaffles,
+        R.id.fragmentPreferences,
+        R.id.fragmentPreferencesGeneral,
+        R.id.fragmentPreferencesLottery,
+        R.id.fragmentPreferencesCustomRaffle
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +33,6 @@ class HomeActivity : BaseActivity() {
 
     private fun setupNavigation() {
         fragmentHost.findNavController().apply {
-            graph = navInflater.inflate(R.navigation.nav_graph)
             layoutBottomNavigation.setupWithNavController(this)
             addOnDestinationChangedListener { _, destination, _ ->
                 layoutBottomNavigation.visibleIf(destination.id in bottomBarEnabledFragments)
