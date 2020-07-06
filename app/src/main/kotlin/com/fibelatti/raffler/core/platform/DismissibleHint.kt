@@ -6,11 +6,12 @@ import android.widget.LinearLayout
 import androidx.annotation.StringRes
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
+import com.fibelatti.core.extension.inflate
 import com.fibelatti.raffler.R
-import com.fibelatti.raffler.core.extension.inflate
 import com.fibelatti.raffler.core.extension.setShapeBackgroundColor
 
 interface DismissibleHint {
+
     fun showDismissibleHint(
         container: View,
         @StringRes hintTitle: Int,
@@ -27,7 +28,13 @@ interface DismissibleHint {
 }
 
 class DismissibleHintDelegate : DismissibleHint {
-    override fun showDismissibleHint(container: View, hintTitle: Int, hintMessage: Int, onHintDismissed: (() -> Unit)?) {
+
+    override fun showDismissibleHint(
+        container: View,
+        hintTitle: Int,
+        hintMessage: Int,
+        onHintDismissed: (() -> Unit)?
+    ) {
         showDismissibleHint(
             container = container,
             hintTitle = container.context.getString(hintTitle),
@@ -49,7 +56,9 @@ class DismissibleHintDelegate : DismissibleHint {
                 val textViewHintMessage = findViewById<AppCompatTextView>(R.id.textViewHintMessage)
                 val buttonHintDismiss = findViewById<AppCompatTextView>(R.id.textViewButtonDismiss)
 
-                rootLayout.setShapeBackgroundColor(ContextCompat.getColor(rootLayout.context, R.color.color_background_contrast))
+                rootLayout.setShapeBackgroundColor(
+                    ContextCompat.getColor(rootLayout.context, R.color.color_background_contrast)
+                )
 
                 textViewHintTitle.text = hintTitle
                 textViewHintMessage.text = hintMessage
@@ -59,6 +68,6 @@ class DismissibleHintDelegate : DismissibleHint {
                     container.removeView(this)
                 }
             }
-            ?.let { container.addView(it) }
+            ?.let(container::addView)
     }
 }

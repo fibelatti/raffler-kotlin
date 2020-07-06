@@ -1,21 +1,18 @@
 package com.fibelatti.raffler.features.lottery.presentation
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.recyclerview.widget.GridLayoutManager
+import com.fibelatti.core.archcomponents.extension.observe
+import com.fibelatti.core.archcomponents.extension.observeEvent
 import com.fibelatti.core.archcomponents.extension.viewModel
+import com.fibelatti.core.extension.clearError
+import com.fibelatti.core.extension.hideKeyboard
+import com.fibelatti.core.extension.showError
+import com.fibelatti.core.extension.textAsString
+import com.fibelatti.core.extension.visible
+import com.fibelatti.core.extension.withGridLayoutManager
+import com.fibelatti.core.extension.withItemOffsetDecoration
 import com.fibelatti.raffler.R
-import com.fibelatti.raffler.core.extension.clearError
-import com.fibelatti.raffler.core.extension.error
-import com.fibelatti.raffler.core.extension.hideKeyboard
-import com.fibelatti.raffler.core.extension.observe
-import com.fibelatti.raffler.core.extension.observeEvent
-import com.fibelatti.raffler.core.extension.showError
-import com.fibelatti.raffler.core.extension.textAsString
-import com.fibelatti.raffler.core.extension.visible
-import com.fibelatti.raffler.core.extension.withDefaultDecoration
 import com.fibelatti.raffler.core.platform.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_lottery.*
 import javax.inject.Inject
@@ -25,37 +22,29 @@ private const val ODD_SPAN_COUNT = 3
 
 class LotteryFragment @Inject constructor(
     private val lotteryAdapter: LotteryAdapter
-) : BaseFragment() {
+) : BaseFragment(R.layout.fragment_lottery) {
 
     private val lotteryViewModel by viewModel { viewModelProvider.lotteryViewModel() }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        lotteryViewModel.run {
-            error(error, ::handleError)
-            observe(defaultQuantityAvailable) { editTextTotalQuantity.setText(it) }
-            observe(defaultQuantityToRaffle) { editTextRaffleQuantity.setText(it) }
-            observeEvent(showHint) {
-                showDismissibleHint(
-                    container = layoutHintContainer,
-                    hintTitle = getString(R.string.hint_quick_tip),
-                    hintMessage = getString(R.string.lottery_dismissible_hint),
-                    onHintDismissed = { lotteryViewModel.hintDismissed() }
-                )
-            }
-            observe(lotteryNumbers, ::showResults)
-            observe(quantityAvailableError, ::handleTotalQuantityError)
-            observe(quantityToRaffleError, ::handleRaffleQuantityError)
-        }
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        inflater.inflate(R.layout.fragment_lottery, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupLayout()
         setupRecyclerView()
+
+        viewLifecycleOwner.observe(lotteryViewModel.error, ::handleError)
+        viewLifecycleOwner.observe(lotteryViewModel.defaultQuantityAvailable, editTextTotalQuantity::setText)
+        viewLifecycleOwner.observe(lotteryViewModel.defaultQuantityToRaffle, editTextRaffleQuantity::setText)
+        viewLifecycleOwner.observeEvent(lotteryViewModel.showHint) {
+            showDismissibleHint(
+                container = layoutHintContainer,
+                hintTitle = getString(R.string.hint_quick_tip),
+                hintMessage = getString(R.string.lottery_dismissible_hint),
+                onHintDismissed = { lotteryViewModel.hintDismissed() }
+            )
+        }
+        viewLifecycleOwner.observe(lotteryViewModel.lotteryNumbers, ::showResults)
+        viewLifecycleOwner.observe(lotteryViewModel.quantityAvailableError, ::handleTotalQuantityError)
+        viewLifecycleOwner.observe(lotteryViewModel.quantityToRaffleError, ::handleRaffleQuantityError)
     }
 
     private fun setupLayout() {
@@ -68,8 +57,9 @@ class LotteryFragment @Inject constructor(
     }
 
     private fun setupRecyclerView() {
-        recyclerViewItems.withDefaultDecoration()
-        recyclerViewItems.adapter = lotteryAdapter
+        recyclerViewItems
+            .withItemOffsetDecoration(R.dimen.margin_small)
+            .adapter = lotteryAdapter
     }
 
     private fun showResults(results: List<LotteryNumberModel>) {
@@ -80,10 +70,8 @@ class LotteryFragment @Inject constructor(
         }
 
         layoutRoot.hideKeyboard()
-
-        recyclerViewItems.layoutManager = GridLayoutManager(context, spanCount)
-        recyclerViewItems.visible()
-        lotteryAdapter.setItems(results)
+        recyclerViewItems.withGridLayoutManager(spanCount).visible()
+        lotteryAdapter.submitList(results)
     }
 
     private fun handleTotalQuantityError(message: String) {

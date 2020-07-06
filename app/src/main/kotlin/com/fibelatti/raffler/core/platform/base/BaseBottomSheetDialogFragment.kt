@@ -14,5 +14,8 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
     override fun getTheme(): Int = R.style.AppTheme_BaseBottomSheetDialog_BottomSheetDialog
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = BottomSheetDialog(requireContext(), theme)
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = BottomSheetDialog(
+        requireContext(),
+        theme
+    )
 }

@@ -84,7 +84,7 @@
         app:layout_constraintRight_toLeftOf="@+id/imageButtonAddItem"
         app:layout_constraintTop_toBottomOf="@+id/checkboxAddShortcut">
 
-        <com.fibelatti.raffler.core.platform.customview.BackPressReactiveTextInputEditText
+        <com.fibelatti.core.android.customview.BackPressReactiveTextInputEditText
             android:id="@+id/editTextCustomRaffleItemDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

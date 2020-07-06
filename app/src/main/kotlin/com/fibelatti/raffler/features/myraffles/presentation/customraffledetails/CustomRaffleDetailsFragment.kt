@@ -1,23 +1,20 @@
 package com.fibelatti.raffler.features.myraffles.presentation.customraffledetails
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.fibelatti.core.android.BundleDelegate
 import com.fibelatti.core.archcomponents.extension.activityViewModel
+import com.fibelatti.core.archcomponents.extension.observe
+import com.fibelatti.core.archcomponents.extension.observeEvent
+import com.fibelatti.core.extension.exhaustive
+import com.fibelatti.core.extension.gone
+import com.fibelatti.core.extension.visible
+import com.fibelatti.core.extension.withItemOffsetDecoration
+import com.fibelatti.core.extension.withLinearLayoutManager
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.alertDialogBuilder
-import com.fibelatti.raffler.core.extension.error
-import com.fibelatti.raffler.core.extension.exhaustive
-import com.fibelatti.raffler.core.extension.gone
-import com.fibelatti.raffler.core.extension.observe
-import com.fibelatti.raffler.core.extension.observeEvent
-import com.fibelatti.raffler.core.extension.visible
-import com.fibelatti.raffler.core.extension.withDefaultDecoration
-import com.fibelatti.raffler.core.extension.withLinearLayoutManager
 import com.fibelatti.raffler.core.platform.AppConfig
-import com.fibelatti.raffler.core.platform.BundleDelegate
 import com.fibelatti.raffler.core.platform.base.BaseFragment
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModel
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModes
@@ -30,7 +27,7 @@ private var Bundle.customRaffleId by BundleDelegate.Long("CUSTOM_RAFFLE_ID")
 
 class CustomRaffleDetailsFragment @Inject constructor(
     private val customRaffleDetailsAdapter: CustomRaffleDetailsAdapter
-) : BaseFragment(),
+) : BaseFragment(R.layout.fragment_custom_raffle_details),
     CustomRaffleModes by CustomRaffleModesDelegate() {
 
     companion object {
@@ -43,13 +40,16 @@ class CustomRaffleDetailsFragment @Inject constructor(
 
     private val customRaffleDetailsViewModel by activityViewModel { viewModelProvider.customRaffleDetailsViewModel() }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupLayout()
+        setupRecyclerView()
+
         customRaffleDetailsViewModel.run {
-            error(error, ::handleError)
-            observe(preferredRaffleMode, ::setupRaffleButtons)
-            observe(customRaffle, ::showCustomRaffleDetails)
-            observeEvent(showHint) {
+            viewLifecycleOwner.observe(error, ::handleError)
+            viewLifecycleOwner.observe(preferredRaffleMode, ::setupRaffleButtons)
+            viewLifecycleOwner.observe(customRaffle, ::showCustomRaffleDetails)
+            viewLifecycleOwner.observeEvent(showHint) {
                 showDismissibleHint(
                     container = layoutHintContainer,
                     hintTitle = getString(R.string.hint_quick_tip),
@@ -57,20 +57,11 @@ class CustomRaffleDetailsFragment @Inject constructor(
                     onHintDismissed = { customRaffleDetailsViewModel.hintDismissed() }
                 )
             }
-            observeEvent(invalidSelectionError, ::handleInvalidSelectionError)
-            observeEvent(showModeSelector) { showRaffleModeSelector() }
-            observeEvent(showPreferredRaffleMode) { showPreferredRaffleMode(it) }
-            observeEvent(toggleState, ::handleToggleState)
+            viewLifecycleOwner.observeEvent(invalidSelectionError, ::handleInvalidSelectionError)
+            viewLifecycleOwner.observeEvent(showModeSelector) { showRaffleModeSelector() }
+            viewLifecycleOwner.observeEvent(showPreferredRaffleMode) { showPreferredRaffleMode(it) }
+            viewLifecycleOwner.observeEvent(toggleState, ::handleToggleState)
         }
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        inflater.inflate(R.layout.fragment_custom_raffle_details, container, false)
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setupLayout()
-        setupRecyclerView()
     }
 
     override fun onResume() {
@@ -79,10 +70,10 @@ class CustomRaffleDetailsFragment @Inject constructor(
     }
 
     private fun setupLayout() {
-        layoutTitle.setNavigateUp(R.drawable.ic_close) { layoutRoot.findNavController().navigateUp() }
+        layoutTitle.setNavigateUp(R.drawable.ic_close) { findNavController().navigateUp() }
 
         buttonEdit.setOnClickListener {
-            layoutRoot.findNavController().navigate(
+            findNavController().navigate(
                 R.id.action_fragmentCustomRaffleDetails_to_fragmentCreateCustomRaffle,
                 CreateCustomRaffleFragment.bundle(customRaffleId = arguments?.customRaffleId),
                 CreateCustomRaffleFragment.navOptionsEdit()
@@ -109,8 +100,9 @@ class CustomRaffleDetailsFragment @Inject constructor(
     }
 
     private fun setupRecyclerView() {
-        recyclerViewItems.withDefaultDecoration()
+        recyclerViewItems
             .withLinearLayoutManager()
+            .withItemOffsetDecoration(R.dimen.margin_small)
             .adapter = customRaffleDetailsAdapter
 
         customRaffleDetailsAdapter.clickListener = customRaffleDetailsViewModel::updateItemSelection
@@ -118,7 +110,7 @@ class CustomRaffleDetailsFragment @Inject constructor(
 
     private fun showCustomRaffleDetails(customRaffleModel: CustomRaffleModel) {
         layoutTitle.setTitle(customRaffleModel.description)
-        customRaffleDetailsAdapter.setItems(customRaffleModel.items)
+        customRaffleDetailsAdapter.submitList(customRaffleModel.items)
     }
 
     private fun handleInvalidSelectionError(message: String) {
@@ -159,31 +151,31 @@ class CustomRaffleDetailsFragment @Inject constructor(
     }
 
     private fun goToRoulette() {
-        layoutRoot.findNavController().navigate(
+        findNavController().navigate(
             R.id.action_fragmentCustomRaffleDetails_to_fragmentCustomRaffleRoulette
         )
     }
 
     private fun goToRandomWinners() {
-        layoutRoot.findNavController().navigate(
+        findNavController().navigate(
             R.id.action_fragmentCustomRaffleDetails_to_fragmentCustomRaffleRandomWinners
         )
     }
 
     private fun goToGrouping() {
-        layoutRoot.findNavController().navigate(
+        findNavController().navigate(
             R.id.action_fragmentCustomRaffleDetails_to_fragmentCustomRaffleGrouping
         )
     }
 
     private fun goToCombination() {
-        layoutRoot.findNavController().navigate(
+        findNavController().navigate(
             R.id.action_fragmentCustomRaffleDetails_to_fragmentCustomRaffleCombination
         )
     }
 
     private fun goToVoting() {
-        layoutRoot.findNavController().navigate(
+        findNavController().navigate(
             R.id.action_fragmentCustomRaffleDetails_to_fragmentCustomRaffleVotingStart
         )
     }

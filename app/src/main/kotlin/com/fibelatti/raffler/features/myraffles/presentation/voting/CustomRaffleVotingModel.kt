@@ -1,6 +1,6 @@
 package com.fibelatti.raffler.features.myraffles.presentation.voting
 
-import com.fibelatti.raffler.core.functional.Mapper
+import com.fibelatti.core.functional.TwoWayMapper
 import com.fibelatti.raffler.features.myraffles.CustomRaffleVoting
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModel
 import javax.inject.Inject
@@ -15,7 +15,8 @@ data class CustomRaffleVotingModel(
     val mostVoted: Map<String, Int> = votes.filter { it.value == votes.values.max() }
 }
 
-class CustomRaffleVotingModelMapper @Inject constructor() : Mapper<CustomRaffleVoting, CustomRaffleVotingModel> {
+class CustomRaffleVotingModelMapper @Inject constructor() : TwoWayMapper<CustomRaffleVoting, CustomRaffleVotingModel> {
+
     override fun map(param: CustomRaffleVoting): CustomRaffleVotingModel {
         return with(param) {
             CustomRaffleVotingModel(customRaffleId, description, pin, totalVotes, votes)

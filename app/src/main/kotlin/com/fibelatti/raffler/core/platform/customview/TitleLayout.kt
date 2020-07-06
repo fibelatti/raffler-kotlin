@@ -7,8 +7,8 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import com.fibelatti.core.extension.visible
 import com.fibelatti.raffler.R
-import com.fibelatti.raffler.core.extension.visible
 import kotlinx.android.synthetic.main.layout_title.view.*
 
 class TitleLayout @JvmOverloads constructor(

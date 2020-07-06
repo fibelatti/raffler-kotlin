@@ -1,6 +1,6 @@
 package com.fibelatti.raffler.core.platform
 
-import com.fibelatti.raffler.core.extension.shouldBe
+import com.fibelatti.core.test.extension.shouldBe
 import org.junit.jupiter.api.Test
 
 class AppConfigTest {
@@ -8,7 +8,6 @@ class AppConfigTest {
     @Test
     fun testAppConfigValues() {
         AppConfig.PLAY_STORE_BASE_URL shouldBe "https://play.google.com/store/apps/details?id="
-        AppConfig.MARKET_BASE_URL shouldBe "market://details?id="
 
         AppConfig.LOCALE_NONE shouldBe "none"
 

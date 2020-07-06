@@ -1,11 +1,10 @@
 package com.fibelatti.raffler.core.persistence
 
 import android.content.SharedPreferences
-import com.fibelatti.raffler.BaseTest
+import com.fibelatti.core.extension.get
+import com.fibelatti.core.test.extension.mock
+import com.fibelatti.core.test.extension.shouldBe
 import com.fibelatti.raffler.MockSharedPreferencesEditor
-import com.fibelatti.raffler.core.extension.get
-import com.fibelatti.raffler.core.extension.mock
-import com.fibelatti.raffler.core.extension.shouldBe
 import com.fibelatti.raffler.core.platform.AppConfig
 import org.junit.Before
 import org.junit.Test
@@ -13,7 +12,7 @@ import org.mockito.BDDMockito.given
 import org.mockito.Mockito.spy
 import org.mockito.Mockito.verify
 
-class CurrentInstallSharedPreferencesTest : BaseTest() {
+class CurrentInstallSharedPreferencesTest {
     private val mockSharedPreferences = mock<SharedPreferences>()
     private val mockEditor = spy(MockSharedPreferencesEditor())
 
@@ -30,7 +29,7 @@ class CurrentInstallSharedPreferencesTest : BaseTest() {
     @Test
     fun whenGetThemeIsCalledAndValueIsClassicThenCLASSICisReturned() {
         // GIVEN
-        given(mockSharedPreferences.get<String>(KEY_APP_THEME))
+        given(mockSharedPreferences.get(KEY_APP_THEME, defaultValue = ""))
             .willReturn("classic")
 
         // WHEN
@@ -43,7 +42,7 @@ class CurrentInstallSharedPreferencesTest : BaseTest() {
     @Test
     fun whenGetThemeIsCalledAndValueIsDarkThenDARKisReturned() {
         // GIVEN
-        given(mockSharedPreferences.get<String>(KEY_APP_THEME))
+        given(mockSharedPreferences.get(KEY_APP_THEME, defaultValue = ""))
             .willReturn("dark")
 
         // WHEN
@@ -56,7 +55,7 @@ class CurrentInstallSharedPreferencesTest : BaseTest() {
     @Test
     fun whenGetThemeIsCalledAndValueIsNullThenCLASSICisReturned() {
         // GIVEN
-        given(mockSharedPreferences.get<String>(KEY_APP_THEME))
+        given(mockSharedPreferences.get(KEY_APP_THEME, defaultValue = ""))
             .willReturn(null)
 
         // WHEN
@@ -78,7 +77,7 @@ class CurrentInstallSharedPreferencesTest : BaseTest() {
     @Test
     fun whenGetAppLanguageIsCalledAndValueIsPtThenPORTUGUESEisReturned() {
         // GIVEN
-        given(mockSharedPreferences.get<String>(KEY_APP_LANGUAGE))
+        given(mockSharedPreferences.get(KEY_APP_LANGUAGE, defaultValue = ""))
             .willReturn("pt")
 
         // WHEN
@@ -91,7 +90,7 @@ class CurrentInstallSharedPreferencesTest : BaseTest() {
     @Test
     fun whenGetAppLanguageIsCalledAndValueIsEsThenSPANISHisReturned() {
         // GIVEN
-        given(mockSharedPreferences.get<String>(KEY_APP_LANGUAGE))
+        given(mockSharedPreferences.get(KEY_APP_LANGUAGE, defaultValue = ""))
             .willReturn("es")
 
         // WHEN
@@ -104,7 +103,7 @@ class CurrentInstallSharedPreferencesTest : BaseTest() {
     @Test
     fun whenGetAppLanguageIsCalledThenENGLISHisReturned() {
         // GIVEN
-        given(mockSharedPreferences.get<String>(KEY_APP_LANGUAGE))
+        given(mockSharedPreferences.get(KEY_APP_LANGUAGE, defaultValue = ""))
             .willReturn(null)
 
         // WHEN

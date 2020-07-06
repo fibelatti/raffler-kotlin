@@ -1,21 +1,17 @@
 package com.fibelatti.raffler.features.myraffles.presentation.list
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.fibelatti.core.archcomponents.extension.observe
 import com.fibelatti.core.archcomponents.extension.viewModel
+import com.fibelatti.core.extension.gone
+import com.fibelatti.core.extension.visible
+import com.fibelatti.core.extension.withGridLayoutManager
+import com.fibelatti.core.extension.withItemOffsetDecoration
 import com.fibelatti.raffler.R
-import com.fibelatti.raffler.core.extension.error
 import com.fibelatti.raffler.core.extension.getColorGradientForListSize
-import com.fibelatti.raffler.core.extension.gone
-import com.fibelatti.raffler.core.extension.observe
-import com.fibelatti.raffler.core.extension.visible
-import com.fibelatti.raffler.core.extension.withDefaultDecoration
-import com.fibelatti.raffler.core.extension.withGridLayoutManager
 import com.fibelatti.raffler.core.platform.base.BaseFragment
-import com.fibelatti.raffler.core.platform.base.BaseViewType
 import com.fibelatti.raffler.core.platform.recyclerview.AddNewModel
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModel
 import com.fibelatti.raffler.features.myraffles.presentation.createcustomraffle.CreateCustomRaffleFragment
@@ -26,32 +22,27 @@ import javax.inject.Inject
 
 class MyRafflesFragment @Inject constructor(
     private val customRaffleAdapter: CustomRaffleAdapter
-): BaseFragment() {
+) : BaseFragment(R.layout.fragment_my_raffles) {
 
     private val myRafflesViewModel by viewModel { viewModelProvider.myRafflesViewModel() }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        myRafflesViewModel.run {
-            error(error, ::handleError)
-            observe(customRaffles, ::showCustomRaffles)
-            observe(showHintAndCreateNewLayout) { showHintAndCreateNewLayout(it) }
-        }
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        inflater.inflate(R.layout.fragment_my_raffles, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupLayout()
         setupRecyclerView()
+
+        myRafflesViewModel.run {
+            viewLifecycleOwner.observe(error, ::handleError)
+            viewLifecycleOwner.observe(customRaffles, ::showCustomRaffles)
+            viewLifecycleOwner.observe(showHintAndCreateNewLayout) { showHintAndCreateNewLayout(it) }
+        }
+
         myRafflesViewModel.getAllCustomRaffles()
     }
 
     private fun setupLayout() {
         buttonCreateRaffle.setOnClickListener {
-            layoutRoot.findNavController().navigate(
+            findNavController().navigate(
                 R.id.action_fragmentMyRaffles_to_fragmentCreateCustomRaffle,
                 CreateCustomRaffleFragment.bundle(),
                 CreateCustomRaffleFragment.navOptionsNew()
@@ -60,28 +51,28 @@ class MyRafflesFragment @Inject constructor(
     }
 
     private fun setupRecyclerView() {
-        recyclerViewItems.withDefaultDecoration()
+        recyclerViewItems
             .withGridLayoutManager(spanCount = 2)
+            .withItemOffsetDecoration(R.dimen.margin_small)
             .adapter = customRaffleAdapter
     }
 
     private fun showCustomRaffles(list: List<CustomRaffleModel>) {
-        val dataSet = ArrayList<BaseViewType>()
-            .apply {
-                add(AddNewModel)
-                addAll(list)
-            }
+        layoutHintContainer.removeAllViews()
+        buttonCreateRaffle.gone()
+
+        val dataSet = listOf(AddNewModel) + list
 
         customRaffleAdapter.apply {
             addNewClickListener = {
-                layoutRoot.findNavController().navigate(
+                findNavController().navigate(
                     R.id.action_fragmentMyRaffles_to_fragmentCreateCustomRaffle,
                     CreateCustomRaffleFragment.bundle(),
                     CreateCustomRaffleFragment.navOptionsNew()
                 )
             }
             customRaffleClickListener = {
-                layoutRoot.findNavController().navigate(
+                findNavController().navigate(
                     R.id.action_fragmentMyRaffles_to_fragmentCustomRaffleDetails,
                     CustomRaffleDetailsFragment.bundle(customRaffleId = it)
                 )
@@ -92,7 +83,7 @@ class MyRafflesFragment @Inject constructor(
                 R.color.color_primary,
                 dataSet.size
             )
-            setItems(dataSet)
+            submitList(dataSet)
         }
         recyclerViewItems.visible()
     }

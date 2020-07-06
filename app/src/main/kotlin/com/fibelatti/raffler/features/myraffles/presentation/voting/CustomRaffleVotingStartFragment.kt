@@ -1,25 +1,26 @@
 package com.fibelatti.raffler.features.myraffles.presentation.voting
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.fibelatti.core.archcomponents.extension.activityViewModel
+import com.fibelatti.core.archcomponents.extension.observe
+import com.fibelatti.core.archcomponents.extension.observeEvent
+import com.fibelatti.core.extension.clearError
+import com.fibelatti.core.extension.hideKeyboard
+import com.fibelatti.core.extension.showError
+import com.fibelatti.core.extension.showKeyboard
+import com.fibelatti.core.extension.textAsString
+import com.fibelatti.core.extension.visible
 import com.fibelatti.raffler.R
-import com.fibelatti.raffler.core.extension.clearError
-import com.fibelatti.raffler.core.extension.hideKeyboard
-import com.fibelatti.raffler.core.extension.observeEvent
-import com.fibelatti.raffler.core.extension.showError
-import com.fibelatti.raffler.core.extension.showKeyboard
-import com.fibelatti.raffler.core.extension.textAsString
-import com.fibelatti.raffler.core.extension.visible
 import com.fibelatti.raffler.core.platform.base.BaseFragment
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModel
 import kotlinx.android.synthetic.main.fragment_custom_raffle_voting_start.*
 import javax.inject.Inject
 
-class CustomRaffleVotingStartFragment @Inject constructor() : BaseFragment() {
+class CustomRaffleVotingStartFragment @Inject constructor() : BaseFragment(
+    R.layout.fragment_custom_raffle_voting_start
+) {
 
     private val customRaffleDetailsViewModel by activityViewModel {
         viewModelProvider.customRaffleDetailsViewModel()
@@ -28,23 +29,17 @@ class CustomRaffleVotingStartFragment @Inject constructor() : BaseFragment() {
         viewModelProvider.customRaffleVotingViewModel()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        customRaffleVotingViewModel.run {
-            observeEvent(ongoingVoting) { handleOngoingVoting() }
-            observeEvent(readyToVote) { handleReadyToVote() }
-            observeEvent(pinError, ::handlePinError)
-        }
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        inflater.inflate(R.layout.fragment_custom_raffle_voting_start, container, false)
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupLayout()
 
-        withCustomRaffle { customRaffleVotingViewModel.checkForOngoingVoting(it) }
+        viewLifecycleOwner.observe(customRaffleDetailsViewModel.customRaffle) {
+            setupLayout(it)
+            customRaffleVotingViewModel.checkForOngoingVoting(it)
+        }
+
+        viewLifecycleOwner.observe(customRaffleVotingViewModel.ongoingVoting, ::handleOngoingVoting)
+        viewLifecycleOwner.observeEvent(customRaffleVotingViewModel.readyToVote) { handleReadyToVote() }
+        viewLifecycleOwner.observeEvent(customRaffleVotingViewModel.pinError, ::handlePinError)
     }
 
     override fun onDestroyView() {
@@ -52,40 +47,37 @@ class CustomRaffleVotingStartFragment @Inject constructor() : BaseFragment() {
         layoutRoot.hideKeyboard()
     }
 
-    private fun setupLayout() {
-        layoutTitle.setNavigateUp(R.drawable.ic_close) { layoutRoot.findNavController().navigateUp() }
+    private fun setupLayout(customRaffleModel: CustomRaffleModel) {
+        layoutTitle.setNavigateUp(R.drawable.ic_close) { findNavController().navigateUp() }
+        layoutTitle.setTitle(getString(R.string.custom_raffle_voting_title, customRaffleModel.description))
 
-        withCustomRaffle { customRaffle ->
-            layoutTitle.setTitle(getString(R.string.custom_raffle_voting_title, customRaffle.description))
-
-            buttonStartVoting.setOnClickListener {
-                customRaffleVotingViewModel.setupNewVoting(editTextPin.textAsString(), customRaffle)
-            }
+        buttonStartVoting.setOnClickListener {
+            customRaffleVotingViewModel.setupNewVoting(editTextPin.textAsString(), customRaffleModel)
         }
 
         editTextPin.showKeyboard()
     }
 
-    private fun handleOngoingVoting() {
+    private fun handleOngoingVoting(customRaffleModel: CustomRaffleModel) {
         textViewOngoingVotingDescription.visible()
         layoutDivider.visible()
         textViewStartVotingPinInstructions.setText(R.string.custom_raffle_voting_pin_instructions_existing)
-        buttonResetVoting.visible()
+
         buttonStartVoting.setText(R.string.custom_raffle_voting_continue_voting)
-
-        buttonResetVoting.setOnClickListener {
-            withCustomRaffle { customRaffle ->
-                customRaffleVotingViewModel.setupNewVoting(editTextPin.textAsString(), customRaffle)
-            }
-        }
-
         buttonStartVoting.setOnClickListener {
             customRaffleVotingViewModel.resumeVoting(editTextPin.textAsString())
+        }
+
+        buttonResetVoting.visible()
+        buttonResetVoting.setOnClickListener {
+            customRaffleVotingViewModel.setupNewVoting(editTextPin.textAsString(), customRaffleModel)
         }
     }
 
     private fun handleReadyToVote() {
-        layoutRoot.findNavController().navigate(R.id.action_fragmentCustomRaffleVotingStart_to_fragmentCustomRaffleVotingMenu)
+        findNavController().navigate(
+            R.id.action_fragmentCustomRaffleVotingStart_to_fragmentCustomRaffleVotingMenu
+        )
     }
 
     private fun handlePinError(message: String) {
@@ -96,9 +88,5 @@ class CustomRaffleVotingStartFragment @Inject constructor() : BaseFragment() {
             inputLayoutPin.clearError()
             editTextPin.isError = false
         }
-    }
-
-    private fun withCustomRaffle(body: (CustomRaffleModel) -> Unit) {
-        customRaffleDetailsViewModel.customRaffle.value?.let(body)
     }
 }

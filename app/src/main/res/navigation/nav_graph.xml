@@ -15,7 +15,7 @@
             android:id="@+id/action_fragmentQuickDecision_to_fragmentQuickDecisionResult"
             app:destination="@id/fragmentQuickDecisionResult"
             app:exitAnim="@anim/fade_out"
-            app:popExitAnim="@anim/slide_down" />
+            app:popExitAnim="@anim/fade_out" />
         <action
             android:id="@+id/action_fragmentQuickDecision_to_fragmentCreateCustomRaffle"
             app:destination="@id/fragmentCreateCustomRaffle" />
@@ -77,28 +77,28 @@
             app:enterAnim="@anim/slide_up"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slide_down"  />
+            app:popExitAnim="@anim/slide_down" />
         <action
             android:id="@+id/action_fragmentCustomRaffleDetails_to_fragmentCustomRaffleRandomWinners"
             app:destination="@id/fragmentCustomRaffleRandomWinners"
             app:enterAnim="@anim/slide_up"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slide_down"  />
+            app:popExitAnim="@anim/slide_down" />
         <action
             android:id="@+id/action_fragmentCustomRaffleDetails_to_fragmentCustomRaffleGrouping"
             app:destination="@id/fragmentCustomRaffleGrouping"
             app:enterAnim="@anim/slide_up"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slide_down"  />
+            app:popExitAnim="@anim/slide_down" />
         <action
             android:id="@+id/action_fragmentCustomRaffleDetails_to_fragmentCustomRaffleCombination"
             app:destination="@id/fragmentCustomRaffleCombination"
             app:enterAnim="@anim/slide_up"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slide_down"  />
+            app:popExitAnim="@anim/slide_down" />
         <action
             android:id="@+id/action_fragmentCustomRaffleDetails_to_fragmentCustomRaffleVotingStart"
             app:destination="@id/fragmentCustomRaffleVotingStart"

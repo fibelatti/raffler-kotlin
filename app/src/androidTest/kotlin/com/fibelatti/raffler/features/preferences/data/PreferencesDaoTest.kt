@@ -1,8 +1,8 @@
 package com.fibelatti.raffler.features.preferences.data
 
 import androidx.test.runner.AndroidJUnit4
-import com.fibelatti.raffler.core.extension.shouldBe
-import com.fibelatti.raffler.core.extension.shouldBeEmpty
+import com.fibelatti.core.test.extension.shouldBe
+import com.fibelatti.core.test.extension.shouldBeEmpty
 import com.fibelatti.raffler.core.persistence.database.BaseDbTest
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -59,6 +59,16 @@ class PreferencesDaoTest : BaseDbTest() {
     }
 
     private fun setupInitialData() {
-        preferencesDao.setPreferences(PreferencesDto())
+        preferencesDao.setPreferences(
+            PreferencesDto(
+                id = 0,
+                lotteryDefaultQuantityAvailable = 0,
+                lotteryDefaultQuantityToRaffle = 0,
+                preferredRaffleMode = "",
+                rouletteMusicEnabled = false,
+                rememberRaffledItems = false,
+                hintsDisplayed = mutableMapOf()
+            )
+        )
     }
 }

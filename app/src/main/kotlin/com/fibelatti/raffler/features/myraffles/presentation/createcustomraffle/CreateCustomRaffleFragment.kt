@@ -1,32 +1,29 @@
 package com.fibelatti.raffler.features.myraffles.presentation.createcustomraffle
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.fibelatti.core.android.BundleDelegate
+import com.fibelatti.core.archcomponents.extension.observe
+import com.fibelatti.core.archcomponents.extension.observeEvent
 import com.fibelatti.core.archcomponents.extension.viewModel
+import com.fibelatti.core.extension.addTextChangedListener
+import com.fibelatti.core.extension.clearError
+import com.fibelatti.core.extension.clearText
+import com.fibelatti.core.extension.goneIf
+import com.fibelatti.core.extension.hideKeyboard
+import com.fibelatti.core.extension.onKeyboardSubmit
+import com.fibelatti.core.extension.orFalse
+import com.fibelatti.core.extension.showError
+import com.fibelatti.core.extension.textAsString
+import com.fibelatti.core.extension.visible
+import com.fibelatti.core.extension.withItemOffsetDecoration
+import com.fibelatti.core.extension.withLinearLayoutManager
 import com.fibelatti.raffler.R
-import com.fibelatti.raffler.core.extension.addTextChangedListener
 import com.fibelatti.raffler.core.extension.alertDialogBuilder
-import com.fibelatti.raffler.core.extension.clearError
-import com.fibelatti.raffler.core.extension.clearText
-import com.fibelatti.raffler.core.extension.error
-import com.fibelatti.raffler.core.extension.gone
-import com.fibelatti.raffler.core.extension.hideKeyboard
-import com.fibelatti.raffler.core.extension.isKeyboardSubmit
-import com.fibelatti.raffler.core.extension.observe
-import com.fibelatti.raffler.core.extension.observeEvent
-import com.fibelatti.raffler.core.extension.orFalse
-import com.fibelatti.raffler.core.extension.showError
-import com.fibelatti.raffler.core.extension.textAsString
-import com.fibelatti.raffler.core.extension.visible
-import com.fibelatti.raffler.core.extension.withDefaultDecoration
-import com.fibelatti.raffler.core.extension.withLinearLayoutManager
-import com.fibelatti.raffler.core.platform.BundleDelegate
 import com.fibelatti.raffler.core.platform.base.BaseFragment
 import com.fibelatti.raffler.core.platform.recyclerview.RecyclerViewSwipeToDeleteCallback
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModel
@@ -38,9 +35,10 @@ private var Bundle.customRaffleId by BundleDelegate.Long("CUSTOM_RAFFLE_ID")
 
 class CreateCustomRaffleFragment @Inject constructor(
     private val createCustomRaffleAdapter: CreateCustomRaffleAdapter
-) : BaseFragment() {
+) : BaseFragment(R.layout.fragment_create_custom_raffle) {
 
     companion object {
+
         fun bundle(
             addAsShortcut: Boolean = false,
             customRaffleId: Long? = null
@@ -69,30 +67,25 @@ class CreateCustomRaffleFragment @Inject constructor(
 
     private val createCustomRaffleViewModel by viewModel { viewModelProvider.createCustomRaffleViewModel() }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        createCustomRaffleViewModel.run {
-            error(error, ::handleError)
-            observe(showCreateCustomRaffleLayout) { showCustomRaffleNewLayout() }
-            observe(showEditCustomRaffleLayout) { showCustomRaffleEditLayout() }
-            observe(customRaffle, ::showCustomRaffleDetails)
-            observe(addAsQuickDecision) { checkboxAddShortcut.isChecked = it }
-            observeEvent(showHint) { showAddAsQuickDecisionHint() }
-            observe(invalidDescriptionError, ::handleInvalidDescriptionError)
-            observe(invalidItemsQuantityError, ::handleInvalidItemsQuantityError)
-            observe(invalidItemDescriptionError, ::handleInvalidItemDescriptionError)
-            observeEvent(onChangedSaved) { handleChangesSaved() }
-            observeEvent(onDeleted) { handleDeleted() }
-        }
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        inflater.inflate(R.layout.fragment_create_custom_raffle, container, false)
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupLayout()
         setupRecyclerView()
+
+        createCustomRaffleViewModel.run {
+            viewLifecycleOwner.observe(error, ::handleError)
+            viewLifecycleOwner.observe(showCreateCustomRaffleLayout) { showCustomRaffleNewLayout() }
+            viewLifecycleOwner.observe(showEditCustomRaffleLayout, ::showCustomRaffleEditLayout)
+            viewLifecycleOwner.observe(customRaffle, ::showCustomRaffleDetails)
+            viewLifecycleOwner.observe(addAsQuickDecision, checkboxAddShortcut::setChecked)
+            viewLifecycleOwner.observeEvent(showHint) { showAddAsQuickDecisionHint() }
+            viewLifecycleOwner.observe(invalidDescriptionError, ::handleInvalidDescriptionError)
+            viewLifecycleOwner.observe(invalidItemsQuantityError, ::handleInvalidItemsQuantityError)
+            viewLifecycleOwner.observe(invalidItemDescriptionError, ::handleInvalidItemDescriptionError)
+            viewLifecycleOwner.observeEvent(onChangedSaved) { handleChangesSaved() }
+            viewLifecycleOwner.observeEvent(onDeleted) { handleDeleted() }
+        }
+
         createCustomRaffleViewModel.getCustomRaffleById(arguments?.customRaffleId, arguments?.addAsShortcut)
     }
 
@@ -111,29 +104,28 @@ class CreateCustomRaffleFragment @Inject constructor(
     }
 
     private fun setupLayout() {
-        layoutTitle.setNavigateUp { layoutRoot.findNavController().navigateUp() }
+        layoutTitle.setNavigateUp { findNavController().navigateUp() }
 
         buttonSave.setOnClickListener {
-            if (editTextCustomRaffleItemDescription.textAsString().isNotBlank()) addItem()
+            if (editTextCustomRaffleItemDescription.textAsString().isNotBlank()) {
+                addItem()
+            }
             createCustomRaffleViewModel.save(checkboxAddShortcut.isChecked)
         }
 
-        editTextCustomRaffleDescription.addTextChangedListener(afterTextChanged = createCustomRaffleViewModel::setDescription)
+        editTextCustomRaffleDescription.addTextChangedListener(
+            afterTextChanged = createCustomRaffleViewModel::setDescription
+        )
 
         editTextCustomRaffleItemDescription.apply {
-            setOnFocusChangeListener { _, hasFocus -> if (hasFocus) groupCollapsibleViews.gone() }
+            setOnFocusChangeListener { _, hasFocus -> groupCollapsibleViews.goneIf(hasFocus) }
             onBackPressed = {
                 clearFocus()
                 hideKeyboard()
                 groupCollapsibleViews.visible()
             }
-            setOnEditorActionListener { _, actionId, event ->
-                return@setOnEditorActionListener if (isKeyboardSubmit(actionId, event)) {
-                    addItem()
-                    true
-                } else {
-                    false
-                }
+            onKeyboardSubmit {
+                addItem()
             }
         }
 
@@ -150,8 +142,9 @@ class CreateCustomRaffleFragment @Inject constructor(
     }
 
     private fun setupRecyclerView() {
-        recyclerViewItems.withDefaultDecoration()
+        recyclerViewItems
             .withLinearLayoutManager()
+            .withItemOffsetDecoration(R.dimen.margin_small)
             .adapter = createCustomRaffleAdapter
 
         val swipeHandler = object : RecyclerViewSwipeToDeleteCallback(requireContext()) {
@@ -168,16 +161,14 @@ class CreateCustomRaffleFragment @Inject constructor(
         checkboxAddShortcut.isChecked = arguments?.addAsShortcut.orFalse()
     }
 
-    private fun showCustomRaffleEditLayout() {
-        createCustomRaffleViewModel.customRaffle.value?.let {
-            layoutTitle.setTitle(getString(R.string.custom_raffle_edit_title, it.description))
-            editTextCustomRaffleDescription.setText(it.description)
-            buttonDelete.visible()
-        }
+    private fun showCustomRaffleEditLayout(customRaffleModel: CustomRaffleModel) {
+        layoutTitle.setTitle(getString(R.string.custom_raffle_edit_title, customRaffleModel.description))
+        editTextCustomRaffleDescription.setText(customRaffleModel.description)
+        buttonDelete.visible()
     }
 
     private fun showCustomRaffleDetails(customRaffleModel: CustomRaffleModel) {
-        createCustomRaffleAdapter.setItems(customRaffleModel.items)
+        createCustomRaffleAdapter.submitList(customRaffleModel.items)
     }
 
     private fun addItem() {
@@ -221,11 +212,11 @@ class CreateCustomRaffleFragment @Inject constructor(
     }
 
     private fun handleChangesSaved() {
-        layoutRoot.findNavController().navigateUp()
+        findNavController().navigateUp()
     }
 
     private fun handleDeleted() {
-        layoutRoot.findNavController().navigate(
+        findNavController().navigate(
             R.id.fragmentMyRaffles,
             null,
             navOptions { popUpTo = R.id.fragmentQuickDecision }

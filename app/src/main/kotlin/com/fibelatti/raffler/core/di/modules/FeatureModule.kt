@@ -1,10 +1,7 @@
 package com.fibelatti.raffler.core.di.modules
 
-import android.content.Context
-import android.content.SharedPreferences
 import androidx.fragment.app.Fragment
 import com.fibelatti.raffler.core.di.mapkeys.FragmentKey
-import com.fibelatti.raffler.core.extension.getUserPreferences
 import com.fibelatti.raffler.features.lottery.presentation.LotteryFragment
 import com.fibelatti.raffler.features.myraffles.CustomRaffleRepository
 import com.fibelatti.raffler.features.myraffles.data.CustomRaffleDataSource
@@ -32,17 +29,10 @@ import com.fibelatti.raffler.features.quickdecision.presentation.QuickDecisionRe
 import com.fibelatti.raffler.features.quickdecision.presentation.addnew.AddNewQuickDecisionFragment
 import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.multibindings.IntoMap
 
 @Module
 abstract class FeatureModule {
-
-    companion object {
-
-        @Provides
-        fun Context.userSharedPreferences(): SharedPreferences = getUserPreferences()
-    }
 
     @Binds
     abstract fun PreferencesDataSource.preferencesRepository(): PreferencesRepository

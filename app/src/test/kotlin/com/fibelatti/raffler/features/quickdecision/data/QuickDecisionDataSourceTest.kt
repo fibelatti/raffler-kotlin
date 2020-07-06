@@ -1,19 +1,19 @@
 package com.fibelatti.raffler.features.quickdecision.data
 
+import com.fibelatti.core.functional.Failure
+import com.fibelatti.core.functional.Success
+import com.fibelatti.core.functional.exceptionOrNull
+import com.fibelatti.core.functional.getOrNull
+import com.fibelatti.core.test.extension.givenSuspend
+import com.fibelatti.core.test.extension.mock
+import com.fibelatti.core.test.extension.shouldBe
+import com.fibelatti.core.test.extension.shouldBeAnInstanceOf
 import com.fibelatti.raffler.BaseTest
 import com.fibelatti.raffler.MockDataProvider
-import com.fibelatti.raffler.core.extension.callSuspend
-import com.fibelatti.raffler.core.extension.givenSuspend
-import com.fibelatti.raffler.core.extension.mock
-import com.fibelatti.raffler.core.extension.shouldBe
-import com.fibelatti.raffler.core.extension.shouldBeAnInstanceOf
-import com.fibelatti.raffler.core.functional.Failure
-import com.fibelatti.raffler.core.functional.Success
-import com.fibelatti.raffler.core.functional.exceptionOrNull
-import com.fibelatti.raffler.core.functional.getOrNull
 import com.fibelatti.raffler.core.provider.ResourceProvider
 import com.fibelatti.raffler.features.quickdecision.QuickDecision
 import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.ArgumentMatchers.anyInt
@@ -30,15 +30,11 @@ class QuickDecisionDataSourceTest : BaseTest() {
     private val mockQuickDecisionDtoList = listOf(mockQuickDecisionDto)
     private val mockQuickDecisionList = listOf(mockQuickDecision)
 
-    private val mockError = mock<Throwable>()
-
-    private val quickDecisionDataSource by lazy {
-        QuickDecisionDataSource(
-            mockQuickDecisionDao,
-            mockResourceProvider,
-            mockQuickDecisionDtoMapper
-        )
-    }
+    private val quickDecisionDataSource = QuickDecisionDataSource(
+        mockQuickDecisionDao,
+        mockResourceProvider,
+        mockQuickDecisionDtoMapper
+    )
 
     @BeforeEach
     fun setup() {
@@ -61,7 +57,7 @@ class QuickDecisionDataSourceTest : BaseTest() {
             .willReturn(mockQuickDecisionDtoList)
 
         // WHEN
-        val result = callSuspend { quickDecisionDataSource.getAllQuickDecisions() }
+        val result = runBlocking { quickDecisionDataSource.getAllQuickDecisions() }
 
         // THEN
         result.shouldBeAnInstanceOf<Success<*>>()
@@ -79,32 +75,11 @@ class QuickDecisionDataSourceTest : BaseTest() {
             .willReturn(null)
 
         // WHEN
-        val result = callSuspend { quickDecisionDataSource.getAllQuickDecisions() }
+        val result = runBlocking { quickDecisionDataSource.getAllQuickDecisions() }
 
         // THEN
         result.shouldBeAnInstanceOf<Failure>()
         result.exceptionOrNull()?.shouldBeAnInstanceOf<RuntimeException>()
-    }
-
-    @Test
-    fun `WHEN quickDecisionDao getAllQuickDecisions returns empty AND getJsonFromAssets is returns a list AND addQuickDecisions fails THEN Failure is returned`() {
-        // GIVEN
-        val typeToken = object : TypeToken<List<QuickDecisionDto>>() {}
-
-        givenSuspend { mockQuickDecisionDao.getAllQuickDecisions() }
-            .willReturn(emptyList())
-        given(mockResourceProvider.getJsonFromAssets("quick-decisions.json", typeToken))
-            .willReturn(mockQuickDecisionDtoList)
-
-        givenSuspend { mockQuickDecisionDao.addQuickDecisions(mockQuickDecisionDtoList) }
-            .willAnswer { throw mockError }
-
-        // WHEN
-        val result = callSuspend { quickDecisionDataSource.getAllQuickDecisions() }
-
-        // THEN
-        result.shouldBeAnInstanceOf<Failure>()
-        result.exceptionOrNull() shouldBe mockError
     }
 
     @Test
@@ -118,7 +93,7 @@ class QuickDecisionDataSourceTest : BaseTest() {
             .willReturn(mockQuickDecisionDtoList)
 
         // WHEN
-        val result = callSuspend { quickDecisionDataSource.getAllQuickDecisions() }
+        val result = runBlocking { quickDecisionDataSource.getAllQuickDecisions() }
 
         // THEN
         result.shouldBeAnInstanceOf<Success<*>>()
@@ -126,23 +101,9 @@ class QuickDecisionDataSourceTest : BaseTest() {
     }
 
     @Test
-    fun `WHEN addQuickDecisions is called AND quickDecisionDao throws an error THEN Failure is returned`() {
-        // GIVEN
-        givenSuspend { mockQuickDecisionDao.addQuickDecisions(mockQuickDecisionDtoList) }
-            .willAnswer { throw mockError }
-
-        // WHEN
-        val result = callSuspend { quickDecisionDataSource.addQuickDecisions(mockQuickDecision) }
-
-        // THEN
-        result.shouldBeAnInstanceOf<Failure>()
-        result.exceptionOrNull() shouldBe mockError
-    }
-
-    @Test
     fun `WHEN addQuickDecisions is called THEN Success is returned`() {
         // WHEN
-        val result = callSuspend { quickDecisionDataSource.addQuickDecisions(mockQuickDecision) }
+        val result = runBlocking { quickDecisionDataSource.addQuickDecisions(mockQuickDecision) }
 
         // THEN
         result.shouldBeAnInstanceOf<Success<*>>()

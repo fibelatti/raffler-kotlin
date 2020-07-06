@@ -2,12 +2,9 @@ package com.fibelatti.raffler.core.di.modules
 
 import android.app.Application
 import android.content.Context
-import androidx.fragment.app.FragmentFactory
-import com.fibelatti.core.android.MultiBindingFragmentFactory
-import com.fibelatti.raffler.core.platform.AppResourceProvider
-import com.fibelatti.raffler.core.provider.CoroutineLauncher
-import com.fibelatti.raffler.core.provider.CoroutineLauncherDelegate
-import com.fibelatti.raffler.core.provider.ResourceProvider
+import android.content.SharedPreferences
+import com.fibelatti.raffler.core.di.AppContext
+import com.fibelatti.raffler.core.extension.getUserPreferences
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Binds
@@ -29,17 +26,12 @@ abstract class CoreModule {
 
         @Provides
         fun collatorUs(): Collator = Collator.getInstance(Locale.US)
+
+        @Provides
+        fun userSharedPreferences(@AppContext context: Context): SharedPreferences = context.getUserPreferences()
     }
 
+    @AppContext
     @Binds
     abstract fun bindContext(app: Application): Context
-
-    @Binds
-    abstract fun AppResourceProvider.resourceProvider(): ResourceProvider
-
-    @Binds
-    abstract fun bindCoroutineLauncher(coroutineLauncherDelegate: CoroutineLauncherDelegate): CoroutineLauncher
-
-    @Binds
-    abstract fun MultiBindingFragmentFactory.fragmentFactory(): FragmentFactory
 }

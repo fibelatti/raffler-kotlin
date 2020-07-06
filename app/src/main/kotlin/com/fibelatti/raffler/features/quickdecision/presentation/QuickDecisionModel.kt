@@ -1,8 +1,9 @@
 package com.fibelatti.raffler.features.quickdecision.presentation
 
-import com.fibelatti.raffler.core.functional.Mapper
+import com.fibelatti.core.android.base.BaseViewType
+import com.fibelatti.core.functional.TwoWayMapper
 import com.fibelatti.raffler.core.platform.AppConfig
-import com.fibelatti.raffler.core.platform.base.BaseViewType
+import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleItemModel
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModel
 import com.fibelatti.raffler.features.quickdecision.QuickDecision
 import javax.inject.Inject
@@ -13,6 +14,7 @@ data class QuickDecisionModel(
     val description: String,
     val values: List<String>
 ) : BaseViewType {
+
     companion object {
         @JvmStatic
         val VIEW_TYPE = QuickDecisionModel::class.hashCode()
@@ -21,7 +23,7 @@ data class QuickDecisionModel(
     override fun getViewType(): Int = VIEW_TYPE
 }
 
-class QuickDecisionModelMapper @Inject constructor() : Mapper<QuickDecision, QuickDecisionModel> {
+class QuickDecisionModelMapper @Inject constructor() : TwoWayMapper<QuickDecision, QuickDecisionModel> {
     override fun map(param: QuickDecision): QuickDecisionModel = with(param) {
         QuickDecisionModel(id, locale, description, values)
     }
@@ -35,7 +37,7 @@ class QuickDecisionModelMapper @Inject constructor() : Mapper<QuickDecision, Qui
             id = id.toString(),
             locale = AppConfig.LOCALE_NONE,
             description = description,
-            values = items.map { it.description }
+            values = items.map(CustomRaffleItemModel::description)
         )
     }
 }

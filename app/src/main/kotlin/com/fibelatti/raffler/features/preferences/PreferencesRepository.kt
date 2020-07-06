@@ -1,9 +1,10 @@
 package com.fibelatti.raffler.features.preferences
 
-import com.fibelatti.raffler.core.functional.Result
+import com.fibelatti.core.functional.Result
 import com.fibelatti.raffler.core.platform.AppConfig
 
 interface PreferencesRepository {
+
     suspend fun getPreferences(): Result<Preferences>
 
     suspend fun setAppTheme(appTheme: AppConfig.AppTheme)

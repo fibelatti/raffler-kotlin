@@ -1,8 +1,8 @@
 package com.fibelatti.raffler.features.myraffles.presentation.customraffledetails
 
 import android.view.View
+import com.fibelatti.core.android.base.BaseAdapter
 import com.fibelatti.raffler.R
-import com.fibelatti.raffler.core.platform.base.BaseAdapter
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleItemModel
 import kotlinx.android.synthetic.main.list_item_custom_raffle_item.view.*
 import javax.inject.Inject

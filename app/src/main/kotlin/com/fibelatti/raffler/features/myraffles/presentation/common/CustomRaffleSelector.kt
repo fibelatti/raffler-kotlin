@@ -1,13 +1,14 @@
 package com.fibelatti.raffler.features.myraffles.presentation.common
 
 import android.content.Context
+import com.fibelatti.core.extension.withItemOffsetDecoration
+import com.fibelatti.core.extension.withLinearLayoutManager
 import com.fibelatti.raffler.R
-import com.fibelatti.raffler.core.extension.withDefaultDecoration
-import com.fibelatti.raffler.core.extension.withLinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.fragment_add_custom_raffle_as_quick_decision.*
 
 interface CustomRaffleSelector {
+
     fun showCustomRaffleSelector(
         context: Context,
         title: String,
@@ -17,6 +18,7 @@ interface CustomRaffleSelector {
 }
 
 class CustomRaffleSelectorDelegate : CustomRaffleSelector {
+
     override fun showCustomRaffleSelector(
         context: Context,
         title: String,
@@ -34,11 +36,12 @@ class CustomRaffleSelectorDelegate : CustomRaffleSelector {
                     dismiss()
                 }
 
-                setItems(customRaffles)
+                submitList(customRaffles)
             }
 
-            recyclerViewItems?.withDefaultDecoration()
+            recyclerViewItems
                 ?.withLinearLayoutManager()
+                ?.withItemOffsetDecoration(R.dimen.margin_small)
                 ?.adapter = adapter
 
             show()

@@ -1,19 +1,19 @@
 package com.fibelatti.raffler.features.preferences.data
 
+import com.fibelatti.core.functional.Failure
+import com.fibelatti.core.functional.Result
+import com.fibelatti.core.functional.Success
+import com.fibelatti.core.functional.getOrNull
+import com.fibelatti.core.test.extension.mock
+import com.fibelatti.core.test.extension.safeAny
+import com.fibelatti.core.test.extension.shouldBe
+import com.fibelatti.core.test.extension.shouldBeAnInstanceOf
 import com.fibelatti.raffler.BaseTest
-import com.fibelatti.raffler.core.extension.callSuspend
-import com.fibelatti.raffler.core.extension.mock
-import com.fibelatti.raffler.core.extension.safeAny
-import com.fibelatti.raffler.core.extension.shouldBe
-import com.fibelatti.raffler.core.extension.shouldBeAnInstanceOf
-import com.fibelatti.raffler.core.functional.Failure
-import com.fibelatti.raffler.core.functional.Result
-import com.fibelatti.raffler.core.functional.Success
-import com.fibelatti.raffler.core.functional.getOrNull
 import com.fibelatti.raffler.core.persistence.CurrentInstallSharedPreferences
 import com.fibelatti.raffler.core.persistence.database.AppDatabase
 import com.fibelatti.raffler.core.platform.AppConfig
 import com.fibelatti.raffler.features.preferences.Preferences
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.mockito.BDDMockito.given
@@ -37,7 +37,15 @@ class PreferencesDataSourceTest : BaseTest() {
         mockPreferencesDtoMapper
     )
 
-    private val originalPreferences = PreferencesDto()
+    private val originalPreferences = PreferencesDto(
+        id = 0,
+        lotteryDefaultQuantityAvailable = 0,
+        lotteryDefaultQuantityToRaffle = 0,
+        preferredRaffleMode = "",
+        rouletteMusicEnabled = false,
+        rememberRaffledItems = false,
+        hintsDisplayed = mutableMapOf()
+    )
 
     @Nested
     inner class GetPreferences {
@@ -48,7 +56,7 @@ class PreferencesDataSourceTest : BaseTest() {
                 .willReturn(emptyList())
 
             // WHEN
-            val result = callSuspend { preferencesDataSource.getPreferences() }
+            val result = runBlocking { preferencesDataSource.getPreferences() }
 
             // THEN
             result.shouldBeAnInstanceOf<Failure>()
@@ -90,7 +98,7 @@ class PreferencesDataSourceTest : BaseTest() {
                 .willReturn(AppConfig.AppLanguage.PORTUGUESE)
 
             // WHEN
-            val result = callSuspend { preferencesDataSource.getPreferences() }
+            val result = runBlocking { preferencesDataSource.getPreferences() }
 
             // THEN
             result.shouldBeAnInstanceOf<Success<*>>()
@@ -103,7 +111,7 @@ class PreferencesDataSourceTest : BaseTest() {
         @Test
         fun `WHEN setAppTheme THEN CurrentInstallSharedPreferences setAppTheme is called`() {
             // WHEN
-            callSuspend { preferencesDataSource.setAppTheme(AppConfig.AppTheme.DARK) }
+            runBlocking { preferencesDataSource.setAppTheme(AppConfig.AppTheme.DARK) }
 
             // THEN
             verify(mockCurrentInstallSharedPreferences).setAppTheme(AppConfig.AppTheme.DARK)
@@ -115,7 +123,7 @@ class PreferencesDataSourceTest : BaseTest() {
         @Test
         fun `WHEN setLanguage THEN CurrentInstallSharedPreferences setAppLanguage is called`() {
             // WHEN
-            callSuspend { preferencesDataSource.setLanguage(AppConfig.AppLanguage.SPANISH) }
+            runBlocking { preferencesDataSource.setLanguage(AppConfig.AppLanguage.SPANISH) }
 
             // THEN
             verify(mockCurrentInstallSharedPreferences).setAppLanguage(AppConfig.AppLanguage.SPANISH)
@@ -388,7 +396,7 @@ class PreferencesDataSourceTest : BaseTest() {
             .willReturn(repositoryResponse)
 
         // WHEN
-        val result = callSuspend { methodCall() }
+        val result = runBlocking { methodCall() }
 
         // THEN
         result shouldBe expectedResult
@@ -400,7 +408,7 @@ class PreferencesDataSourceTest : BaseTest() {
             .willReturn(emptyList())
 
         // WHEN
-        val result = callSuspend { methodCall() }
+        val result = runBlocking { methodCall() }
 
         // THEN
         result.shouldBeAnInstanceOf<Failure>()
@@ -416,7 +424,7 @@ class PreferencesDataSourceTest : BaseTest() {
             .willReturn(listOf(originalPreferences))
 
         // WHEN
-        val result = callSuspend { methodCall() }
+        val result = runBlocking { methodCall() }
 
         // THEN
         result.shouldBeAnInstanceOf<Success<*>>()

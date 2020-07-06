@@ -3,23 +3,30 @@ package com.fibelatti.raffler.core.platform.base
 import android.content.Context
 import android.os.Bundle
 import androidx.annotation.CallSuper
+import androidx.annotation.ContentView
+import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.fibelatti.core.extension.toast
 import com.fibelatti.raffler.BuildConfig
 import com.fibelatti.raffler.R
+import com.fibelatti.raffler.core.di.ActivityComponent
 import com.fibelatti.raffler.core.di.AppComponent
 import com.fibelatti.raffler.core.di.AppComponentProvider
 import com.fibelatti.raffler.core.di.ViewModelProvider
 import com.fibelatti.raffler.core.extension.getUpdateContextForLocale
 import com.fibelatti.raffler.core.platform.AppConfig
 
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity @ContentView constructor(
+    @LayoutRes contentLayoutId: Int
+) : AppCompatActivity(contentLayoutId) {
 
-    val appComponent: AppComponent
+    private val appComponent: AppComponent
         get() = (application as AppComponentProvider).appComponent
+    val activityComponent: ActivityComponent
+        get() = appComponent.activityComponentFactory().create(this)
     val viewModelProvider: ViewModelProvider
-        get() = appComponent
+        get() = activityComponent
 
     override fun attachBaseContext(newBase: Context?) {
         super.attachBaseContext(newBase?.getUpdateContextForLocale())

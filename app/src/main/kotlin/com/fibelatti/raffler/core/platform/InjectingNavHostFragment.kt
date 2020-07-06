@@ -7,7 +7,7 @@ import com.fibelatti.raffler.core.platform.base.BaseActivity
 class InjectingNavHostFragment : NavHostFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        childFragmentManager.fragmentFactory = (requireActivity() as BaseActivity).appComponent
+        childFragmentManager.fragmentFactory = (requireActivity() as BaseActivity).activityComponent
             .fragmentFactory()
         super.onCreate(savedInstanceState)
     }

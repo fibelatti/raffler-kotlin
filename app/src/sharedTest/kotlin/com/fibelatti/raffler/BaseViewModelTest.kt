@@ -3,8 +3,10 @@ package com.fibelatti.raffler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.setMain
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.extension.ExtendWith
 
-abstract class BaseTest {
+@ExtendWith(InstantExecutorExtension::class)
+abstract class BaseViewModelTest {
 
     @BeforeEach
     fun baseSetup() {

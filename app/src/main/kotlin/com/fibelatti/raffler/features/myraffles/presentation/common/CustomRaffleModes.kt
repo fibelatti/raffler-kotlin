@@ -4,13 +4,14 @@ import android.content.Context
 import android.view.View
 import android.widget.Button
 import android.widget.FrameLayout
+import com.fibelatti.core.extension.visibleIf
 import com.fibelatti.raffler.R
-import com.fibelatti.raffler.core.extension.visibleIf
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.fragment_custom_raffle_modes.*
 
 interface CustomRaffleModes {
+
     fun showRaffleModes(
         context: Context,
         rouletteClickListener: (() -> Unit)? = null,
@@ -22,6 +23,7 @@ interface CustomRaffleModes {
 }
 
 class CustomRaffleModesDelegate : CustomRaffleModes {
+
     override fun showRaffleModes(
         context: Context,
         rouletteClickListener: (() -> Unit)?,
@@ -60,7 +62,7 @@ class CustomRaffleModesDelegate : CustomRaffleModes {
         }
 
         layoutView?.apply {
-            visibleIf(clickListener != null)
+            visibleIf(clickListener != null, otherwiseVisibility = View.GONE)
             setOnClickListener { onClick() }
         }
         button?.setOnClickListener { onClick() }

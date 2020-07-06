@@ -3,6 +3,7 @@ package com.fibelatti.raffler.core.platform;
 import android.content.Context;
 import android.util.Log;
 
+import com.fibelatti.raffler.core.di.ActivityContext;
 import com.fibelatti.raffler.core.provider.ResourceProvider;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -27,7 +28,10 @@ public class AppResourceProvider implements ResourceProvider {
     private Gson gson;
 
     @Inject
-    public AppResourceProvider(@NotNull Context context, @NotNull Gson gson) {
+    public AppResourceProvider(
+        @ActivityContext @NotNull Context context,
+        @NotNull Gson gson) {
+
         this.context = context;
         this.gson = gson;
     }

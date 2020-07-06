@@ -29,7 +29,7 @@ android {
 
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [
+                arguments += [
                     "room.schemaLocation":"$projectDir/schemas".toString(),
                     "room.incremental":"true"
                 ]
@@ -64,23 +64,15 @@ android {
     }
 
     sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
-        debug.java.srcDirs += 'src/debug/kotlin'
+        main.java.srcDirs("src/main/kotlin")
+        debug.java.srcDirs("src/debug/kotlin")
 
-        String sharedTestDir = 'src/sharedTest/kotlin'
-        String sharedTestResDir = 'src/sharedTest/resources'
+        String sharedTestDir = "src/sharedTest/kotlin"
+        String sharedTestResDir = "src/sharedTest/resources"
 
-        test {
-            java.srcDir sharedTestDir
-            java.srcDirs += sharedTestResDir
-            java.srcDirs += 'src/test/kotlin'
-        }
+        test.java.srcDirs(sharedTestDir, sharedTestResDir, "src/test/kotlin")
 
-        androidTest {
-            java.srcDir sharedTestDir
-            java.srcDirs += sharedTestResDir
-            java.srcDirs += 'src/androidTest/kotlin'
-        }
+        androidTest.java.srcDirs(sharedTestDir, sharedTestResDir, "src/androidTest/kotlin")
     }
 
     compileOptions {

@@ -6,7 +6,6 @@ import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Handler
 import com.fibelatti.raffler.R
-import com.fibelatti.raffler.core.extension.random
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModel
 import javax.inject.Inject
 
@@ -16,6 +15,7 @@ private const val ROULETTE_SPEED_STEPS = 50L
 private const val MEDIA_VOLUME_STEPS = 0.05F
 
 class CustomRaffleRouletteDelegate @Inject constructor() {
+
     private var mediaPlayer: MediaPlayer? = null
     private var mediaVolume = 1F
 
@@ -25,7 +25,7 @@ class CustomRaffleRouletteDelegate @Inject constructor() {
 
     private var currentSpeed = 0L
 
-    private val handler by lazy { Handler() }
+    private val handler = Handler()
 
     var status: RouletteStatus = RouletteStatus.IDLE
         private set
@@ -34,16 +34,20 @@ class CustomRaffleRouletteDelegate @Inject constructor() {
         context: Context,
         rouletteMusicEnabled: Boolean
     ): CustomRaffleRouletteDelegate = apply {
-        if (rouletteMusicEnabled) {
-            this.mediaPlayer = MediaPlayer.create(context, R.raw.easter_egg_soundtrack).apply {
-                setAudioAttributes(AudioAttributes.Builder().setLegacyStreamType(AudioManager.STREAM_MUSIC).build())
-            }
+        if (!rouletteMusicEnabled) {
+            return@apply
+        }
+
+        val audioAttributes = AudioAttributes.Builder().setLegacyStreamType(AudioManager.STREAM_MUSIC).build()
+        this.mediaPlayer = MediaPlayer.create(context, R.raw.easter_egg_soundtrack).apply {
+            setAudioAttributes(audioAttributes)
         }
     }
 
     fun tearDown() {
         handler.removeCallbacksAndMessages(null)
         mediaPlayer?.release()
+        mediaPlayer = null
     }
 
     fun startRoulette(
@@ -78,31 +82,36 @@ class CustomRaffleRouletteDelegate @Inject constructor() {
         updateIndex()
         onRouletteIndexUpdated(optionsIndex[currentIndex])
 
-        handler.postDelayed({
-            when {
-                shouldStop() -> {
-                    handler.removeCallbacksAndMessages(null)
-                    status = RouletteStatus.IDLE
-                    mediaPlayer?.run {
-                        pause()
-                        seekTo(0)
+        handler.postDelayed(
+            {
+                when {
+                    shouldStop() -> {
+                        handler.removeCallbacksAndMessages(null)
+                        status = RouletteStatus.IDLE
+                        mediaPlayer?.run {
+                            pause()
+                            seekTo(0)
+                        }
+                        onRouletteStopped(randomIndex)
                     }
-                    onRouletteStopped(randomIndex)
+                    status == RouletteStatus.STOPPING -> {
+                        mediaVolume -= MEDIA_VOLUME_STEPS
+                        mediaPlayer?.setVolume(mediaVolume, mediaVolume)
+                        animate(onRouletteIndexUpdated, onRouletteStopped)
+                    }
+                    else -> animate(onRouletteIndexUpdated, onRouletteStopped)
                 }
-                status == RouletteStatus.STOPPING -> {
-                    mediaVolume -= MEDIA_VOLUME_STEPS
-                    mediaPlayer?.setVolume(mediaVolume, mediaVolume)
-                    animate(onRouletteIndexUpdated, onRouletteStopped)
-                }
-                else -> animate(onRouletteIndexUpdated, onRouletteStopped)
-            }
-        }, getCurrentSpeed())
+            },
+            getCurrentSpeed()
+        )
     }
 
     private fun updateIndex() {
         currentIndex++
 
-        if (currentIndex >= optionsIndex.size) currentIndex = 0
+        if (currentIndex >= optionsIndex.size) {
+            currentIndex = 0
+        }
     }
 
     private fun getCurrentSpeed(): Long {
@@ -113,15 +122,24 @@ class CustomRaffleRouletteDelegate @Inject constructor() {
         }
     }
 
-    private fun increaseSpeed(): Long =
-        currentSpeed.apply { if (currentSpeed > ROULETTE_SPEED_MAX) currentSpeed -= ROULETTE_SPEED_STEPS }
+    private fun increaseSpeed(): Long = currentSpeed.apply {
+        if (currentSpeed > ROULETTE_SPEED_MAX) {
+            currentSpeed -= ROULETTE_SPEED_STEPS
+        }
+    }
 
-    private fun decreaseSpeed(): Long =
-        currentSpeed.apply { if (currentSpeed < ROULETTE_SPEED_MIN) currentSpeed += ROULETTE_SPEED_STEPS }
+    private fun decreaseSpeed(): Long = currentSpeed.apply {
+        if (currentSpeed < ROULETTE_SPEED_MIN) {
+            currentSpeed += ROULETTE_SPEED_STEPS
+        }
+    }
 
-    private fun shouldStop(): Boolean = optionsIndex[currentIndex] == randomIndex && currentSpeed == ROULETTE_SPEED_MIN
+    private fun shouldStop(): Boolean = optionsIndex[currentIndex] == randomIndex
+        && currentSpeed == ROULETTE_SPEED_MIN
 
     enum class RouletteStatus {
-        IDLE, PLAYING, STOPPING
+        IDLE,
+        PLAYING,
+        STOPPING,
     }
 }
