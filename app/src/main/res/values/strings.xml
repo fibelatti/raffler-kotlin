@@ -16,16 +16,16 @@
     <string name="hint_did_you_know">Did you know?</string>
     <string name="hint_quick_tip">A quick tip</string>
 
-    <string name="alert_confirm_deletion">Confirm deletion?</string>
+    <string name="alert_confirm_deletion">Are you sure you want to delete?</string>
 
     <string name="generic_log_error">Error in %1$s (%2$s)</string>
 
-    <string name="generic_msg_error">Oops! Something went wrong. Please try again.</string>
+    <string name="generic_msg_error">Oops! Something went wrong. Please try again</string>
 
     <!-- Titles -->
     <string name="title_quick_decisions">Decisions</string>
-    <string name="title_lottery">Lottery</string>
-    <string name="title_my_raffles">My Raffles</string>
+    <string name="title_lottery">Lotto</string>
+    <string name="title_my_raffles">Raffles</string>
     <string name="title_preferences">Preferences</string>
     <string name="title_create_custom_raffle">Creating raffle</string>
 
@@ -33,40 +33,40 @@
     <string name="list_item_add_new">Add new</string>
 
     <!-- Quick Decision -->
-    <string name="quick_decision_dismissible_hint">The answer to your questions is now 1 tap away! Here\'s a few shortcuts for simple tasks like flipping a coin or rolling a dice.</string>
+    <string name="quick_decision_dismissible_hint">The answer to your questions is now 1 tap away! Here\'s a few shortcuts for simple tasks such as flipping a coin or rolling a dice</string>
     <string name="quick_decision_result_dismiss">Dismiss</string>
 
     <!-- Quick Decision - Add new -->
-    <string name="quick_decision_add_new_title">Select raffle to add as shortcut</string>
+    <string name="quick_decision_add_new_title">Select a raffle to add as shortcut</string>
 
     <!-- Lottery -->
-    <string name="lottery_dismissible_hint">If you don\'t like thinking of lottery numbers than Raffler can help you out. If you always need the same set-up you can set the default values in preferences.</string>
-    <string name="lottery_quantity_available">Qty. of numbers available</string>
-    <string name="lottery_quantity_to_raffle">Qty. of numbers to raffle</string>
-    <string name="lottery_quantity_validation_error">Please enter a valid quantity.</string>
+    <string name="lottery_dismissible_hint">Raffler can help you out figuring random lotto numbers. If you always need the same setup you can set the default values in the app preferences</string>
+    <string name="lottery_quantity_available">Numbers available</string>
+    <string name="lottery_quantity_to_raffle">Numbers to choose</string>
+    <string name="lottery_quantity_validation_error">Enter a valid quantity</string>
     <string name="lottery_raffle_button">Raffle numbers</string>
 
     <!-- My Raffles -->
     <string name="my_raffles_hint_title">No custom raffles yet</string>
-    <string name="my_raffles_hint_message">With custom raffles you can:\n\n• Choose someone to win a prize or to do a task\n• Create small groups of people\n\nAnd a lot more! Tap the button below to create your first custom raffle.</string>
-    <string name="my_raffles_items_quantity">%d items</string>
+    <string name="my_raffles_hint_message">With custom raffles you can:\n\n• Pick someone to win a prize or to do a task\n• Create small groups of people\n\nAnd a lot more! Tap the button below to create your first custom raffle</string>
+    <string name="my_raffles_items_quantity">%d options</string>
     <string name="my_raffles_create_first_button">Create raffle</string>
     <string name="my_raffles_select_mode_button">Select mode</string>
 
     <!-- Custom Raffle - New or Edit -->
-    <string name="custom_raffle_add_as_quick_decision_dismissible_hint">Having a raffle added as a shortcut can be handy. Since you don\'t have any yet let\'s create your first one and it will be added as a shortcut.</string>
+    <string name="custom_raffle_add_as_quick_decision_dismissible_hint">Having a raffle added as a shortcut can be handy. Since you don\'t have any yet let\'s create your first one and it will be added as a shortcut</string>
     <string name="custom_raffle_description">Description</string>
-    <string name="custom_raffle_add_shortcut">Show as Quick Decision shortcut</string>
-    <string name="custom_raffle_item_description">Item description</string>
+    <string name="custom_raffle_add_shortcut">Add as shortcut</string>
+    <string name="custom_raffle_item_description">Description</string>
     <string name="custom_raffle_edit_title">Editing %s</string>
-    <string name="custom_raffle_create_remove_all_items">Remove all items</string>
-    <string name="custom_raffle_create_invalid_description">Please enter a valid description.</string>
-    <string name="custom_raffle_create_duplicate">An item with the same description was already added.</string>
-    <string name="custom_raffle_create_invalid_items_quantity">A custom raffle should have at least 2 items.</string>
+    <string name="custom_raffle_create_remove_all_items">Remove all options</string>
+    <string name="custom_raffle_create_invalid_description">Enter a valid description</string>
+    <string name="custom_raffle_create_duplicate">An option with the same description was already added</string>
+    <string name="custom_raffle_create_invalid_items_quantity">A custom raffle should have at least 2 options</string>
 
     <!-- Custom Raffle - Details -->
-    <string name="custom_raffle_details_dismissible_hint">Customize raffles with ease. Tapping items will either include or exclude them from the next raffle.</string>
-    <string name="custom_raffle_details_mode_invalid_quantity">Select at least 2 items to raffle.</string>
+    <string name="custom_raffle_details_dismissible_hint">Customize raffles with ease. Tapping each option will either include or exclude it from the next raffle</string>
+    <string name="custom_raffle_details_mode_invalid_quantity">Select at least 2 options to raffle</string>
 
     <string name="custom_raffle_details_include_all">Select all</string>
     <string name="custom_raffle_details_exclude_all">Unselect all</string>
@@ -77,19 +77,19 @@
     <string name="custom_raffle_details_mode_none">None</string>
 
     <string name="custom_raffle_details_mode_roulette">Roulette</string>
-    <string name="custom_raffle_details_mode_roulette_description">Choose a single winner randomly, with a spinning animation and an exciting music for a bit of suspense</string>
+    <string name="custom_raffle_details_mode_roulette_description">Choose a single winner randomly, with a revolving animation and an exciting music for a bit of suspense</string>
 
     <string name="custom_raffle_details_mode_random_winners">Random winners</string>
-    <string name="custom_raffle_details_mode_random_winners_description">Choose how many items to raffle and obtain the result immediately</string>
+    <string name="custom_raffle_details_mode_random_winners_description">Choose how many options to raffle and obtain the result immediately</string>
 
     <string name="custom_raffle_details_mode_grouping">Grouping</string>
-    <string name="custom_raffle_details_mode_grouping_description">Split the raffle into smaller groups, choosing how many groups or many items per group</string>
+    <string name="custom_raffle_details_mode_grouping_description">Split the raffle into smaller groups, choosing how many groups or many options per group</string>
 
     <string name="custom_raffle_details_mode_combination">Combination</string>
-    <string name="custom_raffle_details_mode_combination_description">Create pairs between the items of 2 different raffles, useful to decide prizes or assign tasks</string>
+    <string name="custom_raffle_details_mode_combination_description">Combine 2 different raffles to create groups, useful to decide prizes or assign tasks</string>
 
-    <string name="custom_raffle_details_mode_secret_voting">Secret voting</string>
-    <string name="custom_raffle_details_mode_secret_voting_description">Create a poll a let the majority decide. Hand the phone over for each person to vote and the result will be available at the end.</string>
+    <string name="custom_raffle_details_mode_secret_voting">Ballot</string>
+    <string name="custom_raffle_details_mode_secret_voting_description">Create a ballot a let the majority decide. Hand the phone over for each person to vote and check the result at the end</string>
 
     <!-- Custom Raffle - Roulette -->
     <string name="custom_raffle_roulette_hint_play">Play</string>
@@ -102,14 +102,14 @@
 
     <!-- Custom Raffle - Random Winners -->
     <string name="custom_raffle_random_winners_hint">Quantity of winners</string>
-    <string name="custom_raffle_random_winners_invalid_quantity_too_few">Should be at least 1.</string>
-    <string name="custom_raffle_random_winners_invalid_quantity_too_many">Should be at most %d.</string>
+    <string name="custom_raffle_random_winners_invalid_quantity_too_few">Should be at least 1</string>
+    <string name="custom_raffle_random_winners_invalid_quantity_too_many">Should be at most %d</string>
     <string name="custom_raffle_random_winners_item_title">#%d Winner</string>
 
     <!-- Custom Raffle - Grouping -->
     <string name="custom_raffle_grouping_quantity_hint">Quantity</string>
     <string name="custom_raffle_grouping_quantity_of_groups">Groups</string>
-    <string name="custom_raffle_grouping_quantity_of_items_per_group">Items per group</string>
+    <string name="custom_raffle_grouping_quantity_of_items_per_group">Options per group</string>
     <string name="custom_raffle_grouping_item_title">Group #%d</string>
 
     <!-- Custom Raffle - Combination -->
@@ -123,27 +123,27 @@
 
     <!-- Custom Raffle - Voting -->
     <string name="custom_raffle_voting_title">Voting for %s</string>
-    <string name="custom_raffle_voting_start_voting">Start voting</string>
+    <string name="custom_raffle_voting_start_voting">Begin voting</string>
     <string name="custom_raffle_voting_new_voting">New voting</string>
     <string name="custom_raffle_voting_continue_voting">Continue voting</string>
-    <string name="custom_raffle_voting_ongoing_voting">There\'s an ongoing voting for this raffle. You can either resume it or start a new voting, but all existing votes will be lost.</string>
-    <string name="custom_raffle_voting_pin_instructions_new">Create a 4 digit pin so only you can end the voting before sharing the results:</string>
-    <string name="custom_raffle_voting_pin_instructions_existing">Enter the same 4 digit pin you used when you crated this voting:</string>
+    <string name="custom_raffle_voting_ongoing_voting">There\'s an ongoing ballot for this raffle. You can either resume it or start a new one, but all existing votes will be lost</string>
+    <string name="custom_raffle_voting_pin_instructions_new">Create a 4 digit pin so that only you can end the ballot before sharing the results:</string>
+    <string name="custom_raffle_voting_pin_instructions_existing">Enter the same 4 digit pin you used when you crated this ballot:</string>
 
-    <string name="custom_raffle_voting_pin_invalid">Please enter a 4 digit pin.</string>
-    <string name="custom_raffle_voting_pin_incorrect">Incorrect pin. Please try again.</string>
+    <string name="custom_raffle_voting_pin_invalid">Enter a 4 digit pin</string>
+    <string name="custom_raffle_voting_pin_incorrect">Incorrect pin. Try again</string>
 
     <string name="custom_raffle_voting_new_vote_description">If you are the next to vote tap the button below</string>
     <string name="custom_raffle_voting_new_vote">See options</string>
 
-    <string name="custom_raffle_voting_confirm_vote">Confirm your vote in %s?</string>
+    <string name="custom_raffle_voting_confirm_vote">Do you confirm your vote in %s?</string>
 
     <string name="custom_raffle_voting_votes">{0,choice,0#No votes|1#1 vote|1&lt;{0} votes}</string>
 
-    <string name="custom_raffle_voting_see_results_description">When the voting is finished tap the button below to see the results. Once the results are displayed nobody will be able to vote anymore.</string>
-    <string name="custom_raffle_voting_see_results">See results</string>
+    <string name="custom_raffle_voting_see_results_description">Once the ballot is finished tap the button below to see the results. After the results are displayed no more votes can be added</string>
+    <string name="custom_raffle_voting_see_results">See the results</string>
 
-    <string name="custom_raffle_voting_results_title">Results for %s voting</string>
+    <string name="custom_raffle_voting_results_title">Ballot results - %s</string>
     <string name="custom_raffle_voting_results_first_place">First place</string>
     <string name="custom_raffle_voting_results_second_place">Second place</string>
     <string name="custom_raffle_voting_results_third_place">Third place</string>
@@ -152,15 +152,15 @@
 
     <string name="custom_raffle_voting_results_item_votes">{0,choice,0#No votes|1#1 vote (\'{1,number,percent}\' of total votes)|1&lt;{0} votes (\'{1,number,percent}\' of total votes)}</string>
 
-    <string name="custom_raffle_voting_tie_break_description">It was not possible to get a single winner after the first round of voting. How do you want to decide between the options tied in first place?</string>
-    <string name="custom_raffle_voting_tie_break_vote_again">Vote again</string>
+    <string name="custom_raffle_voting_tie_break_description">It was not possible to get a single winner after the first round of voting. How do you want to tiebreak?</string>
+    <string name="custom_raffle_voting_tie_break_vote_again">New ballot</string>
     <string name="custom_raffle_voting_tie_break_decide_randomly">Decide randomly</string>
 
     <!-- Preferences -->
     <string name="preferences_changes_saved">Changes saved</string>
 
     <string name="preferences_section_general">General preferences</string>
-    <string name="preferences_section_lottery">Lottery preferences</string>
+    <string name="preferences_section_lottery">Lotto preferences</string>
     <string name="preferences_section_my_raffles">My raffles preferences</string>
 
     <string name="preferences_theme_title">Theme</string>
@@ -179,20 +179,20 @@
     <string name="preferences_roulette_music_description">Enable roulette music</string>
 
     <string name="preferences_default_lottery_title">Default lottery values</string>
-    <string name="preferences_default_lottery_max_quantity">Qty. of numbers available</string>
-    <string name="preferences_default_lottery_raffle_quantity">Qty. of numbers to raffle</string>
+    <string name="preferences_default_lottery_max_quantity">Numbers available</string>
+    <string name="preferences_default_lottery_raffle_quantity">Numbers to choose</string>
     <string name="preferences_default_lottery_button">Save</string>
 
-    <string name="preferences_remember_raffled_title">Remember raffled items</string>
-    <string name="preferences_remember_raffled_description">If active, items raffled with Roulette or Random winners won\'t be automatically included in subsequent raffles. Including or excluding items manually is also persisted.</string>
+    <string name="preferences_remember_raffled_title">Remember raffled options</string>
+    <string name="preferences_remember_raffled_description">If active, options raffled with Roulette or Random winners won\'t be automatically included in subsequent raffles. Including or excluding items manually is also persisted</string>
 
     <string name="preferences_reset_hints_title">App Hints</string>
-    <string name="preferences_reset_hints_description">All the hints that you dismissed will be displayed again</string>
+    <string name="preferences_reset_hints_description">All the hints previously dismissed will be displayed again</string>
     <string name="preferences_reset_hints_button">Show again</string>
 
     <string name="preferences_share">Share Raffler</string>
     <string name="preferences_share_title">Sharing Raffler</string>
-    <string name="preferences_share_text">Check out Raffler! Making decisions never been so easy. Download at %s.</string>
+    <string name="preferences_share_text">Check out Raffler! Making decisions never been so easy. Download for free at %s</string>
     <string name="preferences_rate">Rate Raffler</string>
     <string name="preferences_about">Developed with ❤ by Filipe Belatti</string>
     <string name="preferences_app_version">Version: %s</string>
