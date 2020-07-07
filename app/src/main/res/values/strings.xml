@@ -116,10 +116,10 @@
     <string name="custom_raffle_combination_title">Combining with %s</string>
     <string name="custom_raffle_combination_hint">Select another raffle</string>
     <string name="custom_raffle_combination_selector_title">Select another raffle to combine with %s</string>
-    <string name="custom_raffle_combination_quantity_hint">Quantity of pairs</string>
+    <string name="custom_raffle_combination_quantity_hint">Quantity of groups</string>
     <string name="custom_raffle_combination_invalid_quantity_too_few">Should be at least 1</string>
     <string name="custom_raffle_combination_invalid_quantity_too_many">Should be at most %d</string>
-    <string name="custom_raffle_combination_pair_title">#%d Pair</string>
+    <string name="custom_raffle_combination_pair_title">#%d Group</string>
 
     <!-- Custom Raffle - Voting -->
     <string name="custom_raffle_voting_title">Voting for %s</string>

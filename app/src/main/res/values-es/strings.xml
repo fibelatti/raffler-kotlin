@@ -115,10 +115,10 @@
     <string name="custom_raffle_combination_title">Combinando con %s</string>
     <string name="custom_raffle_combination_hint">Elija otro sorteo</string>
     <string name="custom_raffle_combination_selector_title">Elija el sorteo para combinar con %s</string>
-    <string name="custom_raffle_combination_quantity_hint">Cantidad de pares</string>
+    <string name="custom_raffle_combination_quantity_hint">Cantidad de grupos</string>
     <string name="custom_raffle_combination_invalid_quantity_too_few">Debe ser al menos 1</string>
     <string name="custom_raffle_combination_invalid_quantity_too_many">Debe ser como máximo %d</string>
-    <string name="custom_raffle_combination_pair_title">Par #%d</string>
+    <string name="custom_raffle_combination_pair_title">Grupo #%d</string>
 
     <!-- Custom Raffle - Voting -->
     <string name="custom_raffle_voting_title">Votación para %s</string>

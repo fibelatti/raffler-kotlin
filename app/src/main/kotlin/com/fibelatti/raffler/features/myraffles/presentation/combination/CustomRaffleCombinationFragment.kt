@@ -70,13 +70,13 @@ class CustomRaffleCombinationFragment @Inject constructor(
         )
 
         layoutSecondCustomRaffle.setOnClickListener {
-            customRaffleCombinationViewModel.getCustomRafflesToCombineWith(customRaffleModel)
+            customRaffleCombinationViewModel.getCustomRafflesToCombineWith()
         }
         textViewSecondCustomRaffleDescription.setText(R.string.custom_raffle_combination_hint)
 
         buttonRaffle.isEnabled = false
         buttonRaffle.setOnClickListener {
-            customRaffleCombinationViewModel.getPairs(
+            customRaffleCombinationViewModel.getCombinations(
                 customRaffleModel,
                 secondCustomRaffle,
                 editTextTotalQuantity.textAsString()

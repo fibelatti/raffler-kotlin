@@ -20,6 +20,7 @@ import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffle
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModelMapper
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.math.ceil
 import kotlin.math.min
 
 class CustomRaffleCombinationViewModel @Inject constructor(
@@ -35,7 +36,7 @@ class CustomRaffleCombinationViewModel @Inject constructor(
     val quantityError: LiveEvent<String> get() = _quantityError
     private val _quantityError = MutableLiveEvent<String>()
 
-    fun getPairs(
+    fun getCombinations(
         firstCustomRaffle: CustomRaffleModel,
         secondCustomRaffle: CustomRaffleModel,
         quantity: String
@@ -46,29 +47,32 @@ class CustomRaffleCombinationViewModel @Inject constructor(
                 secondCustomRaffle.items,
                 quantity
             ) { qty ->
-                val firstShuffled = firstCustomRaffle.includedItems.shuffled()
-                val secondShuffled = secondCustomRaffle.items.shuffled()
+                val actualQuantity = ceil(firstCustomRaffle.includedItems.size.toDouble() / qty).toInt()
+                val firstShuffled = firstCustomRaffle.includedItems.shuffled().chunked(actualQuantity)
+                val secondShuffled = secondCustomRaffle.items.shuffled().toMutableList()
 
-                (0 until qty).mapIndexed { _, i ->
+                firstShuffled.mapIndexed { index, list ->
+                    val second = secondShuffled.filterNot { it in list }.take(actualQuantity)
+                    secondShuffled.removeAll(second)
+
+                    val description = (list + second).joinToString("\n") { it.description }
+
                     CustomRaffleDraftedModel(
                         title = resourceProvider.getString(
                             R.string.custom_raffle_combination_pair_title,
-                            i + 1
+                            index + 1
                         ),
-                        description = "${firstShuffled[i].description}\n${secondShuffled[i].description}"
+                        description = description
                     )
                 }.let(_pairs::postValue)
             }
         }
     }
 
-    fun getCustomRafflesToCombineWith(customRaffle: CustomRaffleModel) {
+    fun getCustomRafflesToCombineWith() {
         launch {
             customRaffleRepository.getAllCustomRaffles()
-                .mapCatching { raffles ->
-                    raffles.filter { it.id != customRaffle.id }
-                        .let(customRaffleModelMapper::mapList)
-                }
+                .mapCatching(customRaffleModelMapper::mapList)
                 .onSuccess(_otherCustomRaffles::postValue)
                 .onFailure(::handleError)
         }
