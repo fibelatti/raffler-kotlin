@@ -47,12 +47,15 @@ class CustomRaffleCombinationViewModel @Inject constructor(
                 secondCustomRaffle.items,
                 quantity
             ) { qty ->
-                val actualQuantity = ceil(firstCustomRaffle.includedItems.size.toDouble() / qty).toInt()
-                val firstShuffled = firstCustomRaffle.includedItems.shuffled().chunked(actualQuantity)
+                val quantityPerGroup = ceil(
+                    (firstCustomRaffle.includedItems.size + secondCustomRaffle.items.size) / qty.toDouble()
+                ).toInt()
+                val quantityFromSource = ceil(quantityPerGroup / 2.0).toInt()
+                val firstShuffled = firstCustomRaffle.includedItems.shuffled().chunked(quantityFromSource)
                 val secondShuffled = secondCustomRaffle.items.shuffled().toMutableList()
 
-                firstShuffled.mapIndexed { index, list ->
-                    val second = secondShuffled.filterNot { it in list }.take(actualQuantity)
+                val combinations = firstShuffled.mapIndexed { index, list ->
+                    val second = secondShuffled.filterNot { it in list }.take(quantityPerGroup - list.size)
                     secondShuffled.removeAll(second)
 
                     val description = (list + second).joinToString("\n") { it.description }
@@ -64,7 +67,35 @@ class CustomRaffleCombinationViewModel @Inject constructor(
                         ),
                         description = description
                     )
-                }.let(_pairs::postValue)
+                }.toMutableList()
+
+                when (secondShuffled.size) {
+                    0 -> _pairs.postValue(combinations)
+                    1 -> {
+                        combinations.add(
+                            CustomRaffleDraftedModel(
+                                title = resourceProvider.getString(
+                                    R.string.custom_raffle_combination_pair_title,
+                                    combinations.size + 1
+                                ),
+                                description = secondShuffled[0].description
+                            )
+                        )
+                        _pairs.postValue(combinations)
+                    }
+                    else -> {
+                        combinations.add(
+                            CustomRaffleDraftedModel(
+                                title = resourceProvider.getString(
+                                    R.string.custom_raffle_combination_pair_title,
+                                    combinations.size + 1
+                                ),
+                                description = secondShuffled.joinToString("\n") { it.description }
+                            )
+                        )
+                        _pairs.postValue(combinations)
+                    }
+                }
             }
         }
     }
