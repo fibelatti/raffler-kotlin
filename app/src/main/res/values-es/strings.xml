@@ -35,6 +35,7 @@
     <!-- Quick Decision -->
     <string name="quick_decision_dismissible_hint">La respuesta a sus preguntas en la punta de sus dedos. Estos atajos pueden ayudarte en decisiones simples como jugar una moneda o tirar un dado</string>
     <string name="quick_decision_result_dismiss">Cerrar</string>
+    <string name="quick_decision_result_reroll">Toque para sortear otro</string>
 
     <!-- Quick Decision - Add new -->
     <string name="quick_decision_add_new_title">Elija el sorteo para agregar como acceso directo</string>

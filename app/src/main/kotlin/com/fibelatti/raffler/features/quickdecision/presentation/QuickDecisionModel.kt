@@ -1,19 +1,22 @@
 package com.fibelatti.raffler.features.quickdecision.presentation
 
+import android.os.Parcelable
 import com.fibelatti.core.android.base.BaseViewType
 import com.fibelatti.core.functional.TwoWayMapper
 import com.fibelatti.raffler.core.platform.AppConfig
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleItemModel
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModel
 import com.fibelatti.raffler.features.quickdecision.QuickDecision
+import kotlinx.android.parcel.Parcelize
 import javax.inject.Inject
 
+@Parcelize
 data class QuickDecisionModel(
     val id: String,
     val locale: String,
     val description: String,
     val values: List<String>
-) : BaseViewType {
+) : BaseViewType, Parcelable {
 
     companion object {
         @JvmStatic

@@ -9,6 +9,7 @@ import com.fibelatti.raffler.features.myraffles.presentation.list.MyRafflesViewM
 import com.fibelatti.raffler.features.myraffles.presentation.randomwinners.CustomRaffleRandomWinnersViewModel
 import com.fibelatti.raffler.features.myraffles.presentation.voting.CustomRaffleVotingViewModel
 import com.fibelatti.raffler.features.preferences.presentation.PreferencesViewModel
+import com.fibelatti.raffler.features.quickdecision.presentation.QuickDecisionResultViewModel
 import com.fibelatti.raffler.features.quickdecision.presentation.QuickDecisionViewModel
 import com.fibelatti.raffler.features.quickdecision.presentation.addnew.AddNewQuickDecisionViewModel
 
@@ -25,6 +26,7 @@ interface ViewModelProvider {
     fun customRaffleVotingViewModel(): CustomRaffleVotingViewModel
 
     fun quickDecisionViewModel(): QuickDecisionViewModel
+    fun quickDecisionResultViewModel(): QuickDecisionResultViewModel
     fun addNewQuickDecisionViewModel(): AddNewQuickDecisionViewModel
 
     fun preferencesViewModel(): PreferencesViewModel

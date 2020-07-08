@@ -29,8 +29,6 @@ class QuickDecisionViewModel @Inject constructor(
 
     val quickDecisionList: LiveData<QuickDecisionList> get() = _quickDecisionList
     private val _quickDecisionList = MutableLiveData<QuickDecisionList>()
-    val quickDecisionResult: LiveEvent<QuickDecisionResult> get() = _quickDecisionResult
-    private val _quickDecisionResult = MutableLiveEvent<QuickDecisionResult>()
     val showHint: LiveEvent<Unit> get() = _showHint
     private val _showHint = MutableLiveEvent<Unit>()
 
@@ -64,12 +62,6 @@ class QuickDecisionViewModel @Inject constructor(
         }
     }
 
-    fun getQuickDecisionResult(quickDecision: QuickDecisionModel, color: Int) {
-        _quickDecisionResult.postEvent(
-            QuickDecisionResult(quickDecision.description, quickDecision.values.random(), color)
-        )
-    }
-
     fun hintDismissed() {
         launch { preferencesRepository.setQuickDecisionHintDismissed() }
     }
@@ -79,5 +71,4 @@ class QuickDecisionViewModel @Inject constructor(
     }
 
     data class QuickDecisionList(val quickDecisions: List<QuickDecisionModel>, val hasCustomRaffles: Boolean)
-    data class QuickDecisionResult(val title: String, val result: String, val color: Int)
 }

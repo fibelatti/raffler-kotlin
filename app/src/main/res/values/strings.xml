@@ -35,6 +35,7 @@
     <!-- Quick Decision -->
     <string name="quick_decision_dismissible_hint">The answer to your questions is now 1 tap away! Here\'s a few shortcuts for simple tasks such as flipping a coin or rolling a dice</string>
     <string name="quick_decision_result_dismiss">Dismiss</string>
+    <string name="quick_decision_result_reroll">Tap to re-roll</string>
 
     <!-- Quick Decision - Add new -->
     <string name="quick_decision_add_new_title">Select a raffle to add as shortcut</string>

@@ -27,8 +27,6 @@ class QuickDecisionFragment @Inject constructor(
     private val quickDecisionAdapter: QuickDecisionAdapter
 ) : BaseFragment(R.layout.fragment_quick_decisions) {
 
-    private lateinit var sharedView: View
-
     private val quickDecisionViewModel by viewModel { viewModelProvider.quickDecisionViewModel() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -37,7 +35,6 @@ class QuickDecisionFragment @Inject constructor(
 
         viewLifecycleOwner.observe(quickDecisionViewModel.error, ::handleError)
         viewLifecycleOwner.observe(quickDecisionViewModel.quickDecisionList, ::showQuickDecisions)
-        viewLifecycleOwner.observeEvent(quickDecisionViewModel.quickDecisionResult, ::showQuickDecisionResult)
         viewLifecycleOwner.observeEvent(quickDecisionViewModel.showHint) {
             showDismissibleHint(
                 container = layoutHintContainer,
@@ -70,8 +67,15 @@ class QuickDecisionFragment @Inject constructor(
                 }
             }
             quickDecisionClickListener = { view, quickDecisionModel, color ->
-                sharedView = view
-                quickDecisionViewModel.getQuickDecisionResult(quickDecisionModel, color)
+                val transitionName = ViewCompat.getTransitionName(view).orEmpty()
+
+                findNavController().navigate(
+                    R.id.action_fragmentQuickDecision_to_fragmentQuickDecisionResult,
+                    QuickDecisionResultFragment.bundle(transitionName, color, quickDecisionModel),
+                    null,
+                    FragmentNavigatorExtras(view to transitionName)
+                )
+
             }
             colorList = getColorGradientForListSize(
                 requireContext(),
@@ -81,22 +85,6 @@ class QuickDecisionFragment @Inject constructor(
             )
             submitList(dataSet)
         }
-    }
-
-    private fun showQuickDecisionResult(quickDecisionResult: QuickDecisionViewModel.QuickDecisionResult) {
-        val transitionName = ViewCompat.getTransitionName(sharedView).orEmpty()
-
-        findNavController().navigate(
-            R.id.action_fragmentQuickDecision_to_fragmentQuickDecisionResult,
-            QuickDecisionResultFragment.bundle(
-                transitionName,
-                quickDecisionResult.title,
-                quickDecisionResult.result,
-                quickDecisionResult.color
-            ),
-            null,
-            FragmentNavigatorExtras(sharedView to transitionName)
-        )
     }
 
     private fun setupRecyclerView() {
