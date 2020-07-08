@@ -11,7 +11,7 @@
     android:paddingLeft="@dimen/padding_regular"
     android:paddingRight="@dimen/padding_regular">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/textViewCustomRaffleDescription"
         style="@style/AppTheme.Text.Body"
         android:layout_width="0dp"

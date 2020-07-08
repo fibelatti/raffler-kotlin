@@ -25,7 +25,7 @@ class CustomRaffleSelectorDelegate : CustomRaffleSelector {
         customRaffles: List<CustomRaffleModel>,
         customRaffleClickListener: (CustomRaffleModel) -> Unit
     ) {
-        BottomSheetDialog(context, R.style.AppTheme_BaseBottomSheetDialog_BottomSheetDialog).apply {
+        BottomSheetDialog(context, R.style.AppTheme_BottomSheet).apply {
             setContentView(R.layout.fragment_add_custom_raffle_as_quick_decision)
 
             textViewSelectCustomRaffleTitle?.text = title

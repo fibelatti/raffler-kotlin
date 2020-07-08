@@ -31,7 +31,13 @@ class PreferencesCustomRaffleFragment @Inject constructor() : BaseFragment(
             setupPreferredRaffleMode(it.preferredRaffleMode)
             setupRememberRaffledItems(it.rememberRaffledItems)
         }
-        viewLifecycleOwner.observeEvent(preferencesViewModel.updateFeedback) { layoutRoot.snackbar(it) }
+        viewLifecycleOwner.observeEvent(preferencesViewModel.updateFeedback) {
+            layoutRoot.snackbar(
+                message = it,
+                background = R.drawable.background_snackbar,
+                textColor = R.color.text_primary
+            )
+        }
 
         preferencesViewModel.getPreferences()
     }

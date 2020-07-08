@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layoutCustomRaffleRoot"
     android:layout_width="match_parent"
@@ -12,7 +11,7 @@
     android:padding="@dimen/padding_regular"
     tools:layout_width="200dp">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/textViewCustomRaffleDescription"
         style="@style/AppTheme.Text.Body.White"
         android:layout_width="match_parent"
@@ -22,18 +21,14 @@
         android:maxLines="2"
         tools:text="My custom raffle" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/textViewCustomRaffleItems"
         style="@style/AppTheme.Text.Detail.White"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:drawableBottom="@drawable/ic_play_circle"
+        android:drawablePadding="@dimen/padding_xsmall"
         android:gravity="center"
         tools:text="3 items" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imageViewGo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/padding_xsmall"
-        app:srcCompat="@drawable/ic_play_circle" />
 </LinearLayout>

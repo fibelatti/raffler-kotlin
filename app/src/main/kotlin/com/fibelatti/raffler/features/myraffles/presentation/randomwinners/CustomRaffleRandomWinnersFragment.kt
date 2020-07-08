@@ -43,6 +43,8 @@ class CustomRaffleRandomWinnersFragment @Inject constructor(
         viewLifecycleOwner.observeEvent(customRaffleDetailsViewModel.itemsRemaining) {
             layoutRoot.snackbar(
                 resources.getQuantityString(R.plurals.custom_raffle_roulette_hint_items_remaining, it, it),
+                background = R.drawable.background_snackbar,
+                textColor = R.color.text_primary,
                 duration = Snackbar.LENGTH_LONG
             )
 
@@ -92,8 +94,8 @@ class CustomRaffleRandomWinnersFragment @Inject constructor(
         customRaffleDraftedAdapter.run {
             colorList = getColorGradientForListSize(
                 requireContext(),
-                R.color.color_accent,
                 R.color.color_primary,
+                R.color.color_secondary,
                 winners.size
             )
             submitList(winners)

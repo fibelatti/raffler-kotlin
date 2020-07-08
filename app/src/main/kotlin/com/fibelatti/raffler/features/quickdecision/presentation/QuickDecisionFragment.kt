@@ -79,8 +79,8 @@ class QuickDecisionFragment @Inject constructor(
             }
             colorList = getColorGradientForListSize(
                 requireContext(),
-                R.color.color_accent,
                 R.color.color_primary,
+                R.color.color_secondary,
                 dataSet.size
             )
             submitList(dataSet)

@@ -46,7 +46,10 @@ class CustomRaffleCombinationFragment @Inject constructor(
                 .combineLatest(customRaffleDetailsViewModel.customRaffle),
             ::showSelector
         )
-        viewLifecycleOwner.observeEvent(customRaffleCombinationViewModel.quantityError, ::handleQuantityError)
+        viewLifecycleOwner.observeEvent(
+            customRaffleCombinationViewModel.quantityError,
+            ::handleQuantityError
+        )
         viewLifecycleOwner.observe(customRaffleCombinationViewModel.pairs, ::handlePairs)
     }
 
@@ -127,8 +130,8 @@ class CustomRaffleCombinationFragment @Inject constructor(
         customRaffleDraftedAdapter.run {
             colorList = getColorGradientForListSize(
                 requireContext(),
-                R.color.color_accent,
                 R.color.color_primary,
+                R.color.color_secondary,
                 pairs.size
             )
             submitList(pairs)

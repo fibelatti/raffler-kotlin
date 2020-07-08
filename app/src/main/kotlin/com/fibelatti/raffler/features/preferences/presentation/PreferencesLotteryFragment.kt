@@ -33,7 +33,11 @@ class PreferencesLotteryFragment @Inject constructor() : BaseFragment(R.layout.f
         }
         viewLifecycleOwner.observeEvent(preferencesViewModel.updateFeedback) {
             layoutRoot.hideKeyboard()
-            layoutRoot.snackbar(it)
+            layoutRoot.snackbar(
+                message = it,
+                background = R.drawable.background_snackbar,
+                textColor = R.color.text_primary
+            )
         }
         viewLifecycleOwner.observeEvent(preferencesViewModel.totalQuantityError, ::handleTotalQuantityError)
         viewLifecycleOwner.observeEvent(preferencesViewModel.raffleQuantityError, ::handleRaffleQuantityError)

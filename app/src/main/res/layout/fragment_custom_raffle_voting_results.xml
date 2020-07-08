@@ -5,7 +5,7 @@
     android:id="@+id/layoutRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_background"
+    android:background="?android:colorBackground"
     android:paddingTop="@dimen/padding_regular">
 
     <com.fibelatti.raffler.core.platform.customview.TitleLayout
@@ -44,7 +44,7 @@
         app:layout_constraintBottom_toTopOf="@+id/textViewTieBreakerDescription"
         app:layout_constraintTop_toBottomOf="@+id/recyclerViewItems" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/textViewTieBreakerDescription"
         style="@style/AppTheme.Text.Body"
         android:layout_width="match_parent"
@@ -56,7 +56,7 @@
         app:layout_constraintBottom_toTopOf="@+id/buttonVoteAgain"
         app:layout_constraintTop_toBottomOf="@+id/layoutDividerTieBreaker" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/buttonVoteAgain"
         style="@style/AppTheme.TextButton"
         android:layout_marginBottom="@dimen/margin_regular"
@@ -66,7 +66,7 @@
         app:layout_constraintRight_toLeftOf="@+id/buttonDecideRandomly"
         app:layout_constraintTop_toBottomOf="@+id/textViewTieBreakerDescription" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/buttonDecideRandomly"
         style="@style/AppTheme.TextButton"
         android:text="@string/custom_raffle_voting_tie_break_decide_randomly"

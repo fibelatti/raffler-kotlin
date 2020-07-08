@@ -83,10 +83,8 @@ class CustomRaffleVotingStartFragment @Inject constructor() : BaseFragment(
     private fun handlePinError(message: String) {
         if (message.isNotBlank()) {
             inputLayoutPin.showError(message)
-            editTextPin.isError = true
         } else {
             inputLayoutPin.clearError()
-            editTextPin.isError = false
         }
     }
 }

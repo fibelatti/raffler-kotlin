@@ -23,7 +23,7 @@ class CustomRaffleVotingPinConfirmationDelegate : CustomRaffleVotingPinConfirmat
     private var bottomSheetDialog: BottomSheetDialog? = null
 
     override fun showPinConfirmation(context: Context, onPinEntered: (pin: String) -> Unit) {
-        BottomSheetDialog(context, R.style.AppTheme_BaseBottomSheetDialog_BottomSheetDialog).apply {
+        BottomSheetDialog(context, R.style.AppTheme_BottomSheet).apply {
             setContentView(R.layout.layout_custom_raffle_voting_pin_confirmation)
             editTextPin.onMaxLengthReached = { onPinEntered(editTextPin.textAsString()) }
             editTextPin.onBackPressed = {
@@ -38,7 +38,6 @@ class CustomRaffleVotingPinConfirmationDelegate : CustomRaffleVotingPinConfirmat
     override fun showPinError(message: String) {
         bottomSheetDialog?.run {
             inputLayoutPin?.showError(message)
-            editTextPin?.isError = true
             layoutRoot.showKeyboard()
         }
     }

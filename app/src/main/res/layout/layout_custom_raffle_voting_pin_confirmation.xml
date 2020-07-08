@@ -10,7 +10,7 @@
     android:paddingRight="@dimen/padding_regular"
     android:paddingBottom="@dimen/padding_xlarge">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/textViewMessage"
         style="@style/AppTheme.Text.Body"
         android:layout_width="match_parent"

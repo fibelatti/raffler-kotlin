@@ -5,7 +5,7 @@
     android:id="@+id/layoutRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_background"
+    android:background="?android:colorBackground"
     android:paddingTop="@dimen/padding_regular">
 
     <com.fibelatti.raffler.core.platform.customview.TitleLayout
@@ -19,7 +19,6 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/inputLayoutWinnersQuantity"
-        style="@style/AppTheme.InputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_regular"
@@ -41,12 +40,13 @@
 
     <Button
         android:id="@+id/buttonRaffle"
-        style="@style/AppTheme.ButtonPrimary.Small"
+        style="@style/AppTheme.Button.Small"
         android:layout_marginRight="@dimen/margin_regular"
         android:text="@string/hint_raffle"
+        app:layout_constraintBottom_toBottomOf="@+id/inputLayoutWinnersQuantity"
         app:layout_constraintLeft_toRightOf="@+id/inputLayoutWinnersQuantity"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layoutTitle" />
+        app:layout_constraintTop_toTopOf="@id/inputLayoutWinnersQuantity" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewItems"

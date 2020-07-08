@@ -12,7 +12,7 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment() {
     protected val viewModelProvider: ViewModelProvider
         get() = (activity as BaseActivity).viewModelProvider
 
-    override fun getTheme(): Int = R.style.AppTheme_BaseBottomSheetDialog_BottomSheetDialog
+    override fun getTheme(): Int = R.style.AppTheme_BottomSheet
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = BottomSheetDialog(
         requireContext(),

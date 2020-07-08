@@ -32,7 +32,7 @@ class CustomRaffleModesDelegate : CustomRaffleModes {
         combinationClickListener: (() -> Unit)?,
         votingClickListener: (() -> Unit)?
     ) {
-        BottomSheetDialog(context, R.style.AppTheme_BaseBottomSheetDialog_BottomSheetDialog).apply {
+        BottomSheetDialog(context, R.style.AppTheme_BottomSheet).apply {
             setContentView(R.layout.fragment_custom_raffle_modes)
 
             setupMode(rouletteClickListener, layoutRoulette, buttonRoulette)

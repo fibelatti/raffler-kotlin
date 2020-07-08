@@ -14,7 +14,7 @@
         android:paddingRight="@dimen/padding_regular"
         android:paddingBottom="@dimen/padding_xlarge">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/textViewChooseModeTitle"
             style="@style/AppTheme.Text.Title"
             android:layout_width="match_parent"
@@ -29,7 +29,7 @@
             android:clickable="true"
             android:focusable="true">
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/textViewRouletteTitle"
                 style="@style/AppTheme.Text.Body"
                 android:layout_width="0dp"
@@ -40,7 +40,7 @@
                 app:layout_constraintRight_toLeftOf="@+id/buttonRoulette"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/textViewRouletteDescription"
                 style="@style/AppTheme.Text.Detail"
                 android:layout_width="0dp"
@@ -80,7 +80,7 @@
             android:clickable="true"
             android:focusable="true">
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/textViewRandomWinnersTitle"
                 style="@style/AppTheme.Text.Body"
                 android:layout_width="0dp"
@@ -91,7 +91,7 @@
                 app:layout_constraintRight_toLeftOf="@+id/buttonRandomWinners"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/textViewRandomWinnersDescription"
                 style="@style/AppTheme.Text.Detail"
                 android:layout_width="0dp"
@@ -131,7 +131,7 @@
             android:clickable="true"
             android:focusable="true">
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/textViewGroupingTitle"
                 style="@style/AppTheme.Text.Body"
                 android:layout_width="0dp"
@@ -142,7 +142,7 @@
                 app:layout_constraintRight_toLeftOf="@+id/buttonGrouping"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/textViewGroupingDescription"
                 style="@style/AppTheme.Text.Detail"
                 android:layout_width="0dp"
@@ -182,7 +182,7 @@
             android:clickable="true"
             android:focusable="true">
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/textViewCombinationTitle"
                 style="@style/AppTheme.Text.Body"
                 android:layout_width="0dp"
@@ -193,7 +193,7 @@
                 app:layout_constraintRight_toLeftOf="@+id/buttonCombination"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/textViewCombinationDescription"
                 style="@style/AppTheme.Text.Detail"
                 android:layout_width="0dp"
@@ -233,7 +233,7 @@
             android:clickable="true"
             android:focusable="true">
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/textViewVotingTitle"
                 style="@style/AppTheme.Text.Body"
                 android:layout_width="0dp"
@@ -244,7 +244,7 @@
                 app:layout_constraintRight_toLeftOf="@+id/buttonVoting"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/textViewVotingDescription"
                 style="@style/AppTheme.Text.Detail"
                 android:layout_width="0dp"

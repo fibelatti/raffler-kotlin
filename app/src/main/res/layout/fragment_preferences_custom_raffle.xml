@@ -5,7 +5,7 @@
     android:id="@+id/layoutRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_background"
+    android:background="?android:colorBackground"
     android:clipToPadding="false"
     android:paddingLeft="@dimen/padding_regular"
     android:paddingTop="@dimen/padding_regular"
@@ -30,7 +30,7 @@
         app:layout_constraintBottom_toTopOf="@+id/textViewPreferredRaffleModeTitle"
         app:layout_constraintTop_toBottomOf="@+id/layoutTitle" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/textViewPreferredRaffleModeTitle"
         style="@style/AppTheme.Text.SectionTitle"
         android:layout_width="match_parent"
@@ -40,7 +40,7 @@
         app:layout_constraintBottom_toTopOf="@+id/textViewPreferredRaffleModeMessage"
         app:layout_constraintTop_toBottomOf="@+id/dividerPreferredRaffleMode" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/textViewPreferredRaffleModeMessage"
         style="@style/AppTheme.Text.Body"
         android:layout_width="0dp"
@@ -51,7 +51,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewPreferredRaffleModeTitle"
         tools:text="@string/custom_raffle_details_mode_roulette" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/buttonPreferredRaffleMode"
         style="@style/AppTheme.TextButton"
         android:layout_marginLeft="@dimen/margin_regular"
@@ -71,7 +71,7 @@
         app:layout_constraintBottom_toTopOf="@+id/textViewRouletteMusicTitle"
         app:layout_constraintTop_toBottomOf="@+id/textViewPreferredRaffleModeMessage" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/textViewRouletteMusicTitle"
         style="@style/AppTheme.Text.SectionTitle"
         android:layout_width="match_parent"
@@ -81,7 +81,7 @@
         app:layout_constraintBottom_toTopOf="@+id/checkBoxRouletteMusic"
         app:layout_constraintTop_toBottomOf="@+id/dividerRouletteMusic" />
 
-    <androidx.appcompat.widget.AppCompatCheckBox
+    <CheckBox
         android:id="@+id/checkBoxRouletteMusic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -99,7 +99,7 @@
         app:layout_constraintBottom_toTopOf="@+id/textViewRememberRaffledTitle"
         app:layout_constraintTop_toBottomOf="@+id/checkBoxRouletteMusic" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/textViewRememberRaffledTitle"
         style="@style/AppTheme.Text.SectionTitle"
         android:layout_width="match_parent"
@@ -109,7 +109,7 @@
         app:layout_constraintBottom_toTopOf="@+id/checkboxRememberRaffled"
         app:layout_constraintTop_toBottomOf="@+id/dividerRememberRaffled" />
 
-    <androidx.appcompat.widget.AppCompatCheckBox
+    <CheckBox
         android:id="@+id/checkboxRememberRaffled"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

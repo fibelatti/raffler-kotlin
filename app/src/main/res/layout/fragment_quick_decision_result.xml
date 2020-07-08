@@ -11,7 +11,7 @@
     android:gravity="center"
     android:orientation="vertical"
     android:padding="@dimen/padding_regular"
-    tools:background="@color/color_accent">
+    tools:background="?attr/colorPrimary">
 
     <TextView
         android:id="@+id/textViewQuickDecisionName"
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="@dimen/padding_large"
-        android:textColor="@color/color_white_opaque"
+        android:textColor="@color/text_white"
         android:textSize="@dimen/quick_decision_result_text_size"
         app:layout_constraintBottom_toTopOf="@+id/divider"
         app:layout_constraintTop_toBottomOf="@+id/textViewQuickDecisionName"
@@ -44,11 +44,11 @@
         app:layout_constraintStart_toStartOf="@+id/textViewResult"
         app:layout_constraintTop_toBottomOf="@+id/textViewResult" />
 
-    <include
+    <View
         android:id="@+id/divider"
-        layout="@layout/layout_divider"
         android:layout_width="match_parent"
         android:layout_height="@dimen/divider_size"
+        android:background="@color/text_white"
         app:layout_constraintBottom_toTopOf="@+id/textViewButtonDismiss" />
 
     <TextView

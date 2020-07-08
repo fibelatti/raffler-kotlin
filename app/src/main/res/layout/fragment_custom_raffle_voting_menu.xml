@@ -5,7 +5,7 @@
     android:id="@+id/layoutRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_background"
+    android:background="?android:colorBackground"
     android:padding="@dimen/padding_regular">
 
     <com.fibelatti.raffler.core.platform.customview.TitleLayout
@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="spread_inside" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/textViewNewVoteInstructions"
         style="@style/AppTheme.Text.Body"
         android:layout_width="match_parent"
@@ -55,7 +55,7 @@
         app:layout_constraintBottom_toTopOf="@+id/textViewTotalVotes"
         app:layout_constraintTop_toBottomOf="@+id/spaceFiller" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/textViewTotalVotes"
         style="@style/AppTheme.Text.SectionTitle"
         android:layout_width="match_parent"
@@ -66,7 +66,7 @@
         app:layout_constraintTop_toBottomOf="@+id/layoutDivider"
         tools:text="0 votes" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/textViewResultsInstructions"
         style="@style/AppTheme.Text.Body"
         android:layout_width="match_parent"
@@ -77,9 +77,9 @@
         app:layout_constraintBottom_toTopOf="@+id/buttonSeeResults"
         app:layout_constraintTop_toBottomOf="@+id/textViewTotalVotes" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/buttonSeeResults"
-        style="@style/AppTheme.TextButton.Small"
+        style="@style/AppTheme.TextButton"
         android:text="@string/custom_raffle_voting_see_results"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

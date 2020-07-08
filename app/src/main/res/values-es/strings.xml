@@ -56,7 +56,7 @@
 
     <!-- Custom Raffle - New or Edit -->
     <string name="custom_raffle_add_as_quick_decision_dismissible_hint">Crear un atajo para sortear algo rápidamente puede venir bien a la mano. Como usted no tiene ningún sorteo todavía vamos a crear el primero</string>
-    <string name="custom_raffle_description">Descripción</string>
+    <string name="custom_raffle_description">Nombre</string>
     <string name="custom_raffle_add_shortcut">Añadir acceso directo</string>
     <string name="custom_raffle_item_description">Descripción</string>
     <string name="custom_raffle_edit_title">Edición - %s</string>

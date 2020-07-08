@@ -27,7 +27,11 @@ class PreferencesGeneralFragment @Inject constructor() : BaseFragment(R.layout.f
             setupLanguage(it.appLanguage)
         }
         viewLifecycleOwner.observeEvent(preferencesViewModel.updateFeedback) {
-            layoutRoot.snackbar(it)
+            layoutRoot.snackbar(
+                message = it,
+                background = R.drawable.background_snackbar,
+                textColor = R.color.text_primary
+            )
         }
 
         preferencesViewModel.getPreferences()

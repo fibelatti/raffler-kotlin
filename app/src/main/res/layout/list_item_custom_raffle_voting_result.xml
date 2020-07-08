@@ -10,14 +10,14 @@
     android:paddingRight="@dimen/padding_large"
     android:paddingBottom="@dimen/padding_regular">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/textViewDescription"
         style="@style/AppTheme.Text.Body"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="Some custom raffle item" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/textViewNumberOfVotes"
         style="@style/AppTheme.Text.Detail"
         android:layout_width="match_parent"

@@ -84,16 +84,15 @@ class CustomRaffleDetailsFragment @Inject constructor(
     }
 
     private fun setupRaffleButtons(raffleMode: AppConfig.RaffleMode) {
+        buttonRaffle.visible()
         when (raffleMode) {
             AppConfig.RaffleMode.NONE -> {
                 buttonSelectMode.gone()
                 buttonRaffle.setOnClickListener { customRaffleDetailsViewModel.selectMode() }
             }
             else -> {
-                buttonSelectMode.apply {
-                    visible()
-                    setOnClickListener { customRaffleDetailsViewModel.selectMode() }
-                }
+                buttonSelectMode.visible()
+                buttonSelectMode.setOnClickListener { customRaffleDetailsViewModel.selectMode() }
                 buttonRaffle.setOnClickListener { customRaffleDetailsViewModel.raffle() }
             }
         }.exhaustive
@@ -144,10 +143,12 @@ class CustomRaffleDetailsFragment @Inject constructor(
     }
 
     private fun handleToggleState(toggleState: CustomRaffleDetailsViewModel.ToggleState) {
-        textViewToggleAll.setText(when (toggleState) {
-            CustomRaffleDetailsViewModel.ToggleState.INCLUDE_ALL -> R.string.custom_raffle_details_include_all
-            CustomRaffleDetailsViewModel.ToggleState.EXCLUDE_ALL -> R.string.custom_raffle_details_exclude_all
-        })
+        textViewToggleAll.setText(
+            when (toggleState) {
+                CustomRaffleDetailsViewModel.ToggleState.INCLUDE_ALL -> R.string.custom_raffle_details_include_all
+                CustomRaffleDetailsViewModel.ToggleState.EXCLUDE_ALL -> R.string.custom_raffle_details_exclude_all
+            }
+        )
     }
 
     private fun goToRoulette() {

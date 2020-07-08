@@ -17,7 +17,7 @@ import com.fibelatti.raffler.R
 
 private const val XML_NAMESPACE_ANDROID = "http://schemas.android.com/apk/res/android"
 private const val DEFAULT_CHAR_SPACING = 24
-private const val DEFAULT_LINE_SPACING = 8
+private const val DEFAULT_LINE_SPACING = 8F
 private const val DEFAULT_MAX_LENGTH = 4
 
 class PinEntryEditText @JvmOverloads constructor(
@@ -38,12 +38,6 @@ class PinEntryEditText @JvmOverloads constructor(
     private val colorText: Int
     private val textWidths: FloatArray
 
-    var isError: Boolean = false
-        set(value) {
-            field = value
-            invalidate()
-        }
-
     var onMaxLengthReached: () -> Unit = {}
 
     var onBackPressed: PinEntryEditText.() -> Unit = {
@@ -52,8 +46,6 @@ class PinEntryEditText @JvmOverloads constructor(
     }
 
     init {
-        setBackgroundResource(0)
-
         val typedAttrs = context.obtainStyledAttributes(
             attrs,
             R.styleable.PinEntryEditText,
@@ -66,10 +58,7 @@ class PinEntryEditText @JvmOverloads constructor(
             R.styleable.PinEntryEditText_char_spacing,
             DEFAULT_CHAR_SPACING * multi
         ).toFloat()
-        lineSpacing = typedAttrs.getDimensionPixelOffset(
-            R.styleable.PinEntryEditText_line_spacing,
-            DEFAULT_LINE_SPACING * multi
-        ).toFloat()
+        lineSpacing = DEFAULT_LINE_SPACING * multi
         numChars = attrs.getAttributeIntValue(XML_NAMESPACE_ANDROID, "maxLength", DEFAULT_MAX_LENGTH)
         lineStroke = typedAttrs.getDimensionPixelOffset(R.styleable.PinEntryEditText_line_stroke, multi).toFloat()
 
@@ -77,19 +66,19 @@ class PinEntryEditText @JvmOverloads constructor(
 
         colorActivated = typedAttrs.getColor(
             R.styleable.PinEntryEditText_pin_entry_activated,
-            ContextCompat.getColor(context, R.color.color_accent)
+            ContextCompat.getColor(context, R.color.color_primary)
         )
         colorFocused = typedAttrs.getColor(
             R.styleable.PinEntryEditText_pin_entry_focused,
-            ContextCompat.getColor(context, R.color.color_primary)
+            ContextCompat.getColor(context, R.color.color_secondary)
         )
         colorNotFocused = typedAttrs.getColor(
             R.styleable.PinEntryEditText_pin_entry_not_focused,
-            ContextCompat.getColor(context, R.color.color_grey)
+            ContextCompat.getColor(context, R.color.color_on_surface)
         )
         colorError = typedAttrs.getColor(
             R.styleable.PinEntryEditText_pin_entry_error,
-            ContextCompat.getColor(context, R.color.app_red)
+            ContextCompat.getColor(context, R.color.color_error)
         )
 
         colorText = attrs.getAttributeIntValue(
@@ -125,13 +114,10 @@ class PinEntryEditText @JvmOverloads constructor(
             paint.strokeWidth = lineStroke
 
             paint.color = when {
-                isError -> colorError
                 isFocused && currentChar == textLength -> colorActivated
                 isFocused -> colorFocused
                 else -> colorNotFocused
             }
-
-            canvas.drawLine(startX, bottom, startX + charSize, bottom, paint)
 
             if (text.length > currentChar) {
                 val middle = startX + charSize / 2

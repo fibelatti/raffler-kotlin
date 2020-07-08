@@ -3,8 +3,8 @@ package com.fibelatti.raffler.core.platform
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.annotation.StringRes
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import com.fibelatti.core.extension.inflate
 import com.fibelatti.raffler.R
@@ -52,12 +52,12 @@ class DismissibleHintDelegate : DismissibleHint {
         (container as? ViewGroup)?.inflate(R.layout.layout_dismissible_hint)
             ?.apply {
                 val rootLayout = findViewById<LinearLayout>(R.id.layoutRoot)
-                val textViewHintTitle = findViewById<AppCompatTextView>(R.id.textViewHintTitle)
-                val textViewHintMessage = findViewById<AppCompatTextView>(R.id.textViewHintMessage)
-                val buttonHintDismiss = findViewById<AppCompatTextView>(R.id.textViewButtonDismiss)
+                val textViewHintTitle = findViewById<TextView>(R.id.textViewHintTitle)
+                val textViewHintMessage = findViewById<TextView>(R.id.textViewHintMessage)
+                val buttonHintDismiss = findViewById<TextView>(R.id.textViewButtonDismiss)
 
                 rootLayout.setShapeBackgroundColor(
-                    ContextCompat.getColor(rootLayout.context, R.color.color_background_contrast)
+                    ContextCompat.getColor(rootLayout.context, R.color.color_surface)
                 )
 
                 textViewHintTitle.text = hintTitle

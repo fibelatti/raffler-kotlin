@@ -3,7 +3,7 @@
     android:shape="rectangle">
     <stroke
         android:width="@dimen/divider_size"
-        android:color="@color/color_divider" />
-    <solid android:color="@color/color_background_contrast" />
+        android:color="?attr/colorOnSurface" />
+    <solid android:color="?attr/colorSurface" />
     <corners android:radius="@dimen/radius_regular" />
 </shape>

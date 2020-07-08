@@ -84,8 +84,8 @@ class CustomRaffleGroupingFragment @Inject constructor(
         customRaffleDraftedAdapter.run {
             colorList = getColorGradientForListSize(
                 requireContext(),
-                R.color.color_accent,
                 R.color.color_primary,
+                R.color.color_secondary,
                 winners.size
             )
             submitList(winners)

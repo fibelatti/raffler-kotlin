@@ -4,8 +4,7 @@
     android:id="@+id/layoutRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_background"
-    android:clipToPadding="false"
+    android:background="?android:colorBackground"
     android:paddingLeft="@dimen/padding_regular"
     android:paddingTop="@dimen/padding_regular"
     android:paddingRight="@dimen/padding_regular">
@@ -29,7 +28,7 @@
         app:layout_constraintBottom_toTopOf="@+id/textViewThemeTitle"
         app:layout_constraintTop_toBottomOf="@+id/layoutTitle" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/textViewThemeTitle"
         style="@style/AppTheme.Text.SectionTitle"
         android:layout_width="match_parent"
@@ -47,7 +46,7 @@
         app:layout_constraintBottom_toTopOf="@+id/dividerLanguage"
         app:layout_constraintTop_toBottomOf="@+id/textViewThemeTitle">
 
-        <androidx.appcompat.widget.AppCompatRadioButton
+        <RadioButton
             android:id="@+id/radioButtonThemeClassic"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -55,7 +54,7 @@
             android:text="@string/preferences_theme_description_classic"
             android:textColor="@color/text_primary" />
 
-        <androidx.appcompat.widget.AppCompatRadioButton
+        <RadioButton
             android:id="@+id/radioButtonThemeDark"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -74,7 +73,7 @@
         app:layout_constraintBottom_toTopOf="@+id/textViewLanguageTitle"
         app:layout_constraintTop_toBottomOf="@+id/radioGroupTheme" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/textViewLanguageTitle"
         style="@style/AppTheme.Text.SectionTitle"
         android:layout_width="match_parent"
@@ -92,7 +91,7 @@
         app:layout_constraintBottom_toTopOf="@+id/dividerHints"
         app:layout_constraintTop_toBottomOf="@+id/textViewLanguageTitle">
 
-        <androidx.appcompat.widget.AppCompatRadioButton
+        <RadioButton
             android:id="@+id/radioButtonLanguageEnglish"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -100,7 +99,7 @@
             android:text="@string/preferences_language_english"
             android:textColor="@color/text_primary" />
 
-        <androidx.appcompat.widget.AppCompatRadioButton
+        <RadioButton
             android:id="@+id/radioButtonLanguagePortuguese"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -108,7 +107,7 @@
             android:text="@string/preferences_language_portuguese"
             android:textColor="@color/text_primary" />
 
-        <androidx.appcompat.widget.AppCompatRadioButton
+        <RadioButton
             android:id="@+id/radioButtonLanguageSpanish"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -127,7 +126,7 @@
         app:layout_constraintBottom_toTopOf="@+id/textViewHintsTitle"
         app:layout_constraintTop_toBottomOf="@+id/radioGroupLanguage" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/textViewHintsTitle"
         style="@style/AppTheme.Text.SectionTitle"
         android:layout_width="match_parent"
@@ -137,7 +136,7 @@
         app:layout_constraintBottom_toTopOf="@+id/textViewHintsMessage"
         app:layout_constraintTop_toBottomOf="@+id/dividerHints" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/textViewHintsMessage"
         style="@style/AppTheme.Text.Body"
         android:layout_width="0dp"
@@ -148,7 +147,7 @@
         app:layout_constraintRight_toLeftOf="@+id/buttonResetHints"
         app:layout_constraintTop_toBottomOf="@+id/textViewHintsTitle" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/buttonResetHints"
         style="@style/AppTheme.TextButton"
         android:layout_marginLeft="@dimen/margin_regular"

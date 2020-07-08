@@ -22,20 +22,23 @@ class PreferencesFragment @Inject constructor() : BaseFragment(R.layout.fragment
     }
 
     private fun setupLayout() {
-        layoutSectionGeneral.setOnClickListener {
+        buttonPreferencesGeneral.setOnClickListener {
             findNavController().navigate(R.id.action_fragmentPreferences_to_fragmentPreferencesGeneral)
         }
-        layoutSectionLottery.setOnClickListener {
+        buttonPreferencesLottery.setOnClickListener {
             findNavController().navigate(R.id.action_fragmentPreferences_to_fragmentPreferencesLottery)
         }
-        layoutSectionMyRaffles.setOnClickListener {
+        buttonPreferencesCustomRaffles.setOnClickListener {
             findNavController().navigate(R.id.action_fragmentPreferences_to_fragmentPreferencesCustomRaffle)
         }
 
         setupShareAndRate()
 
         try {
-            val pInfo = requireContext().packageManager.getPackageInfo(requireContext().packageName, 0)
+            val pInfo = requireContext().packageManager.getPackageInfo(
+                requireContext().packageName,
+                0
+            )
             textViewAppVersion.text = getString(R.string.preferences_app_version, pInfo.versionName)
         } catch (ignored: Exception) {
             textViewAppVersion.gone()

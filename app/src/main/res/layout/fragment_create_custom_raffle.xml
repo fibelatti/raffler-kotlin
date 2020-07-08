@@ -5,9 +5,7 @@
     android:id="@+id/layoutRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_background"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
+    android:background="?android:colorBackground"
     android:paddingTop="@dimen/padding_regular"
     android:paddingBottom="@dimen/padding_regular">
 
@@ -24,7 +22,7 @@
 
     <Button
         android:id="@+id/buttonSave"
-        style="@style/AppTheme.ButtonPrimary.Small"
+        style="@style/AppTheme.Button.Small"
         android:layout_marginRight="@dimen/margin_regular"
         android:text="@string/hint_save"
         app:layout_constraintLeft_toRightOf="@+id/layoutTitle"
@@ -33,7 +31,6 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/inputLayoutCustomRaffleDescription"
-        style="@style/AppTheme.InputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_regular"
@@ -54,7 +51,7 @@
             android:textSize="@dimen/text_size_large" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <androidx.appcompat.widget.AppCompatCheckBox
+    <CheckBox
         android:id="@+id/checkboxAddShortcut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -73,11 +70,10 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/inputLayoutCustomRaffleItemDescription"
-        style="@style/AppTheme.InputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_regular"
-        android:layout_marginTop="@dimen/margin_regular"
+        android:layout_marginTop="@dimen/margin_small"
         android:layout_marginRight="@dimen/margin_regular"
         app:layout_constraintBottom_toTopOf="@+id/layoutHintContainer"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -93,12 +89,12 @@
             android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageButton
         android:id="@+id/imageButtonAddItem"
         android:layout_width="@dimen/clickable_area"
         android:layout_height="@dimen/clickable_area"
+        android:background="@null"
         android:layout_marginRight="@dimen/margin_regular"
-        android:padding="@dimen/padding_xsmall"
         app:layout_constraintBottom_toBottomOf="@+id/inputLayoutCustomRaffleItemDescription"
         app:layout_constraintLeft_toRightOf="@+id/inputLayoutCustomRaffleItemDescription"
         app:layout_constraintRight_toRightOf="parent"
@@ -133,9 +129,9 @@
         app:layout_constraintBottom_toTopOf="@+id/buttonRemoveAll"
         app:layout_constraintTop_toBottomOf="@+id/recyclerViewItems" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/buttonRemoveAll"
-        style="@style/AppTheme.TextButton.Small"
+        style="@style/AppTheme.TextButton"
         android:layout_marginRight="@dimen/margin_regular"
         android:text="@string/custom_raffle_create_remove_all_items"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -144,7 +140,7 @@
 
     <Button
         android:id="@+id/buttonDelete"
-        style="@style/AppTheme.ButtonPrimary.Small"
+        style="@style/AppTheme.Button.Small"
         android:layout_marginRight="@dimen/margin_regular"
         android:text="@string/hint_delete"
         android:visibility="gone"
