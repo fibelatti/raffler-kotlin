@@ -9,11 +9,11 @@ import com.fibelatti.core.archcomponents.extension.observe
 import com.fibelatti.core.archcomponents.extension.observeEvent
 import com.fibelatti.core.extension.exhaustive
 import com.fibelatti.core.extension.gone
+import com.fibelatti.core.extension.showStyledDialog
 import com.fibelatti.core.extension.visible
 import com.fibelatti.core.extension.withItemOffsetDecoration
 import com.fibelatti.core.extension.withLinearLayoutManager
 import com.fibelatti.raffler.R
-import com.fibelatti.raffler.core.extension.alertDialogBuilder
 import com.fibelatti.raffler.core.platform.AppConfig
 import com.fibelatti.raffler.core.platform.base.BaseFragment
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModel
@@ -113,7 +113,10 @@ class CustomRaffleDetailsFragment @Inject constructor(
     }
 
     private fun handleInvalidSelectionError(message: String) {
-        alertDialogBuilder {
+        context?.showStyledDialog(
+            dialogStyle = R.style.AppTheme_AlertDialog,
+            dialogBackground = R.drawable.background_contrast_rounded
+        ) {
             setMessage(message)
             setPositiveButton(R.string.hint_ok) { dialog, _ -> dialog.dismiss() }
             show()

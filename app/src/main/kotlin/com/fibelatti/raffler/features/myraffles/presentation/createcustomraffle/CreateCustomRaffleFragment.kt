@@ -18,12 +18,12 @@ import com.fibelatti.core.extension.hideKeyboard
 import com.fibelatti.core.extension.onKeyboardSubmit
 import com.fibelatti.core.extension.orFalse
 import com.fibelatti.core.extension.showError
+import com.fibelatti.core.extension.showStyledDialog
 import com.fibelatti.core.extension.textAsString
 import com.fibelatti.core.extension.visible
 import com.fibelatti.core.extension.withItemOffsetDecoration
 import com.fibelatti.core.extension.withLinearLayoutManager
 import com.fibelatti.raffler.R
-import com.fibelatti.raffler.core.extension.alertDialogBuilder
 import com.fibelatti.raffler.core.platform.base.BaseFragment
 import com.fibelatti.raffler.core.platform.recyclerview.RecyclerViewSwipeToDeleteCallback
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModel
@@ -96,10 +96,12 @@ class CreateCustomRaffleFragment @Inject constructor(
 
     override fun handleError(error: Throwable) {
         super.handleError(error)
-        alertDialogBuilder {
+        context?.showStyledDialog(
+            dialogStyle = R.style.AppTheme_AlertDialog,
+            dialogBackground = R.drawable.background_contrast_rounded
+        ) {
             setMessage(error.message)
             setPositiveButton(R.string.hint_ok) { dialog, _ -> dialog.dismiss() }
-            show()
         }
     }
 
@@ -132,11 +134,13 @@ class CreateCustomRaffleFragment @Inject constructor(
         imageButtonAddItem.setOnClickListener { addItem() }
         buttonRemoveAll.setOnClickListener { createCustomRaffleViewModel.removeAllItems() }
         buttonDelete.setOnClickListener {
-            alertDialogBuilder {
+            context?.showStyledDialog(
+                dialogStyle = R.style.AppTheme_AlertDialog,
+                dialogBackground = R.drawable.background_contrast_rounded
+            ) {
                 setMessage(R.string.alert_confirm_deletion)
                 setPositiveButton(R.string.hint_yes) { _, _ -> createCustomRaffleViewModel.delete() }
                 setNegativeButton(R.string.hint_no) { dialog, _ -> dialog.dismiss() }
-                show()
             }
         }
     }
@@ -195,10 +199,12 @@ class CreateCustomRaffleFragment @Inject constructor(
 
     private fun handleInvalidItemsQuantityError(message: String) {
         if (message.isNotBlank()) {
-            alertDialogBuilder {
+            context?.showStyledDialog(
+                dialogStyle = R.style.AppTheme_AlertDialog,
+                dialogBackground = R.drawable.background_contrast_rounded
+            ) {
                 setMessage(message)
                 setPositiveButton(R.string.hint_ok) { dialog, _ -> dialog.dismiss() }
-                show()
             }
         }
     }
