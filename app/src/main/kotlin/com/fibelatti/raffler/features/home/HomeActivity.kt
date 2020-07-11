@@ -2,6 +2,7 @@ package com.fibelatti.raffler.features.home
 
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.fibelatti.core.extension.visibleIf
@@ -23,16 +24,20 @@ class HomeActivity : BaseActivity(R.layout.activity_home) {
         R.id.fragmentPreferencesCustomRaffle
     )
 
+    private val navHostFragment by lazy {
+        supportFragmentManager.findFragmentById(R.id.fragmentHost) as NavHostFragment
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSupportActionBar(toolbar)
         setupNavigation()
     }
 
-    override fun onSupportNavigateUp() = fragmentHost.findNavController().navigateUp()
+    override fun onSupportNavigateUp() = navHostFragment.findNavController().navigateUp()
 
     private fun setupNavigation() {
-        fragmentHost.findNavController().apply {
+        navHostFragment.findNavController().apply {
             layoutBottomNavigation.setupWithNavController(this)
             addOnDestinationChangedListener { _, destination, _ ->
                 layoutBottomNavigation.visibleIf(
