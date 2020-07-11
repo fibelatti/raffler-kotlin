@@ -58,8 +58,10 @@
     <string name="custom_raffle_add_as_quick_decision_dismissible_hint">Criar um atalho para sortear algo rapidamente pode vir bem a calhar. Como você não possui nenhum sorteio ainda vamos criar o primeiro</string>
     <string name="custom_raffle_description">Nome</string>
     <string name="custom_raffle_add_shortcut">Adicionar atalho</string>
-    <string name="custom_raffle_item_description">Descrição</string>
+    <string name="custom_raffle_item_description">Descrição da opção</string>
     <string name="custom_raffle_edit_title">Editando %s</string>
+    <string name="custom_raffle_create_swipe_right">Deslize uma opção para a direta para edita-la</string>
+    <string name="custom_raffle_create_swipe_left">Deslize uma opção para a esquerda para remove-la</string>
     <string name="custom_raffle_create_remove_all_items">Apagar todos as opções</string>
     <string name="custom_raffle_create_invalid_description">Entre uma descrição válida</string>
     <string name="custom_raffle_create_duplicate">Já existe uma opção com esta descrição</string>

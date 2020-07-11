@@ -58,8 +58,10 @@
     <string name="custom_raffle_add_as_quick_decision_dismissible_hint">Having a raffle added as a shortcut can be handy. Since you don\'t have any yet let\'s create your first one and it will be added as a shortcut</string>
     <string name="custom_raffle_description">Name</string>
     <string name="custom_raffle_add_shortcut">Add as shortcut</string>
-    <string name="custom_raffle_item_description">Description</string>
+    <string name="custom_raffle_item_description">Option description</string>
     <string name="custom_raffle_edit_title">Editing %s</string>
+    <string name="custom_raffle_create_swipe_right">Swipe an option to the right to edit</string>
+    <string name="custom_raffle_create_swipe_left">Swipe an option to the left to remove</string>
     <string name="custom_raffle_create_remove_all_items">Remove all options</string>
     <string name="custom_raffle_create_invalid_description">Enter a valid description</string>
     <string name="custom_raffle_create_duplicate">An option with the same description was already added</string>

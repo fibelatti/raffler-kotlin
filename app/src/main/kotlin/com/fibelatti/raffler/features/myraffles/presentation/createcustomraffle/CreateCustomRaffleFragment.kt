@@ -2,6 +2,10 @@ package com.fibelatti.raffler.features.myraffles.presentation.createcustomraffle
 
 import android.os.Bundle
 import android.view.View
+import android.widget.EditText
+import android.widget.FrameLayout
+import androidx.appcompat.app.AlertDialog
+import androidx.core.view.ViewCompat
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -13,19 +17,21 @@ import com.fibelatti.core.archcomponents.extension.viewModel
 import com.fibelatti.core.extension.addTextChangedListener
 import com.fibelatti.core.extension.clearError
 import com.fibelatti.core.extension.clearText
-import com.fibelatti.core.extension.goneIf
+import com.fibelatti.core.extension.doOnApplyWindowInsets
 import com.fibelatti.core.extension.hideKeyboard
 import com.fibelatti.core.extension.onKeyboardSubmit
 import com.fibelatti.core.extension.orFalse
 import com.fibelatti.core.extension.showError
 import com.fibelatti.core.extension.showStyledDialog
 import com.fibelatti.core.extension.textAsString
+import com.fibelatti.core.extension.toast
 import com.fibelatti.core.extension.visible
 import com.fibelatti.core.extension.withItemOffsetDecoration
 import com.fibelatti.core.extension.withLinearLayoutManager
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.platform.base.BaseFragment
 import com.fibelatti.raffler.core.platform.recyclerview.RecyclerViewSwipeToDeleteCallback
+import com.fibelatti.raffler.core.platform.recyclerview.RecyclerViewSwipeToEditCallback
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModel
 import kotlinx.android.synthetic.main.fragment_create_custom_raffle.*
 import javax.inject.Inject
@@ -67,10 +73,13 @@ class CreateCustomRaffleFragment @Inject constructor(
 
     private val createCustomRaffleViewModel by viewModel { viewModelProvider.createCustomRaffleViewModel() }
 
+    private var initialInsetBottomValue = -1
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupLayout()
         setupRecyclerView()
+        handleKeyboardVisibility()
 
         createCustomRaffleViewModel.run {
             viewLifecycleOwner.observe(error, ::handleError)
@@ -82,6 +91,7 @@ class CreateCustomRaffleFragment @Inject constructor(
             viewLifecycleOwner.observe(invalidDescriptionError, ::handleInvalidDescriptionError)
             viewLifecycleOwner.observe(invalidItemsQuantityError, ::handleInvalidItemsQuantityError)
             viewLifecycleOwner.observe(invalidItemDescriptionError, ::handleInvalidItemDescriptionError)
+            viewLifecycleOwner.observe(invalidEditError) { context?.toast(it) }
             viewLifecycleOwner.observeEvent(onChangedSaved) { handleChangesSaved() }
             viewLifecycleOwner.observeEvent(onDeleted) { handleDeleted() }
         }
@@ -120,11 +130,9 @@ class CreateCustomRaffleFragment @Inject constructor(
         )
 
         editTextCustomRaffleItemDescription.apply {
-            setOnFocusChangeListener { _, hasFocus -> groupCollapsibleViews.goneIf(hasFocus) }
             onBackPressed = {
                 clearFocus()
                 hideKeyboard()
-                groupCollapsibleViews.visible()
             }
             onKeyboardSubmit {
                 addItem()
@@ -151,13 +159,62 @@ class CreateCustomRaffleFragment @Inject constructor(
             .withItemOffsetDecoration(R.dimen.margin_small)
             .adapter = createCustomRaffleAdapter
 
-        val swipeHandler = object : RecyclerViewSwipeToDeleteCallback(requireContext()) {
+        val deleteSwipeHandle = object : RecyclerViewSwipeToDeleteCallback(requireContext()) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 createCustomRaffleViewModel.removeItem(viewHolder.adapterPosition)
             }
         }
+        val editSwipeHandler = object : RecyclerViewSwipeToEditCallback(requireContext()) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val adapterPosition = viewHolder.adapterPosition
+                createCustomRaffleAdapter.notifyItemChanged(adapterPosition)
+                context?.showStyledDialog(
+                    dialogStyle = R.style.AppTheme_AlertDialog,
+                    dialogBackground = R.drawable.background_contrast_rounded
+                ) {
+                    setMessage(getString(
+                        R.string.custom_raffle_edit_title,
+                        createCustomRaffleAdapter.getItems()[adapterPosition].description)
+                    )
+                    setView(R.layout.layout_edit_item_dialog)
+                    setPositiveButton(R.string.hint_ok) { dialog, _ ->
+                        (dialog as AlertDialog).findViewById<EditText>(R.id.editTextEditItemDescription)?.let {
+                            createCustomRaffleViewModel.editItem(adapterPosition, it.textAsString())
+                        }
+                        dialog.dismiss()
+                    }
+                    setNegativeButton(R.string.hint_cancel) { dialog, _ -> dialog.dismiss() }
+                }
+            }
+        }
 
-        ItemTouchHelper(swipeHandler).attachToRecyclerView(recyclerViewItems)
+        ItemTouchHelper(deleteSwipeHandle).attachToRecyclerView(recyclerViewItems)
+        ItemTouchHelper(editSwipeHandler).attachToRecyclerView(recyclerViewItems)
+    }
+
+    private fun handleKeyboardVisibility() {
+        layoutRoot.doOnApplyWindowInsets { _, windowInsets, _, _ ->
+            // This is the first pass, just save the initial inset value
+            if (initialInsetBottomValue == -1) {
+                initialInsetBottomValue = windowInsets.systemWindowInsetBottom
+                return@doOnApplyWindowInsets
+            }
+
+            val keyboardWillAppear = windowInsets.systemWindowInsetBottom > initialInsetBottomValue
+            val paddingBottom = if (keyboardWillAppear) {
+                windowInsets.systemWindowInsetBottom
+            } else {
+                0
+            }
+
+            ViewCompat.setPaddingRelative(
+                recyclerViewItems,
+                recyclerViewItems.paddingStart,
+                recyclerViewItems.paddingTop,
+                recyclerViewItems.paddingEnd,
+                paddingBottom
+            )
+        }
     }
 
     private fun showCustomRaffleNewLayout() {
@@ -173,6 +230,11 @@ class CreateCustomRaffleFragment @Inject constructor(
 
     private fun showCustomRaffleDetails(customRaffleModel: CustomRaffleModel) {
         createCustomRaffleAdapter.submitList(customRaffleModel.items)
+
+        val lp = recyclerViewItems.layoutParams as FrameLayout.LayoutParams
+        val bottom = recyclerViewItems.bottom + lp.bottomMargin + nestedScrollView.paddingBottom
+
+        nestedScrollView.smoothScrollTo(0, bottom)
     }
 
     private fun addItem() {

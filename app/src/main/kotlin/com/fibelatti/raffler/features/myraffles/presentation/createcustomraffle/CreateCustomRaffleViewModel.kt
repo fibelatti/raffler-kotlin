@@ -49,6 +49,8 @@ class CreateCustomRaffleViewModel @Inject constructor(
     private val _invalidItemsQuantityError = MutableLiveData<String>()
     val invalidItemDescriptionError: LiveData<String> get() = _invalidItemDescriptionError
     private val _invalidItemDescriptionError = MutableLiveData<String>()
+    val invalidEditError: LiveData<String> get() = _invalidEditError
+    private val _invalidEditError = MutableLiveData<String>()
     val onChangedSaved: LiveEvent<CustomRaffleModel> get() = _onChangedSaved
     private val _onChangedSaved = MutableLiveEvent<CustomRaffleModel>()
     val onDeleted: LiveEvent<Unit> get() = _onDeleted
@@ -99,8 +101,33 @@ class CreateCustomRaffleViewModel @Inject constructor(
                 val newItem = CustomRaffleItemModel.empty().copy(description = newItemDescription)
                 val raffle = customRaffle.value ?: CustomRaffleModel.empty()
 
-                _customRaffle.postValue(raffle.copy(items = listOf(newItem) + raffle.items))
+                _customRaffle.postValue(raffle.copy(items = raffle.items + newItem))
                 _invalidItemDescriptionError.postValue(String.empty())
+            }
+        }
+    }
+
+    fun editItem(itemPosition: Int, newItemDescription: String) {
+        when {
+            newItemDescription.isBlank() -> return
+            customRaffle.value?.items?.find { it.description == newItemDescription } != null -> {
+                _invalidEditError.postValue(
+                    resourceProvider.getString(R.string.custom_raffle_create_duplicate)
+                )
+            }
+            else -> {
+                val raffle = customRaffle.value ?: return
+                val updatedRaffle = raffle.copy(
+                    items = raffle.items.mapIndexed { index, customRaffleItemModel ->
+                        if (index == itemPosition) {
+                            customRaffleItemModel.copy(description = newItemDescription)
+                        } else {
+                            customRaffleItemModel
+                        }
+                    }
+                )
+
+                _customRaffle.postValue(updatedRaffle)
             }
         }
     }

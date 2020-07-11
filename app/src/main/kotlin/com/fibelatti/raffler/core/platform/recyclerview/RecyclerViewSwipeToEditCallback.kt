@@ -13,15 +13,15 @@ import com.fibelatti.raffler.R
 
 private const val ROUNDED_CORNER_OFFSET = 20
 
-abstract class RecyclerViewSwipeToDeleteCallback(
+abstract class RecyclerViewSwipeToEditCallback(
     context: Context
-) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
 
-    private val deleteIcon = ContextCompat.getDrawable(context, R.drawable.ic_delete)
-    private val intrinsicWidth = deleteIcon?.intrinsicWidth.orZero()
-    private val intrinsicHeight = deleteIcon?.intrinsicHeight.orZero()
+    private val icon = ContextCompat.getDrawable(context, R.drawable.ic_edit)
+    private val intrinsicWidth = icon?.intrinsicWidth.orZero()
+    private val intrinsicHeight = icon?.intrinsicHeight.orZero()
 
-    private val swipeBackground = ContextCompat.getDrawable(context, R.drawable.background_swipe_to_delete)
+    private val swipeBackground = ContextCompat.getDrawable(context, R.drawable.background_swipe_to_edit)
     private val clearPaint = Paint().apply { xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR) }
 
     override fun onMove(
@@ -50,22 +50,22 @@ abstract class RecyclerViewSwipeToDeleteCallback(
                 return@with
             }
 
-            // Draw the red delete background
+            // Draw the background
             swipeBackground?.apply {
-                setBounds(right - ROUNDED_CORNER_OFFSET + dX.toInt(), top, right, bottom)
+                setBounds(left, top, left + ROUNDED_CORNER_OFFSET + dX.toInt(), bottom)
                 draw(canvas)
             }
 
-            // Calculate position of delete icon
-            val deleteIconTop = top + (itemHeight - intrinsicHeight) / 2
-            val deleteIconMargin = (itemHeight - intrinsicHeight) / 2
-            val deleteIconLeft = right - deleteIconMargin - intrinsicWidth
-            val deleteIconRight = right - deleteIconMargin
-            val deleteIconBottom = deleteIconTop + intrinsicHeight
+            // Calculate position of the icon
+            val iconTop = top + (itemHeight - intrinsicHeight) / 2
+            val iconMargin = (itemHeight - intrinsicHeight) / 2
+            val iconLeft = left + iconMargin
+            val iconRight = left + iconMargin + intrinsicWidth
+            val iconBottom = iconTop + intrinsicHeight
 
-            // Draw the delete icon
-            deleteIcon?.run {
-                setBounds(deleteIconLeft, deleteIconTop, deleteIconRight, deleteIconBottom)
+            // Draw the icon
+            icon?.run {
+                setBounds(iconLeft, iconTop, iconRight, iconBottom)
                 draw(canvas)
             }
 
