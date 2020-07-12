@@ -13,6 +13,7 @@ import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.provider.ResourceProvider
 import com.fibelatti.raffler.features.myraffles.FormatVotingResults
 import com.fibelatti.raffler.features.myraffles.data.CustomRaffleVotingDataSource
+import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleItemModel
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -142,12 +143,11 @@ class CustomRaffleVotingViewModel @Inject constructor(
     }
 
     fun setupRandomDecision() {
-        val currentRaffle = ongoingVoting.value ?: return
         val currentVoting = voting.value ?: return
 
-        val newRaffle = currentRaffle.copy(
-            items = currentRaffle.items.map {
-                it.copy(included = it.description in currentVoting.mostVoted.keys)
+        val newRaffle =CustomRaffleModel.empty().copy(
+            items = currentVoting.mostVoted.keys.map {
+                CustomRaffleItemModel.empty().copy(description = it)
             }
         )
 
