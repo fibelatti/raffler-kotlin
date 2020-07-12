@@ -3,8 +3,8 @@ object AppInfo {
     const val applicationId = "com.fibelatti.raffler"
 
     private const val versionMajor = 2
-    private const val versionMinor = 0
-    private const val versionPatch = 2
+    private const val versionMinor = 1
+    private const val versionPatch = 0
     private const val versionBuild = 0
 
     val versionCode: Int = (versionMajor * 1000000 +
