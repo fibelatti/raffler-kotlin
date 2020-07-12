@@ -90,13 +90,19 @@ class CreateCustomRaffleFragment @Inject constructor(
             viewLifecycleOwner.observeEvent(showHint) { showAddAsQuickDecisionHint() }
             viewLifecycleOwner.observe(invalidDescriptionError, ::handleInvalidDescriptionError)
             viewLifecycleOwner.observe(invalidItemsQuantityError, ::handleInvalidItemsQuantityError)
-            viewLifecycleOwner.observe(invalidItemDescriptionError, ::handleInvalidItemDescriptionError)
+            viewLifecycleOwner.observe(
+                invalidItemDescriptionError,
+                ::handleInvalidItemDescriptionError
+            )
             viewLifecycleOwner.observe(invalidEditError) { context?.toast(it) }
             viewLifecycleOwner.observeEvent(onChangedSaved) { handleChangesSaved() }
             viewLifecycleOwner.observeEvent(onDeleted) { handleDeleted() }
         }
 
-        createCustomRaffleViewModel.getCustomRaffleById(arguments?.customRaffleId, arguments?.addAsShortcut)
+        createCustomRaffleViewModel.getCustomRaffleById(
+            arguments?.customRaffleId,
+            arguments?.addAsShortcut
+        )
     }
 
     override fun onDestroyView() {
@@ -147,7 +153,10 @@ class CreateCustomRaffleFragment @Inject constructor(
                 dialogBackground = R.drawable.background_contrast_rounded
             ) {
                 setMessage(R.string.alert_confirm_deletion)
-                setPositiveButton(R.string.hint_yes) { _, _ -> createCustomRaffleViewModel.delete() }
+                setPositiveButton(R.string.hint_yes) { dialog, _ ->
+                    createCustomRaffleViewModel.delete()
+                    dialog.dismiss()
+                }
                 setNegativeButton(R.string.hint_no) { dialog, _ -> dialog.dismiss() }
             }
         }
@@ -172,15 +181,16 @@ class CreateCustomRaffleFragment @Inject constructor(
                     dialogStyle = R.style.AppTheme_AlertDialog,
                     dialogBackground = R.drawable.background_contrast_rounded
                 ) {
-                    setMessage(getString(
-                        R.string.custom_raffle_edit_title,
-                        createCustomRaffleAdapter.getItems()[adapterPosition].description)
+                    setMessage(
+                        getString(
+                            R.string.custom_raffle_edit_title,
+                            createCustomRaffleAdapter.getItems()[adapterPosition].description
+                        )
                     )
                     setView(R.layout.layout_edit_item_dialog)
                     setPositiveButton(R.string.hint_ok) { dialog, _ ->
-                        (dialog as AlertDialog).findViewById<EditText>(R.id.editTextEditItemDescription)?.let {
-                            createCustomRaffleViewModel.editItem(adapterPosition, it.textAsString())
-                        }
+                        (dialog as AlertDialog).findViewById<EditText>(R.id.editTextEditItemDescription)
+                            ?.let { createCustomRaffleViewModel.editItem(adapterPosition, it.textAsString()) }
                         dialog.dismiss()
                     }
                     setNegativeButton(R.string.hint_cancel) { dialog, _ -> dialog.dismiss() }
@@ -223,7 +233,9 @@ class CreateCustomRaffleFragment @Inject constructor(
     }
 
     private fun showCustomRaffleEditLayout(customRaffleModel: CustomRaffleModel) {
-        layoutTitle.setTitle(getString(R.string.custom_raffle_edit_title, customRaffleModel.description))
+        layoutTitle.setTitle(
+            getString(R.string.custom_raffle_edit_title, customRaffleModel.description)
+        )
         editTextCustomRaffleDescription.setText(customRaffleModel.description)
         buttonDelete.visible()
     }

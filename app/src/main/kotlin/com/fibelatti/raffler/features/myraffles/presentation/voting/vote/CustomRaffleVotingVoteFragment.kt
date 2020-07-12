@@ -34,7 +34,12 @@ class CustomRaffleVotingVoteFragment @Inject constructor(
 
     private fun setupLayout(customRaffleVotingModel: CustomRaffleVotingModel) {
         layoutTitle.setNavigateUp { findNavController().navigateUp() }
-        layoutTitle.setTitle(getString(R.string.custom_raffle_voting_title, customRaffleVotingModel.description))
+        layoutTitle.setTitle(
+            getString(
+                R.string.custom_raffle_voting_title,
+                customRaffleVotingModel.description
+            )
+        )
         customRaffleVotingVoteAdapter.submitList(customRaffleVotingModel.votes.map { item -> item.key })
     }
 
@@ -50,9 +55,11 @@ class CustomRaffleVotingVoteFragment @Inject constructor(
                 dialogBackground = R.drawable.background_contrast_rounded
             ) {
                 setMessage(getString(R.string.custom_raffle_voting_confirm_vote, vote))
-                setPositiveButton(R.string.hint_yes) { _, _ -> customRaffleVotingViewModel.vote(vote) }
+                setPositiveButton(R.string.hint_yes) { dialog, _ ->
+                    customRaffleVotingViewModel.vote(vote)
+                    dialog.dismiss()
+                }
                 setNegativeButton(R.string.hint_no) { dialog, _ -> dialog.dismiss() }
-                show()
             }
         }
     }

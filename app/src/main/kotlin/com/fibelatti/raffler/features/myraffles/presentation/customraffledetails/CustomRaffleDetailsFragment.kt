@@ -119,7 +119,6 @@ class CustomRaffleDetailsFragment @Inject constructor(
         ) {
             setMessage(message)
             setPositiveButton(R.string.hint_ok) { dialog, _ -> dialog.dismiss() }
-            show()
         }
     }
 
