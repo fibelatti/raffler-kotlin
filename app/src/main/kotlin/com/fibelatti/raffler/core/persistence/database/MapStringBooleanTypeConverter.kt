@@ -5,6 +5,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
 class MapStringBooleanTypeConverter {
+
     @TypeConverter
     fun fromMap(map: Map<String, Boolean>): String = Gson().toJson(map)
 
@@ -14,7 +15,7 @@ class MapStringBooleanTypeConverter {
 
         return try {
             Gson().fromJson(value, mapType)
-        } catch (e: Exception) {
+        } catch (ignored: Exception) {
             emptyMap()
         }
     }

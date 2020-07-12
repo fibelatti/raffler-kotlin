@@ -4,7 +4,7 @@
     android:id="@+id/layoutRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_background"
+    android:background="?android:colorBackground"
     android:clipToPadding="false"
     android:paddingLeft="@dimen/padding_regular"
     android:paddingTop="@dimen/padding_regular"
@@ -29,7 +29,7 @@
         app:layout_constraintBottom_toTopOf="@+id/textViewLotteryDefaultsTitle"
         app:layout_constraintTop_toBottomOf="@+id/layoutTitle" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/textViewLotteryDefaultsTitle"
         style="@style/AppTheme.Text.SectionTitle"
         android:layout_width="match_parent"
@@ -41,7 +41,6 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/inputLayoutTotalQuantity"
-        style="@style/AppTheme.InputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_small"
@@ -62,7 +61,6 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/inputLayoutRaffleQuantity"
-        style="@style/AppTheme.InputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_small"
@@ -83,8 +81,9 @@
 
     <Button
         android:id="@+id/buttonLotteryDefaults"
-        style="@style/AppTheme.ButtonPrimary.Small"
+        style="@style/AppTheme.Button.Small"
         android:text="@string/preferences_default_lottery_button"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inputLayoutRaffleQuantity" />
 </androidx.constraintlayout.widget.ConstraintLayout>

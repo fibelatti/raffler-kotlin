@@ -1,8 +1,9 @@
 package com.fibelatti.raffler.features.quickdecision
 
-import com.fibelatti.raffler.core.functional.Result
+import com.fibelatti.core.functional.Result
 
 interface QuickDecisionRepository {
+
     suspend fun getAllQuickDecisions(): Result<List<QuickDecision>>
 
     suspend fun getQuickDecisionById(id: String): Result<QuickDecision?>

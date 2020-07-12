@@ -5,6 +5,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
 class MapStringIntTypeConverter {
+
     @TypeConverter
     fun fromMap(map: Map<String, Int>): String = Gson().toJson(map)
 
@@ -14,7 +15,7 @@ class MapStringIntTypeConverter {
 
         return try {
             Gson().fromJson(value, mapType)
-        } catch (e: Exception) {
+        } catch (ignored: Exception) {
             emptyMap()
         }
     }

@@ -5,37 +5,39 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.fibelatti.raffler.features.preferences.data.PREFERENCES_TABLE_INITIAL_SETUP
 
-fun getDatabaseMigrations(): Array<Migration> =
-    arrayOf(
-        MigrationFrom1To2,
-        MigrationFrom2To3,
-        MigrationFrom3To4,
-        MigrationFrom4To5
-    )
+fun getDatabaseMigrations(): Array<Migration> = arrayOf(
+    MigrationFrom1To2,
+    MigrationFrom2To3,
+    MigrationFrom3To4,
+    MigrationFrom4To5
+)
 
 // region Raffler 1 database versions
 object MigrationFrom1To2 : Migration(DATABASE_VERSION_1, DATABASE_VERSION_2) {
+
     override fun migrate(database: SupportSQLiteDatabase) {
-        logMigration()
+        logMigration(tag = "MigrationFrom1To2")
     }
 }
 
 object MigrationFrom2To3 : Migration(DATABASE_VERSION_2, DATABASE_VERSION_3) {
+
     override fun migrate(database: SupportSQLiteDatabase) {
-        logMigration()
+        logMigration(tag = "MigrationFrom2To3")
     }
 }
 
 object MigrationFrom3To4 : Migration(DATABASE_VERSION_3, DATABASE_VERSION_4) {
+
     override fun migrate(database: SupportSQLiteDatabase) {
-        logMigration()
+        logMigration(tag = "MigrationFrom3To4")
     }
 }
 // endregion
 
 object MigrationFrom4To5 : Migration(DATABASE_VERSION_4, DATABASE_VERSION_5) {
     override fun migrate(database: SupportSQLiteDatabase) {
-        logMigration()
+        logMigration("MigrationFrom4To5")
 
         // Drop legacy tables
         database.execSQL("DROP TABLE IF EXISTS quick_decision")
@@ -77,9 +79,9 @@ object MigrationFrom4To5 : Migration(DATABASE_VERSION_4, DATABASE_VERSION_5) {
             // Drop old table
             database.execSQL("DROP TABLE IF EXISTS settings")
 
-            logLegacySuccess()
-        } catch (e: Exception) {
-            logLegacyError()
+            logLegacySuccess("MigrationFrom4To5")
+        } catch (ignored: Exception) {
+            logLegacyError("MigrationFrom4To5")
 
             database.execSQL(PREFERENCES_TABLE_INITIAL_SETUP)
         }
@@ -97,26 +99,24 @@ object MigrationFrom4To5 : Migration(DATABASE_VERSION_4, DATABASE_VERSION_5) {
             database.execSQL("DROP TABLE IF EXISTS groups")
             database.execSQL("DROP TABLE IF EXISTS group_items")
 
-            logLegacySuccess()
-        } catch (e: Exception) {
-            logLegacyError()
+            logLegacySuccess("MigrationFrom4To5")
+        } catch (ignored: Exception) {
+            logLegacyError("MigrationFrom4To5")
         }
         // endregion
     }
 }
 
 // region Logcat
-private fun Migration.tag(): String = javaClass.simpleName
-
-private fun Migration.logMigration() {
-    Log.d(tag(), "Running migration ${tag()}")
+private fun logMigration(tag: String) {
+    Log.d(tag, "Running migration $tag")
 }
 
-private fun Migration.logLegacyError() {
-    Log.d(tag(), "Legacy table not found: no action required")
+private fun logLegacyError(tag: String) {
+    Log.d(tag, "Legacy table not found: no action required")
 }
 
-private fun Migration.logLegacySuccess() {
-    Log.d(tag(), "Legacy table found: data migrated successfully")
+private fun logLegacySuccess(tag: String) {
+    Log.d(tag, "Legacy table found: data migrated successfully")
 }
 // endregion

@@ -1,32 +1,33 @@
 package com.fibelatti.raffler.core.di
 
-import com.fibelatti.raffler.App
+import android.app.Application
 import com.fibelatti.raffler.core.di.modules.CoreModule
-import com.fibelatti.raffler.core.di.modules.LotteryModule
-import com.fibelatti.raffler.core.di.modules.MyRafflesModule
-import com.fibelatti.raffler.core.di.modules.PreferencesModule
-import com.fibelatti.raffler.core.di.modules.QuickDecisionModule
+import com.fibelatti.raffler.core.di.modules.DatabaseModule
+import com.fibelatti.raffler.core.persistence.CurrentInstallSharedPreferences
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
 
-@Component(modules = [
-    CoreModule::class,
-    QuickDecisionModule::class,
-    LotteryModule::class,
-    MyRafflesModule::class,
-    PreferencesModule::class
-])
+@Component(
+    modules = [
+        CoreModule::class,
+        DatabaseModule::class
+    ]
+)
 @Singleton
-interface AppComponent : Injector {
+interface AppComponent {
 
-    @Component.Builder
-    interface Builder {
-        fun build(): AppComponent
+    fun activityComponentFactory(): ActivityComponent.Factory
 
-        @BindsInstance
-        fun application(application: App): Builder
+    fun currentInstallSharedPreferences(): CurrentInstallSharedPreferences
+
+    @Component.Factory
+    interface Factory {
+
+        fun create(@BindsInstance application: Application): AppComponent
     }
+}
 
-    fun inject(application: App)
+interface AppComponentProvider {
+    val appComponent: AppComponent
 }

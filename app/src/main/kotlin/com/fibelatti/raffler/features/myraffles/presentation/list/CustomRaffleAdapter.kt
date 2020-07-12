@@ -1,6 +1,6 @@
 package com.fibelatti.raffler.features.myraffles.presentation.list
 
-import com.fibelatti.raffler.core.platform.base.BaseAdapterWithDelegates
+import com.fibelatti.core.android.base.BaseAdapterWithDelegates
 import com.fibelatti.raffler.core.platform.recyclerview.AddNewDelegateAdapter
 import com.fibelatti.raffler.core.platform.recyclerview.AddNewModel
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModel
@@ -20,14 +20,17 @@ class CustomRaffleAdapter @Inject constructor(
 
     var customRaffleClickListener: (Long) -> Unit = { }
         set(value) {
+            field = value
             customRaffleDelegateAdapter.clickListener = value
         }
     var addNewClickListener: () -> Unit = {}
         set(value) {
+            field = value
             addNewDelegateAdapter.clickListener = value
         }
     var colorList: List<Int> = ArrayList()
         set(value) {
+            field = value
             customRaffleDelegateAdapter.colorList = value
             addNewDelegateAdapter.colorList = value
         }

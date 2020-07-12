@@ -2,11 +2,10 @@ package com.fibelatti.raffler.core.persistence.database
 
 import androidx.room.Room
 import androidx.test.InstrumentationRegistry
-import com.fibelatti.raffler.BaseTest
 import org.junit.After
 import org.junit.Before
 
-abstract class BaseDbTest : BaseTest() {
+abstract class BaseDbTest {
     protected lateinit var appDatabase: AppDatabase
 
     @Before

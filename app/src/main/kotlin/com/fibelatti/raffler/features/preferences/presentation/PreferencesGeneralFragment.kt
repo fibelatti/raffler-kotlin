@@ -1,52 +1,45 @@
 package com.fibelatti.raffler.features.preferences.presentation
 
 import android.os.Bundle
-import android.os.Handler
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.fibelatti.core.archcomponents.extension.observe
+import com.fibelatti.core.archcomponents.extension.observeEvent
+import com.fibelatti.core.archcomponents.extension.viewModel
+import com.fibelatti.core.extension.snackbar
 import com.fibelatti.raffler.R
-import com.fibelatti.raffler.core.extension.error
-import com.fibelatti.raffler.core.extension.observe
-import com.fibelatti.raffler.core.extension.observeEvent
-import com.fibelatti.raffler.core.extension.snackbar
 import com.fibelatti.raffler.core.platform.AppConfig
 import com.fibelatti.raffler.core.platform.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_preferences_general.*
+import javax.inject.Inject
 
-private const val RESTART_DELAY = 1000L
+class PreferencesGeneralFragment @Inject constructor() : BaseFragment(R.layout.fragment_preferences_general) {
 
-class PreferencesGeneralFragment : BaseFragment() {
-
-    private val preferencesViewModel by lazy {
-        viewModelFactory.get<PreferencesViewModel>(requireActivity())
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        preferencesViewModel.run {
-            error(error, ::handleError)
-            observe(preferences) {
-                setupTheme(it.appTheme)
-                setupLanguage(it.appLanguage)
-            }
-            observeEvent(updateFeedback) { layoutRoot.snackbar(it) }
-        }
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        inflater.inflate(R.layout.fragment_preferences_general, container, false)
+    private val preferencesViewModel by viewModel { viewModelProvider.preferencesViewModel() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupLayout()
+
+        viewLifecycleOwner.observe(preferencesViewModel.error, ::handleError)
+        viewLifecycleOwner.observe(preferencesViewModel.preferences) {
+            setupTheme(it.appTheme)
+            setupLanguage(it.appLanguage)
+        }
+        viewLifecycleOwner.observeEvent(preferencesViewModel.updateFeedback) {
+            layoutRoot.snackbar(
+                message = it,
+                background = R.drawable.background_snackbar,
+                textColor = R.color.text_primary
+            )
+        }
+
         preferencesViewModel.getPreferences()
     }
 
     private fun setupLayout() {
         layoutTitle.setTitle(R.string.preferences_section_general)
-        layoutTitle.setNavigateUp { layoutRoot.findNavController().navigateUp() }
+        layoutTitle.setNavigateUp { findNavController().navigateUp() }
         buttonResetHints.setOnClickListener { preferencesViewModel.resetAllHints() }
     }
 
@@ -95,7 +88,7 @@ class PreferencesGeneralFragment : BaseFragment() {
                 }
             }
 
-            Handler().postDelayed({ activity?.recreate() }, RESTART_DELAY)
+            activity?.recreate()
         }
     }
 }

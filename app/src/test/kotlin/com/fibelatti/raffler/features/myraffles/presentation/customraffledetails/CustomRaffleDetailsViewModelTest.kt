@@ -1,6 +1,16 @@
 package com.fibelatti.raffler.features.myraffles.presentation.customraffledetails
 
-import com.fibelatti.raffler.BaseTest
+import com.fibelatti.core.archcomponents.extension.asLiveData
+import com.fibelatti.core.archcomponents.extension.asLiveEvent
+import com.fibelatti.core.archcomponents.test.extension.currentEventShouldBe
+import com.fibelatti.core.archcomponents.test.extension.currentValueShouldBe
+import com.fibelatti.core.functional.Failure
+import com.fibelatti.core.functional.Success
+import com.fibelatti.core.test.extension.givenSuspend
+import com.fibelatti.core.test.extension.mock
+import com.fibelatti.core.test.extension.safeAny
+import com.fibelatti.core.test.extension.verifySuspend
+import com.fibelatti.raffler.BaseViewModelTest
 import com.fibelatti.raffler.MockDataProvider
 import com.fibelatti.raffler.MockDataProvider.mockCustomRaffle
 import com.fibelatti.raffler.MockDataProvider.mockCustomRaffleItem
@@ -8,16 +18,6 @@ import com.fibelatti.raffler.MockDataProvider.mockCustomRaffleItemModel
 import com.fibelatti.raffler.MockDataProvider.mockCustomRaffleModel
 import com.fibelatti.raffler.MockDataProvider.mockPreferences
 import com.fibelatti.raffler.R
-import com.fibelatti.raffler.core.extension.asLiveData
-import com.fibelatti.raffler.core.extension.asLiveEvent
-import com.fibelatti.raffler.core.extension.givenSuspend
-import com.fibelatti.raffler.core.extension.mock
-import com.fibelatti.raffler.core.extension.safeAny
-import com.fibelatti.raffler.core.extension.currentValueShouldBe
-import com.fibelatti.raffler.core.extension.currentEventShouldBe
-import com.fibelatti.raffler.core.extension.verifySuspend
-import com.fibelatti.raffler.core.functional.Failure
-import com.fibelatti.raffler.core.functional.Success
 import com.fibelatti.raffler.core.platform.AppConfig
 import com.fibelatti.raffler.core.provider.ResourceProvider
 import com.fibelatti.raffler.features.myraffles.CustomRaffleRepository
@@ -25,8 +25,8 @@ import com.fibelatti.raffler.features.myraffles.RememberRaffled
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModel
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModelMapper
 import com.fibelatti.raffler.features.preferences.PreferencesRepository
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.ArgumentMatchers.anyLong
 import org.mockito.BDDMockito.given
@@ -35,7 +35,7 @@ import org.mockito.Mockito.spy
 import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
 
-class CustomRaffleDetailsViewModelTest : BaseTest() {
+class CustomRaffleDetailsViewModelTest : BaseViewModelTest() {
 
     private val mockPreferencesRepository = mock<PreferencesRepository>()
     private val mockCustomRaffleRepository = mock<CustomRaffleRepository>()
@@ -48,7 +48,7 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
 
     private lateinit var viewModel: CustomRaffleDetailsViewModel
 
-    @Before
+    @BeforeEach
     fun setup() {
         given(mockResourceProvider.getString(anyInt()))
             .willReturn(MockDataProvider.genericString)
@@ -60,8 +60,7 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
             mockCustomRaffleRepository,
             mockCustomRaffleModelMapper,
             mockRememberRaffled,
-            mockResourceProvider,
-            testCoroutineLauncher
+            mockResourceProvider
         ))
 
         viewModel.showHint currentEventShouldBe Unit
@@ -491,7 +490,9 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
         val initialCustomRaffle = mockCustomRaffleModel(items = mutableListOf(firstItem, secondItem))
         val initialToggleState = CustomRaffleDetailsViewModel.ToggleState.INCLUDE_ALL
 
-        val expectedRaffleModel = initialCustomRaffle.apply { items.forEach { it.included = true } }
+        val expectedRaffleModel = initialCustomRaffle.copy(
+            items = initialCustomRaffle.items.map { it.copy(included = true) }
+        )
         val expectedToggleState = CustomRaffleDetailsViewModel.ToggleState.EXCLUDE_ALL
 
         given(viewModel.customRaffle)
@@ -520,7 +521,9 @@ class CustomRaffleDetailsViewModelTest : BaseTest() {
         val initialCustomRaffle = mockCustomRaffleModel(items = mutableListOf(firstItem, secondItem))
         val initialToggleState = CustomRaffleDetailsViewModel.ToggleState.EXCLUDE_ALL
 
-        val expectedRaffleModel = initialCustomRaffle.apply { items.forEach { it.included = false } }
+        val expectedRaffleModel = initialCustomRaffle.copy(
+            items = initialCustomRaffle.items.map { it.copy(included = false) }
+        )
         val expectedToggleState = CustomRaffleDetailsViewModel.ToggleState.INCLUDE_ALL
 
         given(viewModel.customRaffle)

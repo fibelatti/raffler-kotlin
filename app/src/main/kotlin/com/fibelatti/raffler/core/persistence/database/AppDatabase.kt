@@ -15,6 +15,7 @@ import com.fibelatti.raffler.features.quickdecision.data.QuickDecisionDao
 import com.fibelatti.raffler.features.quickdecision.data.QuickDecisionDto
 
 const val DATABASE_NAME = "com.fibelatti.raffler.db"
+
 // region Database Versions
 const val DATABASE_VERSION_1 = 1
 const val DATABASE_VERSION_2 = 2
@@ -40,6 +41,7 @@ const val DATABASE_VERSION_5 = 5
     MapStringIntTypeConverter::class
 )
 abstract class AppDatabase : RoomDatabase() {
+
     abstract fun getQuickDecisionDao(): QuickDecisionDao
     abstract fun getCustomRaffleDao(): CustomRaffleDao
     abstract fun getCustomRaffleItemDao(): CustomRaffleItemDao

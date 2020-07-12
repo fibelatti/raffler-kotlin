@@ -6,10 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageButton
         android:id="@+id/buttonNavigateBack"
-        style="@style/AppTheme.ClickableIcon"
+        android:layout_width="@dimen/clickable_area"
+        android:layout_height="@dimen/clickable_area"
         android:layout_marginRight="@dimen/margin_regular"
+        android:background="@null"
         android:visibility="gone"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/textViewTitle"
@@ -17,7 +19,7 @@
         app:srcCompat="@drawable/ic_back_arrow"
         tools:visibility="visible" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/textViewTitle"
         style="@style/AppTheme.Text.Title"
         android:layout_width="0dp"

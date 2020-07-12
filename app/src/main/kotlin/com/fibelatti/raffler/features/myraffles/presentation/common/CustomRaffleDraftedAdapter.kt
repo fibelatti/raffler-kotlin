@@ -1,9 +1,9 @@
 package com.fibelatti.raffler.features.myraffles.presentation.common
 
 import android.view.View
+import com.fibelatti.core.android.base.BaseAdapter
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.extension.setShapeBackgroundColor
-import com.fibelatti.raffler.core.platform.base.BaseAdapter
 import kotlinx.android.synthetic.main.list_item_custom_raffle_drafted_item.view.*
 import javax.inject.Inject
 

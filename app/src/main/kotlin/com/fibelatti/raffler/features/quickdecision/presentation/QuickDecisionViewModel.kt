@@ -1,21 +1,21 @@
 package com.fibelatti.raffler.features.quickdecision.presentation
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.fibelatti.raffler.core.extension.random
-import com.fibelatti.raffler.core.functional.Failure
-import com.fibelatti.raffler.core.functional.Success
-import com.fibelatti.raffler.core.functional.error
-import com.fibelatti.raffler.core.functional.mapCatching
-import com.fibelatti.raffler.core.functional.value
+import com.fibelatti.core.archcomponents.BaseViewModel
+import com.fibelatti.core.archcomponents.LiveEvent
+import com.fibelatti.core.archcomponents.MutableLiveEvent
+import com.fibelatti.core.archcomponents.postEvent
+import com.fibelatti.core.functional.Failure
+import com.fibelatti.core.functional.Success
+import com.fibelatti.core.functional.error
+import com.fibelatti.core.functional.mapCatching
+import com.fibelatti.core.functional.value
 import com.fibelatti.raffler.core.platform.AppConfig.LOCALE_NONE
-import com.fibelatti.raffler.core.platform.MutableLiveEvent
-import com.fibelatti.raffler.core.platform.base.BaseViewModel
-import com.fibelatti.raffler.core.platform.postEvent
-import com.fibelatti.raffler.core.provider.CoroutineLauncher
 import com.fibelatti.raffler.features.myraffles.CustomRaffleRepository
 import com.fibelatti.raffler.features.preferences.PreferencesRepository
-import com.fibelatti.raffler.features.quickdecision.QuickDecision
 import com.fibelatti.raffler.features.quickdecision.QuickDecisionRepository
+import kotlinx.coroutines.launch
 import java.util.Locale
 import javax.inject.Inject
 
@@ -24,62 +24,51 @@ class QuickDecisionViewModel @Inject constructor(
     private val quickDecisionRepository: QuickDecisionRepository,
     private val customRaffleRepository: CustomRaffleRepository,
     private val preferencesRepository: PreferencesRepository,
-    private val quickDecisionModelMapper: QuickDecisionModelMapper,
-    coroutineLauncher: CoroutineLauncher
-) : BaseViewModel(coroutineLauncher) {
+    private val quickDecisionModelMapper: QuickDecisionModelMapper
+) : BaseViewModel() {
 
-    val state by lazy { MutableLiveData<State>() }
-    val showHint by lazy { MutableLiveEvent<Unit>() }
+    val quickDecisionList: LiveData<QuickDecisionList> get() = _quickDecisionList
+    private val _quickDecisionList = MutableLiveData<QuickDecisionList>()
+    val showHint: LiveEvent<Unit> get() = _showHint
+    private val _showHint = MutableLiveEvent<Unit>()
+
+    init {
+        launch {
+            if (!preferencesRepository.getQuickDecisionHintDisplayed()) {
+                _showHint.postEvent(Unit)
+            }
+        }
+    }
 
     fun getAllQuickDecisions() {
-        start {
-            checkForHints()
-
-            val quickDecisions = callInBackground {
-                quickDecisionRepository.getAllQuickDecisions()
-                    .mapCatching { it.filterByLocale() }
-            }
-            val customRaffles = callInBackground { customRaffleRepository.getAllCustomRaffles() }
+        launch {
+            val quickDecisions = quickDecisionRepository.getAllQuickDecisions()
+                .mapCatching { quickDecisions ->
+                    quickDecisions.filter { it.locale == locale.language || it.locale == LOCALE_NONE }
+                        .let(quickDecisionModelMapper::mapList)
+                }
+            val customRaffles = customRaffleRepository.getAllCustomRaffles()
 
             when {
                 quickDecisions is Success && customRaffles is Success -> {
-                    showQuickDecisions(quickDecisions.value, hasCustomRaffles = customRaffles.value.isNotEmpty())
+                    showQuickDecisions(
+                        quickDecisions.value,
+                        hasCustomRaffles = customRaffles.value.isNotEmpty()
+                    )
                 }
-                quickDecisions is Success -> {
-                    showQuickDecisions(quickDecisions.value)
-                }
-                quickDecisions is Failure -> {
-                    handleError(quickDecisions.error)
-                }
+                quickDecisions is Success -> showQuickDecisions(quickDecisions.value)
+                quickDecisions is Failure -> handleError(quickDecisions.error)
             }
         }
-    }
-
-    fun getQuickDecisionResult(quickDecision: QuickDecisionModel, color: Int) {
-        state.postValue(State.ShowResult(quickDecision.description, quickDecision.values.random(), color))
     }
 
     fun hintDismissed() {
-        startInBackground { preferencesRepository.setQuickDecisionHintDismissed() }
+        launch { preferencesRepository.setQuickDecisionHintDismissed() }
     }
-
-    private fun checkForHints() {
-        startInBackground {
-            if (!preferencesRepository.getQuickDecisionHintDisplayed()) {
-                showHint.postEvent(Unit)
-            }
-        }
-    }
-
-    private fun List<QuickDecision>.filterByLocale(): List<QuickDecisionModel> =
-        filter { it.locale == locale.language || it.locale == LOCALE_NONE }.let(quickDecisionModelMapper::mapList)
 
     private fun showQuickDecisions(list: List<QuickDecisionModel>, hasCustomRaffles: Boolean = false) {
-        state.postValue(State.ShowList(list, hasCustomRaffles))
+        _quickDecisionList.postValue(QuickDecisionList(list, hasCustomRaffles))
     }
 
-    sealed class State {
-        data class ShowList(val quickDecisions: List<QuickDecisionModel>, val hasCustomRaffles: Boolean) : State()
-        data class ShowResult(val title: String, val result: String, val color: Int) : State()
-    }
+    data class QuickDecisionList(val quickDecisions: List<QuickDecisionModel>, val hasCustomRaffles: Boolean)
 }

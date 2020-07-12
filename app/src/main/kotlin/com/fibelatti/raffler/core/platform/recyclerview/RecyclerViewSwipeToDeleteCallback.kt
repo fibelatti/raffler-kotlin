@@ -8,18 +8,21 @@ import android.graphics.PorterDuffXfermode
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.fibelatti.core.extension.orZero
 import com.fibelatti.raffler.R
-import com.fibelatti.raffler.core.extension.orZero
 
 private const val ROUNDED_CORNER_OFFSET = 20
 
-abstract class RecyclerViewSwipeToDeleteCallback(context: Context) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-    private val deleteIcon by lazy { ContextCompat.getDrawable(context, R.drawable.ic_delete) }
-    private val intrinsicWidth by lazy { deleteIcon?.intrinsicWidth.orZero() }
-    private val intrinsicHeight by lazy { deleteIcon?.intrinsicHeight.orZero() }
+abstract class RecyclerViewSwipeToDeleteCallback(
+    context: Context
+) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
 
-    private val swipeBackground by lazy { ContextCompat.getDrawable(context, R.drawable.background_swipe_to_delete) }
-    private val clearPaint by lazy { Paint().apply { xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR) } }
+    private val deleteIcon = ContextCompat.getDrawable(context, R.drawable.ic_delete)
+    private val intrinsicWidth = deleteIcon?.intrinsicWidth.orZero()
+    private val intrinsicHeight = deleteIcon?.intrinsicHeight.orZero()
+
+    private val swipeBackground = ContextCompat.getDrawable(context, R.drawable.background_swipe_to_delete)
+    private val clearPaint = Paint().apply { xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR) }
 
     override fun onMove(
         recyclerView: RecyclerView,
@@ -27,6 +30,7 @@ abstract class RecyclerViewSwipeToDeleteCallback(context: Context) : ItemTouchHe
         target: RecyclerView.ViewHolder
     ): Boolean = false
 
+    @Suppress("MagicNumber")
     override fun onChildDraw(
         canvas: Canvas,
         recyclerView: RecyclerView,
@@ -38,12 +42,12 @@ abstract class RecyclerViewSwipeToDeleteCallback(context: Context) : ItemTouchHe
     ) {
         with(viewHolder.itemView) {
             val itemHeight = bottom - top
-            val isCanceled = dX == 0f && !isCurrentlyActive
+            val isCanceled = dX <= 200F && !isCurrentlyActive
 
             if (isCanceled) {
                 clearCanvas(canvas, right + dX, top.toFloat(), right.toFloat(), bottom.toFloat())
                 super.onChildDraw(canvas, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-                return
+                return@with
             }
 
             // Draw the red delete background

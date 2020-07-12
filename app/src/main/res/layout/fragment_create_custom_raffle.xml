@@ -5,9 +5,7 @@
     android:id="@+id/layoutRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_background"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
+    android:background="?android:colorBackground"
     android:paddingTop="@dimen/padding_regular"
     android:paddingBottom="@dimen/padding_regular">
 
@@ -24,16 +22,16 @@
 
     <Button
         android:id="@+id/buttonSave"
-        style="@style/AppTheme.ButtonPrimary.Small"
+        style="@style/AppTheme.Button.Small"
         android:layout_marginRight="@dimen/margin_regular"
         android:text="@string/hint_save"
+        app:layout_constraintBottom_toBottomOf="@+id/layoutTitle"
         app:layout_constraintLeft_toRightOf="@+id/layoutTitle"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/layoutTitle" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/inputLayoutCustomRaffleDescription"
-        style="@style/AppTheme.InputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_regular"
@@ -50,11 +48,10 @@
             android:layout_height="wrap_content"
             android:hint="@string/custom_raffle_description"
             android:imeOptions="actionDone"
-            android:singleLine="true"
-            android:textSize="@dimen/text_size_large" />
+            android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <androidx.appcompat.widget.AppCompatCheckBox
+    <CheckBox
         android:id="@+id/checkboxAddShortcut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -65,26 +62,19 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inputLayoutCustomRaffleDescription" />
 
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/groupCollapsibleViews"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:constraint_referenced_ids="inputLayoutCustomRaffleDescription,checkboxAddShortcut" />
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/inputLayoutCustomRaffleItemDescription"
-        style="@style/AppTheme.InputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_regular"
-        android:layout_marginTop="@dimen/margin_regular"
+        android:layout_marginTop="@dimen/margin_small"
         android:layout_marginRight="@dimen/margin_regular"
         app:layout_constraintBottom_toTopOf="@+id/layoutHintContainer"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/imageButtonAddItem"
         app:layout_constraintTop_toBottomOf="@+id/checkboxAddShortcut">
 
-        <com.fibelatti.raffler.core.platform.customview.BackPressReactiveTextInputEditText
+        <com.fibelatti.core.android.customview.BackPressReactiveTextInputEditText
             android:id="@+id/editTextCustomRaffleItemDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -93,12 +83,12 @@
             android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageButton
         android:id="@+id/imageButtonAddItem"
         android:layout_width="@dimen/clickable_area"
         android:layout_height="@dimen/clickable_area"
         android:layout_marginRight="@dimen/margin_regular"
-        android:padding="@dimen/padding_xsmall"
+        android:background="@null"
         app:layout_constraintBottom_toBottomOf="@+id/inputLayoutCustomRaffleItemDescription"
         app:layout_constraintLeft_toRightOf="@+id/inputLayoutCustomRaffleItemDescription"
         app:layout_constraintRight_toRightOf="parent"
@@ -110,17 +100,27 @@
         layout="@layout/layout_hint_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerViewItems"
+        app:layout_constraintBottom_toTopOf="@+id/nestedScrollView"
         app:layout_constraintTop_toBottomOf="@+id/inputLayoutCustomRaffleItemDescription" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewItems"
-        style="@style/AppTheme.RecyclerView"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/dividerDeleteAll"
-        app:layout_constraintTop_toBottomOf="@+id/layoutHintContainer"
-        tools:listitem="@layout/list_item_create_custom_raffle_item" />
+        app:layout_constraintTop_toBottomOf="@+id/layoutHintContainer">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewItems"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:paddingStart="@dimen/padding_regular"
+            android:paddingTop="@dimen/padding_regular"
+            android:paddingEnd="@dimen/padding_regular"
+            tools:listitem="@layout/list_item_create_custom_raffle_item" />
+    </androidx.core.widget.NestedScrollView>
 
     <include
         android:id="@+id/dividerDeleteAll"
@@ -130,21 +130,44 @@
         android:layout_marginLeft="@dimen/margin_regular"
         android:layout_marginRight="@dimen/margin_regular"
         android:layout_marginBottom="@dimen/margin_regular"
-        app:layout_constraintBottom_toTopOf="@+id/buttonRemoveAll"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerViewItems" />
+        app:layout_constraintBottom_toTopOf="@+id/textViewSwipeRight"
+        app:layout_constraintTop_toBottomOf="@+id/nestedScrollView" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
+        android:id="@+id/textViewSwipeRight"
+        style="@style/AppTheme.Text.Detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/padding_regular"
+        android:paddingEnd="@dimen/padding_regular"
+        android:text="@string/custom_raffle_create_swipe_right"
+        app:layout_constraintBottom_toTopOf="@+id/textViewSwipeLeft"
+        app:layout_constraintTop_toBottomOf="@+id/dividerDeleteAll" />
+
+    <TextView
+        android:id="@+id/textViewSwipeLeft"
+        style="@style/AppTheme.Text.Detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/padding_regular"
+        android:paddingEnd="@dimen/padding_regular"
+        android:paddingBottom="@dimen/padding_small"
+        android:text="@string/custom_raffle_create_swipe_left"
+        app:layout_constraintBottom_toTopOf="@+id/buttonRemoveAll"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSwipeRight" />
+
+    <TextView
         android:id="@+id/buttonRemoveAll"
-        style="@style/AppTheme.TextButton.Small"
+        style="@style/AppTheme.TextButton"
         android:layout_marginRight="@dimen/margin_regular"
         android:text="@string/custom_raffle_create_remove_all_items"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/buttonDelete"
-        app:layout_constraintTop_toBottomOf="@+id/dividerDeleteAll" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewSwipeLeft" />
 
     <Button
         android:id="@+id/buttonDelete"
-        style="@style/AppTheme.ButtonPrimary.Small"
+        style="@style/AppTheme.Button.Small"
         android:layout_marginRight="@dimen/margin_regular"
         android:text="@string/hint_delete"
         android:visibility="gone"

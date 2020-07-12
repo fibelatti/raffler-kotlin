@@ -4,7 +4,7 @@
     android:id="@+id/layoutRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_background"
+    android:background="?android:colorBackground"
     android:paddingTop="@dimen/padding_regular">
 
     <include
@@ -17,7 +17,6 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/inputLayoutTotalQuantity"
-        style="@style/AppTheme.InputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_regular"
@@ -40,7 +39,6 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/inputLayoutRaffleQuantity"
-        style="@style/AppTheme.InputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin_regular"

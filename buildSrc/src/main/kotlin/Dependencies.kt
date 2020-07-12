@@ -1,85 +1,70 @@
 object Versions {
-    const val gradlePluginVersion = "3.2.1"
-    const val kotlinVersion = "1.3.0"
-    const val dexCountPlugin = "0.8.2"
-    const val jacocoVersion = "0.8.1"
+    const val minSdkVersion = 21
+    const val targetSdkVersion = 29
+    const val compileSdkVersion = 29
 
-    const val minSdkVersion = 19
-    const val targetSdkVersion = 28
-    const val compileSdkVersion = 28
-
-    const val buildToolsVersion = "28.0.3"
-
-    internal const val appCompatVersion = "1.0.0"
-    internal const val materialDesignVersion = "1.0.0"
-    internal const val constraintLayoutVersion = "2.0.0-alpha1"
-
-    internal const val coroutinesCoreVersion = "1.0.0"
-    internal const val coroutinesAndroidVersion = "1.0.0"
-
-    internal const val archComponentsVersion = "2.0.0"
-    internal const val navigationVersion = "1.0.0-alpha06"
-
-    internal const val daggerVersion = "2.17"
-
-    internal const val gsonVersion = "2.8.5"
-
-    internal const val jUnitVersion = "4.12"
-    internal const val testRunnerVersion = "1.0.1"
-    internal const val mockitoVersion = "2.23.0"
-    internal const val mockitoAndroidVersion = "2.18.3"
-    internal const val junit5pluginVersion = "1.2.0.0"
-    internal const val junit5Version = "5.2.0"
+    internal const val kotlinVersion = "1.3.72"
+    internal const val coroutinesVersion = "1.3.7"
+    internal const val lifecycleVersion = "2.2.0"
+    internal const val roomVersion = "2.2.5"
 }
 
 object Classpaths {
-    val gradlePlugin = "com.android.tools.build:gradle:${Versions.gradlePluginVersion}"
-    val kotlinPlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlinVersion}"
-    val junit5Plugin = "de.mannodermaus.gradle.plugins:android-junit5:${Versions.junit5pluginVersion}"
-    val jacocoPlugin = "org.jacoco:org.jacoco.core:${Versions.jacocoVersion}"
-    val dexCountPlugin = "com.getkeepsafe.dexcount:dexcount-gradle-plugin:${Versions.dexCountPlugin}"
+    const val gradlePlugin = "com.android.tools.build:gradle:4.0.0"
+    const val kotlinPlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlinVersion}"
 }
 
-object KotlinDependencies {
-    val kotlin = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlinVersion}"
-    val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutinesCoreVersion}"
-    val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutinesAndroidVersion}"
-}
+object Dependencies {
+    const val kotlin = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlinVersion}"
+    const val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutinesVersion}"
+    const val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutinesVersion}"
 
-object SupportLibraryDependencies {
-    val supportLibrary = "androidx.appcompat:appcompat:${Versions.appCompatVersion}"
-    val materialDesign = "com.google.android.material:material:${Versions.materialDesignVersion}"
-    val constraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.constraintLayoutVersion}"
-}
+    const val appCompat = "androidx.appcompat:appcompat:1.1.0"
+    const val activity = "androidx.activity:activity-ktx:1.1.0"
+    const val fragments = "androidx.fragment:fragment-ktx:1.2.4"
+    const val supportAnnotations = "androidx.annotation:annotation:1.1.0"
+    const val materialDesign = "com.google.android.material:material:1.2.0-beta01"
+    const val constraintLayout = "androidx.constraintlayout:constraintlayout:2.0.0-beta6"
 
-object ArchitectureComponentDependencies {
-    val archComponents = "androidx.lifecycle:lifecycle-extensions:${Versions.archComponentsVersion}"
-    val archComponentsCompiler = "androidx.lifecycle:lifecycle-compiler:${Versions.archComponentsVersion}"
-    val room = "androidx.room:room-runtime:${Versions.archComponentsVersion}"
-    val roomCompiler = "androidx.room:room-compiler:${Versions.archComponentsVersion}"
-    val navigationFragment = "android.arch.navigation:navigation-fragment-ktx:${Versions.navigationVersion}"
-    val navigationUi = "android.arch.navigation:navigation-ui-ktx:${Versions.navigationVersion}"
-}
+    const val coreLib = "com.fibelatti.core:core:2.0.0-alpha4"
+    const val coreLibArch = "com.fibelatti.core:arch-components:2.0.0-alpha4"
 
-object DIDependencies {
-    val dagger = "com.google.dagger:dagger:${Versions.daggerVersion}"
-    val daggerCompiler = "com.google.dagger:dagger-compiler:${Versions.daggerVersion}"
-}
+    const val archComponents = "androidx.lifecycle:lifecycle-extensions:${Versions.lifecycleVersion}"
+    const val archComponentsCompiler = "androidx.lifecycle:lifecycle-compiler:${Versions.lifecycleVersion}"
 
-object ThirdPartyDependencies {
-    val gson = "com.google.code.gson:gson:${Versions.gsonVersion}"
+    const val room = "androidx.room:room-runtime:${Versions.roomVersion}"
+    const val roomCompiler = "androidx.room:room-compiler:${Versions.roomVersion}"
+
+    const val navigationFragment = "androidx.navigation:navigation-fragment-ktx:2.3.0"
+    const val navigationUi = "androidx.navigation:navigation-ui-ktx:2.3.0"
+
+    private const val daggerVersion = "2.27"
+
+    const val dagger = "com.google.dagger:dagger:$daggerVersion"
+    const val daggerCompiler = "com.google.dagger:dagger-compiler:$daggerVersion"
+
+    const val gson = "com.google.code.gson:gson:2.8.5"
+
+    const val playCore = "com.google.android.play:core:1.6.5"
+
+    const val leakCanary = "com.squareup.leakcanary:leakcanary-android:2.2"
 }
 
 object TestDependencies {
-    val junit = "junit:junit:${Versions.jUnitVersion}"
-    val junit5 = "org.junit.jupiter:junit-jupiter-api:${Versions.junit5Version}"
-    val junit5Engine = "org.junit.jupiter:junit-jupiter-engine:${Versions.junit5Version}"
-    val junit5Params = "org.junit.jupiter:junit-jupiter-params:${Versions.junit5Version}"
-    val junitVintage = "org.junit.vintage:junit-vintage-engine:${Versions.junit5Version}"
-    val testRunner = "com.android.support.test:runner:${Versions.testRunnerVersion}"
-    val kotlinTest = "org.jetbrains.kotlin:kotlin-test-junit:${Versions.kotlinVersion}"
-    val mockitoCore = "org.mockito:mockito-core:${Versions.mockitoVersion}"
-    val mockitoAndroid = "org.mockito:mockito-android:${Versions.mockitoAndroidVersion}"
-    val supportAnnotations = "androidx.annotation:annotation:${Versions.appCompatVersion}"
-    val archComponentsTest = "android.arch.core:core-testing:${Versions.archComponentsVersion}"
+    private const val junit5Version = "5.6.0"
+
+    const val coreLibTest = "com.fibelatti.core:core-test:2.0.0-alpha3"
+    const val coreLibArchTest = "com.fibelatti.core:arch-components-test:2.0.0-alpha3"
+
+    const val junit = "junit:junit:4.13"
+    const val junit5 = "org.junit.jupiter:junit-jupiter-api:$junit5Version"
+    const val junit5Engine = "org.junit.jupiter:junit-jupiter-engine:$junit5Version"
+    const val junit5Params = "org.junit.jupiter:junit-jupiter-params:$junit5Version"
+    const val junitVintage = "org.junit.vintage:junit-vintage-engine:$junit5Version"
+    const val testRunner = "com.android.support.test:runner:1.1.0"
+    const val kotlinTest = "org.jetbrains.kotlin:kotlin-test-junit:${Versions.kotlinVersion}"
+    const val coroutinesTest = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutinesVersion}"
+    const val mockitoCore = "org.mockito:mockito-inline:3.2.4"
+    const val archComponentsTest = "android.arch.core:core-testing:${Versions.lifecycleVersion}"
+    const val roomTest = "android.arch.persistence.room:testing:${Versions.roomVersion}"
 }

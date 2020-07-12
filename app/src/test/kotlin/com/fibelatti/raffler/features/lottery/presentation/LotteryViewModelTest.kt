@@ -1,23 +1,23 @@
 package com.fibelatti.raffler.features.lottery.presentation
 
-import com.fibelatti.raffler.BaseTest
+import com.fibelatti.core.archcomponents.test.extension.currentValueShouldBe
+import com.fibelatti.core.archcomponents.test.extension.shouldNeverReceiveValues
+import com.fibelatti.core.extension.empty
+import com.fibelatti.core.functional.Success
+import com.fibelatti.core.test.extension.givenSuspend
+import com.fibelatti.core.test.extension.mock
+import com.fibelatti.core.test.extension.safeAny
+import com.fibelatti.raffler.BaseViewModelTest
 import com.fibelatti.raffler.MockDataProvider
-import com.fibelatti.raffler.core.extension.empty
-import com.fibelatti.raffler.core.extension.givenSuspend
-import com.fibelatti.raffler.core.extension.mock
-import com.fibelatti.raffler.core.extension.safeAny
-import com.fibelatti.raffler.core.extension.shouldNeverReceiveValues
-import com.fibelatti.raffler.core.extension.currentValueShouldBe
-import com.fibelatti.raffler.core.functional.Success
 import com.fibelatti.raffler.core.provider.ResourceProvider
 import com.fibelatti.raffler.features.preferences.Preferences
 import com.fibelatti.raffler.features.preferences.PreferencesRepository
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.BDDMockito.given
 
-class LotteryViewModelTest : BaseTest() {
+class LotteryViewModelTest : BaseViewModelTest() {
 
     private val mockPreferencesRepository = mock<PreferencesRepository>()
     private val mockLotteryNumberModelMapper = mock<LotteryNumberModelMapper>()
@@ -28,7 +28,7 @@ class LotteryViewModelTest : BaseTest() {
 
     private lateinit var viewModel: LotteryViewModel
 
-    @Before
+    @BeforeEach
     fun setup() {
         given(mockResourceProvider.getString(anyInt()))
             .willReturn(MockDataProvider.genericString)
@@ -44,8 +44,7 @@ class LotteryViewModelTest : BaseTest() {
         viewModel = LotteryViewModel(
             mockPreferencesRepository,
             mockLotteryNumberModelMapper,
-            mockResourceProvider,
-            testCoroutineLauncher
+            mockResourceProvider
         )
 
         viewModel.defaultQuantityAvailable currentValueShouldBe MockDataProvider.genericString

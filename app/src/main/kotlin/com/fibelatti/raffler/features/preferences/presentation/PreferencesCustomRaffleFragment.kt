@@ -1,54 +1,50 @@
 package com.fibelatti.raffler.features.preferences.presentation
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.fibelatti.core.archcomponents.extension.observe
+import com.fibelatti.core.archcomponents.extension.observeEvent
+import com.fibelatti.core.archcomponents.extension.viewModel
+import com.fibelatti.core.extension.snackbar
 import com.fibelatti.raffler.R
-import com.fibelatti.raffler.core.extension.error
-import com.fibelatti.raffler.core.extension.observe
-import com.fibelatti.raffler.core.extension.observeEvent
-import com.fibelatti.raffler.core.extension.snackbar
 import com.fibelatti.raffler.core.platform.AppConfig
 import com.fibelatti.raffler.core.platform.base.BaseFragment
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModes
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModesDelegate
 import kotlinx.android.synthetic.main.fragment_preferences_custom_raffle.*
+import javax.inject.Inject
 
-class PreferencesCustomRaffleFragment :
-    BaseFragment(),
-    CustomRaffleModes by CustomRaffleModesDelegate() {
+class PreferencesCustomRaffleFragment @Inject constructor() : BaseFragment(
+    R.layout.fragment_preferences_custom_raffle
+), CustomRaffleModes by CustomRaffleModesDelegate() {
 
-    private val preferencesViewModel by lazy {
-        viewModelFactory.get<PreferencesViewModel>(requireActivity())
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        preferencesViewModel.run {
-            error(error, ::handleError)
-            observe(preferences) {
-                setupRouletteMusicEnabled(it.rouletteMusicEnabled)
-                setupPreferredRaffleMode(it.preferredRaffleMode)
-                setupRememberRaffledItems(it.rememberRaffledItems)
-            }
-            observeEvent(updateFeedback) { layoutRoot.snackbar(it) }
-        }
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        inflater.inflate(R.layout.fragment_preferences_custom_raffle, container, false)
+    private val preferencesViewModel by viewModel { viewModelProvider.preferencesViewModel() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupLayout()
+
+        viewLifecycleOwner.observe(preferencesViewModel.error, ::handleError)
+        viewLifecycleOwner.observe(preferencesViewModel.preferences) {
+            setupRouletteMusicEnabled(it.rouletteMusicEnabled)
+            setupPreferredRaffleMode(it.preferredRaffleMode)
+            setupRememberRaffledItems(it.rememberRaffledItems)
+        }
+        viewLifecycleOwner.observeEvent(preferencesViewModel.updateFeedback) {
+            layoutRoot.snackbar(
+                message = it,
+                background = R.drawable.background_snackbar,
+                textColor = R.color.text_primary
+            )
+        }
+
         preferencesViewModel.getPreferences()
     }
 
     private fun setupLayout() {
         layoutTitle.setTitle(R.string.preferences_section_my_raffles)
-        layoutTitle.setNavigateUp { layoutRoot.findNavController().navigateUp() }
+        layoutTitle.setNavigateUp { findNavController().navigateUp() }
     }
 
     private fun setupPreferredRaffleMode(raffleMode: AppConfig.RaffleMode) {

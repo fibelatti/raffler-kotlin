@@ -3,6 +3,7 @@ package com.fibelatti.raffler
 import android.content.SharedPreferences
 
 open class MockSharedPreferencesEditor : SharedPreferences.Editor {
+
     override fun putLong(key: String?, value: Long): SharedPreferences.Editor = this
 
     override fun putInt(key: String?, value: Int): SharedPreferences.Editor = this
@@ -21,5 +22,7 @@ open class MockSharedPreferencesEditor : SharedPreferences.Editor {
 
     override fun commit(): Boolean = true
 
-    override fun apply() {}
+    override fun apply() {
+        // Intentionally empty
+    }
 }

@@ -1,6 +1,6 @@
 package com.fibelatti.raffler
 
-import com.fibelatti.raffler.core.extension.empty
+import com.fibelatti.core.extension.empty
 import com.fibelatti.raffler.core.platform.AppConfig
 import com.fibelatti.raffler.features.myraffles.CustomRaffle
 import com.fibelatti.raffler.features.myraffles.CustomRaffleItem
@@ -9,6 +9,7 @@ import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffle
 import com.fibelatti.raffler.features.preferences.Preferences
 
 object MockDataProvider {
+
     const val genericString = "Some string"
     const val defaultId = 1L
 

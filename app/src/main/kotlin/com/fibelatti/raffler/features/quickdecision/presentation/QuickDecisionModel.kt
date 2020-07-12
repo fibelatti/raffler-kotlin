@@ -1,18 +1,23 @@
 package com.fibelatti.raffler.features.quickdecision.presentation
 
-import com.fibelatti.raffler.core.functional.Mapper
+import android.os.Parcelable
+import com.fibelatti.core.android.base.BaseViewType
+import com.fibelatti.core.functional.TwoWayMapper
 import com.fibelatti.raffler.core.platform.AppConfig
-import com.fibelatti.raffler.core.platform.base.BaseViewType
+import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleItemModel
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleModel
 import com.fibelatti.raffler.features.quickdecision.QuickDecision
+import kotlinx.android.parcel.Parcelize
 import javax.inject.Inject
 
+@Parcelize
 data class QuickDecisionModel(
     val id: String,
     val locale: String,
     val description: String,
     val values: List<String>
-) : BaseViewType {
+) : BaseViewType, Parcelable {
+
     companion object {
         @JvmStatic
         val VIEW_TYPE = QuickDecisionModel::class.hashCode()
@@ -21,7 +26,7 @@ data class QuickDecisionModel(
     override fun getViewType(): Int = VIEW_TYPE
 }
 
-class QuickDecisionModelMapper @Inject constructor() : Mapper<QuickDecision, QuickDecisionModel> {
+class QuickDecisionModelMapper @Inject constructor() : TwoWayMapper<QuickDecision, QuickDecisionModel> {
     override fun map(param: QuickDecision): QuickDecisionModel = with(param) {
         QuickDecisionModel(id, locale, description, values)
     }
@@ -35,7 +40,7 @@ class QuickDecisionModelMapper @Inject constructor() : Mapper<QuickDecision, Qui
             id = id.toString(),
             locale = AppConfig.LOCALE_NONE,
             description = description,
-            values = items.map { it.description }
+            values = items.map(CustomRaffleItemModel::description)
         )
     }
 }

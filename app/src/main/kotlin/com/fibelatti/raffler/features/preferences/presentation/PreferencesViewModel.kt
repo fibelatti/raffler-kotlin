@@ -1,52 +1,57 @@
 package com.fibelatti.raffler.features.preferences.presentation
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.fibelatti.core.archcomponents.BaseViewModel
+import com.fibelatti.core.archcomponents.LiveEvent
+import com.fibelatti.core.archcomponents.MutableLiveEvent
+import com.fibelatti.core.archcomponents.postEvent
+import com.fibelatti.core.extension.empty
+import com.fibelatti.core.extension.isInt
+import com.fibelatti.core.functional.Result
+import com.fibelatti.core.functional.onFailure
+import com.fibelatti.core.functional.onSuccess
 import com.fibelatti.raffler.R
-import com.fibelatti.raffler.core.extension.empty
-import com.fibelatti.raffler.core.extension.isInt
-import com.fibelatti.raffler.core.functional.Result
-import com.fibelatti.raffler.core.functional.onFailure
-import com.fibelatti.raffler.core.functional.onSuccess
 import com.fibelatti.raffler.core.platform.AppConfig
-import com.fibelatti.raffler.core.platform.MutableLiveEvent
-import com.fibelatti.raffler.core.platform.base.BaseViewModel
-import com.fibelatti.raffler.core.platform.postEvent
-import com.fibelatti.raffler.core.provider.CoroutineLauncher
 import com.fibelatti.raffler.core.provider.ResourceProvider
 import com.fibelatti.raffler.features.preferences.Preferences
 import com.fibelatti.raffler.features.preferences.PreferencesRepository
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class PreferencesViewModel @Inject constructor(
     private val preferencesRepository: PreferencesRepository,
-    private val resourceProvider: ResourceProvider,
-    coroutineLauncher: CoroutineLauncher
-) : BaseViewModel(coroutineLauncher) {
+    private val resourceProvider: ResourceProvider
+) : BaseViewModel() {
 
-    val preferences by lazy { MutableLiveData<Preferences>() }
-    val updateFeedback by lazy { MutableLiveEvent<String>() }
-    val totalQuantityError by lazy { MutableLiveEvent<String>() }
-    val raffleQuantityError by lazy { MutableLiveEvent<String>() }
+    val preferences: LiveData<Preferences> get() = _preferences
+    private val _preferences = MutableLiveData<Preferences>()
+    val updateFeedback: LiveEvent<String> get() = _updateFeedback
+    private val _updateFeedback = MutableLiveEvent<String>()
+    val totalQuantityError: LiveEvent<String> get() = _totalQuantityError
+    private val _totalQuantityError = MutableLiveEvent<String>()
+    val raffleQuantityError: LiveEvent<String> get() = _raffleQuantityError
+    private val _raffleQuantityError = MutableLiveEvent<String>()
 
     fun getPreferences() {
-        startInBackground {
+        launch {
             preferencesRepository.getPreferences()
-                .onSuccess(preferences::postValue)
+                .onSuccess(_preferences::postValue)
                 .onFailure(::handleError)
         }
     }
 
     fun setAppTheme(appTheme: AppConfig.AppTheme) {
-        startInBackground { preferencesRepository.setAppTheme(appTheme) }
+        launch { preferencesRepository.setAppTheme(appTheme) }
     }
 
     fun setAppLanguage(appLanguage: AppConfig.AppLanguage) {
-        startInBackground { preferencesRepository.setLanguage(appLanguage) }
+        launch { preferencesRepository.setLanguage(appLanguage) }
     }
 
     fun setLotteryDefaultValues(quantityAvailable: String, quantityToRaffle: String) {
         validateData(quantityAvailable, quantityToRaffle) { qtyTotal, qtyRaffle ->
-            startInBackground {
+            launch {
                 preferencesRepository.setLotteryDefault(qtyTotal, qtyRaffle)
                     .handleResult()
             }
@@ -54,28 +59,28 @@ class PreferencesViewModel @Inject constructor(
     }
 
     fun setPreferredRaffleMode(raffleMode: AppConfig.RaffleMode) {
-        startInBackground {
+        launch {
             preferencesRepository.setPreferredRaffleMode(raffleMode)
                 .handleResult()
         }
     }
 
     fun setRouletteMusicEnabled(value: Boolean) {
-        startInBackground {
+        launch {
             preferencesRepository.setRouletteMusicEnabled(value)
                 .handleResult()
         }
     }
 
     fun setRememberRaffledItems(value: Boolean) {
-        startInBackground {
+        launch {
             preferencesRepository.rememberRaffledItems(value)
                 .handleResult()
         }
     }
 
     fun resetAllHints() {
-        startInBackground {
+        launch {
             preferencesRepository.resetHints()
                 .handleResult()
         }
@@ -84,7 +89,7 @@ class PreferencesViewModel @Inject constructor(
     private fun Result<Unit>.handleResult() {
         onSuccess {
             getPreferences()
-            updateFeedback.postEvent(resourceProvider.getString(R.string.preferences_changes_saved))
+            _updateFeedback.postEvent(resourceProvider.getString(R.string.preferences_changes_saved))
         }.onFailure(::handleError)
     }
 
@@ -93,20 +98,20 @@ class PreferencesViewModel @Inject constructor(
         quantityToRaffle: String,
         ifValid: (Int, Int) -> Unit
     ) {
-        val qtyAvailable = quantityAvailable.takeIf { it.isNotBlank() } ?: "0"
-        val qtyToRaffle = quantityToRaffle.takeIf { it.isNotBlank() } ?: "0"
+        val qtyAvailable = quantityAvailable.ifBlank { "0"  }
+        val qtyToRaffle = quantityToRaffle.ifBlank { "0"  }
 
         when {
             !qtyAvailable.isInt() -> {
-                totalQuantityError.postEvent(resourceProvider.getString(R.string.lottery_quantity_validation_error))
+                _totalQuantityError.postEvent(resourceProvider.getString(R.string.lottery_quantity_validation_error))
             }
             !qtyToRaffle.isInt() -> {
-                totalQuantityError.postEvent(String.empty())
-                raffleQuantityError.postEvent(resourceProvider.getString(R.string.lottery_quantity_validation_error))
+                _totalQuantityError.postEvent(String.empty())
+                _raffleQuantityError.postEvent(resourceProvider.getString(R.string.lottery_quantity_validation_error))
             }
             else -> {
-                totalQuantityError.postEvent(String.empty())
-                raffleQuantityError.postEvent(String.empty())
+                _totalQuantityError.postEvent(String.empty())
+                _raffleQuantityError.postEvent(String.empty())
 
                 ifValid(qtyAvailable.toInt(), qtyToRaffle.toInt())
             }

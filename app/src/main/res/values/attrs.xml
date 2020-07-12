@@ -2,7 +2,6 @@
 <resources>
     <declare-styleable name="PinEntryEditText">
         <attr name="char_spacing" format="reference|dimension" />
-        <attr name="line_spacing" format="reference|dimension" />
         <attr name="line_stroke" format="reference|dimension" />
         <attr name="pin_entry_activated" format="reference|color" />
         <attr name="pin_entry_focused" format="reference|color" />

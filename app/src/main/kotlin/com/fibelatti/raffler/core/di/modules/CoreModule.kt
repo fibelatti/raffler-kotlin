@@ -1,13 +1,10 @@
 package com.fibelatti.raffler.core.di.modules
 
+import android.app.Application
 import android.content.Context
-import androidx.lifecycle.ViewModelProvider
-import com.fibelatti.raffler.App
-import com.fibelatti.raffler.core.di.modules.viewmodel.ViewModelFactory
-import com.fibelatti.raffler.core.platform.AppResourceProvider
-import com.fibelatti.raffler.core.provider.CoroutineLauncher
-import com.fibelatti.raffler.core.provider.CoroutineLauncherDelegate
-import com.fibelatti.raffler.core.provider.ResourceProvider
+import android.content.SharedPreferences
+import com.fibelatti.raffler.core.di.AppContext
+import com.fibelatti.raffler.core.extension.getUserPreferences
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Binds
@@ -16,35 +13,25 @@ import dagger.Provides
 import java.text.Collator
 import java.util.Locale
 
-@Module(includes = [
-    CoreModule.Binder::class,
-    PersistenceModule::class
-])
-object CoreModule {
-    @Module
-    interface Binder {
-        @Binds
-        fun bindContext(app: App): Context
+@Module
+abstract class CoreModule {
 
-        @Binds
-        fun bindResourceProvider(appResourceProvider: AppResourceProvider): ResourceProvider
+    companion object {
 
-        @Binds
-        fun bindCoroutineLauncher(coroutineLauncherDelegate: CoroutineLauncherDelegate): CoroutineLauncher
+        @Provides
+        fun gson(): Gson = GsonBuilder().create()
 
-        @Binds
-        fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
+        @Provides
+        fun localeDefault(): Locale = Locale.getDefault()
+
+        @Provides
+        fun collatorUs(): Collator = Collator.getInstance(Locale.US)
+
+        @Provides
+        fun userSharedPreferences(@AppContext context: Context): SharedPreferences = context.getUserPreferences()
     }
 
-    @Provides
-    @JvmStatic
-    fun provideGson(): Gson = GsonBuilder().create()
-
-    @Provides
-    @JvmStatic
-    fun provideLocaleDefault(): Locale = Locale.getDefault()
-
-    @Provides
-    @JvmStatic
-    fun provideUSCollator(): Collator = Collator.getInstance(Locale.US)
+    @AppContext
+    @Binds
+    abstract fun bindContext(app: Application): Context
 }

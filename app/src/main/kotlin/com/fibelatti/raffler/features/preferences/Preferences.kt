@@ -11,5 +11,5 @@ data class Preferences(
     val preferredRaffleMode: AppConfig.RaffleMode,
     val rouletteMusicEnabled: Boolean,
     val rememberRaffledItems: Boolean,
-    val hintsDisplayed: MutableMap<String, Boolean>
+    val hintsDisplayed: Map<String, Boolean>
 )

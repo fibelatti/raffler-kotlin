@@ -10,3 +10,9 @@ insert_final_newline = true
 
 [gradlew.bat]
 end_of_line = crlf
+
+[*.{kt,kts}]
+disabled_rules=import-ordering
+
+[*.yml]
+indent_size = 2

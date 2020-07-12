@@ -16,11 +16,11 @@
     <string name="hint_did_you_know">Você sabia?</string>
     <string name="hint_quick_tip">Uma dica</string>
 
-    <string name="alert_confirm_deletion">Confirma a exclusão?</string>
+    <string name="alert_confirm_deletion">Deseja realmente apagar?</string>
 
     <string name="generic_log_error">Erro em %1$s (%2$s)</string>
 
-    <string name="generic_msg_error">Oops! Algo deu errado. Por favor tente novamente.</string>
+    <string name="generic_msg_error">Oops! Algo deu errado. Por favor tente novamente</string>
 
     <!-- Titles -->
     <string name="title_quick_decisions">Decisões</string>
@@ -33,43 +33,46 @@
     <string name="list_item_add_new">Adicionar novo</string>
 
     <!-- Quick Decision -->
-    <string name="quick_decision_dismissible_hint">A resposta para suas perguntas na ponta dos seus dedos. Estes atalhos podem te ajudar em decisões simples como jogar uma moeda ou rolar um dado.</string>
+    <string name="quick_decision_dismissible_hint">A resposta para suas perguntas na ponta dos seus dedos. Estes atalhos podem te ajudar em decisões simples como jogar uma moeda ou rolar um dado</string>
     <string name="quick_decision_result_dismiss">Fechar</string>
+    <string name="quick_decision_result_reroll">Clique para sortear novamente</string>
 
     <!-- Quick Decision - Add new -->
-    <string name="quick_decision_add_new_title">Escolha o sorteio para adicionar como atalho</string>
+    <string name="quick_decision_add_new_title">Escolha um sorteio para adicionar como atalho</string>
 
     <!-- Lottery -->
-    <string name="lottery_dismissible_hint">Se você não gosta de ficar pensando em quais números jogar na loteria o Raffler pode te ajudar. Você pode definir quantidades padrão nas preferências.</string>
-    <string name="lottery_quantity_available">Qtde. de números disponíveis</string>
-    <string name="lottery_quantity_to_raffle">Qtde. de números sorteados</string>
-    <string name="lottery_quantity_validation_error">Por favor entre uma quantidade válida.</string>
+    <string name="lottery_dismissible_hint">Raffler pode te ajudar a sortear números aleatórios para jogos de loteria. Você pode definir quantidades padrão nas preferências</string>
+    <string name="lottery_quantity_available">Números disponíveis</string>
+    <string name="lottery_quantity_to_raffle">Números a sortear</string>
+    <string name="lottery_quantity_validation_error">Entre uma quantidade válida</string>
     <string name="lottery_raffle_button">Sortear números</string>
 
     <!-- My Raffles -->
     <string name="my_raffles_hint_title">Nenhum sorteio</string>
-    <string name="my_raffles_hint_message">Com sorteios personalizados você pode:\n\n• Escolher alguém para ganhar um prêmio ou fazer uma tarefa\n• Criar grupos de pessoas\n\nE muito mais! Pressione o botão abaixo para criar seu primeiro sorteio.</string>
-    <string name="my_raffles_items_quantity">%d itens</string>
+    <string name="my_raffles_hint_message">Com sorteios personalizados você pode:\n\n• Sortear alguém para ganhar um prêmio ou fazer uma tarefa\n• Criar grupos de pessoas\n\nE muito mais! Pressione o botão abaixo para criar seu primeiro sorteio</string>
+    <string name="my_raffles_items_quantity">%d opcões</string>
     <string name="my_raffles_create_first_button">Criar sorteio</string>
     <string name="my_raffles_select_mode_button">Escolher modo</string>
 
     <!-- Custom Raffle - New or Edit -->
-    <string name="custom_raffle_add_as_quick_decision_dismissible_hint">Criar um atalho para sortear algo rapidamente pode vir bem a calhar. Como você não possui nenhum sorteio ainda vamos criar o primeiro.</string>
-    <string name="custom_raffle_description">Descrição</string>
+    <string name="custom_raffle_add_as_quick_decision_dismissible_hint">Criar um atalho para sortear algo rapidamente pode vir bem a calhar. Como você não possui nenhum sorteio ainda vamos criar o primeiro</string>
+    <string name="custom_raffle_description">Nome</string>
     <string name="custom_raffle_add_shortcut">Adicionar atalho</string>
-    <string name="custom_raffle_item_description">Descrição do item</string>
+    <string name="custom_raffle_item_description">Descrição da opção</string>
     <string name="custom_raffle_edit_title">Editando %s</string>
-    <string name="custom_raffle_create_remove_all_items">Apagar todos os itens</string>
-    <string name="custom_raffle_create_invalid_description">Entre uma descrição válida.</string>
-    <string name="custom_raffle_create_duplicate">Já existe um item com esta descrição.</string>
-    <string name="custom_raffle_create_invalid_items_quantity">O sorteio deve ter pelo menos 2 itens.</string>
+    <string name="custom_raffle_create_swipe_right">Deslize uma opção para a direta para edita-la</string>
+    <string name="custom_raffle_create_swipe_left">Deslize uma opção para a esquerda para remove-la</string>
+    <string name="custom_raffle_create_remove_all_items">Apagar todos as opções</string>
+    <string name="custom_raffle_create_invalid_description">Entre uma descrição válida</string>
+    <string name="custom_raffle_create_duplicate">Já existe uma opção com esta descrição</string>
+    <string name="custom_raffle_create_invalid_items_quantity">O sorteio deve ter pelo menos 2 opções</string>
 
     <!-- Custom Raffle - Details -->
-    <string name="custom_raffle_details_dismissible_hint">Personalize cada sorteio facilmente. Clicar nos itens irá incluí-los ou excluí-los do próximo sorteio.</string>
-    <string name="custom_raffle_details_mode_invalid_quantity">Escolha pelo menos 2 itens para sortear.</string>
+    <string name="custom_raffle_details_dismissible_hint">Personalize cada sorteio facilmente. Clicar em cada opção irá incluí-la ou excluí-la do próximo sorteio</string>
+    <string name="custom_raffle_details_mode_invalid_quantity">Escolha pelo menos 2 opções para sortear</string>
 
-    <string name="custom_raffle_details_include_all">Selecionar todos</string>
-    <string name="custom_raffle_details_exclude_all">Desselecionar todos</string>
+    <string name="custom_raffle_details_include_all">Selecionar todas</string>
+    <string name="custom_raffle_details_exclude_all">Desselecionar todas</string>
 
     <string name="custom_raffle_details_mode_title">Escolha o modo de sorteio</string>
     <string name="custom_raffle_details_mode_button">Escolher</string>
@@ -77,19 +80,19 @@
     <string name="custom_raffle_details_mode_none">Nenhum</string>
 
     <string name="custom_raffle_details_mode_roulette">Roleta</string>
-    <string name="custom_raffle_details_mode_roulette_description">Escolha o vencedor de forma aleatória, com a clássica música do peão</string>
+    <string name="custom_raffle_details_mode_roulette_description">Escolha o vencedor de forma aleatória, com a clássica música do pião</string>
 
     <string name="custom_raffle_details_mode_random_winners">Sorteados aleatórios</string>
-    <string name="custom_raffle_details_mode_random_winners_description">Defina a quantidade de sorteados e obtenha o resultado imediatamente</string>
+    <string name="custom_raffle_details_mode_random_winners_description">Defina a quantidade de opções sorteadas e obtenha o resultado imediatamente</string>
 
     <string name="custom_raffle_details_mode_grouping">Agrupamento</string>
-    <string name="custom_raffle_details_mode_grouping_description">Crie grupos a partir dos itens do sorteio, escolhendo quantos grupos criar ou quantos itens por grupo</string>
+    <string name="custom_raffle_details_mode_grouping_description">Crie grupos a partir das opções do sorteio, escolhendo quantos grupos criar ou quantas opções por grupo</string>
 
     <string name="custom_raffle_details_mode_combination">Combinação</string>
-    <string name="custom_raffle_details_mode_combination_description">Crie pares entre os itens de 2 sorteios, útil para definir prêmios ou atribuir tarefas</string>
+    <string name="custom_raffle_details_mode_combination_description">Combine 2 sorteios diferentes para criar grupos, útil para definir prêmios ou atribuir tarefas</string>
 
-    <string name="custom_raffle_details_mode_secret_voting">Votação secreta</string>
-    <string name="custom_raffle_details_mode_secret_voting_description">Crie uma enquete e deixe a maioria decidir. Cada pessoa registra seu voto e o resultado estará disponível ao final da votação.</string>
+    <string name="custom_raffle_details_mode_secret_voting">Votação</string>
+    <string name="custom_raffle_details_mode_secret_voting_description">Crie uma votação e deixe a maioria decidir. Cada pessoa registra seu voto e o resultado estará disponível ao final</string>
 
     <!-- Custom Raffle - Roulette -->
     <string name="custom_raffle_roulette_hint_play">Rodar</string>
@@ -102,35 +105,35 @@
 
     <!-- Custom Raffle - Random Winners -->
     <string name="custom_raffle_random_winners_hint">Quantidade de sorteados</string>
-    <string name="custom_raffle_random_winners_invalid_quantity_too_few">Deve ser pelo menos 1.</string>
-    <string name="custom_raffle_random_winners_invalid_quantity_too_many">Deve ser no máximo %d.</string>
-    <string name="custom_raffle_random_winners_item_title">#%d Sorteado</string>
+    <string name="custom_raffle_random_winners_invalid_quantity_too_few">Deve ser pelo menos 1</string>
+    <string name="custom_raffle_random_winners_invalid_quantity_too_many">Deve ser no máximo %d</string>
+    <string name="custom_raffle_random_winners_item_title">Sorteado #%d</string>
 
     <!-- Custom Raffle - Grouping -->
     <string name="custom_raffle_grouping_quantity_hint">Quantidade</string>
     <string name="custom_raffle_grouping_quantity_of_groups">Grupos</string>
-    <string name="custom_raffle_grouping_quantity_of_items_per_group">Itens por grupo</string>
+    <string name="custom_raffle_grouping_quantity_of_items_per_group">Opções por grupo</string>
     <string name="custom_raffle_grouping_item_title">Grupo #%d</string>
 
     <string name="custom_raffle_combination_title">Combinando com %s</string>
     <string name="custom_raffle_combination_hint">Escolha outro sorteio</string>
     <string name="custom_raffle_combination_selector_title">Escolha o sorteio para combinar com %s</string>
-    <string name="custom_raffle_combination_quantity_hint">Quantidade de pares</string>
-    <string name="custom_raffle_combination_invalid_quantity_too_few">Deve ser pelo menos 1.</string>
-    <string name="custom_raffle_combination_invalid_quantity_too_many">Deve ser no máximo %d.</string>
-    <string name="custom_raffle_combination_pair_title">#%d par</string>
+    <string name="custom_raffle_combination_quantity_hint">Quantidade de grupos</string>
+    <string name="custom_raffle_combination_invalid_quantity_too_few">Deve ser pelo menos 1</string>
+    <string name="custom_raffle_combination_invalid_quantity_too_many">Deve ser no máximo %d</string>
+    <string name="custom_raffle_combination_pair_title">Grupo #%d</string>
 
     <!-- Custom Raffle - Voting -->
     <string name="custom_raffle_voting_title">Votação para %s</string>
     <string name="custom_raffle_voting_start_voting">Iniciar votação</string>
     <string name="custom_raffle_voting_new_voting">Nova votação</string>
     <string name="custom_raffle_voting_continue_voting">Continuar votação</string>
-    <string name="custom_raffle_voting_ongoing_voting">Já existe uma votação para esse sorteio. Você pode dar continuidade a ela ou iniciar uma nova votação, porém votos existentes serão perdidos.</string>
+    <string name="custom_raffle_voting_ongoing_voting">Existe uma votação em andamento para esse sorteio. Você pode dar continuidade a ela ou iniciar uma nova votação, porém votos existentes serão perdidos</string>
     <string name="custom_raffle_voting_pin_instructions_new">Crie um pin de 4 dígitos para que somente você possa encerrar a votação antes de compartilhar os resultados:</string>
     <string name="custom_raffle_voting_pin_instructions_existing">Confirme o pin de 4 dígitos utilizado para a criação desta votação:</string>
 
-    <string name="custom_raffle_voting_pin_invalid">Digite um pin de 4 dígitos.</string>
-    <string name="custom_raffle_voting_pin_incorrect">Pin incorreto, tente novamente.</string>
+    <string name="custom_raffle_voting_pin_invalid">Digite um pin de 4 dígitos</string>
+    <string name="custom_raffle_voting_pin_incorrect">Pin incorreto, tente novamente</string>
 
     <string name="custom_raffle_voting_new_vote_description">Se você é o(a) próximo(a) a votar pressione o botão abaixo</string>
     <string name="custom_raffle_voting_new_vote">Ver opções</string>
@@ -139,10 +142,10 @@
 
     <string name="custom_raffle_voting_votes">{0,choice,0#Nenhum voto|1#1 voto|1&lt;{0} votos}</string>
 
-    <string name="custom_raffle_voting_see_results_description">Quando a votação estiver concluída pressione o botão abaixo para ver os resultados. Uma vez exibidos ninguém mais poderá votar.</string>
-    <string name="custom_raffle_voting_see_results">Ver resultados</string>
+    <string name="custom_raffle_voting_see_results_description">Quando a votação estiver concluída pressione o botão abaixo para ver os resultados. Uma vez exibidos ninguém mais poderá votar</string>
+    <string name="custom_raffle_voting_see_results">Ver os resultados</string>
 
-    <string name="custom_raffle_voting_results_title">Resultados da votação para %s</string>
+    <string name="custom_raffle_voting_results_title">Resultados da votação - %s</string>
     <string name="custom_raffle_voting_results_first_place">Primeiro colocado</string>
     <string name="custom_raffle_voting_results_second_place">Segundo colocado</string>
     <string name="custom_raffle_voting_results_third_place">Terceiro colocado</string>
@@ -151,7 +154,7 @@
 
     <string name="custom_raffle_voting_results_item_votes">{0,choice,0#Nenhum voto|1#1 voto (\'{1,number,percent}\' do total)|1&lt;{0} votos (\'{1,number,percent}\' do total)}</string>
 
-    <string name="custom_raffle_voting_tie_break_description">Não foi possível decidir o vencedor após a primeira rodada de votação. Como você quer escolher entre as opções empatadas em primeiro colocado?</string>
+    <string name="custom_raffle_voting_tie_break_description">Não foi possível decidir o vencedor após a primeira rodada de votação. Como deseja desemptar?</string>
     <string name="custom_raffle_voting_tie_break_vote_again">Votar novamente</string>
     <string name="custom_raffle_voting_tie_break_decide_randomly">Decidir aleatoriamente</string>
 
@@ -175,15 +178,15 @@
     <string name="preferences_preferred_raffle_mode_button">Alterar</string>
 
     <string name="preferences_roulette_music_title">Efeitos sonoros</string>
-    <string name="preferences_roulette_music_description">Habilitar música do peão</string>
+    <string name="preferences_roulette_music_description">Habilitar música do pião</string>
 
     <string name="preferences_default_lottery_title">Valores padrão</string>
-    <string name="preferences_default_lottery_max_quantity">Qtde. de números disponíveis</string>
-    <string name="preferences_default_lottery_raffle_quantity">Qtde. de números sorteados</string>
+    <string name="preferences_default_lottery_max_quantity">Números disponíveis</string>
+    <string name="preferences_default_lottery_raffle_quantity">Números a sortear</string>
     <string name="preferences_default_lottery_button">Salvar</string>
 
-    <string name="preferences_remember_raffled_title">Lembrar itens sorteados</string>
-    <string name="preferences_remember_raffled_description">Se ativo, itens sorteados usando Roleta ou Sorteados aleatórios não serão incluídos automaticamente nos sorteios subsequentes. Incluir ou excluir itens manualmente também é lembrado.</string>
+    <string name="preferences_remember_raffled_title">Lembrar opções sorteadas</string>
+    <string name="preferences_remember_raffled_description">Se ativo, opções sorteadas usando Roleta ou Sorteados aleatórios não serão incluídas automaticamente nos sorteios subsequentes. Incluir ou excluir opções manualmente também é lembrado</string>
 
     <string name="preferences_reset_hints_title">Dicas</string>
     <string name="preferences_reset_hints_button">Mostrar novamente</string>
@@ -191,7 +194,7 @@
 
     <string name="preferences_share">Compartilhar</string>
     <string name="preferences_share_title">Compartilhando</string>
-    <string name="preferences_share_text">Confira o app Raffler! Decidir as coisas nunca foi tão fácil. Baixe gratuitamente em %s.</string>
+    <string name="preferences_share_text">Confira o app Raffler! Decidir as coisas nunca foi tão fácil. Baixe gratuitamente em %s</string>
     <string name="preferences_rate">Avaliar</string>
     <string name="preferences_about">Desenvolvido com ❤ por Filipe Belatti</string>
     <string name="preferences_app_version">Versão: %s</string>

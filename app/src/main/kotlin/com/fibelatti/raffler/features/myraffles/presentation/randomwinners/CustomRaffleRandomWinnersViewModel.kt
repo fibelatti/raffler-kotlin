@@ -1,29 +1,31 @@
 package com.fibelatti.raffler.features.myraffles.presentation.randomwinners
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.fibelatti.core.archcomponents.BaseViewModel
+import com.fibelatti.core.extension.empty
+import com.fibelatti.core.extension.isInt
 import com.fibelatti.raffler.R
-import com.fibelatti.raffler.core.extension.empty
-import com.fibelatti.raffler.core.extension.isInt
-import com.fibelatti.raffler.core.platform.base.BaseViewModel
-import com.fibelatti.raffler.core.provider.CoroutineLauncher
 import com.fibelatti.raffler.core.provider.ResourceProvider
 import com.fibelatti.raffler.features.myraffles.RememberRaffled
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleDraftedModel
 import com.fibelatti.raffler.features.myraffles.presentation.common.CustomRaffleItemModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class CustomRaffleRandomWinnersViewModel @Inject constructor(
     private val rememberRaffled: RememberRaffled,
-    private val resourceProvider: ResourceProvider,
-    coroutineLauncher: CoroutineLauncher
-) : BaseViewModel(coroutineLauncher) {
+    private val resourceProvider: ResourceProvider
+) : BaseViewModel() {
 
-    val randomWinners by lazy { MutableLiveData<List<CustomRaffleDraftedModel>>() }
-    val quantityError by lazy { MutableLiveData<String>() }
+    val randomWinners: LiveData<List<CustomRaffleDraftedModel>> get() = _randomWinners
+    private val _randomWinners = MutableLiveData<List<CustomRaffleDraftedModel>>()
+    val quantityError: LiveData<String> get() = _quantityError
+    private val _quantityError = MutableLiveData<String>()
 
     fun getRandomWinners(options: List<CustomRaffleItemModel>, quantity: String) {
         validateData(options, quantity) { qty ->
-            startInBackground {
+            launch {
                 options.shuffled()
                     .take(qty)
                     .also { raffledItems ->
@@ -31,32 +33,40 @@ class CustomRaffleRandomWinnersViewModel @Inject constructor(
                     }
                     .mapIndexed { index, item ->
                         CustomRaffleDraftedModel(
-                            title = resourceProvider.getString(R.string.custom_raffle_random_winners_item_title, index + 1),
+                            title = resourceProvider.getString(
+                                R.string.custom_raffle_random_winners_item_title,
+                                index + 1
+                            ),
                             description = item.description
                         )
                     }
-                    .let(randomWinners::postValue)
+                    .let(_randomWinners::postValue)
             }
         }
     }
 
-    private fun validateData(options: List<CustomRaffleItemModel>, quantity: String, ifValid: (quantity: Int) -> Unit) {
+    private fun validateData(
+        options: List<CustomRaffleItemModel>,
+        quantity: String,
+        ifValid: (quantity: Int) -> Unit
+    ) {
         when {
             quantity.isBlank() || !quantity.isInt() -> {
-                quantityError.postValue(resourceProvider.getString(R.string.lottery_quantity_validation_error))
+                _quantityError.postValue(resourceProvider.getString(R.string.lottery_quantity_validation_error))
             }
             quantity.toInt() > options.size - 1 -> {
-                quantityError.postValue(resourceProvider.getString(
+                _quantityError.postValue(resourceProvider.getString(
                     R.string.custom_raffle_random_winners_invalid_quantity_too_many,
                     options.size - 1
                 ))
             }
             quantity.toInt() < 1 -> {
-                quantityError.postValue(resourceProvider.getString(R.string.custom_raffle_random_winners_invalid_quantity_too_few))
+                _quantityError.postValue(
+                    resourceProvider.getString(R.string.custom_raffle_random_winners_invalid_quantity_too_few)
+                )
             }
             else -> {
-                quantityError.postValue(String.empty())
-
+                _quantityError.postValue(String.empty())
                 ifValid(quantity.toInt())
             }
         }

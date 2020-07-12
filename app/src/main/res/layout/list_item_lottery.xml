@@ -10,7 +10,7 @@
     android:padding="@dimen/padding_regular"
     tools:layout_width="50dp">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/textViewLotteryItem"
         style="@style/AppTheme.Text.Body"
         android:layout_width="match_parent"

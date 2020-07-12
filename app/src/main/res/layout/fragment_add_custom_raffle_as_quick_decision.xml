@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/textViewSelectCustomRaffleTitle"
             style="@style/AppTheme.Text.Title"
             android:layout_width="0dp"

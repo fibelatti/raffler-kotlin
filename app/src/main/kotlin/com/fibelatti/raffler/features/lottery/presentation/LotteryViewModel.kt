@@ -1,31 +1,38 @@
 package com.fibelatti.raffler.features.lottery.presentation
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.fibelatti.core.archcomponents.BaseViewModel
+import com.fibelatti.core.archcomponents.LiveEvent
+import com.fibelatti.core.archcomponents.MutableLiveEvent
+import com.fibelatti.core.archcomponents.postEvent
+import com.fibelatti.core.extension.empty
+import com.fibelatti.core.extension.isInt
+import com.fibelatti.core.functional.onSuccess
 import com.fibelatti.raffler.R
-import com.fibelatti.raffler.core.extension.empty
-import com.fibelatti.raffler.core.extension.isInt
-import com.fibelatti.raffler.core.functional.onSuccess
-import com.fibelatti.raffler.core.platform.MutableLiveEvent
-import com.fibelatti.raffler.core.platform.base.BaseViewModel
-import com.fibelatti.raffler.core.platform.postEvent
-import com.fibelatti.raffler.core.provider.CoroutineLauncher
 import com.fibelatti.raffler.core.provider.ResourceProvider
 import com.fibelatti.raffler.features.preferences.PreferencesRepository
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class LotteryViewModel @Inject constructor(
     private val preferencesRepository: PreferencesRepository,
     private val lotteryNumberModelMapper: LotteryNumberModelMapper,
-    private val resourceProvider: ResourceProvider,
-    coroutineLauncher: CoroutineLauncher
-) : BaseViewModel(coroutineLauncher) {
+    private val resourceProvider: ResourceProvider
+) : BaseViewModel() {
 
-    val defaultQuantityAvailable by lazy { MutableLiveData<String>() }
-    val defaultQuantityToRaffle by lazy { MutableLiveData<String>() }
-    val showHint by lazy { MutableLiveEvent<Unit>() }
-    val lotteryNumbers by lazy { MutableLiveData<List<LotteryNumberModel>>() }
-    val quantityAvailableError by lazy { MutableLiveData<String>() }
-    val quantityToRaffleError by lazy { MutableLiveData<String>() }
+    val defaultQuantityAvailable: LiveData<String> get() = _defaultQuantityAvailable
+    private val _defaultQuantityAvailable = MutableLiveData<String>()
+    val defaultQuantityToRaffle: LiveData<String> get() = _defaultQuantityToRaffle
+    private val _defaultQuantityToRaffle = MutableLiveData<String>()
+    val showHint: LiveEvent<Unit> get() = _showHint
+    private val _showHint = MutableLiveEvent<Unit>()
+    val lotteryNumbers: LiveData<List<LotteryNumberModel>> get() = _lotteryNumbers
+    private val _lotteryNumbers = MutableLiveData<List<LotteryNumberModel>>()
+    val quantityAvailableError: LiveData<String> get() = _quantityAvailableError
+    private val _quantityAvailableError = MutableLiveData<String>()
+    val quantityToRaffleError: LiveData<String> get() = _quantityToRaffleError
+    private val _quantityToRaffleError = MutableLiveData<String>()
 
     init {
         getDefaults()
@@ -33,34 +40,34 @@ class LotteryViewModel @Inject constructor(
     }
 
     fun getLotteryNumbers(quantityAvailable: String, quantityToRaffle: String) {
-        startInBackground {
+        launch {
             validateData(quantityAvailable, quantityToRaffle) { totalQty, raffleQty ->
                 (1..totalQty).shuffled()
                     .take(raffleQty)
                     .let(lotteryNumberModelMapper::mapList)
-                    .also(lotteryNumbers::postValue)
+                    .let(_lotteryNumbers::postValue)
             }
         }
     }
 
     fun hintDismissed() {
-        startInBackground { preferencesRepository.setLotteryHintDismissed() }
+        launch { preferencesRepository.setLotteryHintDismissed() }
     }
 
     private fun getDefaults() {
-        startInBackground {
+        launch {
             preferencesRepository.getPreferences()
                 .onSuccess {
-                    defaultQuantityAvailable.postValue(it.lotteryDefaultQuantityAvailable)
-                    defaultQuantityToRaffle.postValue(it.lotteryDefaultQuantityToRaffle)
+                    _defaultQuantityAvailable.postValue(it.lotteryDefaultQuantityAvailable)
+                    _defaultQuantityToRaffle.postValue(it.lotteryDefaultQuantityToRaffle)
                 }
         }
     }
 
     private fun checkForHints() {
-        startInBackground {
+        launch {
             if (!preferencesRepository.getLotteryHintDisplayed()) {
-                showHint.postEvent(Unit)
+                _showHint.postEvent(Unit)
             }
         }
     }
@@ -72,15 +79,17 @@ class LotteryViewModel @Inject constructor(
     ) {
         when {
             quantityAvailable.isBlank() || !quantityAvailable.isInt() -> {
-                quantityAvailableError.postValue(resourceProvider.getString(R.string.lottery_quantity_validation_error))
+                _quantityAvailableError.postValue(
+                    resourceProvider.getString(R.string.lottery_quantity_validation_error)
+                )
             }
             quantityToRaffle.isBlank() || !quantityToRaffle.isInt() -> {
-                quantityAvailableError.postValue(String.empty())
-                quantityToRaffleError.postValue(resourceProvider.getString(R.string.lottery_quantity_validation_error))
+                _quantityAvailableError.postValue(String.empty())
+                _quantityToRaffleError.postValue(resourceProvider.getString(R.string.lottery_quantity_validation_error))
             }
             else -> {
-                quantityAvailableError.postValue(String.empty())
-                quantityToRaffleError.postValue(String.empty())
+                _quantityAvailableError.postValue(String.empty())
+                _quantityToRaffleError.postValue(String.empty())
 
                 ifValid(quantityAvailable.toInt(), quantityToRaffle.toInt())
             }
