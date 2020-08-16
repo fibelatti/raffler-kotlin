@@ -12,7 +12,7 @@ data class CustomRaffleVotingModel(
     val totalVotes: Int,
     val votes: Map<String, Int>
 ) {
-    val mostVoted: Map<String, Int> = votes.filter { it.value == votes.values.max() }
+    val mostVoted: Map<String, Int> = votes.filter { it.value == votes.values.maxOrNull() }
 }
 
 class CustomRaffleVotingModelMapper @Inject constructor() : TwoWayMapper<CustomRaffleVoting, CustomRaffleVotingModel> {
