@@ -4,7 +4,7 @@ jacoco {
     toolVersion = "0.8.4"
 }
 
-task jacocoTestReport(type: JacocoReport, dependsOn: ['testPinboardapiDebugUnitTest']) {
+task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest']) {
 
     group "Reporting"
     description "Generate Jacoco coverage reports."

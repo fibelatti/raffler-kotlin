@@ -1,7 +1,7 @@
 Raffler
 =====
 
-[![Language](https://img.shields.io/badge/language-kotlin-brightgreen.svg)](https://www.github.com/fibelatti/pinboard-kotlin)
+[![Language](https://img.shields.io/badge/language-kotlin-brightgreen.svg)](https://www.github.com/fibelatti/raffler-kotlin)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Android CI](https://github.com/fibelatti/raffler-kotlin/workflows/Android%20CI/badge.svg)](https://github.com/fibelatti/raffler-kotlin/actions?query=workflow%3A%22Android+CI%22)
 
