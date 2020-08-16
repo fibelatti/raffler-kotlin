@@ -198,4 +198,8 @@
     <string name="preferences_rate">Evaluar</string>
     <string name="preferences_about">Desarrollado con ❤ por Filipe Belatti</string>
     <string name="preferences_app_version">Versión: %s</string>
+
+    <!-- In-app Update -->
+    <string name="in_app_update_ready">Una actualización de la aplicación está lista para instalar</string>
+    <string name="in_app_update_install">REINICIAR</string>
 </resources>

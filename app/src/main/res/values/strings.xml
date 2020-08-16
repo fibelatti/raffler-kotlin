@@ -199,4 +199,8 @@
     <string name="preferences_rate">Rate Raffler</string>
     <string name="preferences_about">Developed with ❤ by Filipe Belatti</string>
     <string name="preferences_app_version">Version: %s</string>
+
+    <!-- In-app Update -->
+    <string name="in_app_update_ready">An app update is ready to install</string>
+    <string name="in_app_update_install">RESTART</string>
 </resources>

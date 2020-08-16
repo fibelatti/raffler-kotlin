@@ -4,6 +4,7 @@ import android.app.Activity
 import androidx.fragment.app.FragmentFactory
 import com.fibelatti.raffler.core.di.modules.ActivityModule
 import com.fibelatti.raffler.core.di.modules.FeatureModule
+import com.fibelatti.raffler.features.InAppUpdateManager
 import dagger.BindsInstance
 import dagger.Subcomponent
 
@@ -16,6 +17,7 @@ import dagger.Subcomponent
 interface ActivityComponent : ViewModelProvider {
 
     fun fragmentFactory(): FragmentFactory
+    fun inAppUpdateManager(): InAppUpdateManager
 
     @Subcomponent.Factory
     interface Factory {

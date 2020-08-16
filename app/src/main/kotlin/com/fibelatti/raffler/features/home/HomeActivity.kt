@@ -2,19 +2,27 @@ package com.fibelatti.raffler.features.home
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.fibelatti.core.extension.doOnApplyWindowInsets
 import com.fibelatti.core.extension.gone
+import com.fibelatti.core.extension.snackbar
 import com.fibelatti.core.extension.visible
 import com.fibelatti.raffler.R
 import com.fibelatti.raffler.core.platform.base.BaseActivity
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.layout_toolbar_default.*
 
 class HomeActivity : BaseActivity(R.layout.activity_home) {
+
+    companion object {
+
+        private const val FLEXIBLE_UPDATE_REQUEST = 1001
+    }
 
     private val bottomBarEnabledFragments: List<Int> = listOf(
         R.id.fragmentQuickDecision,
@@ -31,6 +39,8 @@ class HomeActivity : BaseActivity(R.layout.activity_home) {
         supportFragmentManager.findFragmentById(R.id.fragmentHost) as NavHostFragment
     }
 
+    private val inAppUpdateManager get() = activityComponent.inAppUpdateManager()
+
     private var topInset: Int = 0
     private var bottomInset: Int = 0
 
@@ -39,6 +49,11 @@ class HomeActivity : BaseActivity(R.layout.activity_home) {
         setSupportActionBar(toolbar)
         setupView()
         setupNavigation()
+        inAppUpdateManager.checkForAvailableUpdates(
+            this,
+            FLEXIBLE_UPDATE_REQUEST,
+            ::onUpdateDownloadComplete
+        )
     }
 
     override fun onSupportNavigateUp() = navHostFragment.findNavController().navigateUp()
@@ -53,7 +68,7 @@ class HomeActivity : BaseActivity(R.layout.activity_home) {
 
             ViewCompat.setPaddingRelative(
                 view,
-                initialPadding.start ,
+                initialPadding.start,
                 initialPadding.top + insets.systemWindowInsetTop,
                 initialPadding.end,
                 initialPadding.bottom)
@@ -90,6 +105,19 @@ class HomeActivity : BaseActivity(R.layout.activity_home) {
                     layoutBottomNavigation.gone()
                 }
             }
+        }
+    }
+
+    private fun onUpdateDownloadComplete() {
+        layoutRoot.snackbar(
+            message = getString(R.string.in_app_update_ready),
+            textColor = R.color.text_primary,
+            marginSize = R.dimen.margin_regular,
+            background = R.drawable.background_snackbar,
+            duration = Snackbar.LENGTH_LONG
+        ) {
+            setAction(R.string.in_app_update_install) { inAppUpdateManager.completeUpdate() }
+            setActionTextColor(ContextCompat.getColor(layoutRoot.context, R.color.color_on_background))
         }
     }
 }
