@@ -1,6 +1,7 @@
 package com.fibelatti.raffler.features.preferences.presentation
 
 import android.os.Bundle
+import android.text.InputFilter
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.fibelatti.core.archcomponents.extension.observe
@@ -12,6 +13,7 @@ import com.fibelatti.core.extension.showError
 import com.fibelatti.core.extension.snackbar
 import com.fibelatti.core.extension.textAsString
 import com.fibelatti.raffler.R
+import com.fibelatti.raffler.core.platform.InputFilterMinMax
 import com.fibelatti.raffler.core.platform.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_preferences_lottery.*
 import javax.inject.Inject
@@ -57,7 +59,17 @@ class PreferencesLotteryFragment @Inject constructor() : BaseFragment(R.layout.f
         }
     }
 
+    @Suppress("MagicNumber")
     private fun setupDefaultLotteryValues(quantityAvailable: String, quantityToRaffle: String) {
+        editTextTotalQuantity.filters = arrayOf(
+            InputFilterMinMax(min = 0, max = 999),
+            InputFilter.LengthFilter(3)
+        )
+        editTextRaffleQuantity.filters = arrayOf(
+            InputFilterMinMax(min = 0, max = 999),
+            InputFilter.LengthFilter(3)
+        )
+
         editTextTotalQuantity.setText(quantityAvailable)
         editTextRaffleQuantity.setText(quantityToRaffle)
     }

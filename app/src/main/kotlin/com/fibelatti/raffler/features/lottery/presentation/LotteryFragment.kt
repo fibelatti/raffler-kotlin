@@ -1,6 +1,7 @@
 package com.fibelatti.raffler.features.lottery.presentation
 
 import android.os.Bundle
+import android.text.InputFilter
 import android.view.View
 import com.fibelatti.core.archcomponents.extension.observe
 import com.fibelatti.core.archcomponents.extension.observeEvent
@@ -13,6 +14,7 @@ import com.fibelatti.core.extension.visible
 import com.fibelatti.core.extension.withGridLayoutManager
 import com.fibelatti.core.extension.withItemOffsetDecoration
 import com.fibelatti.raffler.R
+import com.fibelatti.raffler.core.platform.InputFilterMinMax
 import com.fibelatti.raffler.core.platform.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_lottery.*
 import javax.inject.Inject
@@ -47,7 +49,17 @@ class LotteryFragment @Inject constructor(
         viewLifecycleOwner.observe(lotteryViewModel.quantityToRaffleError, ::handleRaffleQuantityError)
     }
 
+    @Suppress("MagicNumber")
     private fun setupLayout() {
+        editTextTotalQuantity.filters = arrayOf(
+            InputFilterMinMax(min = 0, max = 999),
+            InputFilter.LengthFilter(3)
+        )
+        editTextRaffleQuantity.filters = arrayOf(
+            InputFilterMinMax(min = 0, max = 999),
+            InputFilter.LengthFilter(3)
+        )
+
         buttonRaffle.setOnClickListener {
             lotteryViewModel.getLotteryNumbers(
                 editTextTotalQuantity.textAsString(),
